@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ZoneData" load_steps=3 format=3 uid="uid://bgh3eybbbs44c"]
+
+[ext_resource type="Script" uid="uid://dsgmtbbiyaovc" path="res://data/Resources/worlds/zone.gd" id="1_4fwog"]
+[ext_resource type="PackedScene" uid="uid://dd5g0ufrdt4m2" path="res://scenes/spell-tree/spell-tree.tscn" id="2_t1qkn"]
+
+[resource]
+script = ExtResource("1_4fwog")
+zone_id = "spell_tree"
+zone_name = "Tree Of Ilmu"
+zone_scene = ExtResource("2_t1qkn")
+zone_type = "Study"
+difficulty = 0
+metadata/_custom_type_script = "uid://dsgmtbbiyaovc"

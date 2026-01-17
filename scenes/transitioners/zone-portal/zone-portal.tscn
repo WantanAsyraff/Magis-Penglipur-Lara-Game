@@ -1,7 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://b5tctii1rqqju"]
 
-[ext_resource type="Script" uid="uid://c0xk7l7idx70l" path="res://scenes/transitioners/zone-portal/zone_portal.gd" id="1_cnpwf"]
-[ext_resource type="Resource" uid="uid://cpicnufhn4gry" path="res://data/worlds/hubs/akademi-bintang-utama/abu-library.tres" id="2_iib6d"]
+[ext_resource type="Script" uid="uid://c0xk7l7idx70l" path="res://scenes/transitioners/zone-portal/zone-portal.gd" id="1_cnpwf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cnpwf"]
 size = Vector2(76, 78)

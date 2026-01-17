@@ -75,3 +75,7 @@ func _on_spells_learned(spells: Array[SpellData]):
 	var player := get_tree().get_first_node_in_group("player")
 	if player:
 		player.add_spells(spells)
+
+
+func _on_button_pressed() -> void:
+	Scene_Transition.go_back()

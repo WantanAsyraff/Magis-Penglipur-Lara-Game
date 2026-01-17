@@ -29,6 +29,10 @@ layout_mode = 2
 text = "Field Name"
 horizontal_alignment = 1
 
+[node name="Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "BACK"
+
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 900)
@@ -38,3 +42,5 @@ layout_mode = 2
 unique_name_in_owner = true
 custom_minimum_size = Vector2(1920, 900)
 layout_mode = 2
+
+[connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_button_pressed"]

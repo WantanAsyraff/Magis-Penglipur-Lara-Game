@@ -1,10 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://c5d1qbkughamj"]
+[gd_scene load_steps=6 format=3 uid="uid://c5d1qbkughamj"]
 
 [ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="1_lpmy0"]
 [ext_resource type="Script" uid="uid://6iqrt1selfp" path="res://data/Resources/worlds/zone-root.gd" id="1_uixox"]
 [ext_resource type="PackedScene" uid="uid://bua4p61hbx7gg" path="res://components/Destructables/Box.tscn" id="2_uixox"]
 [ext_resource type="PackedScene" uid="uid://cry62ps8l1buh" path="res://components/platforms/platform.tscn" id="3_1u3qg"]
-[ext_resource type="PackedScene" uid="uid://b5tctii1rqqju" path="res://scenes/transitioners/zone-portal/ZonePortal.tscn" id="4_2ucu8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x6d4m"]
 size = Vector2(127.55748, 126)
@@ -51,11 +50,3 @@ position = Vector2(1377, 329.99997)
 scale = Vector2(2.9759462, 0.8801199)
 
 [node name="Doors" type="Node2D" parent="."]
-
-[node name="ZonePortal" parent="Doors" instance=ExtResource("4_2ucu8")]
-position = Vector2(-188, 305)
-
-[node name="SpawnPoints" type="Node" parent="."]
-
-[node name="fountain" type="Marker2D" parent="SpawnPoints"]
-position = Vector2(1956, 223)

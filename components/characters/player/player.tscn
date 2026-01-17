@@ -46,3 +46,4 @@ horizontal_alignment = 1
 
 [node name="Camera2D" parent="." instance=ExtResource("3_dc6tm")]
 process_mode = 3
+process_priority = 10

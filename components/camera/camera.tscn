@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://cw0ml7a8dvemo"]
+
+[ext_resource type="Script" uid="uid://bfm27u5e7gn7r" path="res://components/camera/camera.gd" id="1_s8cyt"]
+[ext_resource type="PackedScene" uid="uid://qoyrbwgkhxny" path="res://scenes/ui/user_interface.tscn" id="2_5he1u"]
+
+[node name="Camera2D" type="Camera2D"]
+zoom = Vector2(0.7, 0.7)
+position_smoothing_enabled = true
+position_smoothing_speed = 2.0
+script = ExtResource("1_s8cyt")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UserInterface" parent="CanvasLayer" instance=ExtResource("2_5he1u")]
+anchors_preset = -1
+anchor_left = -0.71500003
+anchor_top = -0.712
+anchor_right = 0.71400005
+anchor_bottom = 0.71900004
+offset_left = 1379.8
+offset_top = 765.96
+offset_right = 0.11987305
+offset_bottom = 0.47998047

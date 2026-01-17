@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="SpellData" load_steps=4 format=3 uid="uid://cpquycdbih76w"]
+
+[ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="1_ue5me"]
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="2_rs734"]
+[ext_resource type="Script" uid="uid://b6vkafnios50y" path="res://data/Resources/ilmu/subject.gd" id="3_m6hma"]
+
+[resource]
+script = ExtResource("2_rs734")
+spell_name = "Pressure Jet"
+spell_id = "pressure_jet"
+spell_incantation = Array[String](["left", "right", "up", "right"])
+magis_archetype = "Elementalist"
+upfront_cost = 35
+cast_time = 0.2
+projectile_range = 400.0
+projectile_size = 0.8
+projectile_damage = 40.0
+projectile_speed = 650.0
+projectile_texture = ExtResource("1_ue5me")
+piercing = true
+theory_desc = "\"Applying Bernoulli's principle and fluid dynamics, the caster compresses ambient water molecules into a high-velocity stream. The laminar flow maintains coherence over distance, transferring kinetic energy upon impact and displacing targets through momentum conservation.\""
+metadata/_custom_type_script = "uid://ddmcw1l0ht73f"

@@ -1,0 +1,117 @@
+[gd_scene load_steps=5 format=3 uid="uid://bix1nk2keebsx"]
+
+[ext_resource type="Script" uid="uid://cpbp6jcqiumr8" path="res://scenes/spell-tree/subject_panel.gd" id="1_cfyhi"]
+[ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="1_djdju"]
+[ext_resource type="Resource" uid="uid://s6tau28u35o4" path="res://data/magis/fields/natural-science/core-subjects/Hydrodynamics.tres" id="2_kqsy7"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_kqsy7"]
+font_size = 18
+
+[node name="SubjectPanel" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 191.0
+offset_top = 65.0
+offset_right = 1763.0
+offset_bottom = 996.0
+script = ExtResource("1_cfyhi")
+subject_data = ExtResource("2_kqsy7")
+metadata/_edit_group_ = true
+
+[node name="Panel" type="Panel" parent="."]
+custom_minimum_size = Vector2(500, 300)
+layout_mode = 0
+offset_right = 1572.0
+offset_bottom = 930.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="SubjectContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="TitleContainer" type="HBoxContainer" parent="Panel/MarginContainer/SubjectContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Panel/MarginContainer/SubjectContainer/TitleContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+texture = ExtResource("1_djdju")
+
+[node name="SubjectLabel" type="Label" parent="Panel/MarginContainer/SubjectContainer/TitleContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "SUBJECT NAME"
+
+[node name="SubjectDescContainer" type="HBoxContainer" parent="Panel/MarginContainer/SubjectContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+alignment = 1
+
+[node name="CourseContainer" type="VBoxContainer" parent="Panel/MarginContainer/SubjectContainer/SubjectDescContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="CourseOutlineLabel" type="Label" parent="Panel/MarginContainer/SubjectContainer/SubjectDescContainer/CourseContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "COURSE OUTLINE"
+
+[node name="CourseDescriptionLabel" type="Label" parent="Panel/MarginContainer/SubjectContainer/SubjectDescContainer/CourseContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(500, 200)
+layout_mode = 2
+text = "COURSE DESCRIPTION
+COURSE DESCRIPTION
+COURSE DESCRIPTION
+COURSE DESCRIPTION
+"
+label_settings = SubResource("LabelSettings_kqsy7")
+autowrap_mode = 3
+
+[node name="SpellList" type="VBoxContainer" parent="Panel/MarginContainer/SubjectContainer/SubjectDescContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="SpellListLabel" type="Label" parent="Panel/MarginContainer/SubjectContainer/SubjectDescContainer/SpellList"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "SPELLS YOU WILL LEARN"
+
+[node name="SpellLabel" type="Label" parent="Panel/MarginContainer/SubjectContainer/SubjectDescContainer/SpellList"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(500, 200)
+layout_mode = 2
+text = "- SPELL LIST"
+autowrap_mode = 3
+
+[node name="ButtonContainer" type="HBoxContainer" parent="Panel/MarginContainer/SubjectContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+alignment = 1
+
+[node name="CancelButton" type="Button" parent="Panel/MarginContainer/SubjectContainer/ButtonContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Hmm.... later."
+
+[node name="ConfirmButton" type="Button" parent="Panel/MarginContainer/SubjectContainer/ButtonContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Study!"
+
+[connection signal="pressed" from="Panel/MarginContainer/SubjectContainer/ButtonContainer/CancelButton" to="." method="_on_cancel_button_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/SubjectContainer/ButtonContainer/ConfirmButton" to="." method="_on_confirm_button_pressed"]

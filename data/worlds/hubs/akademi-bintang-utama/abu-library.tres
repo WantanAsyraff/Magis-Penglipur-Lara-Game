@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ZoneData" load_steps=3 format=3 uid="uid://cpicnufhn4gry"]
+
+[ext_resource type="Script" uid="uid://dsgmtbbiyaovc" path="res://data/Resources/worlds/zone.gd" id="1_ovxbg"]
+[ext_resource type="PackedScene" uid="uid://caw2xl6yhtvk6" path="res://scenes/worlds/hubs/akademi-bintang-utama/ABULibrary.tscn" id="2_af60m"]
+
+[resource]
+script = ExtResource("1_ovxbg")
+zone_id = "akademi_bintang_utama_library"
+zone_name = "Library Of Knowledge"
+zone_scene = ExtResource("2_af60m")
+zone_type = "Hub"
+difficulty = 0
+metadata/_custom_type_script = "uid://dsgmtbbiyaovc"

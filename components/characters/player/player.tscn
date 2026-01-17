@@ -1,0 +1,44 @@
+[gd_scene load_steps=5 format=3 uid="uid://dglx0pbuwqv14"]
+
+[ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="1_kjygs"]
+[ext_resource type="Script" uid="uid://caoknale6eh0p" path="res://components/characters/player/player.gd" id="1_viwsh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kjygs"]
+size = Vector2(161.5, 238)
+
+[sub_resource type="LabelSettings" id="LabelSettings_42y4n"]
+font_size = 30
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_viwsh")
+
+[node name="PlayerSprite(Temp)" type="Sprite2D" parent="."]
+position = Vector2(0, -1.5769169)
+scale = Vector2(1.1651651, 1.0715144)
+texture = ExtResource("1_kjygs")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, -50)
+shape = SubResource("RectangleShape2D_kjygs")
+
+[node name="CastDirectionMarker" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -237)
+gizmo_extents = 37.5
+
+[node name="Sprite2D" type="Sprite2D" parent="CastDirectionMarker"]
+self_modulate = Color(1, 0, 0, 1)
+scale = Vector2(0.27374002, 0.47766894)
+texture = ExtResource("1_kjygs")
+
+[node name="castingText" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = -112.0
+offset_top = -248.0
+offset_right = 101.0
+offset_bottom = -206.0
+text = "CASTING TEXT"
+label_settings = SubResource("LabelSettings_42y4n")
+horizontal_alignment = 1
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]

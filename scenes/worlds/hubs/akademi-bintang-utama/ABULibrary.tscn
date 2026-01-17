@@ -1,0 +1,57 @@
+[gd_scene load_steps=7 format=3 uid="uid://caw2xl6yhtvk6"]
+
+[ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="1_dl0as"]
+[ext_resource type="PackedScene" uid="uid://bua4p61hbx7gg" path="res://components/Destructables/Box.tscn" id="2_hap56"]
+[ext_resource type="PackedScene" uid="uid://cry62ps8l1buh" path="res://components/platforms/platform.tscn" id="3_re26j"]
+[ext_resource type="PackedScene" uid="uid://dglx0pbuwqv14" path="res://components/characters/player/player.tscn" id="4_jagw0"]
+[ext_resource type="PackedScene" uid="uid://cw0ml7a8dvemo" path="res://components/camera/camera.tscn" id="5_w06vj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yr4ky"]
+size = Vector2(127.55748, 126)
+
+[node name="AbuLibrary" type="Node2D"]
+
+[node name="WorldComponent" type="Node2D" parent="."]
+
+[node name="Platform" type="Sprite2D" parent="WorldComponent"]
+modulate = Color(0.11119685, 0.11119684, 0.11119684, 1)
+position = Vector2(612.5001, 697.7669)
+scale = Vector2(37.71094, 3.0348914)
+texture = ExtResource("1_dl0as")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="WorldComponent/Platform"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldComponent/Platform/StaticBody2D"]
+position = Vector2(0.11063385, -0.9999695)
+shape = SubResource("RectangleShape2D_yr4ky")
+
+[node name="StaticBody2D" parent="WorldComponent" instance=ExtResource("2_hap56")]
+position = Vector2(1318, 31)
+
+[node name="StaticBody2D2" parent="WorldComponent" instance=ExtResource("2_hap56")]
+position = Vector2(300, -290)
+gravity_scale = 0.0
+
+[node name="StaticBody2D3" parent="WorldComponent" instance=ExtResource("2_hap56")]
+position = Vector2(900, -486)
+gravity_scale = 0.0
+max_health = 50
+
+[node name="StaticBody2D4" parent="WorldComponent" instance=ExtResource("2_hap56")]
+position = Vector2(1034, -321)
+max_health = 20
+
+[node name="StaticBody2D5" parent="WorldComponent" instance=ExtResource("2_hap56")]
+position = Vector2(1349, -190)
+max_health = 300
+
+[node name="Platform2" parent="WorldComponent" instance=ExtResource("3_re26j")]
+position = Vector2(181, 364)
+
+[node name="Character" type="Node2D" parent="."]
+
+[node name="Player" parent="Character" instance=ExtResource("4_jagw0")]
+position = Vector2(592, 419)
+
+[node name="Camera" parent="Character/Player" instance=ExtResource("5_w06vj")]
+offset = Vector2(0, -300)

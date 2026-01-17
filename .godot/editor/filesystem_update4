@@ -1,0 +1,13 @@
+res://scenes/worlds/hubs/akademi-bintang-utama/ABULibrary.tscn
+res://scenes/transitioners/zone-portal/ZonePortal.tscn
+res://scenes/transitioners/zone-portal/zone_portal.gd
+res://components/characters/player/player.tscn
+res://autoloads/scene-transition.gd
+res://components/temp-world.tscn
+res://scenes/worlds/hubs/akademi-bintang-utama/ABU-courtyard.tscn
+res://data/worlds/hubs/akademi-bintang-utama/abu-courtyard.tres
+res://data/worlds/hubs/akademi-bintang-utama/abu-library.tres
+res://scenes/worlds/hubs/akademi-bintang-utama/ABU-library.tscn
+res://autoloads/player-manager.gd
+res://scenes/worlds/hubs/akademi-bintang-utama/abu_library.gd
+res://data/Resources/worlds/zone-root.gd

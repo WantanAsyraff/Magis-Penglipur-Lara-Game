@@ -18,6 +18,8 @@ config/icon="res://icon.svg"
 
 Player_Global_Data="*res://autoloads/player-data.gd"
 Spell_Library="*res://autoloads/spell-library.gd"
+Scene_Transition="*res://autoloads/scene-transition.gd"
+Player_Manager="*res://autoloads/player-manager.gd"
 
 [display]
 
@@ -31,9 +33,12 @@ folder_colors={
 "res://autoloads/": "red",
 "res://components/": "yellow",
 "res://data/": "teal",
-"res://scenes/": "orange",
-"res://worlds/": "red"
+"res://scenes/": "orange"
 }
+
+[global_group]
+
+player="The player, duh. For object detection and owies"
 
 [input]
 

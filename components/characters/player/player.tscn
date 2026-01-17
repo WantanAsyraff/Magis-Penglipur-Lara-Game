@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://dglx0pbuwqv14"]
+[gd_scene load_steps=6 format=3 uid="uid://dglx0pbuwqv14"]
 
 [ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="1_kjygs"]
 [ext_resource type="Script" uid="uid://caoknale6eh0p" path="res://components/characters/player/player.gd" id="1_viwsh"]
+[ext_resource type="PackedScene" uid="uid://cw0ml7a8dvemo" path="res://components/camera/camera.tscn" id="3_dc6tm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kjygs"]
 size = Vector2(161.5, 238)
@@ -41,4 +42,7 @@ text = "CASTING TEXT"
 label_settings = SubResource("LabelSettings_42y4n")
 horizontal_alignment = 1
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." groups=["player"]]
+
+[node name="Camera2D" parent="." instance=ExtResource("3_dc6tm")]
+process_mode = 3

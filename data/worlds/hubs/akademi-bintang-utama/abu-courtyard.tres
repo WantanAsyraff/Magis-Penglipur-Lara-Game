@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ZoneData" load_steps=3 format=3 uid="uid://kh3isqhmfkk8"]
+
+[ext_resource type="Script" uid="uid://dsgmtbbiyaovc" path="res://data/Resources/worlds/zone.gd" id="1_j4n4y"]
+[ext_resource type="PackedScene" uid="uid://c5d1qbkughamj" path="res://scenes/worlds/hubs/akademi-bintang-utama/ABU-courtyard.tscn" id="2_unfjn"]
+
+[resource]
+script = ExtResource("1_j4n4y")
+zone_id = "akademi_bintang_utama_courtyard"
+zone_name = "Courtyard"
+zone_scene = ExtResource("2_unfjn")
+zone_type = "Hub"
+difficulty = 0
+metadata/_custom_type_script = "uid://dsgmtbbiyaovc"

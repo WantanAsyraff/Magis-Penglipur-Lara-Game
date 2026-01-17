@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://b5tctii1rqqju"]
+
+[ext_resource type="Script" uid="uid://c0xk7l7idx70l" path="res://scenes/transitioners/zone-portal/zone_portal.gd" id="1_cnpwf"]
+[ext_resource type="Resource" uid="uid://cpicnufhn4gry" path="res://data/worlds/hubs/akademi-bintang-utama/abu-library.tres" id="2_iib6d"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cnpwf"]
+size = Vector2(76, 78)
+
+[node name="ZonePortal" type="Area2D"]
+script = ExtResource("1_cnpwf")
+target_zone = ExtResource("2_iib6d")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_cnpwf")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

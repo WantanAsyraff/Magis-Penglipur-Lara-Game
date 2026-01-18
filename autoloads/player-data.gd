@@ -29,3 +29,16 @@ var p_size: float = 1
 var current_field: String
 var current_major: String
 var current_minor: String
+
+
+var learned_spells: Array[SpellData] = []
+
+func add_spell(spell: SpellData):
+	if learned_spells.has(spell):
+		return
+	learned_spells.append(spell)
+	print("Global learned spell:", spell.spell_name)
+
+func add_spells(spells: Array[SpellData]):
+	for s in spells:
+		add_spell(s)

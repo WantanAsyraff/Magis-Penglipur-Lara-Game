@@ -26,7 +26,6 @@ var dash_cooldown_timer := 0.0
 # -------------------------
 var SPEED := Player_Global_Data.p_speed
 var JUMP_VELOCITY := Player_Global_Data.p_jump_height
-var current_mana := Player_Global_Data.p_curr_mana
 
 # -------------------------
 # SPELLCASTING
@@ -45,6 +44,20 @@ var current_spell_index := 0
 # -------------------------
 func _ready() -> void:
 	add_to_group("player")
+
+	# Pull persistent spell data
+	_sync_spells_from_global()
+
+	# Optional: react to spells learned mid-scene
+	if Player_Global_Data.has_signal("spells_updated"):
+		Player_Global_Data.spells_updated.connect(_sync_spells_from_global)
+
+# -------------------------
+# SPELL SYNC
+# -------------------------
+func _sync_spells_from_global() -> void:
+	spell_inventory = Player_Global_Data.learned_spells.duplicate()
+	print("Player spell inventory synced:", spell_inventory.size())
 
 # -------------------------
 # PHYSICS
@@ -206,21 +219,3 @@ func _update_aim_direction():
 
 func _set_cast_marker(pos: Vector2):
 	castMarker.position = pos
-
-# -------------------------
-# SPELL INVENTORY API
-# -------------------------
-func add_spell_to_inventory(spell: SpellData):
-	if spell_inventory.has(spell):
-		return
-
-	if spell_inventory.size() >= 8:
-		print("Spell inventory full!")
-		return
-
-	spell_inventory.append(spell)
-	print("Learned spell:", spell.spell_name)
-
-func add_spells(spells: Array[SpellData]):
-	for spell in spells:
-		add_spell_to_inventory(spell)

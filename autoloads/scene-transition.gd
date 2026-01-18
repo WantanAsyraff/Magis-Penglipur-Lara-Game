@@ -4,6 +4,13 @@ var current_scene_path: String = ""
 var previous_scene_path: String = ""
 var target_spawn_point: String = "entrance" # First spawn player. Must be Marker 2D
 
+func _ready():
+	var scene := get_tree().current_scene
+	if scene and scene.scene_file_path != "":
+		current_scene_path = scene.scene_file_path
+		print("Initial scene set to:", current_scene_path)
+
+
 func change_scene(new_scene_path: String, spawn_point: String = "entrance"):
 	# Save paths
 	previous_scene_path = current_scene_path

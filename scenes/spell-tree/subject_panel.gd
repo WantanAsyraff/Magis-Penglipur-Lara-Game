@@ -27,8 +27,9 @@ func display_spells():
 	spell.text = result
 
 func _on_learn_button_pressed():
-	emit_signal("spells_learned", subject_data.contained_spells)
+	Player_Global_Data.add_spells(subject_data.contained_spells)
 	queue_free()
+
 
 func _on_cancel_button_pressed() -> void:
 	queue_free()

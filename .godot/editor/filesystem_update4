@@ -5,3 +5,4 @@ res://scenes/spell-tree/subject_panel.gd
 res://components/characters/player/player.gd
 res://scenes/worlds/hubs/akademi-bintang-utama/ABU-library.tscn
 res://data/magis/spells/botany.tres
+res://scenes/transitioners/zone-portal/zone-portal.gd

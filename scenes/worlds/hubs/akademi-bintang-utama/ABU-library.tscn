@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c5d1qbkughamj"]
+[gd_scene load_steps=9 format=3 uid="uid://c5d1qbkughamj"]
 
 [ext_resource type="Script" uid="uid://6iqrt1selfp" path="res://data/Resources/worlds/zone-root.gd" id="1_msjvq"]
 [ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="2_gk0t7"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cry62ps8l1buh" path="res://components/platforms/platform.tscn" id="4_lnht0"]
 [ext_resource type="PackedScene" uid="uid://b5tctii1rqqju" path="res://scenes/transitioners/zone-portal/zone-portal.tscn" id="5_44dsb"]
 [ext_resource type="Resource" uid="uid://bgh3eybbbs44c" path="res://data/worlds/hubs/akademi-bintang-utama/spell-tree.tres" id="6_01sgy"]
+[ext_resource type="Resource" uid="uid://kh3isqhmfkk8" path="res://data/worlds/hubs/akademi-bintang-utama/abu-courtyard.tres" id="7_gk0t7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x6d4m"]
 size = Vector2(127.55748, 126)
@@ -58,10 +59,18 @@ position = Vector2(-150, 340)
 target_zone = ExtResource("6_01sgy")
 target_spawn_point = "spell_entrance"
 
+[node name="Courtyard" parent="Doors" instance=ExtResource("5_44dsb")]
+position = Vector2(2849, 387)
+target_zone = ExtResource("7_gk0t7")
+preview_text = "Press [E] to Enter Courtyard"
+
 [node name="SpawnPoints" type="Node" parent="."]
 
 [node name="spell_entrance" type="Marker2D" parent="SpawnPoints"]
 position = Vector2(-139, 428)
 
 [node name="entrance" type="Marker2D" parent="SpawnPoints"]
-position = Vector2(544, 396)
+position = Vector2(569, -194)
+
+[node name="east_entrance" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(2568, 373)

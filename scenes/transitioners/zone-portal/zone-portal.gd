@@ -2,8 +2,8 @@ class_name ZonePortal
 extends Area2D
 
 @export var target_zone: ZoneData
-@export var target_spawn_point: String = "entrance"
-@export var preview_text: String = "Press [E] to Enter"
+@export var target_spawn_point: String = ""
+@export_multiline var preview_text: String = "Press [E] to Enter"
 
 var player_in_range := false
 var preview_label: Label

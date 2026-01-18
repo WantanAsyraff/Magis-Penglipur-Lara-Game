@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="ZoneData" load_steps=3 format=3 uid="uid://kh3isqhmfkk8"]
 
 [ext_resource type="Script" uid="uid://dsgmtbbiyaovc" path="res://data/Resources/worlds/zone.gd" id="1_j4n4y"]
-[ext_resource type="PackedScene" uid="uid://c5d1qbkughamj" path="res://scenes/worlds/hubs/akademi-bintang-utama/ABU-library.tscn" id="2_unfjn"]
+[ext_resource type="PackedScene" uid="uid://bkmeh0wpswxka" path="res://scenes/worlds/hubs/akademi-bintang-utama/ABU-courtyard.tscn" id="2_unfjn"]
 
 [resource]
 script = ExtResource("1_j4n4y")

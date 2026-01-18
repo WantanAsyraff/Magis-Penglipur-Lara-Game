@@ -9,6 +9,7 @@ var p_role: String
 
 var p_curr_ringgit: String
 var p_mood: String
+var combat_mode: String
 
 var p_position: Vector2
 var p_moveable: bool = true

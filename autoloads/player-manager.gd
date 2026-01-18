@@ -4,6 +4,7 @@ extends Node
 var player: Node2D = null
 
 func spawn_player(parent: Node, spawn_position: Vector2):
+	print("spawning player...")
 	if not player_scene:
 		push_error("Player scene not assigned in Player_Manager!")
 		return
@@ -14,4 +15,6 @@ func spawn_player(parent: Node, spawn_position: Vector2):
 
 	player = player_scene.instantiate()
 	parent.add_child(player)
+	print("Player spawned!")
 	player.global_position = spawn_position
+	print("player position at ", spawn_position)

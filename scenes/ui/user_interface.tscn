@@ -5,7 +5,7 @@
 [sub_resource type="LabelSettings" id="LabelSettings_2fueo"]
 font_size = 48
 
-[node name="UserInterface" type="Control"]
+[node name="UserInterface(Combat)" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

@@ -15,16 +15,17 @@ func _change_zone():
 		push_error("Invalid target zone!")
 		return
 
-	# Save previous scene before leaving
-	Scene_Transition.previous_scene_path = Scene_Transition.current_scene_path
-	Scene_Transition.target_spawn_point = target_spawn_point
-
-	get_tree().change_scene_to_packed(target_zone.zone_scene)
+	Scene_Transition.change_scene(
+		target_zone.zone_scene.resource_path,
+		target_spawn_point
+	)
 
 func _on_body_entered(body: Node2D):
 	if body.is_in_group("player"):
+		print("Player entered")
 		player_in_range = true
 
 func _on_body_exited(body: Node2D):
 	if body.is_in_group("player"):
+		print("Player exited")
 		player_in_range = false

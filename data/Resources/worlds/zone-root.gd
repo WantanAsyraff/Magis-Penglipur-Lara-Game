@@ -4,6 +4,7 @@ func _ready():
 	if not has_node("SpawnPoints"):
 		push_error("Zone missing SpawnPoints!")
 		return
+	print("Spawn points found")
 
 	var spawn_name := Scene_Transition.target_spawn_point
 	var spawn_points := $SpawnPoints

@@ -1,0 +1,15 @@
+# Godot 4.x - editor cache (DO ignore)
+.godot/
+
+# But keep important project files
+!.godot/editor_layout.cfg
+!.godot/project_metadata.cfg
+
+# Godot import files (auto-generated)
+*.import
+
+# Export presets (optional: commit if you want shared export configs)
+# export_presets.cfg
+
+# Mono / C# (ignore if not using C#)
+.mono/

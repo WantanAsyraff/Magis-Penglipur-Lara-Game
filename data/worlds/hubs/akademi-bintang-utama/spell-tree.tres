@@ -1,9 +1,12 @@
-[gd_resource type="Resource" script_class="SceneData" load_steps=2 format=3 uid="uid://bgh3eybbbs44c"]
+[gd_resource type="Resource" script_class="SceneData" load_steps=3 format=3 uid="uid://bgh3eybbbs44c"]
 
 [ext_resource type="Script" uid="uid://bxc44phagq28x" path="res://data/Resources/worlds/scene-data.gd" id="1_4fwog"]
+[ext_resource type="PackedScene" uid="uid://dd5g0ufrdt4m2" path="res://scenes/spell-tree/spell-tree.tscn" id="1_t1qkn"]
 
 [resource]
 script = ExtResource("1_4fwog")
 scene_id = "spell_tree"
-scene_name = "spell"
+scene = ExtResource("1_t1qkn")
+scene_name = "Knowledge Tree"
+default_spawn_marker = "SpellTree"
 metadata/_custom_type_script = "uid://bxc44phagq28x"

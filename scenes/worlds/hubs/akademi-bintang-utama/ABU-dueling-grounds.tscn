@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://bexs4iekjrle3"]
+
+[ext_resource type="Script" uid="uid://6q0dmmapj6gm" path="res://data/worlds/zone-root.gd" id="1_0gf5p"]
+[ext_resource type="PackedScene" uid="uid://cry62ps8l1buh" path="res://components/platforms/platform.tscn" id="1_drkpr"]
+[ext_resource type="PackedScene" uid="uid://c5a41lx0gq8be" path="res://scenes/transitioners/zone-portal/zone-portal.tscn" id="2_0gf5p"]
+
+[node name="AbuDuelingGrounds" type="Node"]
+script = ExtResource("1_0gf5p")
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="GameComponents" type="Node2D" parent="World"]
+
+[node name="Platform" parent="World/GameComponents" instance=ExtResource("1_drkpr")]
+position = Vector2(940, 1014)
+scale = Vector2(13.880001, 5.399999)
+
+[node name="Characters" type="Node2D" parent="World/GameComponents"]
+
+[node name="Doors" type="Node2D" parent="World/GameComponents"]
+
+[node name="ZonePortal(Courtyard)" parent="World/GameComponents/Doors" instance=ExtResource("2_0gf5p")]
+position = Vector2(-463, 753)
+next_scene_id = "akademi_bintang_utama_courtyard"
+spawn_marker_override = "DuelingGrounds"
+
+[node name="SpawnPoints" type="Node2D" parent="World/GameComponents"]
+
+[node name="DuelingGrounds" type="Marker2D" parent="World/GameComponents/SpawnPoints"]
+position = Vector2(-165, 767)

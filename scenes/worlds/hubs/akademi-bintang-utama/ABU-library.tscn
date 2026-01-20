@@ -1,76 +1,29 @@
-[gd_scene load_steps=9 format=3 uid="uid://c5d1qbkughamj"]
+[gd_scene load_steps=4 format=3 uid="uid://dr4xq816re75m"]
 
-[ext_resource type="Script" uid="uid://6iqrt1selfp" path="res://data/Resources/worlds/zone-root.gd" id="1_msjvq"]
-[ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="2_gk0t7"]
-[ext_resource type="PackedScene" uid="uid://bua4p61hbx7gg" path="res://components/Destructables/Box.tscn" id="3_brr8f"]
-[ext_resource type="PackedScene" uid="uid://cry62ps8l1buh" path="res://components/platforms/platform.tscn" id="4_lnht0"]
-[ext_resource type="PackedScene" uid="uid://b5tctii1rqqju" path="res://scenes/transitioners/zone-portal/zone-portal.tscn" id="5_44dsb"]
-[ext_resource type="Resource" uid="uid://bgh3eybbbs44c" path="res://data/worlds/hubs/akademi-bintang-utama/spell-tree.tres" id="6_01sgy"]
-[ext_resource type="Resource" uid="uid://kh3isqhmfkk8" path="res://data/worlds/hubs/akademi-bintang-utama/abu-courtyard.tres" id="7_gk0t7"]
+[ext_resource type="PackedScene" uid="uid://cry62ps8l1buh" path="res://components/platforms/platform.tscn" id="1_fl56c"]
+[ext_resource type="Script" uid="uid://6q0dmmapj6gm" path="res://data/worlds/zone-root.gd" id="1_ndklj"]
+[ext_resource type="PackedScene" uid="uid://c5a41lx0gq8be" path="res://scenes/transitioners/zone-portal/zone-portal.tscn" id="3_jry4t"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_x6d4m"]
-size = Vector2(127.55748, 126)
+[node name="AbuLibrary" type="Node"]
+script = ExtResource("1_ndklj")
 
-[node name="AbuCourtyard" type="Node2D"]
-script = ExtResource("1_msjvq")
+[node name="World" type="Node2D" parent="."]
 
-[node name="WorldComponent" type="Node2D" parent="."]
+[node name="GameComponents" type="Node2D" parent="World"]
 
-[node name="Platform" type="Sprite2D" parent="WorldComponent"]
-modulate = Color(0.11119685, 0.11119684, 0.11119684, 1)
-position = Vector2(612.5001, 697.7669)
-scale = Vector2(37.71094, 3.0348914)
-texture = ExtResource("2_gk0t7")
+[node name="Platform" parent="World/GameComponents" instance=ExtResource("1_fl56c")]
+position = Vector2(940, 1014)
+scale = Vector2(13.880001, 5.399999)
 
-[node name="StaticBody2D" type="StaticBody2D" parent="WorldComponent/Platform"]
+[node name="Characters" type="Node2D" parent="World/GameComponents"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldComponent/Platform/StaticBody2D"]
-position = Vector2(0.11063385, -0.9999695)
-shape = SubResource("RectangleShape2D_x6d4m")
+[node name="Doors" type="Node2D" parent="World/GameComponents"]
 
-[node name="StaticBody2D" parent="WorldComponent" instance=ExtResource("3_brr8f")]
-position = Vector2(1318, 31)
+[node name="ZonePortal(Courtyard)" parent="World/GameComponents/Doors" instance=ExtResource("3_jry4t")]
+position = Vector2(1815, 778)
+next_scene_id = "akademi_bintang_utama_courtyard"
 
-[node name="StaticBody2D2" parent="WorldComponent" instance=ExtResource("3_brr8f")]
-position = Vector2(300, -290)
-gravity_scale = 0.0
+[node name="SpawnPoints" type="Node2D" parent="World/GameComponents"]
 
-[node name="StaticBody2D3" parent="WorldComponent" instance=ExtResource("3_brr8f")]
-position = Vector2(900, -486)
-gravity_scale = 0.0
-max_health = 50
-
-[node name="StaticBody2D4" parent="WorldComponent" instance=ExtResource("3_brr8f")]
-position = Vector2(1034, -321)
-max_health = 20
-
-[node name="StaticBody2D5" parent="WorldComponent" instance=ExtResource("3_brr8f")]
-position = Vector2(1349, -190)
-max_health = 300
-
-[node name="Platform2" parent="WorldComponent" instance=ExtResource("4_lnht0")]
-position = Vector2(1377, 329.99997)
-scale = Vector2(2.9759462, 0.8801199)
-
-[node name="Doors" type="Node2D" parent="."]
-
-[node name="SpellTree" parent="Doors" instance=ExtResource("5_44dsb")]
-position = Vector2(-150, 340)
-target_zone = ExtResource("6_01sgy")
-target_spawn_point = "spell_entrance"
-
-[node name="Courtyard" parent="Doors" instance=ExtResource("5_44dsb")]
-position = Vector2(2849, 387)
-target_zone = ExtResource("7_gk0t7")
-preview_text = "Press [E] to Enter Courtyard"
-
-[node name="SpawnPoints" type="Node" parent="."]
-
-[node name="spell_entrance" type="Marker2D" parent="SpawnPoints"]
-position = Vector2(-139, 428)
-
-[node name="entrance" type="Marker2D" parent="SpawnPoints"]
-position = Vector2(569, -194)
-
-[node name="east_entrance" type="Marker2D" parent="SpawnPoints"]
-position = Vector2(2568, 373)
+[node name="PlayerSpawn" type="Marker2D" parent="World/GameComponents/SpawnPoints"]
+position = Vector2(1505, 811)

@@ -13,19 +13,26 @@ config_version=5
 config/name="Magis Penglipur Lara"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://icon.svg"
+scenes/loading_scene_path="res://addons/yet_another_scene_manager/Scenes/Loading.tscn"
+scenes/error_scene_path="res://addons/yet_another_scene_manager/Scenes/Error.tscn"
 
 [autoload]
 
 Player_Global_Data="*res://autoloads/player-data.gd"
 Spell_Library="*res://autoloads/spell-library.gd"
-Scene_Transition="*res://autoloads/scene-transition.gd"
 Player_Manager="*res://autoloads/player-manager.gd"
+SceneManager="*res://addons/scene_manager/SceneManager.tscn"
+Scene_Registry="*res://autoloads/scene-registry.gd"
 
 [display]
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
 window/stretch/mode="viewport"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/scene_manager/plugin.cfg")
 
 [file_customization]
 

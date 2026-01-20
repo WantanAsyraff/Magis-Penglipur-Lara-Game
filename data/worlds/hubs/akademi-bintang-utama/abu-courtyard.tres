@@ -8,5 +8,6 @@ script = ExtResource("1_j4n4y")
 scene_id = "akademi_bintang_utama_courtyard"
 scene = ExtResource("1_unfjn")
 scene_name = "Interchange of Knowledge"
+default_spawn_marker = "IntoCourtyard"
 description = "The courtyard where students pass by, chasing time as they catch up to their next classes."
 metadata/_custom_type_script = "uid://bxc44phagq28x"

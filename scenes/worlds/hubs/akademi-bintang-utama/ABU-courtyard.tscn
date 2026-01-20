@@ -20,10 +20,20 @@ scale = Vector2(13.880001, 5.399999)
 [node name="Doors" type="Node2D" parent="World/GameComponents"]
 
 [node name="ZonePortal(Library)" parent="World/GameComponents/Doors" instance=ExtResource("3_lpmy0")]
-position = Vector2(-208, 792)
+position = Vector2(-463, 753)
 next_scene_id = "akademi_bintang_utama_library"
+spawn_marker_override = "IntoLibrary"
+
+[node name="ZonePortal(DuelingGrounds)" parent="World/GameComponents/Doors" instance=ExtResource("3_lpmy0")]
+position = Vector2(1216, 791)
+is_door = true
+next_scene_id = "akademi_bintang_utama_dueling_grounds"
+spawn_marker_override = "DuelingGrounds"
 
 [node name="SpawnPoints" type="Node2D" parent="World/GameComponents"]
 
-[node name="PlayerSpawn" type="Marker2D" parent="World/GameComponents/SpawnPoints"]
-position = Vector2(300, 810)
+[node name="IntoCourtyard" type="Marker2D" parent="World/GameComponents/SpawnPoints"]
+position = Vector2(-170, 822)
+
+[node name="DuelingGrounds" type="Marker2D" parent="World/GameComponents/SpawnPoints"]
+position = Vector2(1216, 796)

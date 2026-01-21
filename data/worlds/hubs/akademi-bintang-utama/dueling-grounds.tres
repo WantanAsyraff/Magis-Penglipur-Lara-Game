@@ -9,5 +9,5 @@ scene_id = "akademi_bintang_utama_dueling_grounds"
 scene = ExtResource("1_wwy7p")
 scene_name = "Dueling Grounds"
 default_spawn_marker = "DuelingGrounds"
-description = "Duels for casters"
+description = "Dueling grounds for magis casters."
 metadata/_custom_type_script = "uid://bxc44phagq28x"

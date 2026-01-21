@@ -1,15 +1,21 @@
-[gd_scene load_steps=3 format=3 uid="uid://c5a41lx0gq8be"]
+[gd_scene load_steps=4 format=3 uid="uid://c5a41lx0gq8be"]
 
 [ext_resource type="Script" uid="uid://c0xk7l7idx70l" path="res://scenes/transitioners/zone-portal/zone_portal.gd" id="1_saikc"]
+[ext_resource type="Texture2D" uid="uid://c4wrj62vnntuv" path="res://assets/template/door.png" id="2_qjk6n"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cnpwf"]
-size = Vector2(160, 200)
+size = Vector2(218, 308)
 
 [node name="ZonePortal" type="Area2D"]
 script = ExtResource("1_saikc")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(13, 27)
 shape = SubResource("RectangleShape2D_cnpwf")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(2.0881925, 1.8730313)
+texture = ExtResource("2_qjk6n")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]

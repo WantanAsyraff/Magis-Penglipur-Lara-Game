@@ -12,19 +12,19 @@ script = ExtResource("1_0gf5p")
 [node name="GameComponents" type="Node2D" parent="World"]
 
 [node name="Platform" parent="World/GameComponents" instance=ExtResource("1_drkpr")]
-position = Vector2(940, 1014)
-scale = Vector2(13.880001, 5.399999)
+position = Vector2(938, 1078)
+scale = Vector2(13.880001, 8.36)
 
 [node name="Characters" type="Node2D" parent="World/GameComponents"]
 
 [node name="Doors" type="Node2D" parent="World/GameComponents"]
 
 [node name="ZonePortal(Courtyard)" parent="World/GameComponents/Doors" instance=ExtResource("2_0gf5p")]
-position = Vector2(-463, 753)
+position = Vector2(-478, 737)
 next_scene_id = "akademi_bintang_utama_courtyard"
 spawn_marker_override = "DuelingGrounds"
 
 [node name="SpawnPoints" type="Node2D" parent="World/GameComponents"]
 
 [node name="DuelingGrounds" type="Marker2D" parent="World/GameComponents/SpawnPoints"]
-position = Vector2(-165, 767)
+position = Vector2(800, 767)

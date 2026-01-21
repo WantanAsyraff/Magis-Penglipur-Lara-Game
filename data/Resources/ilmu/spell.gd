@@ -3,8 +3,11 @@ class_name SpellData extends Resource
 @export var spell_name: String
 @export var spell_id: String
 
-enum SpellType { OFFENSIVE, DEFENSIVE, SUPPORTIVE, AOE, HEALING, BUFFING }
+enum SpellType { OFFENSIVE, DEFENSIVE, SUPPORTIVE, AOE, HEALING, RECOVERY, ENCHANCEMENT, IMPAIRMENT, MOVEMENT}
 @export var spell_type: SpellType
+
+enum SpellManifest { MELEE, RANGED, PROTECTIVE, UTILITY, CONTROL, RESTORATIVE}
+@export var spell_manifest: SpellManifest
 
 @export var spell_incantation: Array[String] = ["", "", "", ""]
 

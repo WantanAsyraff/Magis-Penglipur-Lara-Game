@@ -9,6 +9,7 @@
 script = ExtResource("2_np5yw")
 spell_name = "Static Bolt"
 spell_id = "static_bolt"
+spell_manifest = 1
 spell_incantation = Array[String](["up", "down", "up", "down"])
 magis_archetype = "Elementalist"
 magis_comprehension = "Intermediate"

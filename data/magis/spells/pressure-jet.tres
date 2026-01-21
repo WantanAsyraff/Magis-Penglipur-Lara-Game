@@ -8,6 +8,7 @@
 script = ExtResource("2_rs734")
 spell_name = "Pressure Jet"
 spell_id = "pressure_jet"
+spell_manifest = 1
 spell_incantation = Array[String](["left", "right", "up", "right"])
 magis_archetype = "Elementalist"
 upfront_cost = 35

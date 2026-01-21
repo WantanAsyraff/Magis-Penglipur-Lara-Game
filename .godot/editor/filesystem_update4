@@ -2,3 +2,6 @@ res://components/Destructables/Box.tscn
 res://scenes/transitioners/zone-portal/zone-portal.tscn
 res://components/platforms/platform.tscn
 res://scenes/worlds/hubs/akademi-bintang-utama/ABU-courtyard.tscn
+res://data/Resources/ilmu/spell.gd
+res://data/magis/spells/pressure-jet.tres
+res://data/magis/spells/static-bolt.tres

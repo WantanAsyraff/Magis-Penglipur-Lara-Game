@@ -63,6 +63,8 @@ func _sync_spells_from_global() -> void:
 # PHYSICS
 # -------------------------
 func _physics_process(delta: float) -> void:
+	if multiplayer.has_multiplayer_peer() and not is_multiplayer_authority():
+		return
 	if is_dashing:
 		velocity = dash_direction * DASH_SPEED
 		dash_timer -= delta
@@ -91,6 +93,8 @@ func _physics_process(delta: float) -> void:
 # INPUT
 # -------------------------
 func _unhandled_input(_event: InputEvent) -> void:
+	if multiplayer.has_multiplayer_peer() and not is_multiplayer_authority():
+		return
 	if Input.is_action_just_pressed("start_incantation"):
 		is_casting = !is_casting
 		spell_string.clear()

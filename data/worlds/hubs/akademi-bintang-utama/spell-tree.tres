@@ -9,4 +9,5 @@ scene_id = "spell_tree"
 scene = ExtResource("1_t1qkn")
 scene_name = "Knowledge Tree"
 default_spawn_marker = "SpellTree"
+description = "The caster's repository of information and growth."
 metadata/_custom_type_script = "uid://bxc44phagq28x"

@@ -37,6 +37,7 @@ enabled=PackedStringArray("res://addons/scene_manager/plugin.cfg")
 [file_customization]
 
 folder_colors={
+"res://assets/": "pink",
 "res://autoloads/": "red",
 "res://components/": "yellow",
 "res://data/": "teal",

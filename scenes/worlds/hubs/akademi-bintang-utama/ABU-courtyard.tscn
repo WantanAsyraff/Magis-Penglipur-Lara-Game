@@ -11,21 +11,17 @@ script = ExtResource("1_db0ui")
 
 [node name="GameComponents" type="Node2D" parent="World"]
 
-[node name="Platform" parent="World/GameComponents" instance=ExtResource("1_m4jfd")]
-position = Vector2(940, 1014)
-scale = Vector2(13.880001, 5.399999)
-
 [node name="Characters" type="Node2D" parent="World/GameComponents"]
 
 [node name="Doors" type="Node2D" parent="World/GameComponents"]
 
 [node name="ZonePortal(Library)" parent="World/GameComponents/Doors" instance=ExtResource("3_lpmy0")]
-position = Vector2(-463, 753)
+position = Vector2(-1585, 726)
 next_scene_id = "akademi_bintang_utama_library"
 spawn_marker_override = "IntoLibrary"
 
 [node name="ZonePortal(DuelingGrounds)" parent="World/GameComponents/Doors" instance=ExtResource("3_lpmy0")]
-position = Vector2(1216, 791)
+position = Vector2(1221, 729)
 is_door = true
 next_scene_id = "akademi_bintang_utama_dueling_grounds"
 spawn_marker_override = "DuelingGrounds"
@@ -33,7 +29,11 @@ spawn_marker_override = "DuelingGrounds"
 [node name="SpawnPoints" type="Node2D" parent="World/GameComponents"]
 
 [node name="IntoCourtyard" type="Marker2D" parent="World/GameComponents/SpawnPoints"]
-position = Vector2(-170, 822)
+position = Vector2(-1365, 743)
 
 [node name="DuelingGrounds" type="Marker2D" parent="World/GameComponents/SpawnPoints"]
-position = Vector2(1216, 796)
+position = Vector2(982, 717)
+
+[node name="Platform" parent="." instance=ExtResource("1_m4jfd")]
+position = Vector2(983, 1117)
+scale = Vector2(30.040005, 10.519999)

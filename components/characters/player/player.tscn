@@ -48,4 +48,4 @@ horizontal_alignment = 1
 process_mode = 3
 process_priority = 10
 offset = Vector2(0, -300)
-position_smoothing_speed = 4.5
+position_smoothing_speed = 4.2

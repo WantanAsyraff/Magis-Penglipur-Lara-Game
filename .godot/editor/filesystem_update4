@@ -9,3 +9,13 @@ res://components/platforms/temptilemap.tscn
 res://scenes/worlds/hubs/akademi-bintang-utama/ABU-dueling-grounds.tscn
 res://scenes/worlds/hubs/akademi-bintang-utama/ABU-library.tscn
 res://components/characters/player/player.tscn
+res://scenes/worlds/hubs/akademi-bintang-utama/dormitory/ABU-dormitory-room.tscn
+res://data/worlds/hubs/akademi-bintang-utama/abu-dormitory-hallway.tres
+res://scenes/worlds/hubs/akademi-bintang-utama/story-hub/missions-selection.tscn
+res://data/worlds/hubs/akademi-bintang-utama/story/mission-selection.tres
+res://data/worlds/hubs/akademi-bintang-utama/story/missions-selection.tres
+res://scenes/worlds/hubs/akademi-bintang-utama/dormitory/ABU-dormitory-hallway.tscn
+res://data/worlds/hubs/akademi-bintang-utama/dormitory/abu-dorm-room.tres
+res://data/worlds/hubs/akademi-bintang-utama/abu-campus-entrance.tscn
+res://scenes/worlds/hubs/akademi-bintang-utama/abu-campus-entrance.tscn
+res://data/worlds/hubs/akademi-bintang-utama/abu-campus-entrance.tres

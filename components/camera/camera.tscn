@@ -13,6 +13,7 @@ script = ExtResource("1_s8cyt")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="UserInterfaceCombat" parent="CanvasLayer" instance=ExtResource("2_5he1u")]
+unique_name_in_owner = true
 visible = false
 anchors_preset = -1
 anchor_left = -0.71500003
@@ -25,3 +26,4 @@ offset_right = 0.11987305
 offset_bottom = 0.47998047
 
 [node name="UserInterfaceOverworld" parent="CanvasLayer" instance=ExtResource("3_yuem3")]
+unique_name_in_owner = true

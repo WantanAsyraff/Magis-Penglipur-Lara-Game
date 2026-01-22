@@ -26,7 +26,7 @@ var p_invincible: bool = false
 var p_hidden: bool = false
 
 var p_speed: float = 900
-var p_jump_height: float = -930.0
+var p_jump_height: float = -1600.0
 var p_max_health: int = 100
 var p_curr_health: int = p_max_health:
 	set(value):

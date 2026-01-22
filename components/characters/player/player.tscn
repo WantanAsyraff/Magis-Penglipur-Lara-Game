@@ -45,7 +45,8 @@ horizontal_alignment = 1
 [node name="GPUParticles2D" type="GPUParticles2D" parent="." groups=["player"]]
 
 [node name="Camera2D" parent="." instance=ExtResource("3_dc6tm")]
+unique_name_in_owner = true
 process_mode = 3
 process_priority = 10
-offset = Vector2(0, -300)
+offset = Vector2(0, -370)
 position_smoothing_speed = 4.2

@@ -1,6 +1,6 @@
 extends Node
 # Note: Ensure this is named 'Player_Global_Data' in your Project Settings > Autoload
-
+signal custom_signal_emitted(signal_key: String)
 signal combat_mode_changed(is_combat: bool)
 signal mana_changed(new_value: int)
 signal health_changed(new_value: int)

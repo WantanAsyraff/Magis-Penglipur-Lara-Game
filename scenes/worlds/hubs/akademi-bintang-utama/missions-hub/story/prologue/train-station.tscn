@@ -11,6 +11,11 @@ script = ExtResource("1_wt5h2")
 
 [node name="GameComponents" type="Node2D" parent="World"]
 
+[node name="NPCs" type="Node2D" parent="World/GameComponents"]
+
+[node name="NPC" parent="World/GameComponents/NPCs" instance=ExtResource("3_wly16")]
+position = Vector2(-449, 814)
+
 [node name="Platforms" type="Node2D" parent="World/GameComponents"]
 
 [node name="Temptilemap" parent="World/GameComponents/Platforms" instance=ExtResource("1_jy8fq")]
@@ -21,8 +26,3 @@ tile_map_data = PackedByteArray("AAD3/w8AAAAAAAAAAAD4/w8AAAABAAAAAAD5/w8AAAAAAAA
 [node name="Doors" type="Node2D" parent="World/GameComponents"]
 
 [node name="SpawnPoints" type="Node2D" parent="World/GameComponents"]
-
-[node name="NPCs" type="Node2D" parent="World/GameComponents"]
-
-[node name="NPC" parent="World/GameComponents/NPCs" instance=ExtResource("3_wly16")]
-position = Vector2(-449, 814)

@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://5j53l67p7ufs"]
+[gd_scene load_steps=4 format=3 uid="uid://5j53l67p7ufs"]
 
 [ext_resource type="Script" uid="uid://b5ma0yonok3pj" path="res://scenes/ui/phone-ui/e-hailing-ui/e_hailing_ui.gd" id="1_f1hos"]
 [ext_resource type="PackedScene" uid="uid://1b5xcv84ouja" path="res://scenes/ui/phone-ui/e-hailing-ui/route-panel/route_panel.tscn" id="1_s4xdm"]
+[ext_resource type="PackedScene" uid="uid://0g01kyenn650" path="res://scenes/worlds/hubs/akademi-bintang-utama/missions-hub/story/prologue/prologue-scene-03.tscn" id="3_8tlr5"]
 
 [node name="E-HailingApp" type="Control"]
 layout_mode = 3
@@ -42,5 +43,6 @@ text = "TOP LEFT"
 
 [node name="RoutePanel" parent="UI/PanelContainer/UI/VBoxContainer" instance=ExtResource("1_s4xdm")]
 layout_mode = 2
+destination_scene = ExtResource("3_8tlr5")
 
 [connection signal="pressed" from="UI/PanelContainer/UI/Back button" to="." method="_on_back_button_pressed"]

@@ -1,4 +1,4 @@
-res://scenes/worlds/hubs/akademi-bintang-utama
+res://autoloads
 res://scenes/ui
 res://components/platforms
 res://components/Destructables
@@ -6,4 +6,3 @@ res://data/Resources/worlds
 res://scenes/transitioners/zone-portal
 res://data/worlds/hubs/akademi-bintang-utama
 res://data/worlds/hubs/akademi-bintang-utama/
-res://autoloads

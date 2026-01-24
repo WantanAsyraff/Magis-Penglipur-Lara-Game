@@ -1,0 +1,81 @@
+[gd_scene load_steps=2 format=3 uid="uid://248u3hk2nrx"]
+
+[ext_resource type="Script" uid="uid://div68mn0trx6d" path="res://scenes/ui/multiplayer_menu.gd" id="1_dwilq"]
+
+[node name="MultiplayerMenu (Control)" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dwilq")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Multiplayer"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HostButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Host World"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Your OpenID:"
+
+[node name="OpenIdLine" type="LineEdit" parent="PanelContainer/VBoxContainer/HBoxContainer2" groups=["player"]]
+layout_mode = 2
+editable = false
+
+[node name="CopyButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Copy"
+
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HSeparator"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Join a friend:"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="JoinLine" type="LineEdit" parent="PanelContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+placeholder_text = "Paste host OpenID here..."
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="RelayCheck" type="CheckBox" parent="PanelContainer/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+text = "Force Relay (if NAT fails)"
+
+[node name="JoinButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+text = "Join"
+
+[node name="StatusLabel" type="Label" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Status: idle"
+
+[node name="PeersLabel" type="Label" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Peers: -"

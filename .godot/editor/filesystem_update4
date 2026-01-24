@@ -1,8 +1,0 @@
-res://scenes/worlds/hubs/akademi-bintang-utama/ABU-courtyard.tscn
-res://data/worlds/hubs/akademi-bintang-utama/abu-library.tres
-res://data/worlds/hubs/akademi-bintang-utama/abu-courtyard.tres
-res://scenes/worlds/hubs/akademi-bintang-utama/ABU-library.tscn
-res://scenes/transitioners/zone-portal/zone-portal.tscn
-res://scenes/transitioners/zone-portal/zone-portal.gd
-res://data/Resources/worlds/zone-root.gd
-res://autoloads/scene-transition.gd

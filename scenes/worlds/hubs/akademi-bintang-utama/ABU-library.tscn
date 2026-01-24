@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c5d1qbkughamj"]
+[gd_scene load_steps=10 format=3 uid="uid://c5d1qbkughamj"]
 
 [ext_resource type="Script" uid="uid://6iqrt1selfp" path="res://data/Resources/worlds/zone-root.gd" id="1_msjvq"]
 [ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="2_gk0t7"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://b5tctii1rqqju" path="res://scenes/transitioners/zone-portal/zone-portal.tscn" id="5_44dsb"]
 [ext_resource type="Resource" uid="uid://bgh3eybbbs44c" path="res://data/worlds/hubs/akademi-bintang-utama/spell-tree.tres" id="6_01sgy"]
 [ext_resource type="Resource" uid="uid://kh3isqhmfkk8" path="res://data/worlds/hubs/akademi-bintang-utama/abu-courtyard.tres" id="7_gk0t7"]
+[ext_resource type="PackedScene" uid="uid://248u3hk2nrx" path="res://scenes/ui/multiplayer_menu.tscn" id="8_brr8f"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x6d4m"]
 size = Vector2(127.55748, 126)
@@ -74,3 +75,19 @@ position = Vector2(569, -194)
 
 [node name="east_entrance" type="Marker2D" parent="SpawnPoints"]
 position = Vector2(2568, 373)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MultiplayerMenu (Control)" parent="CanvasLayer/Control" instance=ExtResource("8_brr8f")]
+visible = true
+layout_mode = 1

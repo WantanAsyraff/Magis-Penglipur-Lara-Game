@@ -20,12 +20,19 @@ Player_Global_Data="*res://autoloads/player-data.gd"
 Spell_Library="*res://autoloads/spell-library.gd"
 Scene_Transition="*res://autoloads/scene-transition.gd"
 Player_Manager="*res://autoloads/player-manager.gd"
+Noray="*res://addons/netfox.noray/noray.gd"
+PacketHandshake="*res://addons/netfox.noray/packet-handshake.gd"
+Network_Manager="*res://autoloads/network-manager.gd"
 
 [display]
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
 window/stretch/mode="viewport"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/netfox.internals/plugin.cfg", "res://addons/netfox.noray/plugin.cfg")
 
 [file_customization]
 

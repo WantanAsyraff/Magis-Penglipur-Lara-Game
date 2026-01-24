@@ -91,7 +91,7 @@ func _noray_bootstrap() -> int:
 	await Noray.on_oid
 	await Noray.on_pid
 
-	open_id = Noray.open_id
+	open_id = Noray.oid
 	noray_ready.emit(open_id)
 
 	# Register remote address so Noray sets Noray.local_port :contentReference[oaicite:4]{index=4}

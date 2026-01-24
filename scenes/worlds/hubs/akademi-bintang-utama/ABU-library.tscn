@@ -77,17 +77,8 @@ position = Vector2(569, -194)
 position = Vector2(2568, 373)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+process_mode = 3
+visible = false
+follow_viewport_enabled = true
 
-[node name="Control" type="Control" parent="CanvasLayer"]
-layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="MultiplayerMenu (Control)" parent="CanvasLayer/Control" instance=ExtResource("8_brr8f")]
-visible = true
-layout_mode = 1
+[node name="MultiplayerMenu (Control)" parent="CanvasLayer" instance=ExtResource("8_brr8f")]

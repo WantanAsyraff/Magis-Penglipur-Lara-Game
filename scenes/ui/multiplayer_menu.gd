@@ -1,26 +1,24 @@
 extends Control
 
-@onready var open_id_line: LineEdit = $PanelContainer/VBoxContainer/HBoxContainer2/OpenIdLine
-@onready var join_line: LineEdit = $PanelContainer/VBoxContainer/HBoxContainer3/JoinLine
-@onready var relay_check: CheckBox = $PanelContainer/VBoxContainer/HBoxContainer4/RelayCheck
-@onready var status_label: Label = $PanelContainer/VBoxContainer/StatusLabel
-@onready var peers_label: Label = $PanelContainer/VBoxContainer/PeersLabel
+@onready var open_id_line: LineEdit = %OpenIdLine
+@onready var join_line: LineEdit = %JoinLine
+@onready var relay_check: CheckBox = %RelayCheck
+@onready var status_label: Label = %StatusLabel
+@onready var peers_label: Label = %PeersLabel
+
+@onready var host_button: Button = %HostButton
+@onready var copy_button: Button = %CopyButton
+@onready var join_button: Button = %JoinButton
 
 func _ready() -> void:
 	print("UI ready. Network_Manager is:", Network_Manager)
 
-	Network_Manager.noray_ready.connect(func(oid: String):
-		print("UI got noray_ready:", oid)
-		_on_noray_ready(oid)
-		)
-		
-	# Buttons
-	$PanelContainer/VBoxContainer/HBoxContainer/HostButton.pressed.connect(_on_host_pressed)
-	$PanelContainer/VBoxContainer/HBoxContainer2/CopyButton.pressed.connect(_on_copy_pressed)
-	$PanelContainer/VBoxContainer/HBoxContainer4/JoinButton.pressed.connect(_on_join_pressed)
+	# ✅ Hook up button presses
+	host_button.pressed.connect(_on_host_pressed)
+	copy_button.pressed.connect(_on_copy_pressed)
+	join_button.pressed.connect(_on_join_pressed)
 
-
-	# NetworkManager signals
+	# ✅ Connect signals ONCE
 	Network_Manager.noray_ready.connect(_on_noray_ready)
 	Network_Manager.connected_to_host.connect(func():
 		_set_status("Connected to host ✅")
@@ -40,6 +38,7 @@ func _ready() -> void:
 	_update_peers()
 
 func _on_host_pressed() -> void:
+	print("[UI] Host button pressed")
 	_set_status("Hosting... (connecting to Noray)")
 	Network_Manager.host_game()
 
@@ -53,16 +52,16 @@ func _on_join_pressed() -> void:
 	Network_Manager.join_game(code, relay_check.button_pressed)
 
 func _on_copy_pressed() -> void:
-	if open_id_line.text.strip_edges() == "":
+	var oid := open_id_line.text.strip_edges()
+	if oid == "":
 		_set_status("No OpenID yet.")
 		return
-	DisplayServer.clipboard_set(open_id_line.text)
+	DisplayServer.clipboard_set(oid)
 	_set_status("Copied OpenID to clipboard.")
 
 func _on_noray_ready(open_id: String) -> void:
+	print("UI got noray_ready:", open_id)
 	open_id_line.text = open_id
-	# Helpful: auto-fill join box when testing on same PC
-	# join_line.text = open_id
 	_set_status("Noray ready. Share OpenID to join.")
 
 func _set_status(msg: String) -> void:

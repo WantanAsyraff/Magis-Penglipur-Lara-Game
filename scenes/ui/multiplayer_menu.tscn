@@ -27,6 +27,7 @@ text = "Multiplayer"
 layout_mode = 2
 
 [node name="HostButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Host World"
 
@@ -38,26 +39,24 @@ layout_mode = 2
 text = "Your OpenID:"
 
 [node name="OpenIdLine" type="LineEdit" parent="PanelContainer/VBoxContainer/HBoxContainer2" groups=["player"]]
+unique_name_in_owner = true
 layout_mode = 2
 editable = false
 
 [node name="CopyButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Copy"
 
 [node name="HSeparator" type="HSeparator" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HSeparator"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="JoinLabel" type="Label" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
 text = "Join a friend:"
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="JoinLine" type="LineEdit" parent="PanelContainer/VBoxContainer/HBoxContainer3"]
+[node name="JoinLine" type="LineEdit" parent="PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 placeholder_text = "Paste host OpenID here..."
 
@@ -65,17 +64,21 @@ placeholder_text = "Paste host OpenID here..."
 layout_mode = 2
 
 [node name="RelayCheck" type="CheckBox" parent="PanelContainer/VBoxContainer/HBoxContainer4"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Force Relay (if NAT fails)"
 
 [node name="JoinButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer4"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Join"
 
 [node name="StatusLabel" type="Label" parent="PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Status: idle"
 
 [node name="PeersLabel" type="Label" parent="PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Peers: -"

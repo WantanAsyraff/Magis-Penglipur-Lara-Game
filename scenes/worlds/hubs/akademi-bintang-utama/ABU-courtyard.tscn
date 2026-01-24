@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://bkmeh0wpswxka"]
 
-[ext_resource type="Script" uid="uid://6iqrt1selfp" path="res://data/Resources/worlds/zone-root.gd" id="1_db0ui"]
+[ext_resource type="Script" uid="uid://dsgmtbbiyaovc" path="res://data/Resources/worlds/zone.gd" id="1_db0ui"]
 [ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="1_m4jfd"]
 [ext_resource type="PackedScene" uid="uid://bua4p61hbx7gg" path="res://components/Destructables/Box.tscn" id="2_db0ui"]
 [ext_resource type="PackedScene" uid="uid://cry62ps8l1buh" path="res://components/platforms/platform.tscn" id="3_lpmy0"]

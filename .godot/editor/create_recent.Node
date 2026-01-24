@@ -1,6 +1,7 @@
+Node
+CanvasLayer
 Control
 Button
-CanvasLayer
 CanvasGroup
 Label
 CheckBox
@@ -10,5 +11,4 @@ HSeparator
 VBoxContainer
 PanelContainer
 Marker2D
-Node
 Node2D

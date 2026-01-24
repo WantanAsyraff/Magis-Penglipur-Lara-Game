@@ -66,6 +66,8 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 		return # STOP HERE: Do not process inputs or dashing
 
+	if multiplayer.has_multiplayer_peer() and not is_multiplayer_authority():
+		return
 	if is_dashing:
 		velocity = dash_direction * DASH_SPEED
 	else:
@@ -121,6 +123,17 @@ func _try_dash() -> void:
 		dash_direction = dir.normalized()
 
 func _handle_combat_input() -> void:
+		if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+			velocity.y = JUMP_VELOCITY
+
+	move_and_slide()
+
+# -------------------------
+# INPUT
+# -------------------------
+func _unhandled_input(_event: InputEvent) -> void:
+	if multiplayer.has_multiplayer_peer() and not is_multiplayer_authority():
+		return
 	if Input.is_action_just_pressed("start_incantation"):
 		is_casting = !is_casting
 		spell_string.clear()

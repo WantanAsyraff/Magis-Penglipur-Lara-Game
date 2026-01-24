@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Node2D
 CollisionShape2D
 Area2D
@@ -12,3 +13,19 @@ VBoxContainer
 Label
 Control
 VScrollBar
+=======
+Node
+CanvasLayer
+Control
+Button
+CanvasGroup
+Label
+CheckBox
+HBoxContainer
+LineEdit
+HSeparator
+VBoxContainer
+PanelContainer
+Marker2D
+Node2D
+>>>>>>> feature/multiplayer

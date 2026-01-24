@@ -1,0 +1,8 @@
+# Godot 4.x - editor cache (DO ignore)
+.godot/
+
+
+# Godot import files (auto-generated)
+*.import
+/.godot/editor
+/.godot

@@ -1,0 +1,46 @@
+[gd_scene load_steps=3 format=3 uid="uid://5j53l67p7ufs"]
+
+[ext_resource type="Script" uid="uid://b5ma0yonok3pj" path="res://scenes/ui/phone-ui/e_hailing_ui.gd" id="1_f1hos"]
+[ext_resource type="PackedScene" uid="uid://1b5xcv84ouja" path="res://scenes/ui/phone-ui/e-hailing-ui/route_panel.tscn" id="1_s4xdm"]
+
+[node name="E-HailingApp" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_f1hos")
+
+[node name="UI" type="Panel" parent="."]
+self_modulate = Color(16.039173, 3.198309, 8.259297, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="UI"]
+layout_mode = 0
+offset_right = 411.0
+offset_bottom = 557.0
+
+[node name="UI" type="VBoxContainer" parent="UI/PanelContainer"]
+layout_mode = 2
+
+[node name="Back button" type="Button" parent="UI/PanelContainer/UI"]
+layout_mode = 2
+text = "BACK"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/PanelContainer/UI"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/PanelContainer/UI/VBoxContainer"]
+layout_mode = 2
+text = "TOP LEFT"
+
+[node name="RoutePanel" parent="UI/PanelContainer/UI/VBoxContainer" instance=ExtResource("1_s4xdm")]
+layout_mode = 2
+
+[connection signal="pressed" from="UI/PanelContainer/UI/Back button" to="." method="_on_back_button_pressed"]

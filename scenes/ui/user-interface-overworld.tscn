@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://c5g6ie7nadata"]
+[gd_scene load_steps=2 format=3 uid="uid://c5g6ie7nadata"]
+
+[ext_resource type="PackedScene" uid="uid://dh675vcu2br3h" path="res://scenes/ui/phone_ui.tscn" id="1_cw5sm"]
 
 [node name="UserInterfaceOverworld" type="Control"]
 layout_mode = 3
@@ -13,3 +15,10 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 text = "OVERWORLD UI"
+
+[node name="PhoneUI" parent="." instance=ExtResource("1_cw5sm")]
+layout_mode = 1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -84.0
+offset_bottom = 563.0

@@ -39,3 +39,10 @@ res://scenes/worlds/hubs/akademi-bintang-utama/missions-hub/story/prologue/train
 res://components/characters/player/player.tscn
 res://scenes/worlds/hubs/akademi-bintang-utama/missions-hub/missions-selection.tscn
 res://components/characters/player/player.gd
+res://scenes/ui/phone-ui/e-hailing-ui/route-panel/route_panel.tscn
+res://scenes/ui/phone-ui/e-hailing-ui/route-panel/route_panel.gd
+res://autoloads/player-data.gd
+res://dialogue/overworld/story-select-npc.dtl
+res://dialogue/characters/amal-fakhri.dch
+res://scenes/ui/phone-ui/e-hailing-ui/e-hailingUI.tscn
+res://scenes/worlds/hubs/akademi-bintang-utama/missions-hub/story/prologue/prologue-scene-03.tscn

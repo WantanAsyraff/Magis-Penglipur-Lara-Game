@@ -10,3 +10,4 @@ script = ExtResource("1_1qy6m")
 timeline_1 = ExtResource("2_sn2sa")
 timeline_2 = ExtResource("3_t8kg4")
 timeline_3 = ExtResource("4_pql0s")
+next_scene_id = "nillayah_train_station"

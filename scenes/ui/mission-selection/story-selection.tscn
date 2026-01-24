@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://40eyximxy17o"]
+[gd_scene load_steps=3 format=3 uid="uid://40eyximxy17o"]
 
 [ext_resource type="Script" uid="uid://yu4qfawb5trg" path="res://scenes/ui/mission-selection/story_selection.gd" id="1_gbkoh"]
+[ext_resource type="PackedScene" uid="uid://t3o4osbl3bct" path="res://scenes/worlds/hubs/akademi-bintang-utama/missions-hub/story/prologue/Prologue.tscn" id="2_cx7n8"]
 
 [node name="StorySelection" type="Control"]
 layout_mode = 3
@@ -10,6 +11,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_gbkoh")
+destination_scene = ExtResource("2_cx7n8")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1

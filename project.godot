@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="Magis Penglipur Lara"
+run/main_scene="uid://ojuwskp4k3a2"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://icon.svg"
 scenes/loading_scene_path="res://addons/yet_another_scene_manager/Scenes/Loading.tscn"
@@ -28,6 +29,7 @@ Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
 [dialogic]
 
 directories/dch_directory={
+"amal-fakhri": "res://dialogue/characters/amal-fakhri.dch",
 "duelist-winner": "res://dialogue/characters/duelist-winner.dch",
 "narrator": "res://dialogue/characters/narrator.dch",
 "player": "res://dialogue/characters/player.dch",
@@ -38,7 +40,8 @@ directories/dtl_directory={
 "scene-1": "res://dialogue/story-mode/akademi-bintang-utama/prologue/scene-1.dtl",
 "scene-2": "res://dialogue/story-mode/akademi-bintang-utama/prologue/scene-2.dtl",
 "scene-2-a": "res://dialogue/characters/scene-2-a.dtl",
-"scene-3": "res://dialogue/story-mode/akademi-bintang-utama/prologue/scene-3.dtl"
+"scene-3": "res://dialogue/story-mode/akademi-bintang-utama/prologue/scene-3.dtl",
+"story-select-npc": "res://dialogue/overworld/story-select-npc.dtl"
 }
 layout/style_directory={}
 glossary/default_case_sensitive=true

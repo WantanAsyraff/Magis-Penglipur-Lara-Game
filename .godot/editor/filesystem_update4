@@ -14,3 +14,13 @@ res://scenes/ui/app.tscn
 res://scenes/ui/app.gd
 res://scenes/ui/user-interface-overworld.tscn
 res://scenes/ui/phone_ui.gd
+res://scenes/ui/e-hailingUI.tscn
+res://scenes/ui/phone-ui.tscn
+res://scenes/ui/phone-ui/e-hailingUI.tscn
+res://scenes/ui/phone-ui/app.tscn
+res://scenes/ui/phone-ui/phone-ui.tscn
+res://scenes/ui/phone-ui/app.gd
+res://scenes/ui/phone-ui/phone_ui.gd
+res://scenes/ui/phone-ui/e-hailing-ui/route_panel.tscn
+res://scenes/ui/phone-ui/e-hailing-ui/route_panel.gd
+res://scenes/ui/phone-ui/e_hailing_ui.gd

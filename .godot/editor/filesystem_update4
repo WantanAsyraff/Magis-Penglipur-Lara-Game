@@ -1,1 +1,16 @@
 res://scenes/worlds/hubs/akademi-bintang-utama/ABU-dueling-grounds.tscn
+res://dialogue/story-mode/akademi-bintang-utama/prologue/scene-1.dtl
+res://dialogue/characters/yunira.dch
+res://scenes/worlds/hubs/akademi-bintang-utama/abu-campus-entrance.tscn
+res://dialogue/characters/player.dch
+res://dialogue/characters/narrator.dch
+res://dialogue/characters/scene-2.dtl
+res://dialogue/story-mode/akademi-bintang-utama/prologue/scene-2.dtl
+res://dialogue/story-mode/akademi-bintang-utama/prologue/scene-3.dtl
+res://dialogue/characters/random-student.dch
+res://dialogue/characters/duelist-winner.dch
+res://scenes/ui/phone_ui.tscn
+res://scenes/ui/app.tscn
+res://scenes/ui/app.gd
+res://scenes/ui/user-interface-overworld.tscn
+res://scenes/ui/phone_ui.gd

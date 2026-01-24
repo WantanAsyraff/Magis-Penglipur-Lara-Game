@@ -1,10 +1,12 @@
+res://scenes/ui
+res://dialogue/characters
+res://dialogue/story-mode/akademi-bintang-utama/prologue
 res://data/worlds/hubs/akademi-bintang-utama/
 res://data/worlds/hubs/akademi-bintang-utama/dormitory/
 res://data/worlds/hubs/akademi-bintang-utama/story/
 res://autoloads
 res://data/worlds
 res://scenes/worlds/hubs/akademi-bintang-utama
-res://scenes/ui
 res://components/platforms
 res://components/Destructables
 res://data/Resources/worlds

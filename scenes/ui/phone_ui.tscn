@@ -1,0 +1,54 @@
+[gd_scene load_steps=3 format=3 uid="uid://dh675vcu2br3h"]
+
+[ext_resource type="Script" uid="uid://c370b7uc5j2lr" path="res://scenes/ui/phone_ui.gd" id="1_e010p"]
+[ext_resource type="PackedScene" uid="uid://dbwcpjgic86os" path="res://scenes/ui/app.tscn" id="1_qb4dd"]
+
+[node name="PhoneUI" type="Control"]
+layout_mode = 3
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1388.0
+offset_top = 1003.0
+offset_right = -84.0
+offset_bottom = 563.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_e010p")
+up_pos = Vector2(1384, 450)
+down_pos = Vector2(1384, 1005)
+metadata/_edit_group_ = true
+
+[node name="PhoneBG" type="Panel" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 448.0
+offset_bottom = 640.0
+
+[node name="Screen" type="Panel" parent="PhoneBG"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 18.0
+offset_top = 23.0
+offset_right = -19.0
+offset_bottom = -60.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AppList" type="GridContainer" parent="PhoneBG/Screen"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="App" parent="." instance=ExtResource("1_qb4dd")]
+layout_mode = 0
+offset_left = 39.0
+offset_top = 53.0
+offset_right = 151.0
+offset_bottom = 156.0

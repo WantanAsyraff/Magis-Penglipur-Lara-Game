@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c370b7uc5j2lr" path="res://scenes/ui/phone-ui/phone_ui.gd" id="1_e010p"]
 [ext_resource type="PackedScene" uid="uid://dbwcpjgic86os" path="res://scenes/ui/phone-ui/app.tscn" id="1_qb4dd"]
-[ext_resource type="PackedScene" uid="uid://5j53l67p7ufs" path="res://scenes/ui/phone-ui/e-hailingUI.tscn" id="3_s57sm"]
+[ext_resource type="PackedScene" uid="uid://5j53l67p7ufs" path="res://scenes/ui/phone-ui/e-hailing-ui/e-hailingUI.tscn" id="3_s57sm"]
 
 [node name="PhoneUI" type="Control"]
 clip_children = 2

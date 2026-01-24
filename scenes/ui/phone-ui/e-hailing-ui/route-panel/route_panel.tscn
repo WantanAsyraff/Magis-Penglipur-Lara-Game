@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://1b5xcv84ouja"]
 
-[ext_resource type="Script" uid="uid://uk2d70i0npqx" path="res://scenes/ui/phone-ui/e-hailing-ui/route_panel.gd" id="1_bjcnm"]
+[ext_resource type="Script" uid="uid://uk2d70i0npqx" path="res://scenes/ui/phone-ui/e-hailing-ui/route-panel/route_panel.gd" id="1_bjcnm"]
 
 [node name="RoutePanel" type="PanelContainer"]
 script = ExtResource("1_bjcnm")

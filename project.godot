@@ -37,6 +37,7 @@ directories/dch_directory={
 directories/dtl_directory={
 "scene-1": "res://dialogue/story-mode/akademi-bintang-utama/prologue/scene-1.dtl",
 "scene-2": "res://dialogue/story-mode/akademi-bintang-utama/prologue/scene-2.dtl",
+"scene-2-a": "res://dialogue/characters/scene-2-a.dtl",
 "scene-3": "res://dialogue/story-mode/akademi-bintang-utama/prologue/scene-3.dtl"
 }
 layout/style_directory={}

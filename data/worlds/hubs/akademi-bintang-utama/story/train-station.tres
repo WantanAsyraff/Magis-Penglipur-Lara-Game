@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="SceneData" load_steps=2 format=3 uid="uid://cd3u68fg46lld"]
+
+[ext_resource type="Script" uid="uid://bxc44phagq28x" path="res://data/Resources/worlds/scene-data.gd" id="1_ky6hy"]
+
+[resource]
+script = ExtResource("1_ky6hy")
+scene_id = "nillayah_train_station"
+scene_name = "Kilat Railway Express"
+description = "The train station. nyoooooooms"
+metadata/_custom_type_script = "uid://bxc44phagq28x"

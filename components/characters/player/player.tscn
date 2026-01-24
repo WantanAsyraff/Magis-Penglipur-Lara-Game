@@ -12,7 +12,7 @@ size = Vector2(161.5, 238)
 [sub_resource type="LabelSettings" id="LabelSettings_42y4n"]
 font_size = 30
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_viwsh")
 
 [node name="PlayerSprite(Temp)" type="Sprite2D" parent="."]

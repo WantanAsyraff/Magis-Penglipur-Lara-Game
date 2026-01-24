@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://5j53l67p7ufs"]
 
-[ext_resource type="Script" uid="uid://b5ma0yonok3pj" path="res://scenes/ui/phone-ui/e_hailing_ui.gd" id="1_f1hos"]
-[ext_resource type="PackedScene" uid="uid://1b5xcv84ouja" path="res://scenes/ui/phone-ui/e-hailing-ui/route_panel.tscn" id="1_s4xdm"]
+[ext_resource type="Script" uid="uid://b5ma0yonok3pj" path="res://scenes/ui/phone-ui/e-hailing-ui/e_hailing_ui.gd" id="1_f1hos"]
+[ext_resource type="PackedScene" uid="uid://1b5xcv84ouja" path="res://scenes/ui/phone-ui/e-hailing-ui/route-panel/route_panel.tscn" id="1_s4xdm"]
 
 [node name="E-HailingApp" type="Control"]
 layout_mode = 3

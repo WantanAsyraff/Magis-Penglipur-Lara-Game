@@ -1,11 +1,13 @@
+res://data/worlds/hubs/akademi-bintang-utama/story/
+res://components/NPCs
+res://dialogue/characters
+res://scenes/ui/mission-selection
 res://scenes/ui/phone-ui/e-hailing-ui
 res://scenes/ui/phone-ui
 res://scenes/ui
-res://dialogue/characters
 res://dialogue/story-mode/akademi-bintang-utama/prologue
 res://data/worlds/hubs/akademi-bintang-utama/
 res://data/worlds/hubs/akademi-bintang-utama/dormitory/
-res://data/worlds/hubs/akademi-bintang-utama/story/
 res://autoloads
 res://data/worlds
 res://scenes/worlds/hubs/akademi-bintang-utama

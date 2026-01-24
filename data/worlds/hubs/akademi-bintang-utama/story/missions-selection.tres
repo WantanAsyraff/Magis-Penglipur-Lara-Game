@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="SceneData" load_steps=3 format=3 uid="uid://db8q4sqjnubuk"]
 
-[ext_resource type="PackedScene" uid="uid://dj6lkjig764ox" path="res://scenes/worlds/hubs/akademi-bintang-utama/story-hub/missions-selection.tscn" id="1_ghjun"]
+[ext_resource type="PackedScene" uid="uid://dj6lkjig764ox" path="res://scenes/worlds/hubs/akademi-bintang-utama/missions-hub/missions-selection.tscn" id="1_ghjun"]
 [ext_resource type="Script" uid="uid://bxc44phagq28x" path="res://data/Resources/worlds/scene-data.gd" id="2_jjsf4"]
 
 [resource]

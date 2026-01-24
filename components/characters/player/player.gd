@@ -9,7 +9,6 @@ const PROJECTILE_SCENE = preload("res://components/projectiles/magis-projectile.
 @export var combat_mode: bool = false:
 	set(value):
 		combat_mode = value
-		# Sync to Global only if it differs to avoid infinite loops
 		if Player_Global_Data.combat_mode != value:
 			Player_Global_Data.combat_mode = value
 		_on_combat_mode_changed(value)
@@ -44,58 +43,35 @@ var spell_string: Array[String] = []
 func _ready() -> void:
 	add_to_group("player")
 	_sync_spells_from_global()
-
-	# Signal Connection: Update the @export var if Global changes
 	Player_Global_Data.combat_mode_changed.connect(func(new_val): combat_mode = new_val)
 	
-	# Global Listeners
 	if Player_Global_Data.has_signal("spells_updated"):
 		Player_Global_Data.spells_updated.connect(_sync_spells_from_global)
 	
-	# Initial Sync
 	combat_mode = Player_Global_Data.combat_mode
 
 # -------------------------
-# LOGIC: MODE REACTION
-# -------------------------
-func _on_combat_mode_changed(is_combat: bool) -> void:
-	if not is_inside_tree(): await ready
-	
-	# Camera Zoom Transition
-	var target_zoom = Vector2(0.7, 0.7) if is_combat else Vector2(1.0, 1.0)
-	create_tween().tween_property(camera, "zoom", target_zoom, 0.5)\
-		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-	
-	# Reset state when leaving combat
-	if not is_combat:
-		_cancel_casting()
-
-# -------------------------
-# LOGIC: PHYSICS & DASH
+# LOGIC: PHYSICS & MOVEMENT
 # -------------------------
 func _physics_process(delta: float) -> void:
 	_handle_dash_timers(delta)
 	
+	# APPLY GRAVITY (Always apply so player sits on floor during dialogue)
+	_apply_gravity(delta)
+
+	# CHECK GLOBAL MOVEABLE STATE
+	if not Player_Global_Data.p_moveable:
+		# Slow down to a stop if we were moving
+		velocity.x = move_toward(velocity.x, 0, SPEED)
+		move_and_slide()
+		return # STOP HERE: Do not process inputs or dashing
+
 	if is_dashing:
 		velocity = dash_direction * DASH_SPEED
 	else:
-		_apply_gravity(delta)
 		_handle_movement()
 
 	move_and_slide()
-
-func _handle_dash_timers(delta: float) -> void:
-	if is_dashing:
-		dash_timer -= delta
-		if dash_timer <= 0:
-			is_dashing = false
-			dash_cooldown_timer = DASH_COOLDOWN
-	elif dash_cooldown_timer > 0:
-		dash_cooldown_timer -= delta
-
-func _apply_gravity(delta: float) -> void:
-	if not is_on_floor():
-		velocity += get_gravity() * delta
 
 func _handle_movement() -> void:
 	var dir := Input.get_axis("ui_left", "ui_right")
@@ -112,13 +88,30 @@ func _handle_movement() -> void:
 # LOGIC: INPUT
 # -------------------------
 func _unhandled_input(_event: InputEvent) -> void:
-	# 1. Universal: Dash
+	# Stop all inputs (Dash/Combat) if not moveable
+	if not Player_Global_Data.p_moveable:
+		return
+
 	if Input.is_action_just_pressed("dash") and not is_dashing and dash_cooldown_timer <= 0:
 		_try_dash()
 
-	# 2. Combat Specific
 	if combat_mode:
 		_handle_combat_input()
+
+# ... [The rest of your spell/dash helper functions remain the same] ...
+
+func _handle_dash_timers(delta: float) -> void:
+	if is_dashing:
+		dash_timer -= delta
+		if dash_timer <= 0:
+			is_dashing = false
+			dash_cooldown_timer = DASH_COOLDOWN
+	elif dash_cooldown_timer > 0:
+		dash_cooldown_timer -= delta
+
+func _apply_gravity(delta: float) -> void:
+	if not is_on_floor():
+		velocity += get_gravity() * delta
 
 func _try_dash() -> void:
 	var dir := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
@@ -132,9 +125,7 @@ func _handle_combat_input() -> void:
 		is_casting = !is_casting
 		spell_string.clear()
 		spell_label.text = ""
-
 	_update_aim_direction()
-
 	if is_casting:
 		_process_incantation_inputs()
 
@@ -144,9 +135,6 @@ func _process_incantation_inputs() -> void:
 	elif Input.is_action_just_pressed("incantation_left"): _add_sequence("left")
 	elif Input.is_action_just_pressed("incantation_right"): _add_sequence("right")
 
-# -------------------------
-# HELPERS: SPELLS
-# -------------------------
 func _sync_spells_from_global() -> void:
 	spell_inventory = Player_Global_Data.learned_spells.duplicate()
 
@@ -158,18 +146,14 @@ func _add_sequence(incantation: String) -> void:
 
 func _try_cast_spell() -> void:
 	var matched_spell = _find_spell_match()
-
 	if not matched_spell:
 		_fail_cast("Invalid sequence!")
 		return
-
 	if Player_Global_Data.p_curr_mana < matched_spell.upfront_cost:
 		_fail_cast("Not enough mana!")
 		return
-
 	Player_Global_Data.p_curr_mana -= matched_spell.upfront_cost
 	_execute_spell_instantiation(matched_spell)
-	
 	spell_label.text = matched_spell.spell_name + " cast!"
 	_reset_casting_with_delay()
 
@@ -183,10 +167,8 @@ func _execute_spell_instantiation(spell: SpellData) -> void:
 	var inst = PROJECTILE_SCENE.instantiate()
 	inst.spell_data = spell
 	inst.position = castMarker.global_position
-	
 	if spell.spell_type != SpellData.SpellType.AOE:
 		inst.direction = castMarker.position.normalized()
-	
 	get_parent().add_child(inst)
 
 func _fail_cast(message: String) -> void:
@@ -203,16 +185,19 @@ func _cancel_casting() -> void:
 	spell_label.text = ""
 
 func _update_aim_direction() -> void:
-	# Simplified aiming using get_vector
 	var aim_input = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	if aim_input != Vector2.ZERO:
-		# Map the vector to your specific coordinate offsets
 		var target_pos = Vector2.ZERO
 		target_pos.x = aim_input.x * 142
 		target_pos.y = -237 if aim_input.y < 0 else (177 if aim_input.y > 0 else 0)
-		
-		# Handle the horizontal offset when only pressing left/right
 		if aim_input.y == 0:
 			target_pos.y = -57
-			
 		castMarker.position = target_pos
+
+func _on_combat_mode_changed(is_combat: bool) -> void:
+	if not is_inside_tree(): await ready
+	var target_zoom = Vector2(0.7, 0.7) if is_combat else Vector2(1.0, 1.0)
+	create_tween().tween_property(camera, "zoom", target_zoom, 0.5)\
+		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	if not is_combat:
+		_cancel_casting()

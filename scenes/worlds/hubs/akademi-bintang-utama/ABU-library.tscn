@@ -1,21 +1,8 @@
-<<<<<<< HEAD
-[gd_scene load_steps=4 format=4 uid="uid://dr4xq816re75m"]
+[gd_scene load_steps=4 format=4 uid="uid://ddxjcs5vbm5pv"]
 
 [ext_resource type="Script" uid="uid://6q0dmmapj6gm" path="res://data/worlds/zone-root.gd" id="1_ndklj"]
 [ext_resource type="PackedScene" uid="uid://c5a41lx0gq8be" path="res://scenes/transitioners/zone-portal/zone-portal.tscn" id="3_jry4t"]
 [ext_resource type="PackedScene" uid="uid://cy3c7eiatv07j" path="res://components/platforms/temptilemap.tscn" id="3_ndklj"]
-=======
-[gd_scene load_steps=10 format=3 uid="uid://c5d1qbkughamj"]
-
-[ext_resource type="Script" uid="uid://6iqrt1selfp" path="res://data/Resources/worlds/zone-root.gd" id="1_msjvq"]
-[ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="2_gk0t7"]
-[ext_resource type="PackedScene" uid="uid://bua4p61hbx7gg" path="res://components/Destructables/Box.tscn" id="3_brr8f"]
-[ext_resource type="PackedScene" uid="uid://cry62ps8l1buh" path="res://components/platforms/platform.tscn" id="4_lnht0"]
-[ext_resource type="PackedScene" uid="uid://b5tctii1rqqju" path="res://scenes/transitioners/zone-portal/zone-portal.tscn" id="5_44dsb"]
-[ext_resource type="Resource" uid="uid://bgh3eybbbs44c" path="res://data/worlds/hubs/akademi-bintang-utama/spell-tree.tres" id="6_01sgy"]
-[ext_resource type="Resource" uid="uid://kh3isqhmfkk8" path="res://data/worlds/hubs/akademi-bintang-utama/abu-courtyard.tres" id="7_gk0t7"]
-[ext_resource type="PackedScene" uid="uid://248u3hk2nrx" path="res://scenes/ui/multiplayer_menu.tscn" id="8_brr8f"]
->>>>>>> feature/multiplayer
 
 [node name="AbuLibrary" type="Node"]
 script = ExtResource("1_ndklj")
@@ -48,41 +35,5 @@ next_scene_id = "spell_tree"
 [node name="IntoLibrary" type="Marker2D" parent="World/GameComponents/SpawnPoints"]
 position = Vector2(1960, 837)
 
-<<<<<<< HEAD
 [node name="SpellTree" type="Marker2D" parent="World/GameComponents/SpawnPoints"]
 position = Vector2(-818, 863)
-=======
-[node name="Platform2" parent="WorldComponent" instance=ExtResource("4_lnht0")]
-position = Vector2(1377, 329.99997)
-scale = Vector2(2.9759462, 0.8801199)
-
-[node name="Doors" type="Node2D" parent="."]
-
-[node name="SpellTree" parent="Doors" instance=ExtResource("5_44dsb")]
-position = Vector2(-150, 340)
-target_zone = ExtResource("6_01sgy")
-target_spawn_point = "spell_entrance"
-
-[node name="Courtyard" parent="Doors" instance=ExtResource("5_44dsb")]
-position = Vector2(2849, 387)
-target_zone = ExtResource("7_gk0t7")
-preview_text = "Press [E] to Enter Courtyard"
-
-[node name="SpawnPoints" type="Node" parent="."]
-
-[node name="spell_entrance" type="Marker2D" parent="SpawnPoints"]
-position = Vector2(-139, 428)
-
-[node name="entrance" type="Marker2D" parent="SpawnPoints"]
-position = Vector2(569, -194)
-
-[node name="east_entrance" type="Marker2D" parent="SpawnPoints"]
-position = Vector2(2568, 373)
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-process_mode = 3
-visible = false
-follow_viewport_enabled = true
-
-[node name="MultiplayerMenu (Control)" parent="CanvasLayer" instance=ExtResource("8_brr8f")]
->>>>>>> feature/multiplayer

@@ -8,6 +8,18 @@ var players: Dictionary = {}
 # Prevent double-spawn during fast scene transitions
 var _is_spawning: bool = false
 
+func get_local_peer_id() -> int:
+	if multiplayer.has_multiplayer_peer():
+		return multiplayer.get_unique_id()
+	return 1
+
+func get_local_player() -> Node2D:
+	var id := get_local_peer_id()
+	if players.has(id) and is_instance_valid(players[id]):
+		return players[id]
+	return null
+
+
 
 # -------------------------------------------------
 # SINGLEPLAYER / LEGACY ENTRY POINT

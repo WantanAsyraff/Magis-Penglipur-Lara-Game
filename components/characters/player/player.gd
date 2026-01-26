@@ -86,22 +86,6 @@ func _handle_movement() -> void:
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 
-# -------------------------
-# LOGIC: INPUT
-# -------------------------
-func _unhandled_input(_event: InputEvent) -> void:
-	# Stop all inputs (Dash/Combat) if not moveable
-	if not Player_Global_Data.p_moveable:
-		return
-
-	if Input.is_action_just_pressed("dash") and not is_dashing and dash_cooldown_timer <= 0:
-		_try_dash()
-
-	if combat_mode:
-		_handle_combat_input()
-
-# ... [The rest of your spell/dash helper functions remain the same] ...
-
 func _handle_dash_timers(delta: float) -> void:
 	if is_dashing:
 		dash_timer -= delta
@@ -125,8 +109,7 @@ func _try_dash() -> void:
 func _handle_combat_input() -> void:
 		if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 			velocity.y = JUMP_VELOCITY
-
-	move_and_slide()
+		move_and_slide()
 
 # -------------------------
 # INPUT
@@ -134,6 +117,16 @@ func _handle_combat_input() -> void:
 func _unhandled_input(_event: InputEvent) -> void:
 	if multiplayer.has_multiplayer_peer() and not is_multiplayer_authority():
 		return
+		
+	# Stop all inputs (Dash/Combat) if not moveable
+	if not Player_Global_Data.p_moveable:
+		return
+
+	if Input.is_action_just_pressed("dash") and not is_dashing and dash_cooldown_timer <= 0:
+		_try_dash()
+
+	if combat_mode:
+		_handle_combat_input()
 	if Input.is_action_just_pressed("start_incantation"):
 		is_casting = !is_casting
 		spell_string.clear()

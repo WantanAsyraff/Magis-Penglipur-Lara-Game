@@ -12,11 +12,15 @@ var p_curr_ringgit: String
 var p_mood: String
 
 # SETTER: This automatically triggers the signal whenever the value changes
-var combat_mode: bool = false:
+var _combat_mode := false
+var combat_mode: bool:
 	set(value):
-		if combat_mode != value:
-			combat_mode = value
-			combat_mode_changed.emit(value)
+		if _combat_mode == value:
+			return
+		_combat_mode = value
+		combat_mode_changed.emit(value)
+	get:
+		return _combat_mode
 
 var p_position: Vector2
 var p_moveable: bool = true

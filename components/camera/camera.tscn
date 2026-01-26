@@ -27,9 +27,6 @@ offset_right = 0.11987305
 offset_bottom = 0.47998047
 
 [node name="UserInterfaceOverworld" parent="CanvasLayer" instance=ExtResource("3_yuem3")]
-<<<<<<< HEAD
 unique_name_in_owner = true
-=======
 
 [node name="MultiplayerMenu (Control)" parent="CanvasLayer" instance=ExtResource("4_mf6hl")]
->>>>>>> feature/multiplayer

@@ -6,3 +6,4 @@
 *.import
 /.godot/editor
 /.godot
+.godot/editor/

@@ -11,9 +11,9 @@ position_smoothing_enabled = true
 position_smoothing_speed = 2.0
 script = ExtResource("1_s8cyt")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="UI" type="CanvasLayer" parent="."]
 
-[node name="UserInterfaceCombat" parent="CanvasLayer" instance=ExtResource("2_5he1u")]
+[node name="UserInterfaceCombat" parent="UI" instance=ExtResource("2_5he1u")]
 unique_name_in_owner = true
 visible = false
 anchors_preset = -1
@@ -26,7 +26,7 @@ offset_top = 765.96
 offset_right = 0.11987305
 offset_bottom = 0.47998047
 
-[node name="UserInterfaceOverworld" parent="CanvasLayer" instance=ExtResource("3_yuem3")]
+[node name="UserInterfaceOverworld" parent="UI" instance=ExtResource("3_yuem3")]
 unique_name_in_owner = true
 
 [node name="MultiplayerMenu (Control)" parent="CanvasLayer" instance=ExtResource("4_mf6hl")]

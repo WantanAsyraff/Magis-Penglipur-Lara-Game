@@ -30,19 +30,35 @@ offset_bottom = 557.0
 [node name="UI" type="VBoxContainer" parent="UI/PanelContainer"]
 layout_mode = 2
 
-[node name="Back button" type="Button" parent="UI/PanelContainer/UI"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/PanelContainer/UI"]
+layout_mode = 2
+alignment = 1
+
+[node name="Back button" type="Button" parent="UI/PanelContainer/UI/HBoxContainer"]
 layout_mode = 2
 text = "BACK"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/PanelContainer/UI"]
+[node name="E-HailingVBoxContainer" type="VBoxContainer" parent="UI/PanelContainer/UI"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="UI/PanelContainer/UI/VBoxContainer"]
+[node name="SelectLabel" type="Label" parent="UI/PanelContainer/UI/E-HailingVBoxContainer"]
 layout_mode = 2
-text = "TOP LEFT"
+text = "Select Your Location:"
 
-[node name="RoutePanel" parent="UI/PanelContainer/UI/VBoxContainer" instance=ExtResource("1_s4xdm")]
+[node name="RoutePanel" parent="UI/PanelContainer/UI/E-HailingVBoxContainer" instance=ExtResource("1_s4xdm")]
 layout_mode = 2
 destination_scene = ExtResource("3_8tlr5")
 
-[connection signal="pressed" from="UI/PanelContainer/UI/Back button" to="." method="_on_back_button_pressed"]
+[node name="ButtonHBoxContainer" type="HBoxContainer" parent="UI/PanelContainer/UI"]
+layout_mode = 2
+alignment = 1
+
+[node name="PrevButton" type="Button" parent="UI/PanelContainer/UI/ButtonHBoxContainer"]
+layout_mode = 2
+text = "<"
+
+[node name="NextButton" type="Button" parent="UI/PanelContainer/UI/ButtonHBoxContainer"]
+layout_mode = 2
+text = ">"
+
+[connection signal="pressed" from="UI/PanelContainer/UI/HBoxContainer/Back button" to="." method="_on_back_button_pressed"]

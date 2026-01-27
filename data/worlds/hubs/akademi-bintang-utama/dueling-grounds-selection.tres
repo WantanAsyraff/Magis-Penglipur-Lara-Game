@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SceneData" load_steps=2 format=3 uid="uid://dlnmsgptvhdf6"]
+
+[ext_resource type="Script" uid="uid://bxc44phagq28x" path="res://data/Resources/worlds/scene-data.gd" id="1_cp3fr"]
+
+[resource]
+script = ExtResource("1_cp3fr")
+scene_id = "dueling_grounds_selection"
+description = "Select ur place of battle"
+metadata/_custom_type_script = "uid://bxc44phagq28x"

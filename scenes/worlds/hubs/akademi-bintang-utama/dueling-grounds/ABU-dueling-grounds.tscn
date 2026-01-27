@@ -54,6 +54,10 @@ position = Vector2(-467, 780)
 next_scene_id = "akademi_bintang_utama_courtyard"
 spawn_marker_override = "DuelingGrounds"
 
+[node name="ZonePortal" parent="World/GameComponents/Doors" instance=ExtResource("2_0gf5p")]
+position = Vector2(1958, 778)
+next_scene_id = "dueling_selection_ui"
+
 [node name="SpawnPoints" type="Node2D" parent="World/GameComponents"]
 
 [node name="DuelingGrounds" type="Marker2D" parent="World/GameComponents/SpawnPoints"]

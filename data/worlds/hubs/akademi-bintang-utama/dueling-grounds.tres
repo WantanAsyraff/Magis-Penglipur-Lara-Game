@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="SceneData" load_steps=3 format=3 uid="uid://mvegk7285mji"]
 
 [ext_resource type="Script" uid="uid://bxc44phagq28x" path="res://data/Resources/worlds/scene-data.gd" id="1_68a3a"]
-[ext_resource type="PackedScene" uid="uid://bexs4iekjrle3" path="res://scenes/worlds/hubs/akademi-bintang-utama/ABU-dueling-grounds.tscn" id="1_wwy7p"]
+[ext_resource type="PackedScene" uid="uid://bexs4iekjrle3" path="res://scenes/worlds/hubs/akademi-bintang-utama/dueling-grounds/ABU-dueling-grounds.tscn" id="1_wwy7p"]
 
 [resource]
 script = ExtResource("1_68a3a")

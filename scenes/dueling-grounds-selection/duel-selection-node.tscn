@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://upitc0orkqpy"]
+
+[ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="1_7jglb"]
+[ext_resource type="Script" uid="uid://ggxhydq3yor4" path="res://scenes/dueling-grounds-selection/duel_selection_node.gd" id="1_yoxf7"]
+
+[node name="HBoxContainer" type="HBoxContainer"]
+script = ExtResource("1_yoxf7")
+
+[node name="DuelingGroundsLabel" type="Label" parent="."]
+layout_mode = 2
+text = "DUELING GROUNDS DEMO"
+
+[node name="TextureRect" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+texture = ExtResource("1_7jglb")
+
+[node name="EnterButton" type="Button" parent="."]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+text = "Enter"
+
+[connection signal="pressed" from="EnterButton" to="." method="_on_enter_button_pressed"]

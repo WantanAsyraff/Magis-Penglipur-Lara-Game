@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="SceneData" load_steps=3 format=3 uid="uid://6tl1um0gbnu"]
 
-[ext_resource type="PackedScene" uid="uid://ojuwskp4k3a2" path="res://scenes/worlds/hubs/akademi-bintang-utama/abu-campus-entrance.tscn" id="1_6e4nm"]
+[ext_resource type="PackedScene" uid="uid://ojuwskp4k3a2" path="res://scenes/worlds/hubs/akademi-bintang-utama/ABU-campus-entrance.tscn" id="1_6e4nm"]
 [ext_resource type="Script" uid="uid://bxc44phagq28x" path="res://data/Resources/worlds/scene-data.gd" id="1_rpm6s"]
 
 [resource]

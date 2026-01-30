@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="subjectData" load_steps=3 format=3 uid="uid://daswhfr6efpng"]
+
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="1_oboqb"]
+[ext_resource type="Script" uid="uid://b6vkafnios50y" path="res://data/Resources/ilmu/subject.gd" id="2_mpgug"]
+
+[resource]
+script = ExtResource("2_mpgug")
+subject_description = "This subject examines the behavior of fluids at rest and in motion, including flow in pipes, channels, and hydraulic systems. It forms the basis of water supply, drainage, and flood control design."
+metadata/_custom_type_script = "uid://b6vkafnios50y"

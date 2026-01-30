@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="subjectData" load_steps=3 format=3 uid="uid://bccmufnl67n4k"]
+
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="1_dgdhj"]
+[ext_resource type="Script" uid="uid://b6vkafnios50y" path="res://data/Resources/ilmu/subject.gd" id="2_xg4it"]
+
+[resource]
+script = ExtResource("2_xg4it")
+subject_archetype = "Physical Sciences"
+metadata/_custom_type_script = "uid://b6vkafnios50y"

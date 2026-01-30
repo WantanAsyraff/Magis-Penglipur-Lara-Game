@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="subjectData" load_steps=3 format=3 uid="uid://bcqolxsdxt3qo"]
+
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="1_4hk6f"]
+[ext_resource type="Script" uid="uid://b6vkafnios50y" path="res://data/Resources/ilmu/subject.gd" id="2_5t7y8"]
+
+[resource]
+script = ExtResource("2_5t7y8")
+subject_description = "Construction Materials covers the properties, behavior, and durability of materials such as concrete, steel, asphalt, and composites. Emphasis is placed on performance under environmental and load conditions."
+metadata/_custom_type_script = "uid://b6vkafnios50y"

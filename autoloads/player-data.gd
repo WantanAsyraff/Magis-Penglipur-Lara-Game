@@ -10,6 +10,7 @@ var p_name: String
 var p_role: String
 var p_curr_ringgit: String
 var p_mood: String
+var is_casting := false
 
 # SETTER: This automatically triggers the signal whenever the value changes
 var _combat_mode := false

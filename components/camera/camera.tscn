@@ -20,9 +20,11 @@ visible = false
 
 [node name="UserInterfaceOverworld" parent="UI" instance=ExtResource("3_yuem3")]
 unique_name_in_owner = true
+visible = false
 
 [node name="MultiplayerMenu (Control)" parent="UI" instance=ExtResource("4_mf6hl")]
 visible = false
 
 [node name="PauseMenu" parent="UI" instance=ExtResource("5_503qr")]
 unique_name_in_owner = true
+visible = false

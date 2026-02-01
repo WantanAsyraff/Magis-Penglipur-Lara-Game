@@ -31,19 +31,19 @@ position = Vector2(1024, 768)
 position = Vector2(1088, 384)
 
 [node name="Box2" parent="World/GameComponents/Platforms" instance=ExtResource("4_v3l7u")]
-position = Vector2(1024, 192)
+position = Vector2(1920, -256)
 
 [node name="Box3" parent="World/GameComponents/Platforms" instance=ExtResource("4_v3l7u")]
-position = Vector2(896, 320)
+position = Vector2(384, 128)
 
 [node name="Box4" parent="World/GameComponents/Platforms" instance=ExtResource("4_v3l7u")]
 position = Vector2(1600, 192)
 
 [node name="Box5" parent="World/GameComponents/Platforms" instance=ExtResource("4_v3l7u")]
-position = Vector2(1664, 0)
+position = Vector2(1344, 448)
 
 [node name="Box6" parent="World/GameComponents/Platforms" instance=ExtResource("4_v3l7u")]
-position = Vector2(1472, 0)
+position = Vector2(1088, -192)
 
 [node name="Characters" type="Node2D" parent="World/GameComponents"]
 

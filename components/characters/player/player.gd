@@ -16,6 +16,7 @@ const PROJECTILE_SCENE = preload("res://components/projectiles/magis-projectile.
 @onready var castMarker: Marker2D = %CastDirectionMarker
 @onready var spell_label: Label = %castingText
 @onready var camera: Camera2D = %Camera2D
+@onready var dash_particles: GPUParticles2D = %DashParticles
 
 # -------------------------
 # VARIABLES
@@ -33,7 +34,6 @@ var is_dashing := false
 var dash_cooldown_timer := 0.0
 
 # Spells
-var is_casting := false
 var spell_inventory: Array[SpellData] = []
 var spell_string: Array[String] = []
 
@@ -78,7 +78,7 @@ func _physics_process(delta: float) -> void:
 func _handle_movement() -> void:
 	var dir := Input.get_axis("ui_left", "ui_right")
 	
-	if dir != 0 and not is_casting:
+	if dir != 0 and not Player_Global_Data.is_casting:
 		velocity.x = dir * SPEED
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
@@ -105,6 +105,7 @@ func _try_dash() -> void:
 		is_dashing = true
 		dash_timer = DASH_TIME
 		dash_direction = dir.normalized()
+		_play_dash_effect()
 
 func _handle_combat_input() -> void:
 		if Input.is_action_just_pressed("ui_accept") and is_on_floor():
@@ -128,11 +129,11 @@ func _unhandled_input(_event: InputEvent) -> void:
 	if combat_mode:
 		_handle_combat_input()
 	if Input.is_action_just_pressed("start_incantation"):
-		is_casting = !is_casting
+		Player_Global_Data.is_casting = !Player_Global_Data.is_casting
 		spell_string.clear()
 		spell_label.text = ""
 	_update_aim_direction()
-	if is_casting:
+	if Player_Global_Data.is_casting:
 		_process_incantation_inputs()
 
 func _process_incantation_inputs() -> void:
@@ -186,7 +187,7 @@ func _reset_casting_with_delay() -> void:
 	_cancel_casting()
 
 func _cancel_casting() -> void:
-	is_casting = false
+	Player_Global_Data.is_casting = false
 	spell_string.clear()
 	spell_label.text = ""
 
@@ -207,3 +208,19 @@ func _on_combat_mode_changed(is_combat: bool) -> void:
 		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	if not is_combat:
 		_cancel_casting()
+
+func _play_dash_effect() -> void:
+	if not dash_particles:
+		return
+
+	var mat := dash_particles.process_material as ParticleProcessMaterial
+	if not mat:
+		return
+
+	dash_particles.global_position = global_position
+	mat.direction = Vector3(
+		-dash_direction.x,
+		-dash_direction.y,
+		0
+	)
+	dash_particles.restart()

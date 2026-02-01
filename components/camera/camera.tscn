@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://cw0ml7a8dvemo"]
+[gd_scene load_steps=6 format=3 uid="uid://cw0ml7a8dvemo"]
 
 [ext_resource type="Script" uid="uid://bfm27u5e7gn7r" path="res://components/camera/camera.gd" id="1_s8cyt"]
 [ext_resource type="PackedScene" uid="uid://qoyrbwgkhxny" path="res://scenes/ui/user-interface-combat.tscn" id="2_5he1u"]
 [ext_resource type="PackedScene" uid="uid://c5g6ie7nadata" path="res://scenes/ui/user-interface-overworld.tscn" id="3_yuem3"]
 [ext_resource type="PackedScene" uid="uid://248u3hk2nrx" path="res://scenes/ui/multiplayer_menu.tscn" id="4_mf6hl"]
+[ext_resource type="PackedScene" uid="uid://db43cii5up0h2" path="res://scenes/ui/menus/pause_menu.tscn" id="5_503qr"]
 
 [node name="Camera2D" type="Camera2D"]
 zoom = Vector2(0.7, 0.7)
@@ -16,17 +17,12 @@ script = ExtResource("1_s8cyt")
 [node name="UserInterfaceCombat" parent="UI" instance=ExtResource("2_5he1u")]
 unique_name_in_owner = true
 visible = false
-anchors_preset = -1
-anchor_left = -0.71500003
-anchor_top = -0.712
-anchor_right = 0.71400005
-anchor_bottom = 0.71900004
-offset_left = 1379.8
-offset_top = 765.96
-offset_right = 0.11987305
-offset_bottom = 0.47998047
 
 [node name="UserInterfaceOverworld" parent="UI" instance=ExtResource("3_yuem3")]
 unique_name_in_owner = true
 
-[node name="MultiplayerMenu (Control)" parent="CanvasLayer" instance=ExtResource("4_mf6hl")]
+[node name="MultiplayerMenu (Control)" parent="UI" instance=ExtResource("4_mf6hl")]
+visible = false
+
+[node name="PauseMenu" parent="UI" instance=ExtResource("5_503qr")]
+unique_name_in_owner = true

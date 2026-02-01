@@ -19,7 +19,6 @@ grow_vertical = 2
 script = ExtResource("1_e010p")
 up_pos = Vector2(1384, 450)
 down_pos = Vector2(1384, 1005)
-metadata/_edit_group_ = true
 
 [node name="PhoneBG" type="Panel" parent="."]
 unique_name_in_owner = true

@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://c5g6ie7nadata"]
+[gd_scene load_steps=3 format=3 uid="uid://c5g6ie7nadata"]
 
 [ext_resource type="PackedScene" uid="uid://dh675vcu2br3h" path="res://scenes/ui/phone-ui/phone-ui.tscn" id="1_cw5sm"]
+[ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="2_hnc3k"]
 
 [node name="UserInterfaceOverworld" type="Control"]
 layout_mode = 3
@@ -10,15 +11,53 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-text = "OVERWORLD UI"
-
 [node name="PhoneUI" parent="." instance=ExtResource("1_cw5sm")]
+visible = false
 layout_mode = 1
 offset_left = 0.0
 offset_top = 0.0
 offset_right = 0.0
 offset_bottom = 0.0
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1257.0
+offset_bottom = -887.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PlayerProfileVBox" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="OverworldLabel" type="Label" parent="PanelContainer/PlayerProfileVBox"]
+layout_mode = 2
+text = "OVERWORLD UI"
+
+[node name="PlayerStatsHBox" type="HBoxContainer" parent="PanelContainer/PlayerProfileVBox"]
+layout_mode = 2
+
+[node name="ProfileIcon" type="TextureRect" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox"]
+layout_mode = 2
+texture = ExtResource("2_hnc3k")
+
+[node name="HealthContainer" type="VBoxContainer" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox"]
+layout_mode = 2
+
+[node name="HealthLabel" type="Label" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox/HealthContainer"]
+layout_mode = 2
+text = "HEALTH BAR "
+
+[node name="HealthProgressBar" type="ProgressBar" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox/HealthContainer"]
+layout_mode = 2
+value = 100.0
+
+[node name="ManaLabel" type="Label" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox/HealthContainer"]
+layout_mode = 2
+text = "MANA"
+
+[node name="ManaProgressBar" type="ProgressBar" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox/HealthContainer"]
+layout_mode = 2
+value = 100.0

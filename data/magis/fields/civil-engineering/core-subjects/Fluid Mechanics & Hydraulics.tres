@@ -5,5 +5,6 @@
 
 [resource]
 script = ExtResource("2_mpgug")
+subject_archetype = "Physical Sciences"
 subject_description = "This subject examines the behavior of fluids at rest and in motion, including flow in pipes, channels, and hydraulic systems. It forms the basis of water supply, drainage, and flood control design."
 metadata/_custom_type_script = "uid://b6vkafnios50y"

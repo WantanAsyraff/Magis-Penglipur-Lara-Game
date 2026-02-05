@@ -86,6 +86,8 @@ audio/channel_defaults={
 Noray="*res://addons/netfox.noray/noray.gd"
 PacketHandshake="*res://addons/netfox.noray/packet-handshake.gd"
 Network_Manager="*res://autoloads/network-manager.gd"
+layout/style_list=[]
+layout/default_style="Default"
 
 [display]
 

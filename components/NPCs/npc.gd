@@ -33,8 +33,8 @@ func start_dialogue() -> void:
 			print("Transitioning to new scene...")
 			# Using SceneManager as per your previous logic
 			# If SceneManager is an Autoload, we pass the resource_path
+			Player_Global_Data.p_moveable = true
 			await SceneManager.change_scene(destination_scene.resource_path)
-			
 			# Note: We don't necessarily need to set p_moveable = true here 
 			# because the new scene will likely re-initialize the player.
 		else:

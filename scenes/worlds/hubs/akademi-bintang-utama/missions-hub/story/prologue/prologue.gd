@@ -32,13 +32,13 @@ func start_sequence() -> void:
 		push_error("FAILED: The scene data for '" + next_scene_id + "' exists, but the 'scene' property is empty!")
 		return
 
-	# If both pass, proceed to change scene
-	await SceneManager.change_scene(scene_data.scene.resource_path)
-	
 	Dialogic.start(timeline_2)
 	await Dialogic.timeline_ended
 	print("end of, timeline 2")
 	Player_Global_Data.p_moveable = true
+	
+	# If both pass, proceed to change scene
+	await SceneManager.change_scene(scene_data.scene.resource_path)
 	
 # Helper function to filter global signals
 func wait_for_custom_signal(target_name: String):

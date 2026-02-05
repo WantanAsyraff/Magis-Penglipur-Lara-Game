@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=4 uid="uid://bwaa8e6xvp7o4"]
+[gd_scene load_steps=6 format=4 uid="uid://bwaa8e6xvp7o4"]
 
 [ext_resource type="PackedScene" uid="uid://cy3c7eiatv07j" path="res://components/platforms/temptilemap.tscn" id="1_jy8fq"]
 [ext_resource type="Script" uid="uid://6q0dmmapj6gm" path="res://data/worlds/zone-root.gd" id="1_wt5h2"]
+[ext_resource type="Resource" uid="uid://bhmk728qjl3gr" path="res://dialogue/story-mode/akademi-bintang-utama/prologue/scene-1.dtl" id="3_h465j"]
 [ext_resource type="PackedScene" uid="uid://cj3mkhidrb0kx" path="res://components/NPCs/npc.tscn" id="3_wly16"]
+[ext_resource type="PackedScene" uid="uid://0g01kyenn650" path="res://scenes/worlds/hubs/akademi-bintang-utama/missions-hub/story/prologue/prologue-scene-03.tscn" id="4_1mfm7"]
 
 [node name="TrainStation" type="Node"]
 script = ExtResource("1_wt5h2")
@@ -15,6 +17,9 @@ script = ExtResource("1_wt5h2")
 
 [node name="NPC" parent="World/GameComponents/NPCs" instance=ExtResource("3_wly16")]
 position = Vector2(-449, 814)
+npc_timeline = ExtResource("3_h465j")
+is_overworld_npc = true
+destination_scene = ExtResource("4_1mfm7")
 
 [node name="Platforms" type="Node2D" parent="World/GameComponents"]
 

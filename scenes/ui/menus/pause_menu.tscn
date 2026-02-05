@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://db43cii5up0h2"]
+[gd_scene load_steps=3 format=3 uid="uid://db43cii5up0h2"]
 
 [ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="1_5p30d"]
+[ext_resource type="Script" uid="uid://dkkkmggdc866o" path="res://scenes/ui/menus/pause_menu.gd" id="1_dd7lr"]
 
 [node name="PauseMenu" type="Control"]
 layout_mode = 3
@@ -9,6 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_dd7lr")
 
 [node name="MenulPanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -36,6 +38,10 @@ layout_mode = 2
 text = "SETTINGS
 "
 
+[node name="QuitButton" type="Button" parent="MenulPanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Quit"
+
 [node name="TexturePanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
@@ -56,3 +62,8 @@ texture = ExtResource("1_5p30d")
 [node name="Label" type="Label" parent="TexturePanelContainer/VBoxContainer"]
 layout_mode = 2
 text = "CHARACTER SPLASH ART TEXTURE"
+
+[connection signal="pressed" from="MenulPanelContainer/VBoxContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="MenulPanelContainer/VBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="pressed" from="MenulPanelContainer/VBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="MenulPanelContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]

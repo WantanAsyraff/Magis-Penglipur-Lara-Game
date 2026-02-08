@@ -26,7 +26,7 @@ var JUMP_VELOCITY := Player_Global_Data.p_jump_height
 
 # Dash
 var DASH_SPEED := 2500.0
-var DASH_TIME := 0.15
+var DASH_TIME := 0.10
 var DASH_COOLDOWN := 1.0
 var dash_timer := 0.0
 var dash_direction := Vector2.ZERO

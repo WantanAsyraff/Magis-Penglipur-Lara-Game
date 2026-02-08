@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://t3o4osbl3bct"]
+
+[ext_resource type="Script" uid="uid://d4id6l0ys54bx" path="res://scenes/worlds/hubs/akademi-bintang-utama/missions-hub/story/prologue/prologue.gd" id="1_1qy6m"]
+[ext_resource type="Resource" uid="uid://bhmk728qjl3gr" path="res://dialogue/story-mode/akademi-bintang-utama/prologue/scene-1.dtl" id="2_sn2sa"]
+[ext_resource type="Resource" uid="uid://ciwom8uj1f5pd" path="res://dialogue/story-mode/akademi-bintang-utama/prologue/scene-2.dtl" id="3_t8kg4"]
+[ext_resource type="Resource" uid="uid://d2r2lttexnjj8" path="res://dialogue/story-mode/akademi-bintang-utama/prologue/scene-3.dtl" id="4_pql0s"]
+
+[node name="Prologue" type="Node" unique_id=1926843880]
+script = ExtResource("1_1qy6m")
+timeline_1 = ExtResource("2_sn2sa")
+timeline_2 = ExtResource("3_t8kg4")
+timeline_3 = ExtResource("4_pql0s")
+next_scene_id = "nillayah_train_station"

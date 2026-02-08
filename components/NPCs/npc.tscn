@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://cj3mkhidrb0kx"]
+
+[ext_resource type="Script" uid="uid://iije0qme33th" path="res://components/NPCs/npc.gd" id="1_cgdws"]
+[ext_resource type="Texture2D" uid="uid://doaygnck5qus5" path="res://assets/template/player-temp.png" id="1_exqg5"]
+[ext_resource type="Resource" uid="uid://wwx3njg3vpa6" path="res://dialogue/characters/scene-2-a.dtl" id="2_fw4mo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_exqg5"]
+size = Vector2(150, 124)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cgdws"]
+size = Vector2(40, 118)
+
+[node name="NPC" type="CharacterBody2D" unique_id=117054356]
+scale = Vector2(2, 2)
+script = ExtResource("1_cgdws")
+npc_timeline = ExtResource("2_fw4mo")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1627412591]
+texture = ExtResource("1_exqg5")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1697705886]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1155419802]
+shape = SubResource("RectangleShape2D_exqg5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2026531879]
+shape = SubResource("RectangleShape2D_cgdws")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

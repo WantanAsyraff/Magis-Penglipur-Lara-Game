@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://dwgy38ch6olib"]
+
+[node name="SkyBox" type="ColorRect" unique_id=895831210]
+z_index = -4096
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -6349.0
+offset_top = -1009.0
+offset_right = 5713.0
+offset_bottom = 1080.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.99580604, 0.79304284, 0.7564862, 1)

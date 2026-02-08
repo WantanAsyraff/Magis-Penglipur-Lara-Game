@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream
 [gd_scene load_steps=8 format=3 uid="uid://dglx0pbuwqv14"]
+=======
+[gd_scene format=3 uid="uid://dglx0pbuwqv14"]
+>>>>>>> Stashed changes
 
 [ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="1_kjygs"]
 [ext_resource type="Script" uid="uid://caoknale6eh0p" path="res://components/characters/player/player.gd" id="1_viwsh"]
@@ -6,12 +10,76 @@
 [ext_resource type="PackedScene" uid="uid://cw0ml7a8dvemo" path="res://components/camera/camera.tscn" id="3_dc6tm"]
 [ext_resource type="Script" uid="uid://dkwipe7wope6u" path="res://components/characters/player/anim_player_controller.gd" id="5_k8mmp"]
 
+<<<<<<< Updated upstream
+=======
+[sub_resource type="Gradient" id="Gradient_hn4f5"]
+offsets = PackedFloat32Array(0.3559322, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.19607843, 0.19607843, 0.19607843, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_x0p2c"]
+gradient = SubResource("Gradient_hn4f5")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_hn4f5"]
+lifetime_randomness = 0.4
+particle_flag_disable_z = true
+spread = 30.0
+initial_velocity_min = 120.0
+initial_velocity_max = 200.0
+gravity = Vector3(0, 98, 0)
+scale_min = 0.59999996
+color_ramp = SubResource("GradientTexture1D_x0p2c")
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_k8mmp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_x0p2c")
+}],
+"loop": true,
+"name": &"casting_down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_hn4f5")
+}],
+"loop": true,
+"name": &"casting_left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_x0p2c")
+}],
+"loop": true,
+"name": &"casting_right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_hn4f5")
+}],
+"loop": true,
+"name": &"casting_up",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_kkjo8")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+>>>>>>> Stashed changes
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kjygs"]
 size = Vector2(161.5, 238)
 
 [sub_resource type="LabelSettings" id="LabelSettings_42y4n"]
 font_size = 30
 
+<<<<<<< Updated upstream
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_viwsh")
 
@@ -44,13 +112,57 @@ label_settings = SubResource("LabelSettings_42y4n")
 horizontal_alignment = 1
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="." groups=["player"]]
+=======
+[node name="Player" type="CharacterBody2D" unique_id=217004952 groups=["player"]]
+script = ExtResource("1_viwsh")
 
-[node name="Camera2D" parent="." instance=ExtResource("3_dc6tm")]
+[node name="DashParticles" type="GPUParticles2D" parent="." unique_id=245820587 groups=["player"]]
+unique_name_in_owner = true
+emitting = false
+amount = 40
+texture = ExtResource("1_kjygs")
+lifetime = 0.35000000000000003
+one_shot = true
+randomness = 0.3
+process_material = SubResource("ParticleProcessMaterial_hn4f5")
+>>>>>>> Stashed changes
+
+[node name="PlayerSprite" type="AnimatedSprite2D" parent="." unique_id=506682569]
+unique_name_in_owner = true
+position = Vector2(0, -2.9999897)
+scale = Vector2(2.174, 1.9531251)
+sprite_frames = SubResource("SpriteFrames_k8mmp")
+animation = &"casting_up"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1279488998]
+shape = SubResource("RectangleShape2D_kjygs")
+
+[node name="Camera2D" parent="." unique_id=206902735 instance=ExtResource("3_dc6tm")]
 unique_name_in_owner = true
 process_mode = 3
 process_priority = 10
 offset = Vector2(0, -370)
 position_smoothing_speed = 4.2
 
-[node name="AnimPlayerController" type="Node" parent="."]
+[node name="CastDirectionMarker" type="Marker2D" parent="." unique_id=788602168]
+unique_name_in_owner = true
+position = Vector2(0, -237)
+gizmo_extents = 37.5
+
+[node name="Sprite2D" type="Sprite2D" parent="CastDirectionMarker" unique_id=1599619831]
+self_modulate = Color(1, 0, 0, 1)
+scale = Vector2(0.27374002, 0.47766894)
+texture = ExtResource("1_kjygs")
+
+[node name="AnimPlayerController" type="Node" parent="." unique_id=165145710]
 script = ExtResource("5_k8mmp")
+
+[node name="castingText" type="Label" parent="." unique_id=1865935094]
+unique_name_in_owner = true
+offset_left = -106.0
+offset_top = -183.0
+offset_right = 107.0
+offset_bottom = -141.0
+text = "CASTING TEXT"
+label_settings = SubResource("LabelSettings_42y4n")
+horizontal_alignment = 1

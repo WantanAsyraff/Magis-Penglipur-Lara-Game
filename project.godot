@@ -8,11 +8,15 @@
 
 config_version=5
 
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
 [application]
 
 config/name="Magis Penglipur Lara"
 run/main_scene="uid://ojuwskp4k3a2"
-config/features=PackedStringArray("4.5", "GL Compatibility")
+config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 scenes/loading_scene_path="res://addons/yet_another_scene_manager/Scenes/Loading.tscn"
 scenes/error_scene_path="res://addons/yet_another_scene_manager/Scenes/Error.tscn"
@@ -24,11 +28,11 @@ Spell_Library="*res://autoloads/spell-library.gd"
 Scene_Transition="*res://autoloads/scene-transition.gd"
 Player_Manager="*res://autoloads/player-manager.gd"
 Network_Manager="*res://autoloads/network-manager.gd"
-SceneManager="*res://addons/scene_manager/SceneManager.tscn"
+SceneManager="*uid://j20v4cg7v8m1"
 Scene_Registry="*res://autoloads/scene-registry.gd"
-Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
-Noray="*res://addons/netfox.noray/noray.gd"
-PacketHandshake="*res://addons/netfox.noray/packet-handshake.gd"
+Dialogic="*uid://ds2q0uclmolvu"
+Noray="*uid://gu4bv4tgms3x"
+PacketHandshake="*uid://tt3j25a05n7c"
 
 [dialogic]
 

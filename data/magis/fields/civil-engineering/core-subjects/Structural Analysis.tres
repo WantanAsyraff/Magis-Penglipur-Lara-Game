@@ -5,6 +5,8 @@
 
 [resource]
 script = ExtResource("2_qqxlf")
+subject_name = "Structural Analysis"
+subject_id = "structural_analysis_101"
 subject_archetype = "Physical Sciences"
 subject_description = "Structural Analysis focuses on understanding how structures respond to loads such as gravity, wind, and usage. Students learn to model forces, moments, and deformations in beams, frames, and trusses to ensure stability and safety."
 metadata/_custom_type_script = "uid://b6vkafnios50y"

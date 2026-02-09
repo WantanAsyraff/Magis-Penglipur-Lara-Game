@@ -5,6 +5,8 @@
 
 [resource]
 script = ExtResource("2_xg4it")
+subject_name = "Structural Dynamics"
+subject_id = "structural_dynamics_201"
 subject_archetype = "Engineering"
 subject_description = "Structural Dynamics studies how structures respond to time-dependent loads such as earthquakes, wind gusts, machinery vibrations, and moving vehicles. It emphasizes natural frequencies, damping, resonance, and dynamic response analysis."
 metadata/_custom_type_script = "uid://b6vkafnios50y"

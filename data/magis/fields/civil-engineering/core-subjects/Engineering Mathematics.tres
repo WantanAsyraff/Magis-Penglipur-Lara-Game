@@ -5,6 +5,8 @@
 
 [resource]
 script = ExtResource("2_yll04")
+subject_name = "Engineering Mathematics"
+subject_id = "engineering_mathematics_101"
 subject_archetype = "Mathematics"
 subject_description = "Engineering Mathematics provides the analytical foundation for modeling physical systems using calculus, differential equations, matrices, and numerical methods."
 metadata/_custom_type_script = "uid://b6vkafnios50y"

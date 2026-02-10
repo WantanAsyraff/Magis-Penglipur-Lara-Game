@@ -1,9 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://cbqpcqnlvxuya"]
-
-[ext_resource type="PackedScene" uid="uid://c5d1qbkughamj" path="res://scenes/worlds/hubs/akademi-bintang-utama/ABU-library.tscn" id="1_errlg"]
-
-[node name="Test" type="Node"]
-
-[node name="AbuCourtyard" parent="." instance=ExtResource("1_errlg")]
-
-[node name="AbuCourtyard2" parent="." instance=ExtResource("1_errlg")]

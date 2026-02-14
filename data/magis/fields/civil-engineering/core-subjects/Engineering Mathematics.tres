@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="subjectData" load_steps=3 format=3 uid="uid://cxw253oogrcwj"]
+[gd_resource type="Resource" script_class="subjectData" format=3 uid="uid://cxw253oogrcwj"]
 
 [ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="1_rj7pn"]
 [ext_resource type="Script" uid="uid://b6vkafnios50y" path="res://data/Resources/ilmu/subject.gd" id="2_yll04"]
@@ -9,4 +9,5 @@ subject_name = "Engineering Mathematics"
 subject_id = "engineering_mathematics_101"
 subject_archetype = "Mathematics"
 subject_description = "Engineering Mathematics provides the analytical foundation for modeling physical systems using calculus, differential equations, matrices, and numerical methods."
+magis_archetype = "Technical"
 metadata/_custom_type_script = "uid://b6vkafnios50y"

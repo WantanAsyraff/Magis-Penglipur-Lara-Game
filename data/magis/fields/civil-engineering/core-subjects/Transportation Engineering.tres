@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="subjectData" load_steps=3 format=3 uid="uid://ce04oldwsdnpo"]
+[gd_resource type="Resource" script_class="subjectData" format=3 uid="uid://ce04oldwsdnpo"]
 
 [ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="1_k6ur0"]
 [ext_resource type="Script" uid="uid://b6vkafnios50y" path="res://data/Resources/ilmu/subject.gd" id="2_ldwmw"]
@@ -9,4 +9,6 @@ subject_name = "Transportation Engineering"
 subject_id = "transportation_engineering_101"
 subject_archetype = "Engineering"
 subject_description = "Transportation Engineering focuses on the planning, design, and operation of transport systems including roads, traffic flow, and pavements to ensure safety and efficiency."
+magis_archetype = "Technical"
+prerequisites = Array[String]([""])
 metadata/_custom_type_script = "uid://b6vkafnios50y"

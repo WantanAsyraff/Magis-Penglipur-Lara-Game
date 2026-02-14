@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="subjectData" load_steps=3 format=3 uid="uid://bccmufnl67n4k"]
+[gd_resource type="Resource" script_class="subjectData" format=3 uid="uid://bccmufnl67n4k"]
 
 [ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="1_dgdhj"]
 [ext_resource type="Script" uid="uid://b6vkafnios50y" path="res://data/Resources/ilmu/subject.gd" id="2_xg4it"]
@@ -9,4 +9,6 @@ subject_name = "Structural Dynamics"
 subject_id = "structural_dynamics_201"
 subject_archetype = "Engineering"
 subject_description = "Structural Dynamics studies how structures respond to time-dependent loads such as earthquakes, wind gusts, machinery vibrations, and moving vehicles. It emphasizes natural frequencies, damping, resonance, and dynamic response analysis."
+magis_archetype = "Technical"
+difficulty_level = 2
 metadata/_custom_type_script = "uid://b6vkafnios50y"

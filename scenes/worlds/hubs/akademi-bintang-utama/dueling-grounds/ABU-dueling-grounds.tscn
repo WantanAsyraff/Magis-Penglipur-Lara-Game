@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=4 uid="uid://bexs4iekjrle3"]
 
-[ext_resource type="Script" path="res://data/worlds/zone-root.gd" id="1_0gf5p"]
+[ext_resource type="Script" uid="uid://6q0dmmapj6gm" path="res://data/worlds/zone-root.gd" id="1_0gf5p"]
 [ext_resource type="PackedScene" uid="uid://cry62ps8l1buh" path="res://components/platforms/platform.tscn" id="1_drkpr"]
 [ext_resource type="PackedScene" uid="uid://c5a41lx0gq8be" path="res://scenes/transitioners/zone-portal/zone-portal.tscn" id="2_0gf5p"]
 [ext_resource type="PackedScene" uid="uid://cy3c7eiatv07j" path="res://components/platforms/temptilemap.tscn" id="2_bwvf1"]
@@ -31,19 +31,19 @@ position = Vector2(1024, 768)
 position = Vector2(1088, 384)
 
 [node name="Box2" parent="World/GameComponents/Platforms" instance=ExtResource("4_v3l7u")]
-position = Vector2(1024, 192)
+position = Vector2(1920, -256)
 
 [node name="Box3" parent="World/GameComponents/Platforms" instance=ExtResource("4_v3l7u")]
-position = Vector2(896, 320)
+position = Vector2(384, 128)
 
 [node name="Box4" parent="World/GameComponents/Platforms" instance=ExtResource("4_v3l7u")]
 position = Vector2(1600, 192)
 
 [node name="Box5" parent="World/GameComponents/Platforms" instance=ExtResource("4_v3l7u")]
-position = Vector2(1664, 0)
+position = Vector2(1344, 448)
 
 [node name="Box6" parent="World/GameComponents/Platforms" instance=ExtResource("4_v3l7u")]
-position = Vector2(1472, 0)
+position = Vector2(1088, -192)
 
 [node name="Characters" type="Node2D" parent="World/GameComponents"]
 

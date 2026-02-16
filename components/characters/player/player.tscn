@@ -1,11 +1,11 @@
-[gd_scene load_steps=14 format=3 uid="uid://dglx0pbuwqv14"]
+[gd_scene format=3 uid="uid://dglx0pbuwqv14"]
 
 [ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="1_kjygs"]
 [ext_resource type="Script" uid="uid://caoknale6eh0p" path="res://components/characters/player/player.gd" id="1_viwsh"]
 [ext_resource type="Texture2D" uid="uid://caaqv80a8h88s" path="res://assets/template/player-temp-left.png" id="2_hn4f5"]
 [ext_resource type="Texture2D" uid="uid://doaygnck5qus5" path="res://assets/template/player-temp.png" id="2_kkjo8"]
 [ext_resource type="PackedScene" uid="uid://cw0ml7a8dvemo" path="res://components/camera/camera.tscn" id="3_dc6tm"]
-[ext_resource type="Texture2D" uid="uid://dao21mtcl0nyf" path="res://assets/template/player-temp-right.png" id="3_x0p2c"]
+[ext_resource type="Texture2D" uid="uid://bqbot7ncx7r8f" path="res://assets/template/player-temp-right.png" id="3_x0p2c"]
 [ext_resource type="Script" uid="uid://dkwipe7wope6u" path="res://components/characters/player/anim_player_controller.gd" id="5_k8mmp"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_k8mmp"]
@@ -74,40 +74,41 @@ gravity = Vector3(0, 98, 0)
 scale_min = 0.59999996
 color_ramp = SubResource("GradientTexture1D_x0p2c")
 
-[node name="Player" type="CharacterBody2D" groups=["player"]]
+[node name="Player" type="CharacterBody2D" unique_id=397395271 groups=["player"]]
+texture_filter = 1
 script = ExtResource("1_viwsh")
 
-[node name="PlayerSprite" type="AnimatedSprite2D" parent="."]
+[node name="PlayerSprite" type="AnimatedSprite2D" parent="." unique_id=1259130146]
 unique_name_in_owner = true
 position = Vector2(0, -2.9999897)
 scale = Vector2(2.174, 1.9531251)
 sprite_frames = SubResource("SpriteFrames_k8mmp")
 animation = &"casting_up"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=68979787]
 shape = SubResource("RectangleShape2D_kjygs")
 
-[node name="CastDirectionMarker" type="Marker2D" parent="."]
+[node name="CastDirectionMarker" type="Marker2D" parent="." unique_id=1815204332]
 unique_name_in_owner = true
-position = Vector2(0, -237)
+position = Vector2(120, 0)
 gizmo_extents = 37.5
 
-[node name="Sprite2D" type="Sprite2D" parent="CastDirectionMarker"]
+[node name="Sprite2D" type="Sprite2D" parent="CastDirectionMarker" unique_id=573375422]
 self_modulate = Color(1, 0, 0, 1)
-scale = Vector2(0.27374002, 0.47766894)
+scale = Vector2(0.20214295, 0.11242846)
 texture = ExtResource("1_kjygs")
 
-[node name="castingText" type="Label" parent="."]
+[node name="castingText" type="Label" parent="." unique_id=379667302]
 unique_name_in_owner = true
 offset_left = -106.0
-offset_top = -183.0
+offset_top = -207.0
 offset_right = 107.0
-offset_bottom = -141.0
+offset_bottom = -165.0
 text = "CASTING TEXT"
 label_settings = SubResource("LabelSettings_42y4n")
 horizontal_alignment = 1
 
-[node name="DashParticles" type="GPUParticles2D" parent="." groups=["player"]]
+[node name="DashParticles" type="GPUParticles2D" parent="." unique_id=1973096397 groups=["player"]]
 unique_name_in_owner = true
 emitting = false
 amount = 40
@@ -117,12 +118,11 @@ one_shot = true
 randomness = 0.3
 process_material = SubResource("ParticleProcessMaterial_hn4f5")
 
-[node name="Camera2D" parent="." instance=ExtResource("3_dc6tm")]
+[node name="Camera2D" parent="." unique_id=1608398286 instance=ExtResource("3_dc6tm")]
 unique_name_in_owner = true
 process_mode = 3
 process_priority = 10
-offset = Vector2(0, -400)
 position_smoothing_speed = 4.2
 
-[node name="AnimPlayerController" type="Node" parent="."]
+[node name="AnimPlayerController" type="Node" parent="." unique_id=2111395895]
 script = ExtResource("5_k8mmp")

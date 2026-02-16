@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cw0ml7a8dvemo"]
+[gd_scene format=3 uid="uid://cw0ml7a8dvemo"]
 
 [ext_resource type="Script" uid="uid://bfm27u5e7gn7r" path="res://components/camera/camera.gd" id="1_s8cyt"]
 [ext_resource type="PackedScene" uid="uid://qoyrbwgkhxny" path="res://scenes/ui/user-interface-combat.tscn" id="2_5he1u"]
@@ -6,25 +6,25 @@
 [ext_resource type="PackedScene" uid="uid://248u3hk2nrx" path="res://scenes/ui/multiplayer_menu.tscn" id="4_mf6hl"]
 [ext_resource type="PackedScene" uid="uid://db43cii5up0h2" path="res://scenes/ui/menus/pause_menu.tscn" id="5_503qr"]
 
-[node name="Camera2D" type="Camera2D"]
+[node name="Camera2D" type="Camera2D" unique_id=1424154472]
 zoom = Vector2(0.7, 0.7)
-position_smoothing_enabled = true
+limit_enabled = false
 position_smoothing_speed = 2.0
 script = ExtResource("1_s8cyt")
 
-[node name="UI" type="CanvasLayer" parent="."]
+[node name="UI" type="CanvasLayer" parent="." unique_id=1184681844]
 
-[node name="UserInterfaceCombat" parent="UI" instance=ExtResource("2_5he1u")]
+[node name="UserInterfaceCombat" parent="UI" unique_id=354401744 instance=ExtResource("2_5he1u")]
 unique_name_in_owner = true
 visible = false
 
-[node name="UserInterfaceOverworld" parent="UI" instance=ExtResource("3_yuem3")]
+[node name="UserInterfaceOverworld" parent="UI" unique_id=1548696164 instance=ExtResource("3_yuem3")]
 unique_name_in_owner = true
 visible = false
 
-[node name="MultiplayerMenu (Control)" parent="UI" instance=ExtResource("4_mf6hl")]
+[node name="MultiplayerMenu (Control)" parent="UI" unique_id=62332286 instance=ExtResource("4_mf6hl")]
 visible = false
 
-[node name="PauseMenu" parent="UI" instance=ExtResource("5_503qr")]
+[node name="PauseMenu" parent="UI" unique_id=282258467 instance=ExtResource("5_503qr")]
 unique_name_in_owner = true
 visible = false

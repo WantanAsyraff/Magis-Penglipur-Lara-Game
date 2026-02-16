@@ -6,7 +6,7 @@ extends Node
 func _process(_delta: float) -> void:
 	_update_flip()
 	_update_animations()
-	print("Casting? ", Player_Global_Data.is_casting)
+	#print("Casting? ", Player_Global_Data.is_casting)
 
 func _update_flip() -> void:
 	var dir := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")

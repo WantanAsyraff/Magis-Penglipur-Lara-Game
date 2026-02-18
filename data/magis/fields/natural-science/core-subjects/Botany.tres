@@ -1,9 +1,8 @@
-[gd_resource type="Resource" script_class="subjectData" load_steps=4 format=3 uid="uid://dgt20mxmfh0w3"]
+[gd_resource type="Resource" script_class="subjectData" format=3 uid="uid://dgt20mxmfh0w3"]
 
 [ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="1_cvnxc"]
 [ext_resource type="Script" uid="uid://b6vkafnios50y" path="res://data/Resources/ilmu/subject.gd" id="1_n6lqa"]
 [ext_resource type="Resource" uid="uid://dmuos14tj2ww3" path="res://data/magis/spells/botany.tres" id="2_nqwp6"]
-
 
 [resource]
 script = ExtResource("1_n6lqa")

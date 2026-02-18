@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://dibm3kal6ufej"]
+
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="1_xatdl"]
+[ext_resource type="Script" uid="uid://b6vkafnios50y" path="res://data/Resources/ilmu/subject.gd" id="2_sg5pb"]
+
+[resource]
+script = ExtResource("1_xatdl")
+spell_name = "Ground Slam"
+spell_id = "ground_slam"
+spell_type = 3
+spell_manifest = 4
+spell_incantation = Array[String](["down", "down", "left", "down"])
+magis_archetype = "Technical"
+upfront_cost = 45
+cast_time = 1.0
+metadata/_custom_type_script = "uid://ddmcw1l0ht73f"

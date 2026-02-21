@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://doaygnck5qus5" path="res://assets/template/player-temp.png" id="2_kkjo8"]
 [ext_resource type="PackedScene" uid="uid://cw0ml7a8dvemo" path="res://components/camera/camera.tscn" id="3_dc6tm"]
 [ext_resource type="Texture2D" uid="uid://bqbot7ncx7r8f" path="res://assets/template/player-temp-right.png" id="3_x0p2c"]
-[ext_resource type="Script" uid="uid://dkwipe7wope6u" path="res://components/characters/player/anim_player_controller.gd" id="5_k8mmp"]
+[ext_resource type="Script" uid="uid://dkwipe7wope6u" path="res://components/characters/player/anim-player-controller.gd" id="5_k8mmp"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_k8mmp"]
 animations = [{

@@ -1,10 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://dh675vcu2br3h"]
+[gd_scene format=3 uid="uid://dh675vcu2br3h"]
 
 [ext_resource type="Script" uid="uid://c370b7uc5j2lr" path="res://scenes/ui/phone-ui/phone_ui.gd" id="1_e010p"]
 [ext_resource type="PackedScene" uid="uid://dbwcpjgic86os" path="res://scenes/ui/phone-ui/app.tscn" id="1_qb4dd"]
 [ext_resource type="PackedScene" uid="uid://5j53l67p7ufs" path="res://scenes/ui/phone-ui/e-hailing-ui/e-hailingUI.tscn" id="3_s57sm"]
 
-[node name="PhoneUI" type="Control"]
+[node name="PhoneUI" type="Control" unique_id=993725934]
 clip_children = 2
 layout_mode = 3
 anchors_preset = 15
@@ -20,13 +20,13 @@ script = ExtResource("1_e010p")
 up_pos = Vector2(1384, 450)
 down_pos = Vector2(1384, 1005)
 
-[node name="PhoneBG" type="Panel" parent="."]
+[node name="PhoneBG" type="Panel" parent="." unique_id=1661318320]
 unique_name_in_owner = true
 layout_mode = 0
 offset_right = 448.0
 offset_bottom = 640.0
 
-[node name="Screen" type="Panel" parent="PhoneBG"]
+[node name="Screen" type="Panel" parent="PhoneBG" unique_id=1448778715]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -39,7 +39,7 @@ offset_bottom = -60.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="AppList" type="Panel" parent="PhoneBG/Screen"]
+[node name="AppList" type="Panel" parent="PhoneBG/Screen" unique_id=1370866763]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -48,7 +48,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="E-Hailing" parent="PhoneBG/Screen/AppList" instance=ExtResource("1_qb4dd")]
+[node name="E-Hailing" parent="PhoneBG/Screen/AppList" unique_id=1562965948 instance=ExtResource("1_qb4dd")]
 layout_mode = 0
 offset_left = 0.0
 offset_top = 0.0

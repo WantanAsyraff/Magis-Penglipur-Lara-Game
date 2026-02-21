@@ -1,9 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://40eyximxy17o"]
+[gd_scene format=3 uid="uid://40eyximxy17o"]
 
 [ext_resource type="Script" uid="uid://yu4qfawb5trg" path="res://scenes/ui/mission-selection/story_selection.gd" id="1_gbkoh"]
 [ext_resource type="PackedScene" uid="uid://t3o4osbl3bct" path="res://scenes/worlds/hubs/akademi-bintang-utama/missions-hub/story/prologue/Prologue.tscn" id="2_cx7n8"]
+[ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="3_6odkk"]
 
-[node name="StorySelection" type="Control"]
+[node name="StorySelection" type="Control" unique_id=133484749]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,7 +14,7 @@ grow_vertical = 2
 script = ExtResource("1_gbkoh")
 destination_scene = ExtResource("2_cx7n8")
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1008419345]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -25,10 +26,10 @@ offset_bottom = -254.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Panel" type="Panel" parent="PanelContainer"]
+[node name="Panel" type="Panel" parent="PanelContainer" unique_id=2093879863]
 layout_mode = 2
 
-[node name="Chapter" type="HBoxContainer" parent="PanelContainer/Panel"]
+[node name="Chapter" type="HBoxContainer" parent="PanelContainer/Panel" unique_id=367880893]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -36,11 +37,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Button" type="Button" parent="PanelContainer/Panel/Chapter"]
+[node name="Prologue" type="VBoxContainer" parent="PanelContainer/Panel/Chapter" unique_id=111287145]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/Panel/Chapter/Prologue" unique_id=1684980254]
+custom_minimum_size = Vector2(0, 400)
+layout_mode = 2
+texture = ExtResource("3_6odkk")
+
+[node name="Button" type="Button" parent="PanelContainer/Panel/Chapter/Prologue" unique_id=1109657905]
 layout_mode = 2
 text = "PROLOGUE"
 
-[node name="TextureRect" type="TextureRect" parent="PanelContainer/Panel/Chapter"]
-layout_mode = 2
-
-[connection signal="pressed" from="PanelContainer/Panel/Chapter/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="PanelContainer/Panel/Chapter/Prologue/Button" to="." method="_on_button_pressed"]

@@ -58,6 +58,9 @@ func _physics_process(delta: float) -> void:
 	
 	# APPLY GRAVITY (Always apply so player sits on floor during dialogue)
 	_apply_gravity(delta)
+	
+	# Update aim direction continuously
+	_update_aim_direction()
 
 	# CHECK GLOBAL MOVEABLE STATE
 	if not Player_Global_Data.p_moveable:
@@ -132,7 +135,6 @@ func _unhandled_input(_event: InputEvent) -> void:
 		Player_Global_Data.is_casting = !Player_Global_Data.is_casting
 		spell_string.clear()
 		spell_label.text = ""
-	_update_aim_direction()
 	if Player_Global_Data.is_casting:
 		_process_incantation_inputs()
 
@@ -195,16 +197,16 @@ func _update_aim_direction() -> void:
 	var aim_input = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	if aim_input != Vector2.ZERO:
 		var target_pos = Vector2.ZERO
-		target_pos.x = aim_input.x * 142
-		target_pos.y = -237 if aim_input.y < 0 else (177 if aim_input.y > 0 else 0)
+		target_pos.x = aim_input.x * 120.0
+		target_pos.y = -160.0 if aim_input.y < 0 else (160.0 if aim_input.y > 0 else 0)
 		if aim_input.y == 0:
-			target_pos.y = -57
+			target_pos.y = 0.0
 		castMarker.position = target_pos
 
 func _on_combat_mode_changed(is_combat: bool) -> void:
 	if not is_inside_tree(): await ready
 	var target_zoom = Vector2(0.7, 0.7) if is_combat else Vector2(1.0, 1.0)
-	create_tween().tween_property(camera, "zoom", target_zoom, 0.5)\
+	create_tween().tween_property(camera, "zoom", target_zoom, 0.2)\
 		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	if not is_combat:
 		_cancel_casting()

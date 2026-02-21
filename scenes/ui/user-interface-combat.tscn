@@ -1,9 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://qoyrbwgkhxny"]
+[gd_scene format=3 uid="uid://qoyrbwgkhxny"]
 
 [ext_resource type="Script" uid="uid://dq721grj8qapv" path="res://scenes/ui/user_interface.gd" id="1_284y0"]
 [ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="2_3yar4"]
+[ext_resource type="Texture2D" uid="uid://p7wjpx3cyuy4" path="res://assets/template/temp-embed-ui.png" id="3_bqmsd"]
+[ext_resource type="Texture2D" uid="uid://cun6433mjf23h" path="res://assets/template/temp-heart.png" id="4_48p3t"]
+[ext_resource type="Texture2D" uid="uid://c3w8vxo0u0mic" path="res://assets/template/temp-mana.png" id="5_6pnla"]
+[ext_resource type="PackedScene" uid="uid://we1fcxlf1wm8" path="res://scenes/ui/repetoire.tscn" id="6_gadla"]
 
-[node name="UserInterface(Combat)" type="Control"]
+[node name="UserInterface(Combat)" type="Control" unique_id=1778911143]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,67 +16,109 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_284y0")
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="TempEmbedUi" type="Sprite2D" parent="." unique_id=1775177104]
+position = Vector2(351.0698, 108)
+scale = Vector2(0.38550368, 0.41860464)
+texture = ExtResource("3_bqmsd")
+
+[node name="ProfileIcon" type="TextureRect" parent="." unique_id=697833912]
+layout_mode = 0
+offset_left = 88.0
+offset_top = 30.0
+offset_right = 216.0
+offset_bottom = 158.0
+texture = ExtResource("2_3yar4")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1054828788]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -1257.0
-offset_bottom = -887.0
+offset_left = 259.0
+offset_top = 15.0
+offset_right = -1294.0
+offset_bottom = -879.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PlayerProfileVBox" type="VBoxContainer" parent="PanelContainer"]
+[node name="PlayerProfileVBox" type="VBoxContainer" parent="PanelContainer" unique_id=1916342234]
 layout_mode = 2
 
-[node name="OverworldLabel" type="Label" parent="PanelContainer/PlayerProfileVBox"]
+[node name="OverworldLabel" type="Label" parent="PanelContainer/PlayerProfileVBox" unique_id=1085789028]
 layout_mode = 2
 text = "OVERWORLD UI"
 
-[node name="PlayerStatsHBox" type="HBoxContainer" parent="PanelContainer/PlayerProfileVBox"]
+[node name="PlayerStatsHBox" type="HBoxContainer" parent="PanelContainer/PlayerProfileVBox" unique_id=1595563284]
 layout_mode = 2
 
-[node name="ProfileIcon" type="TextureRect" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox"]
-layout_mode = 2
-texture = ExtResource("2_3yar4")
-
-[node name="HealthContainer" type="VBoxContainer" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox"]
+[node name="DataContainer" type="VBoxContainer" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox" unique_id=1353600649]
 layout_mode = 2
 
-[node name="HealthLabel" type="Label" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox/HealthContainer"]
+[node name="HealthBoxContainer" type="HBoxContainer" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox/DataContainer" unique_id=663096177]
+layout_mode = 2
+
+[node name="HealthLabel" type="Label" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox/DataContainer/HealthBoxContainer" unique_id=1395845122]
 unique_name_in_owner = true
 layout_mode = 2
 text = "HEALTH: 00/00"
 
-[node name="HealthProgressBar" type="ProgressBar" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox/HealthContainer"]
+[node name="VSeparator" type="VSeparator" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox/DataContainer/HealthBoxContainer" unique_id=437937008]
+layout_mode = 2
+
+[node name="HealthProgressBar" type="ProgressBar" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox/DataContainer/HealthBoxContainer" unique_id=1854441703]
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 value = 100.0
 
-[node name="ManaLabel" type="Label" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox/HealthContainer"]
+[node name="VSeparator" type="VSeparator" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox/DataContainer" unique_id=1428364951]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="ManaBoxContainer" type="HBoxContainer" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox/DataContainer" unique_id=1437261995]
+layout_mode = 2
+
+[node name="ManaLabel" type="Label" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox/DataContainer/ManaBoxContainer" unique_id=1633765243]
 unique_name_in_owner = true
 layout_mode = 2
 text = "MANA: 00/00"
 
-[node name="ManaProgressBar" type="ProgressBar" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox/HealthContainer"]
+[node name="VSeparator" type="VSeparator" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox/DataContainer/ManaBoxContainer" unique_id=1298904630]
+layout_mode = 2
+
+[node name="ManaProgressBar" type="ProgressBar" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox/DataContainer/ManaBoxContainer" unique_id=1545218631]
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 value = 100.0
 
-[node name="PanelContainer2" type="PanelContainer" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.86200005
-anchor_right = 1.0
-anchor_bottom = 0.18
-offset_left = -0.040039063
-offset_bottom = -0.40000916
+[node name="TempHeart" type="TextureRect" parent="." unique_id=1257596511]
+layout_mode = 0
+offset_left = 563.0
+offset_top = 24.0
+offset_right = 843.0
+offset_bottom = 304.0
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("4_48p3t")
 
-[node name="PanelContainer3" type="PanelContainer" parent="."]
+[node name="TempMana" type="TextureRect" parent="." unique_id=762054000]
+layout_mode = 0
+offset_left = 550.0
+offset_top = 83.00001
+offset_right = 843.0
+offset_bottom = 363.0
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("5_6pnla")
+
+[node name="Repetoire" parent="." unique_id=982998006 instance=ExtResource("6_gadla")]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.86200005
-anchor_right = 1.0
-anchor_bottom = 0.18
-offset_left = -1654.04
-offset_top = 885.0
-offset_right = -994.0
-offset_bottom = 884.6
+anchor_left = 0.15200001
+anchor_top = 0.74100006
+anchor_right = 0.859
+anchor_bottom = 1.0
+offset_left = 0.15997314
+offset_top = -0.28009033
+offset_right = -0.2800293
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 0

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="subjectData" format=3 uid="uid://65c7oww8efhx"]
+
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="1_fw608"]
+[ext_resource type="Script" uid="uid://b6vkafnios50y" path="res://data/Resources/ilmu/subject.gd" id="2_qqxlf"]
+
+[resource]
+script = ExtResource("2_qqxlf")
+subject_name = "Structural Analysis"
+subject_id = "structural_analysis_101"
+subject_archetype = "Physical Sciences"
+subject_description = "Structural Analysis focuses on understanding how structures respond to loads such as gravity, wind, and usage. Students learn to model forces, moments, and deformations in beams, frames, and trusses to ensure stability and safety."
+magis_archetype = "Technical"
+metadata/_custom_type_script = "uid://b6vkafnios50y"

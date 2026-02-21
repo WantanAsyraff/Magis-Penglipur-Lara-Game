@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://bspp6sp11dr6h"]
+
+[ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="1_khhen"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_711xm"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 98, 0)
+
+[node name="GroundSlamImpact2" type="GPUParticles2D" unique_id=883263469]
+emitting = false
+amount = 2
+texture = ExtResource("1_khhen")
+lifetime = 0.45
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_711xm")

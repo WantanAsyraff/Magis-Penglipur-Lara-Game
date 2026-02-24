@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="subjectData" load_steps=8 format=3]
+
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="1_spell"]
+[ext_resource type="Script" uid="uid://b6vkafnios50y" path="res://data/Resources/ilmu/subject.gd" id="2_subject"]
+[ext_resource type="Resource" path="res://data/magis/spells/rebar-lance.tres" id="3_rebar"]
+[ext_resource type="Resource" path="res://data/magis/spells/load-vector.tres" id="4_load"]
+[ext_resource type="Resource" path="res://data/magis/spells/fault-bind.tres" id="5_fault"]
+[ext_resource type="Resource" path="res://data/magis/spells/resonance-pulse.tres" id="6_reso"]
+
+[resource]
+script = ExtResource("2_subject")
+subject_name = "Secure Systems Engineering"
+subject_id = "secure_systems_engineering_301"
+subject_archetype = "Computer Science"
+subject_description = "Integrates architecture, reliability, least-privilege design, and failure containment into end-to-end secure systems. Magis training emphasizes layered defenses, resilient constructs, and controlled degradation under attack."
+magis_archetype = "Technical"
+magis_comprehension = "Advanced"
+difficulty_level = 3
+prerequisites = Array[String](["distributed_systems_301", "cybersecurity_principles_201"])
+contained_spells = Array[ExtResource("1_spell")]([ExtResource("3_rebar"), ExtResource("4_load"), ExtResource("5_fault"), ExtResource("6_reso")])
+metadata/_custom_type_script = "uid://b6vkafnios50y"

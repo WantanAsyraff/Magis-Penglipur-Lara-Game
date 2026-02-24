@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="subjectData" load_steps=9 format=3]
+
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="1_spell"]
+[ext_resource type="Script" uid="uid://b6vkafnios50y" path="res://data/Resources/ilmu/subject.gd" id="2_subject"]
+[ext_resource type="Resource" uid="uid://dmuos14tj2ww3" path="res://data/magis/spells/botany.tres" id="3_root"]
+[ext_resource type="Resource" path="res://data/magis/spells/fault-bind.tres" id="4_fault"]
+[ext_resource type="Resource" path="res://data/magis/spells/rebar-lance.tres" id="5_rebar"]
+[ext_resource type="Resource" path="res://data/magis/spells/packet-snare.tres" id="6_packet"]
+[ext_resource type="Resource" path="res://data/magis/spells/firewall-burst.tres" id="7_firewall"]
+
+[resource]
+script = ExtResource("2_subject")
+subject_name = "Cybersecurity Principles"
+subject_id = "cybersecurity_principles_201"
+subject_archetype = "Computer Science"
+subject_description = "Introduces system hardening, access control, threat modeling, and defensive response. Students translate containment, isolation, and integrity verification into protective and restraining Magis techniques."
+magis_archetype = "Technical"
+magis_comprehension = "Intermediate"
+difficulty_level = 2
+prerequisites = Array[String](["programming_fundamentals_101"])
+contained_spells = Array[ExtResource("1_spell")]([ExtResource("3_root"), ExtResource("4_fault"), ExtResource("5_rebar"), ExtResource("6_packet"), ExtResource("7_firewall")])
+metadata/_custom_type_script = "uid://b6vkafnios50y"

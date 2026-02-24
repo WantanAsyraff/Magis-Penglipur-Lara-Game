@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="SpellData" load_steps=6 format=3]
+
+[ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="1_tex"]
+[ext_resource type="PackedScene" uid="uid://5847o4yjb45a" path="res://components/effects/impact/ground-slam-impact.tscn" id="2_impact"]
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="3_spell"]
+[ext_resource type="PackedScene" path="res://components/effects/trails/ground-slam-charge-particle.tscn" id="4_trail"]
+[ext_resource type="Script" uid="uid://b6vkafnios50y" path="res://data/Resources/ilmu/subject.gd" id="5_subject"]
+
+[resource]
+script = ExtResource("3_spell")
+spell_name = "Firewall Burst"
+spell_id = "firewall_burst"
+spell_manifest = 2
+spell_incantation = Array[String](["left", "down", "left", "up"])
+magis_archetype = "Technical"
+magis_comprehension = "Intermediate"
+upfront_cost = 36
+cast_time = 0.4
+projectile_particles = ExtResource("4_trail")
+impact_particles = ExtResource("2_impact")
+projectile_range = 320.0
+projectile_size = 1.4
+projectile_damage = 44.0
+projectile_speed = 520.0
+projectile_texture = ExtResource("1_tex")
+stunnable = true
+stun_dur = 0.45
+theory_desc = "\"Segmented rule barriers are condensed into an expanding defensive burst that blocks hostile flow and punishes unauthorized traversal at close range.\""
+metadata/_custom_type_script = "uid://ddmcw1l0ht73f"

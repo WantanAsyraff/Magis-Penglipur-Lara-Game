@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="1_tex"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_harmonic_shimmer"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 1.4
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_min = 16.0
+initial_velocity_max = 44.0
+gravity = Vector3(0, -10, 0)
+scale_min = 0.16
+scale_max = 0.38
+color = Color(0.91764706, 0.62352943, 1, 0.85)
+
+[node name="HarmonicShimmerTrail" type="GPUParticles2D"]
+amount = 22
+texture = ExtResource("1_tex")
+lifetime = 0.28
+process_material = SubResource("ParticleProcessMaterial_harmonic_shimmer")

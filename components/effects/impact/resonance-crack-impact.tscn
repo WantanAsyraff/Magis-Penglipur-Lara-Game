@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="1_tex"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_resonance_crack"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 6.0
+initial_velocity_min = 140.0
+initial_velocity_max = 240.0
+gravity = Vector3(0, 0, 0)
+spread = 180.0
+damping_min = 8.0
+damping_max = 16.0
+scale_min = 0.24
+scale_max = 0.7
+color = Color(1, 0.8627451, 0.3529412, 1)
+
+[node name="ResonanceCrackImpact" type="GPUParticles2D"]
+emitting = false
+amount = 52
+texture = ExtResource("1_tex")
+lifetime = 0.35
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_resonance_crack")

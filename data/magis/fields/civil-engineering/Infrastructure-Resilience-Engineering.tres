@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="CourseData" load_steps=10 format=3]
+
+[ext_resource type="Script" uid="uid://mj2k1sm83ebr" path="res://data/Resources/ilmu/course.gd" id="1_course"]
+[ext_resource type="Script" uid="uid://b6vkafnios50y" path="res://data/Resources/ilmu/subject.gd" id="2_subject"]
+[ext_resource type="Resource" uid="uid://c1cs7qnfdr111" path="res://data/magis/fields/civil-engineering/core-subjects/Geotechnical Engineering.tres" id="3_geo"]
+[ext_resource type="Resource" uid="uid://65c7oww8efhx" path="res://data/magis/fields/civil-engineering/core-subjects/Structural Analysis.tres" id="4_analysis"]
+[ext_resource type="Resource" uid="uid://bccmufnl67n4k" path="res://data/magis/fields/civil-engineering/core-subjects/Structural Dynamics.tres" id="5_dynamics"]
+[ext_resource type="Resource" path="res://data/magis/fields/civil-engineering/core-subjects/Seismic Engineering.tres" id="6_seismic"]
+[ext_resource type="Resource" path="res://data/magis/fields/civil-engineering/core-subjects/Infrastructure Load Design.tres" id="7_load"]
+[ext_resource type="Resource" path="res://data/magis/fields/civil-engineering/core-subjects/Ground Improvement Systems.tres" id="8_ground"]
+[ext_resource type="Resource" uid="uid://bcqolxsdxt3qo" path="res://data/magis/fields/civil-engineering/core-subjects/Construction Materials.tres" id="9_materials"]
+
+[resource]
+script = ExtResource("1_course")
+course_name = "Bachelor of Infrastructure Resilience Engineering"
+course_id = "beng_infrastructure_resilience"
+course_archetype = "STEM"
+course_description = "An advanced technical program focused on resilient infrastructure under dynamic loads, unstable ground, and extreme environmental events. Students integrate structural, geotechnical, and material systems into robust Magis-assisted engineering practice."
+magis_archetype = "Technical"
+magis_comprehension = "Advanced"
+difficulty_level = 3
+subjects = Array[ExtResource("2_subject")]([ExtResource("9_materials"), ExtResource("3_geo"), ExtResource("4_analysis"), ExtResource("5_dynamics"), ExtResource("7_load"), ExtResource("8_ground"), ExtResource("6_seismic")])
+metadata/_custom_type_script = "uid://mj2k1sm83ebr"

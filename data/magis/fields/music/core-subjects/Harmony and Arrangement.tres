@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="subjectData" load_steps=8 format=3]
+
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="1_spell"]
+[ext_resource type="Script" uid="uid://b6vkafnios50y" path="res://data/Resources/ilmu/subject.gd" id="2_subject"]
+[ext_resource type="Resource" path="res://data/magis/spells/resonance-pulse.tres" id="3_reso"]
+[ext_resource type="Resource" path="res://data/magis/spells/tidal-lance.tres" id="4_tidal"]
+[ext_resource type="Resource" path="res://data/magis/spells/checksum-lance.tres" id="5_check"]
+[ext_resource type="Resource" path="res://data/magis/spells/firewall-burst.tres" id="6_firewall"]
+
+[resource]
+script = ExtResource("2_subject")
+subject_name = "Harmony and Arrangement"
+subject_id = "harmony_and_arrangement_201"
+subject_archetype = "Humanities"
+subject_description = "Explores harmonic progression, voice leading, and ensemble balance. Students orchestrate multi-layered spell structures where supporting tones and accents reinforce the primary effect."
+magis_archetype = "Celestial"
+magis_comprehension = "Intermediate"
+difficulty_level = 2
+prerequisites = Array[String](["music_theory_fundamentals_101"])
+contained_spells = Array[ExtResource("1_spell")]([ExtResource("3_reso"), ExtResource("4_tidal"), ExtResource("5_check"), ExtResource("6_firewall")])
+metadata/_custom_type_script = "uid://b6vkafnios50y"

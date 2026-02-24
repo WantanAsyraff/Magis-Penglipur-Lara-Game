@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="subjectData" load_steps=8 format=3]
+
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="1_spell"]
+[ext_resource type="Script" uid="uid://b6vkafnios50y" path="res://data/Resources/ilmu/subject.gd" id="2_subject"]
+[ext_resource type="Resource" path="res://data/magis/spells/pressure-jet.tres" id="3_pressure"]
+[ext_resource type="Resource" path="res://data/magis/spells/static-bolt.tres" id="4_static"]
+[ext_resource type="Resource" path="res://data/magis/spells/resonance-pulse.tres" id="5_reso"]
+[ext_resource type="Resource" path="res://data/magis/spells/packet-snare.tres" id="6_packet"]
+
+[resource]
+script = ExtResource("2_subject")
+subject_name = "Instrumentation and Orchestration"
+subject_id = "instrumentation_and_orchestration_201"
+subject_archetype = "Humanities"
+subject_description = "Covers timbre, register, texture, and ensemble role assignment. Students learn to select and layer spell voices for clarity, contrast, and controlled crescendos in live casting."
+magis_archetype = "Celestial"
+magis_comprehension = "Intermediate"
+difficulty_level = 2
+prerequisites = Array[String](["harmony_and_arrangement_201", "rhythm_and_meter_101"])
+contained_spells = Array[ExtResource("1_spell")]([ExtResource("3_pressure"), ExtResource("4_static"), ExtResource("5_reso"), ExtResource("6_packet")])
+metadata/_custom_type_script = "uid://b6vkafnios50y"

@@ -9,7 +9,7 @@
 script = ExtResource("2_subject")
 subject_name = "Music Theory Fundamentals"
 subject_id = "music_theory_fundamentals_101"
-subject_archetype = "Humanities"
+subject_archetype = "Arts"
 subject_description = "Introduces notation, scales, intervals, and chord function as the grammar of musical expression. Students learn to structure incantatory phrasing and tonal movement with clarity and intent."
 magis_archetype = "Celestial"
 difficulty_level = 1

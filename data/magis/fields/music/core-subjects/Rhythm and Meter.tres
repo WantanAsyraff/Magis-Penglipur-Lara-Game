@@ -10,7 +10,7 @@
 script = ExtResource("2_subject")
 subject_name = "Rhythm and Meter"
 subject_id = "rhythm_and_meter_101"
-subject_archetype = "Humanities"
+subject_archetype = "Arts"
 subject_description = "Focuses on pulse, subdivision, syncopation, and metric structure. In Magis performance, students train temporal precision to control casting cadence, impact timing, and chained phrases."
 magis_archetype = "Celestial"
 difficulty_level = 1

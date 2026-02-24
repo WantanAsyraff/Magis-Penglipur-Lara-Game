@@ -11,7 +11,7 @@
 script = ExtResource("2_subject")
 subject_name = "Performance Direction"
 subject_id = "performance_direction_301"
-subject_archetype = "Humanities"
+subject_archetype = "Arts"
 subject_description = "Trains ensemble leadership, cueing, dynamic control, and expressive intent in high-pressure performance settings. Students direct coordinated Magis execution across multiple casters and layered effects."
 magis_archetype = "Celestial"
 magis_comprehension = "Advanced"

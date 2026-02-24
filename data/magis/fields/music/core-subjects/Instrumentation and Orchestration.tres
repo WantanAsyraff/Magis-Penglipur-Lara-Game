@@ -11,7 +11,7 @@
 script = ExtResource("2_subject")
 subject_name = "Instrumentation and Orchestration"
 subject_id = "instrumentation_and_orchestration_201"
-subject_archetype = "Humanities"
+subject_archetype = "Arts"
 subject_description = "Covers timbre, register, texture, and ensemble role assignment. Students learn to select and layer spell voices for clarity, contrast, and controlled crescendos in live casting."
 magis_archetype = "Celestial"
 magis_comprehension = "Intermediate"

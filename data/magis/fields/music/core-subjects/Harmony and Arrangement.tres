@@ -11,7 +11,7 @@
 script = ExtResource("2_subject")
 subject_name = "Harmony and Arrangement"
 subject_id = "harmony_and_arrangement_201"
-subject_archetype = "Humanities"
+subject_archetype = "Arts"
 subject_description = "Explores harmonic progression, voice leading, and ensemble balance. Students orchestrate multi-layered spell structures where supporting tones and accents reinforce the primary effect."
 magis_archetype = "Celestial"
 magis_comprehension = "Intermediate"

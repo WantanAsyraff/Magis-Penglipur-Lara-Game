@@ -1,7 +1,8 @@
-[gd_resource type="Resource" script_class="subjectData" format=3 uid="uid://c1cs7qnfdr111"]
+[gd_resource type="Resource" script_class="subjectData" load_steps=4 format=3 uid="uid://c1cs7qnfdr111"]
 
 [ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="1_hs221"]
 [ext_resource type="Script" uid="uid://b6vkafnios50y" path="res://data/Resources/ilmu/subject.gd" id="2_pnjyo"]
+[ext_resource type="Resource" path="res://data/magis/spells/fault-bind.tres" id="3_fault"]
 
 [resource]
 script = ExtResource("2_pnjyo")
@@ -10,4 +11,5 @@ subject_id = "geotechnical_engineering_101"
 subject_archetype = "Engineering"
 subject_description = "Geotechnical Engineering studies soil and rock behavior as engineering materials. It covers foundations, slope stability, earth pressures, and ground improvement techniques."
 magis_archetype = "Technical"
+contained_spells = Array[ExtResource("1_hs221")]([ExtResource("3_fault")])
 metadata/_custom_type_script = "uid://b6vkafnios50y"

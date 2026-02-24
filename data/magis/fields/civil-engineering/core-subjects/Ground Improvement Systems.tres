@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="subjectData" load_steps=5 format=3]
+
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="1_spell"]
+[ext_resource type="Script" uid="uid://b6vkafnios50y" path="res://data/Resources/ilmu/subject.gd" id="2_subject"]
+[ext_resource type="Resource" path="res://data/magis/spells/fault-bind.tres" id="3_fault"]
+[ext_resource type="Resource" path="res://data/magis/spells/rebar-lance.tres" id="4_rebar"]
+
+[resource]
+script = ExtResource("2_subject")
+subject_name = "Ground Improvement Systems"
+subject_id = "ground_improvement_systems_201"
+subject_archetype = "Engineering"
+subject_description = "A practical subject covering soil stabilization, compaction, drainage, and reinforcement methods for weak ground conditions. Magis training focuses on terrain control, anchoring, and subsurface response tuning."
+magis_archetype = "Technical"
+magis_comprehension = "Intermediate"
+difficulty_level = 2
+prerequisites = Array[String](["geotechnical_engineering_101"])
+contained_spells = Array[ExtResource("1_spell")]([ExtResource("3_fault"), ExtResource("4_rebar")])
+metadata/_custom_type_script = "uid://b6vkafnios50y"

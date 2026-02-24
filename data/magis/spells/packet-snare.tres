@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="SpellData" load_steps=6 format=3]
+
+[ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="1_tex"]
+[ext_resource type="PackedScene" uid="uid://c0o52csqnxnvo" path="res://components/effects/impact/root-snare-impact.tscn" id="2_impact"]
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="3_spell"]
+[ext_resource type="PackedScene" uid="uid://h0msm0ixfq2n" path="res://components/effects/trails/root-snare-particle.tscn" id="4_trail"]
+[ext_resource type="Script" uid="uid://b6vkafnios50y" path="res://data/Resources/ilmu/subject.gd" id="5_subject"]
+
+[resource]
+script = ExtResource("3_spell")
+spell_name = "Packet Snare"
+spell_id = "packet_snare"
+spell_manifest = 4
+spell_incantation = Array[String](["right", "left", "down", "up"])
+magis_archetype = "Technical"
+upfront_cost = 26
+cast_time = 0.25
+projectile_particles = ExtResource("4_trail")
+impact_particles = ExtResource("2_impact")
+projectile_range = 430.0
+projectile_size = 0.95
+projectile_damage = 22.0
+projectile_speed = 780.0
+projectile_texture = ExtResource("1_tex")
+stunnable = true
+stun_dur = 0.9
+theory_desc = "\"Traffic interception logic is manifested as a selective capture field that tags and halts unauthorized movement, briefly isolating the target from ongoing flow.\""
+metadata/_custom_type_script = "uid://ddmcw1l0ht73f"

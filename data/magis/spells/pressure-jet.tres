@@ -1,8 +1,10 @@
-[gd_resource type="Resource" script_class="SpellData" load_steps=4 format=3 uid="uid://cpquycdbih76w"]
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://cpquycdbih76w"]
 
 [ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="1_ue5me"]
+[ext_resource type="PackedScene" uid="uid://5ductlj8s53t" path="res://components/effects/impact/pressure-jet-particle.tscn" id="2_impact"]
 [ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="2_rs734"]
 [ext_resource type="Script" uid="uid://b6vkafnios50y" path="res://data/Resources/ilmu/subject.gd" id="3_m6hma"]
+[ext_resource type="PackedScene" path="res://components/effects/trails/pressure-jet-trail.tscn" id="3_trail"]
 
 [resource]
 script = ExtResource("2_rs734")
@@ -13,6 +15,8 @@ spell_incantation = Array[String](["left", "right", "up", "right"])
 magis_archetype = "Elementalist"
 upfront_cost = 35
 cast_time = 0.2
+projectile_particles = ExtResource("3_trail")
+impact_particles = ExtResource("2_impact")
 projectile_range = 400.0
 projectile_size = 0.8
 projectile_damage = 40.0

@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="1_tex"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_packet_stream"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 1.0
+direction = Vector3(-1, 0, 0)
+spread = 20.0
+initial_velocity_min = 28.0
+initial_velocity_max = 72.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.14
+scale_max = 0.32
+color = Color(0.2627451, 0.7411765, 1, 0.95)
+
+[node name="PacketStreamTrail" type="GPUParticles2D"]
+amount = 24
+texture = ExtResource("1_tex")
+lifetime = 0.18
+process_material = SubResource("ParticleProcessMaterial_packet_stream")

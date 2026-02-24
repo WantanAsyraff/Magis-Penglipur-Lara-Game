@@ -4,7 +4,7 @@ class_name subjectData extends Resource
 @export var subject_id: String
 
 @export_enum("Life Sciences", "Physical Sciences", "Mathematics", "Computer Science", "Social Sciences", 
-"Humanities", "Engineering", "Technology", "Language")
+"Humanities", "Arts", "Engineering", "Technology", "Language")
 var subject_archetype: String = "Life Sciences"
 
 @export_multiline var subject_description: String

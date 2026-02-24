@@ -1,8 +1,10 @@
-[gd_resource type="Resource" script_class="subjectData" format=3 uid="uid://nmdqwprwyaf4"]
+[gd_resource type="Resource" script_class="subjectData" load_steps=6 format=3 uid="uid://nmdqwprwyaf4"]
 
 [ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="1_r7x0y"]
 [ext_resource type="Script" uid="uid://b6vkafnios50y" path="res://data/Resources/ilmu/subject.gd" id="2_thxrb"]
 [ext_resource type="Resource" uid="uid://bm8lirrn1ktsj" path="res://data/magis/spells/static-bolt.tres" id="2_vaxhn"]
+[ext_resource type="Resource" path="res://data/magis/spells/arc-needle.tres" id="3_arc"]
+[ext_resource type="Resource" path="res://data/magis/spells/storm-spark.tres" id="4_storm"]
 
 [resource]
 script = ExtResource("2_thxrb")
@@ -12,5 +14,5 @@ subject_archetype = "Physical Sciences"
 subject_description = "The examination of atmospheric phenomena including air pressure systems, electrical discharge, cloud formation, and weather dynamics. Students study charge separation in storm systems, ionization pathways, electromagnetic theory, and thermodynamic processes in gases. This knowledge enables casters to command lightning strikes, manipulate air currents, and induce localized atmospheric changes through precise understanding of meteorological forces."
 magis_archetype = "Elementalist"
 difficulty_level = 3
-contained_spells = Array[ExtResource("1_r7x0y")]([ExtResource("2_vaxhn")])
+contained_spells = Array[ExtResource("1_r7x0y")]([ExtResource("2_vaxhn"), ExtResource("3_arc"), ExtResource("4_storm")])
 metadata/_custom_type_script = "uid://b6vkafnios50y"

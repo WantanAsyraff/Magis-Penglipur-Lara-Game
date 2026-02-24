@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "godot": {
+      "command": "node",
+      "args": [
+        "C:/Users/LocalAdmin/Desktop/Side Projects/Magis-Panglipur-Lara-Game/godot-mcp/build/index.js"
+      ],
+      "env": {
+        "DEBUG": "true",
+        "GODOT_PATH": "C:/Users/LocalAdmin/Downloads/Godot_v4.6-stable_win64.exe/Godot_v4.6-stable_win64_console.exe"
+      }
+    }
+  }
+}

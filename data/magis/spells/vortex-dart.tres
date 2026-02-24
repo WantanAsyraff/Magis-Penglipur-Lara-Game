@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="SpellData" load_steps=6 format=3]
+
+[ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="1_tex"]
+[ext_resource type="PackedScene" path="res://components/effects/impact/root-snare-impact.tscn" id="2_impact"]
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="3_spell"]
+[ext_resource type="PackedScene" path="res://components/effects/trails/pressure-jet-trail.tscn" id="4_trail"]
+[ext_resource type="Script" uid="uid://b6vkafnios50y" path="res://data/Resources/ilmu/subject.gd" id="5_subject"]
+
+[resource]
+script = ExtResource("3_spell")
+spell_name = "Vortex Dart"
+spell_id = "vortex_dart"
+spell_manifest = 1
+spell_incantation = Array[String](["right", "left", "up", "left"])
+magis_archetype = "Elementalist"
+upfront_cost = 24
+cast_time = 0.25
+projectile_particles = ExtResource("4_trail")
+impact_particles = ExtResource("2_impact")
+projectile_range = 460.0
+projectile_size = 0.9
+projectile_damage = 28.0
+projectile_speed = 820.0
+projectile_texture = ExtResource("1_tex")
+stunnable = true
+stun_dur = 0.25
+theory_desc = "\"A rotating fluid packet is accelerated forward while conserving angular momentum, producing a compact vortex projectile that destabilizes the target's footing on impact.\""
+metadata/_custom_type_script = "uid://ddmcw1l0ht73f"

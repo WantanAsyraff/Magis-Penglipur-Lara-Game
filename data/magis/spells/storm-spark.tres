@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="SpellData" load_steps=6 format=3]
+
+[ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="1_tex"]
+[ext_resource type="PackedScene" path="res://components/effects/impact/static-bolt-impact.tscn" id="2_impact"]
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="3_spell"]
+[ext_resource type="PackedScene" path="res://components/effects/trails/static-bolt-trail.tscn" id="4_trail"]
+[ext_resource type="Script" uid="uid://b6vkafnios50y" path="res://data/Resources/ilmu/subject.gd" id="5_subject"]
+
+[resource]
+script = ExtResource("3_spell")
+spell_name = "Storm Spark"
+spell_id = "storm_spark"
+spell_manifest = 1
+spell_incantation = Array[String](["right", "up", "down", "right"])
+magis_archetype = "Elementalist"
+upfront_cost = 18
+cast_time = 0.1
+projectile_particles = ExtResource("4_trail")
+impact_particles = ExtResource("2_impact")
+projectile_range = 380.0
+projectile_size = 0.6
+projectile_damage = 20.0
+projectile_speed = 1100.0
+projectile_texture = ExtResource("1_tex")
+stunnable = true
+stun_dur = 0.2
+theory_desc = "\"A short-lived charge imbalance is forced through ionized air to produce a fast, low-energy spark projectile suited for repeated precision strikes.\""
+metadata/_custom_type_script = "uid://ddmcw1l0ht73f"

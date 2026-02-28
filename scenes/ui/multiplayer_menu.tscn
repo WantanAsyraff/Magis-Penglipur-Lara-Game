@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://248u3hk2nrx"]
+[gd_scene format=3 uid="uid://248u3hk2nrx"]
 
 [ext_resource type="Script" uid="uid://div68mn0trx6d" path="res://scenes/ui/multiplayer_menu.gd" id="1_dwilq"]
 
-[node name="MultiplayerMenu (Control)" type="Control"]
+[node name="MultiplayerMenu (Control)" type="Control" unique_id=771635010]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,74 +11,74 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_dwilq")
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1953271986]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=1390159357]
 layout_mode = 2
 
-[node name="TitleLabel" type="Label" parent="PanelContainer/VBoxContainer"]
+[node name="TitleLabel" type="Label" parent="PanelContainer/VBoxContainer" unique_id=1945815821]
 layout_mode = 2
 text = "Multiplayer"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=1183063163]
 layout_mode = 2
 
-[node name="HostButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="HostButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer" unique_id=878014667]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Host World"
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=286351706]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer2"]
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer2" unique_id=1965372909]
 layout_mode = 2
 text = "Your OpenID:"
 
-[node name="OpenIdLine" type="LineEdit" parent="PanelContainer/VBoxContainer/HBoxContainer2" groups=["player"]]
+[node name="OpenIdLine" type="LineEdit" parent="PanelContainer/VBoxContainer/HBoxContainer2" unique_id=1350193760 groups=["player"]]
 unique_name_in_owner = true
 layout_mode = 2
 editable = false
 
-[node name="CopyButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer2"]
+[node name="CopyButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer2" unique_id=1514440390]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Copy"
 
-[node name="HSeparator" type="HSeparator" parent="PanelContainer/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/VBoxContainer" unique_id=1644374793]
 layout_mode = 2
 
-[node name="JoinLabel" type="Label" parent="PanelContainer/VBoxContainer"]
+[node name="JoinLabel" type="Label" parent="PanelContainer/VBoxContainer" unique_id=155120788]
 layout_mode = 2
 text = "Join a friend:"
 
-[node name="JoinLine" type="LineEdit" parent="PanelContainer/VBoxContainer"]
+[node name="JoinLine" type="LineEdit" parent="PanelContainer/VBoxContainer" unique_id=1151164553]
 unique_name_in_owner = true
 layout_mode = 2
 placeholder_text = "Paste host OpenID here..."
 
-[node name="HBoxContainer4" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+[node name="HBoxContainer4" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=2029545434]
 layout_mode = 2
 
-[node name="RelayCheck" type="CheckBox" parent="PanelContainer/VBoxContainer/HBoxContainer4"]
+[node name="RelayCheck" type="CheckBox" parent="PanelContainer/VBoxContainer/HBoxContainer4" unique_id=2081563970]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Force Relay (if NAT fails)"
 
-[node name="JoinButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer4"]
+[node name="JoinButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer4" unique_id=1660178260]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Join"
 
-[node name="StatusLabel" type="Label" parent="PanelContainer/VBoxContainer"]
+[node name="StatusLabel" type="Label" parent="PanelContainer/VBoxContainer" unique_id=1224908478]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Status: idle"
 
-[node name="PeersLabel" type="Label" parent="PanelContainer/VBoxContainer"]
+[node name="PeersLabel" type="Label" parent="PanelContainer/VBoxContainer" unique_id=1323869077]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Peers: -"

@@ -1,17 +1,18 @@
-[gd_scene load_steps=2 format=3 uid="uid://dbwcpjgic86os"]
+[gd_scene format=3 uid="uid://dbwcpjgic86os"]
 
 [ext_resource type="Script" uid="uid://cu2bg17e15wfx" path="res://scenes/ui/phone-ui/app.gd" id="1_q5kro"]
 
-[node name="App" type="Control"]
+[node name="App" type="Control" unique_id=1666271398]
 layout_mode = 3
-anchors_preset = 0
+anchor_right = 0.066
+anchor_bottom = 0.117000006
 offset_left = 1.0
 offset_top = 1.0
-offset_right = 126.0
-offset_bottom = 126.0
+offset_right = -0.7200012
+offset_bottom = -0.36000824
 script = ExtResource("1_q5kro")
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Panel" type="Panel" parent="." unique_id=1172001112]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -20,7 +21,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1364131946]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

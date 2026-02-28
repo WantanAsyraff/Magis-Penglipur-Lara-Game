@@ -13,6 +13,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_gbkoh")
 destination_scene = ExtResource("2_cx7n8")
+next_scene_id = "mission_selection"
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=1008419345]
 layout_mode = 1
@@ -49,4 +50,11 @@ texture = ExtResource("3_6odkk")
 layout_mode = 2
 text = "PROLOGUE"
 
+[node name="BackButton" type="Button" parent="." unique_id=462491519]
+layout_mode = 0
+offset_right = 300.0
+offset_bottom = 110.0
+text = "BACK "
+
 [connection signal="pressed" from="PanelContainer/Panel/Chapter/Prologue/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]

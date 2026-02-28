@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://bmma1j10p3fv7"]
 
 [ext_resource type="Script" uid="uid://ddnqy10k0s7qq" path="res://scenes/ui/spell-slot.gd" id="1_03n0a"]
-[ext_resource type="Texture2D" uid="uid://4vc24dt18pga" path="res://assets/template/temp-spell.png" id="1_nvrkb"]
+[ext_resource type="Texture2D" uid="uid://b6gp5yx8ews7g" path="res://assets/template/temp-spell.png" id="1_nvrkb"]
 [ext_resource type="Resource" uid="uid://dmuos14tj2ww3" path="res://data/magis/spells/botany.tres" id="2_ajyhg"]
-[ext_resource type="Texture2D" uid="uid://4rhkxn18ecsa" path="res://assets/template/temp-lightbulb.png" id="2_edymq"]
-[ext_resource type="Texture2D" uid="uid://c3w8vxo0u0mic" path="res://assets/template/temp-mana.png" id="4_bcmpn"]
+[ext_resource type="Texture2D" uid="uid://c27hlpd2ups03" path="res://assets/template/temp-lightbulb.png" id="2_edymq"]
+[ext_resource type="Texture2D" uid="uid://cnnad3qojgc2y" path="res://assets/template/temp-mana.png" id="4_bcmpn"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_nvrkb"]
 font_size = 12

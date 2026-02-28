@@ -38,8 +38,8 @@ var p_jumpable: bool = true
 var p_visible: bool = true
 var p_invincible: bool = false
 var p_hidden: bool = false
-var p_speed: float = 900
-var p_jump_height: float = -1600.0
+var p_speed: float = 950
+var p_jump_height: float = -1800.0
 
 var p_max_health: int = 100
 var p_curr_health: int = p_max_health:

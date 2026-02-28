@@ -25,9 +25,9 @@ var SPEED := Player_Global_Data.p_speed
 var JUMP_VELOCITY := Player_Global_Data.p_jump_height
 
 # Dash
-var DASH_SPEED := 2500.0
-var DASH_TIME := 0.15
-var DASH_COOLDOWN := 1.0
+var DASH_SPEED := 3000.0
+var DASH_TIME := 0.083
+var DASH_COOLDOWN := 1.8
 var dash_timer := 0.0
 var dash_direction := Vector2.ZERO
 var is_dashing := false
@@ -86,7 +86,7 @@ func _handle_movement() -> void:
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+	if Input.is_action_just_pressed("ui_accept") and is_on_floor() and not Player_Global_Data.is_casting:
 		velocity.y = JUMP_VELOCITY
 
 func _handle_dash_timers(delta: float) -> void:
@@ -126,7 +126,7 @@ func _unhandled_input(_event: InputEvent) -> void:
 	if not Player_Global_Data.p_moveable:
 		return
 
-	if Input.is_action_just_pressed("dash") and not is_dashing and dash_cooldown_timer <= 0:
+	if Input.is_action_just_pressed("dash") and not Player_Global_Data.is_casting and not is_dashing and dash_cooldown_timer <= 0:
 		_try_dash()
 
 	if combat_mode:
@@ -197,8 +197,8 @@ func _update_aim_direction() -> void:
 	var aim_input = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	if aim_input != Vector2.ZERO:
 		var target_pos = Vector2.ZERO
-		target_pos.x = aim_input.x * 120.0
-		target_pos.y = -160.0 if aim_input.y < 0 else (160.0 if aim_input.y > 0 else 0)
+		target_pos.x = aim_input.x * 140.0
+		target_pos.y = -180.0 if aim_input.y < 0 else (180.0 if aim_input.y > 0 else 0)
 		if aim_input.y == 0:
 			target_pos.y = 0.0
 		castMarker.position = target_pos

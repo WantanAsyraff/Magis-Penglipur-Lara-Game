@@ -1,6 +1,7 @@
 class_name subjectData extends Resource
 
 @export var subject_name: String
+@export var subject_icon: Texture2D
 @export var subject_id: String
 
 @export_enum("Life Sciences", "Physical Sciences", "Mathematics", "Computer Science", "Social Sciences", 

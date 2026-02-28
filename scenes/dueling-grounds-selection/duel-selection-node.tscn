@@ -1,21 +1,26 @@
-[gd_scene load_steps=3 format=3 uid="uid://upitc0orkqpy"]
+[gd_scene format=3 uid="uid://upitc0orkqpy"]
 
 [ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="1_7jglb"]
 [ext_resource type="Script" uid="uid://ggxhydq3yor4" path="res://scenes/dueling-grounds-selection/duel_selection_node.gd" id="1_yoxf7"]
 
-[node name="HBoxContainer" type="HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" unique_id=491323514]
+anchors_preset = -1
+anchor_right = 0.42400002
+anchor_bottom = 0.119
+offset_right = -814.0801
+offset_bottom = -128.52
 script = ExtResource("1_yoxf7")
 
-[node name="DuelingGroundsLabel" type="Label" parent="."]
+[node name="DuelingGroundsLabel" type="Label" parent="." unique_id=262289417]
 layout_mode = 2
 text = "DUELING GROUNDS DEMO"
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="TextureRect" type="TextureRect" parent="." unique_id=2020791936]
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 texture = ExtResource("1_7jglb")
 
-[node name="EnterButton" type="Button" parent="."]
+[node name="EnterButton" type="Button" parent="." unique_id=1292281855]
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 text = "Enter"

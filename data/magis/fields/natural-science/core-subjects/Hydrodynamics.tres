@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="subjectData" load_steps=6 format=3 uid="uid://s6tau28u35o4"]
+[gd_resource type="Resource" script_class="subjectData" format=3 uid="uid://s6tau28u35o4"]
 
 [ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="1_31kwf"]
 [ext_resource type="Script" uid="uid://b6vkafnios50y" path="res://data/Resources/ilmu/subject.gd" id="2_ghmjl"]

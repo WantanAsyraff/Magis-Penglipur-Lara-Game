@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://dd5g0ufrdt4m2"]
 
 [ext_resource type="Script" uid="uid://ccluasuhpw85o" path="res://scenes/spell-tree/spell-tree.gd" id="1_df1co"]
-[ext_resource type="Resource" uid="uid://sn2uvvlutfah" path="res://data/magis/fields/natural-science/Environmental-Studies.tres" id="2_c0yrq"]
+[ext_resource type="Resource" path="res://data/magis/fields/computer-science/Cybersecurity-and-Digital-Defense.tres" id="2_c0yrq"]
+[ext_resource type="Script" uid="uid://dknkru5fm2jo6" path="res://scenes/spell-tree/spell_path.gd" id="3_4wqj6"]
 
 [node name="SpellTree" type="Control" unique_id=1241520483]
 layout_mode = 3
@@ -11,38 +12,46 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_df1co")
-next_scene_id = "akademi_bintang_utama_library"
-spawn_marker_override = "SpellTree"
 course_data = ExtResource("2_c0yrq")
+next_scene_id = "akademi_bintang_utama_library"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=279193611]
+[node name="Button" type="Button" parent="." unique_id=1965567055]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.273
+anchor_top = 0.003
+anchor_right = 0.411
+anchor_bottom = 0.066
+offset_left = 0.8399658
+offset_top = -0.24000001
+offset_right = 0.8800049
+offset_bottom = -0.27999878
+text = "BACK"
+
+[node name="FieldLabel" type="Label" parent="." unique_id=1854951881]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 68.0
+offset_top = 4.0
+offset_right = 464.0
+offset_bottom = 69.0
+text = "Field Name"
+horizontal_alignment = 1
+
+[node name="SpellGenerator" type="ScrollContainer" parent="." unique_id=1112173863]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 75.0
 grow_horizontal = 2
 grow_vertical = 2
-alignment = 1
 
-[node name="FieldLabel" type="Label" parent="VBoxContainer" unique_id=1854951881]
+[node name="SpellPath" type="Control" parent="SpellGenerator" unique_id=33013535]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Field Name"
-horizontal_alignment = 1
+size_flags_horizontal = 0
+script = ExtResource("3_4wqj6")
 
-[node name="Button" type="Button" parent="VBoxContainer" unique_id=1965567055]
-layout_mode = 2
-text = "BACK"
-
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer" unique_id=1655665020]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 900)
-layout_mode = 2
-
-[node name="SpellPath" type="Control" parent="VBoxContainer/ScrollContainer" unique_id=33013535]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(1920, 900)
-layout_mode = 2
-
-[connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

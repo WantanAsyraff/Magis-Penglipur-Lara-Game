@@ -1,10 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://di01g0jhnvub4"]
+[gd_scene format=3 uid="uid://di01g0jhnvub4"]
 
 [ext_resource type="Script" uid="uid://b10ilwfqjf7rw" path="res://scenes/dueling-grounds-selection/dueling_grounds_selection.gd" id="1_2d2ae"]
 [ext_resource type="PackedScene" uid="uid://upitc0orkqpy" path="res://scenes/dueling-grounds-selection/duel-selection-node.tscn" id="2_2d2ae"]
 [ext_resource type="PackedScene" uid="uid://d3w8vnbl6s5qw" path="res://scenes/worlds/hubs/akademi-bintang-utama/dueling-grounds/dueling-grounds-demo.tscn" id="3_n1pgf"]
 
-[node name="DuelingGroundsSelection" type="Control"]
+[node name="DuelingGroundsSelection" type="Control" unique_id=425348589]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,8 +12,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_2d2ae")
+next_scene_id = "akademi_bintang_utama_dueling_grounds"
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Panel" type="Panel" parent="." unique_id=1440857837]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -25,18 +26,72 @@ offset_bottom = -64.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="Panel"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel" unique_id=556622212]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 64.0
-offset_top = 64.0
-offset_right = -64.0
-offset_bottom = -568.0
+offset_left = 57.0
+offset_top = 75.0
+offset_right = -107.0
+offset_bottom = -60.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="DuelGroundsDemo" parent="Panel/PanelContainer" instance=ExtResource("2_2d2ae")]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer" unique_id=1339001706]
+layout_mode = 2
+
+[node name="DuelGroundsDemo" parent="Panel/ScrollContainer/VBoxContainer" unique_id=466276894 instance=ExtResource("2_2d2ae")]
 layout_mode = 2
 duel_scene = ExtResource("3_n1pgf")
+
+[node name="DuelGroundsDemo2" parent="Panel/ScrollContainer/VBoxContainer" unique_id=55370249 instance=ExtResource("2_2d2ae")]
+layout_mode = 2
+duel_scene = ExtResource("3_n1pgf")
+
+[node name="DuelGroundsDemo3" parent="Panel/ScrollContainer/VBoxContainer" unique_id=458953844 instance=ExtResource("2_2d2ae")]
+layout_mode = 2
+duel_scene = ExtResource("3_n1pgf")
+
+[node name="DuelGroundsDemo4" parent="Panel/ScrollContainer/VBoxContainer" unique_id=818447378 instance=ExtResource("2_2d2ae")]
+layout_mode = 2
+duel_scene = ExtResource("3_n1pgf")
+
+[node name="DuelGroundsDemo5" parent="Panel/ScrollContainer/VBoxContainer" unique_id=625714668 instance=ExtResource("2_2d2ae")]
+layout_mode = 2
+duel_scene = ExtResource("3_n1pgf")
+
+[node name="DuelGroundsDemo6" parent="Panel/ScrollContainer/VBoxContainer" unique_id=1163218667 instance=ExtResource("2_2d2ae")]
+layout_mode = 2
+duel_scene = ExtResource("3_n1pgf")
+
+[node name="DuelGroundsDemo7" parent="Panel/ScrollContainer/VBoxContainer" unique_id=1705531671 instance=ExtResource("2_2d2ae")]
+layout_mode = 2
+duel_scene = ExtResource("3_n1pgf")
+
+[node name="DuelGroundsDemo8" parent="Panel/ScrollContainer/VBoxContainer" unique_id=2001876550 instance=ExtResource("2_2d2ae")]
+layout_mode = 2
+duel_scene = ExtResource("3_n1pgf")
+
+[node name="DuelGroundsDemo9" parent="Panel/ScrollContainer/VBoxContainer" unique_id=273781832 instance=ExtResource("2_2d2ae")]
+layout_mode = 2
+duel_scene = ExtResource("3_n1pgf")
+
+[node name="DuelGroundsDemo10" parent="Panel/ScrollContainer/VBoxContainer" unique_id=750731602 instance=ExtResource("2_2d2ae")]
+layout_mode = 2
+duel_scene = ExtResource("3_n1pgf")
+
+[node name="BackButton" type="Button" parent="." unique_id=434414653]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.818
+anchor_top = 0.059000004
+anchor_right = 0.98300004
+anchor_bottom = 0.177
+offset_left = -0.5600586
+offset_top = 0.27999496
+offset_right = -0.36010742
+offset_bottom = -9.160004
+text = "Back"
+
+[connection signal="pressed" from="BackButton" to="." method="_on_button_pressed"]

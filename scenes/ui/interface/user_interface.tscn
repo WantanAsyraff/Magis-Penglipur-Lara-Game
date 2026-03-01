@@ -1,11 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://bmlf8py285jmx"]
+[gd_scene format=3 uid="uid://bmlf8py285jmx"]
 
-[ext_resource type="Script" uid="uid://dq721grj8qapv" path="res://scenes/ui/user_interface.gd" id="1_284y0"]
+[ext_resource type="Script" uid="uid://dq721grj8qapv" path="res://scenes/ui/interface/user_interface.gd" id="1_284y0"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_2fueo"]
 font_size = 48
 
-[node name="UserInterface(Combat)" type="Control"]
+[node name="UserInterface(Combat)" type="Control" unique_id=1509011187]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,7 +14,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_284y0")
 
-[node name="HealthLabel" type="Label" parent="."]
+[node name="HealthLabel" type="Label" parent="." unique_id=531757009]
 unique_name_in_owner = true
 layout_mode = 0
 offset_right = 40.0
@@ -22,7 +22,7 @@ offset_bottom = 23.0
 text = "HEALTH: 00/00"
 label_settings = SubResource("LabelSettings_2fueo")
 
-[node name="ManaLabel" type="Label" parent="."]
+[node name="ManaLabel" type="Label" parent="." unique_id=1309644293]
 unique_name_in_owner = true
 layout_mode = 0
 offset_top = 72.0

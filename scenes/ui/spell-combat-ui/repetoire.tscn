@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://we1fcxlf1wm8"]
 
-[ext_resource type="Script" uid="uid://yo7hj03ngpav" path="res://scenes/ui/repetoire.gd" id="1_mq6y2"]
+[ext_resource type="Script" uid="uid://yo7hj03ngpav" path="res://scenes/ui/spell-combat-ui/repetoire.gd" id="1_mq6y2"]
 
 [node name="Repetoire" type="PanelContainer" unique_id=982998006]
 offset_right = 1378.0

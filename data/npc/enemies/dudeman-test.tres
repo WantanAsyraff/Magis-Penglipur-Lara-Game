@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="NPCSpellcasterData" format=3 uid="uid://duvhc0j7wrm73"]
+
+[ext_resource type="Script" uid="uid://boefcf6n28f4s" path="res://data/Resources/spellcaster-npc.gd" id="1_aavi1"]
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="2_2i61b"]
+[ext_resource type="Resource" uid="uid://bm8lirrn1ktsj" path="res://data/magis/spells/static-bolt.tres" id="3_673uq"]
+[ext_resource type="Resource" path="res://data/magis/spells/rebar-lance.tres" id="4_1de3f"]
+[ext_resource type="Resource" path="res://data/magis/spells/intrusion-ping.tres" id="5_bv5gs"]
+[ext_resource type="Resource" path="res://data/magis/spells/firewall-burst.tres" id="6_nkrqg"]
+[ext_resource type="Resource" uid="uid://dmuos14tj2ww3" path="res://data/magis/spells/botany.tres" id="7_e8iq6"]
+
+[resource]
+script = ExtResource("1_aavi1")
+caster_name = "Dude Man"
+caster_id = "dude_man"
+max_hp = 400.0
+hp_regen_rate = 10.0
+base_defense = 20.0
+spell_pool = Array[ExtResource("2_2i61b")]([ExtResource("3_673uq"), ExtResource("4_1de3f"), ExtResource("5_bv5gs"), ExtResource("6_nkrqg"), ExtResource("7_e8iq6")])
+move_speed = 140.0
+preferred_range = 450.0
+exp_reward = 20
+metadata/_custom_type_script = "uid://boefcf6n28f4s"

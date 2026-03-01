@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://dcclmw35clpaq"]
+
+[ext_resource type="Script" uid="uid://bncc6e6t3ijl0" path="res://components/damage-indicator/damage-indicator.gd" id="1_wtwe4"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_7y5of"]
+font_size = 32
+
+[node name="DamageIndicator" type="Label" unique_id=348841000]
+offset_right = 40.0
+offset_bottom = 23.0
+label_settings = SubResource("LabelSettings_7y5of")
+script = ExtResource("1_wtwe4")
+float_height = 95.0
+duration = 1.8

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="CourseData" load_steps=10 format=3]
+[gd_resource type="Resource" script_class="CourseData" format=3 uid="uid://6rx6otm2nnqh"]
 
 [ext_resource type="Script" uid="uid://mj2k1sm83ebr" path="res://data/Resources/ilmu/course.gd" id="1_course"]
 [ext_resource type="Script" uid="uid://b6vkafnios50y" path="res://data/Resources/ilmu/subject.gd" id="2_subject"]
@@ -8,7 +8,7 @@
 [ext_resource type="Resource" path="res://data/magis/fields/music/core-subjects/Instrumentation and Orchestration.tres" id="6_orch"]
 [ext_resource type="Resource" path="res://data/magis/fields/music/core-subjects/Acoustics and Sound Design.tres" id="7_acoustics"]
 [ext_resource type="Resource" path="res://data/magis/fields/music/core-subjects/Performance Direction.tres" id="8_perf"]
-[ext_resource type="Resource" path="res://data/magis/fields/civil-engineering/core-subjects/Engineering Mathematics.tres" id="9_math"]
+[ext_resource type="Resource" uid="uid://cxw253oogrcwj" path="res://data/magis/fields/civil-engineering/core-subjects/Engineering Mathematics.tres" id="9_math"]
 
 [resource]
 script = ExtResource("1_course")

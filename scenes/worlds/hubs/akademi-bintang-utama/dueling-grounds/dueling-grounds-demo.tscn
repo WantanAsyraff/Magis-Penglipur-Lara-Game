@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://6q0dmmapj6gm" path="res://data/worlds/zone-root.gd" id="1_pxp06"]
 [ext_resource type="PackedScene" uid="uid://cvr4657rrr2mc" path="res://components/tilemaps/palleteTemp.tscn" id="3_ai471"]
 [ext_resource type="PackedScene" uid="uid://cy3c7eiatv07j" path="res://components/platforms/temptilemap.tscn" id="4_5ft3u"]
+[ext_resource type="PackedScene" uid="uid://ca23coml0cwtj" path="res://components/NPCs/enemies/dummy-npc.tscn" id="4_5171i"]
 
 [node name="DuelingGroundsDemo" type="Node" unique_id=1415202585]
 script = ExtResource("1_pxp06")
@@ -26,3 +27,7 @@ tile_map_data = PackedByteArray("AAAQABEAAAABAAAAAAASABAAAAABAAAAAAARABEAAAAAAAA
 [node name="Doors" type="Node2D" parent="World/GameComponents" unique_id=1006648569]
 
 [node name="SpawnPoints" type="Node2D" parent="World/GameComponents" unique_id=1058575654]
+
+[node name="DummyNpc" parent="." unique_id=1626035717 instance=ExtResource("4_5171i")]
+position = Vector2(815, 693)
+scale = Vector2(2, 2)

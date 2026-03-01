@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://qoyrbwgkhxny"]
 
-[ext_resource type="Script" uid="uid://dq721grj8qapv" path="res://scenes/ui/user_interface.gd" id="1_284y0"]
+[ext_resource type="Script" uid="uid://dq721grj8qapv" path="res://scenes/ui/interface/user_interface.gd" id="1_284y0"]
 [ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="2_3yar4"]
 [ext_resource type="Texture2D" uid="uid://dtbr53nljfqb0" path="res://assets/template/temp-embed-ui.png" id="3_bqmsd"]
 [ext_resource type="Texture2D" uid="uid://xsg3u0yhvpo4" path="res://assets/template/temp-heart.png" id="4_48p3t"]
 [ext_resource type="Texture2D" uid="uid://cnnad3qojgc2y" path="res://assets/template/temp-mana.png" id="5_6pnla"]
-[ext_resource type="PackedScene" uid="uid://we1fcxlf1wm8" path="res://scenes/ui/repetoire.tscn" id="6_gadla"]
+[ext_resource type="PackedScene" uid="uid://we1fcxlf1wm8" path="res://scenes/ui/spell-combat-ui/repetoire.tscn" id="6_gadla"]
 
 [node name="UserInterface(Combat)" type="Control" unique_id=1778911143]
 layout_mode = 3
@@ -66,6 +66,7 @@ text = "HEALTH: 00/00"
 layout_mode = 2
 
 [node name="HealthProgressBar" type="ProgressBar" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox/DataContainer/HealthBoxContainer" unique_id=1854441703]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 value = 100.0
@@ -86,6 +87,7 @@ text = "MANA: 00/00"
 layout_mode = 2
 
 [node name="ManaProgressBar" type="ProgressBar" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox/DataContainer/ManaBoxContainer" unique_id=1545218631]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 value = 100.0

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c5g6ie7nadata"]
 
-[ext_resource type="PackedScene" uid="uid://dh675vcu2br3h" path="res://scenes/ui/phone-ui/phone-ui.tscn" id="1_cw5sm"]
-[ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="2_hnc3k"]
+[ext_resource type="PackedScene" uid="uid://dh675vcu2br3h" path="res://scenes/ui/phone-ui/phone-ui.tscn" id="1_awj58"]
+[ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="2_0k00g"]
 
 [node name="UserInterfaceOverworld" type="Control" unique_id=2137878262]
 layout_mode = 3
@@ -11,7 +11,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PhoneUI" parent="." unique_id=842712817 instance=ExtResource("1_cw5sm")]
+[node name="PhoneUI" parent="." unique_id=842712817 instance=ExtResource("1_awj58")]
+visible = false
 layout_mode = 1
 offset_left = 0.0
 offset_top = 0.0
@@ -40,7 +41,7 @@ layout_mode = 2
 
 [node name="ProfileIcon" type="TextureRect" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox" unique_id=142561417]
 layout_mode = 2
-texture = ExtResource("2_hnc3k")
+texture = ExtResource("2_0k00g")
 
 [node name="HealthContainer" type="VBoxContainer" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox" unique_id=1772330646]
 layout_mode = 2
@@ -60,3 +61,13 @@ text = "MANA"
 [node name="ManaProgressBar" type="ProgressBar" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox/HealthContainer" unique_id=472968052]
 layout_mode = 2
 value = 100.0
+
+[node name="CurrentWorldContainer" type="PanelContainer" parent="." unique_id=1807216259]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.79600006
+anchor_right = 1.0
+anchor_bottom = 0.208
+offset_left = 0.67993164
+offset_bottom = 0.3600006
+grow_horizontal = 0

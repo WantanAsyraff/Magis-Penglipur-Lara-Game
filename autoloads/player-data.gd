@@ -1,17 +1,35 @@
 extends Node
 
+# -------------------------
+# SIGNALS
+# -------------------------
 signal custom_signal_emitted(signal_key: String)
 signal combat_mode_changed(is_combat: bool)
 signal casting_changed(is_casting: bool)
-signal mana_changed(new_value: int)
+signal mana_changed(new_value: float)
 signal health_changed(new_value: int)
 signal spells_updated()
 
+# -------------------------
+# IDENTITY
+# -------------------------
 var p_name: String
 var p_role: String
 var p_curr_ringgit: String
 var p_mood: String
 
+# -------------------------
+# FLAGS
+# -------------------------
+var p_moveable: bool = true
+var p_jumpable: bool = true
+var p_visible: bool = true
+var p_invincible: bool = false
+var p_hidden: bool = false
+
+# -------------------------
+# CASTING  (guarded setter)
+# -------------------------
 var _is_casting := false
 var is_casting: bool:
 	set(value):
@@ -22,6 +40,9 @@ var is_casting: bool:
 	get:
 		return _is_casting
 
+# -------------------------
+# COMBAT MODE  (guarded setter)
+# -------------------------
 var _combat_mode := false
 var combat_mode: bool:
 	set(value):
@@ -32,31 +53,42 @@ var combat_mode: bool:
 	get:
 		return _combat_mode
 
+# -------------------------
+# MOVEMENT
+# -------------------------
 var p_position: Vector2
-var p_moveable: bool = true
-var p_jumpable: bool = true
-var p_visible: bool = true
-var p_invincible: bool = false
-var p_hidden: bool = false
-var p_speed: float = 950
-var p_jump_height: float = -1800.0
+var p_speed: float = 950.0
+var p_jump_height: float = -2500.0
+var p_size: float = 1.0
 
+# -------------------------
+# HEALTH
+# -------------------------
 var p_max_health: int = 100
 var p_curr_health: int = p_max_health:
 	set(value):
 		p_curr_health = clamp(value, 0, p_max_health)
 		health_changed.emit(p_curr_health)
 
-var p_max_mana: int = 250
-var p_curr_mana: int = p_max_mana:
+# -------------------------
+# MANA
+# -------------------------
+var p_max_mana: float = 250.0
+var p_curr_mana: float = p_max_mana:
 	set(value):
-		p_curr_mana = clamp(value, 0, p_max_mana)
+		p_curr_mana = clamp(value, 0.0, p_max_mana)
 		mana_changed.emit(p_curr_mana)
 
-var p_size: float = 1
+# -------------------------
+# ACADEMIC
+# -------------------------
 var current_field: String
 var current_major: String
 var current_minor: String
+
+# -------------------------
+# SPELLS
+# -------------------------
 var learned_spells: Array[SpellData] = []
 
 func add_spell(spell: SpellData) -> void:
@@ -84,15 +116,21 @@ func remove_spell(spell: SpellData) -> void:
 func has_spell(spell: SpellData) -> bool:
 	return learned_spells.has(spell)
 
-func consume_mana(amount: int) -> bool:
+# -------------------------
+# MANA HELPERS
+# -------------------------
+func consume_mana(amount: float) -> bool:
 	if p_curr_mana < amount:
 		return false
 	p_curr_mana -= amount
 	return true
 
-func restore_mana(amount: int) -> void:
+func restore_mana(amount: float) -> void:
 	p_curr_mana += amount
 
+# -------------------------
+# HEALTH HELPERS
+# -------------------------
 func take_damage(amount: int) -> void:
 	if p_invincible:
 		return
@@ -104,6 +142,9 @@ func restore_health(amount: int) -> void:
 func is_alive() -> bool:
 	return p_curr_health > 0
 
+# -------------------------
+# RESET
+# -------------------------
 func reset() -> void:
 	p_curr_health = p_max_health
 	p_curr_mana = p_max_mana

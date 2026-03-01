@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://bsgxqa40fteob"]
+
+[ext_resource type="Script" uid="uid://7sgmmuc2tppp" path="res://components/NPCs/enemies/spellcaster_npc.gd" id="1_0duqe"]
+[ext_resource type="Texture2D" uid="uid://doaygnck5qus5" path="res://assets/template/player-temp.png" id="1_8swkv"]
+[ext_resource type="Script" uid="uid://bhfbvmw3ac7j2" path="res://components/NPCs/enemies/npc_caster_brain.gd" id="3_0y3sx"]
+[ext_resource type="Script" uid="uid://dk0vboom1xnf1" path="res://components/NPCs/enemies/npc_spell_handler.gd" id="4_7c8c2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8swkv"]
+size = Vector2(56, 120)
+
+[node name="SpellcasterNpc" type="CharacterBody2D" unique_id=1902282654]
+script = ExtResource("1_0duqe")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=679080922]
+texture = ExtResource("1_8swkv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=131205674]
+shape = SubResource("RectangleShape2D_8swkv")
+
+[node name="NpcCasterBrain" type="Node" parent="." unique_id=1623960493]
+script = ExtResource("3_0y3sx")
+
+[node name="NpcSpellHandler" type="Node" parent="." unique_id=27057785]
+script = ExtResource("4_7c8c2")

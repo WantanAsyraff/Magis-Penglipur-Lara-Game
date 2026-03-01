@@ -1,7 +1,7 @@
 class_name RepetoirePanel
 extends PanelContainer
 
-const SPELL_SLOT = preload("res://scenes/ui/spell-slot.tscn")
+const SPELL_SLOT = preload("res://scenes/ui/spell-combat-ui/spell-slot.tscn")
 
 @onready var grid: GridContainer = %RepetoireGrid
 

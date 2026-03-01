@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://ca23coml0cwtj"]
+
+[ext_resource type="Texture2D" uid="uid://yc3tgp66iwpq" path="res://assets/template/dummy-temp.png" id="1_4jfvk"]
+[ext_resource type="Script" uid="uid://b2q3tyq2ua5ow" path="res://components/NPCs/enemies/dummy-npc.gd" id="1_14nva"]
+[ext_resource type="PackedScene" uid="uid://dcclmw35clpaq" path="res://components/damage-indicator/damage-indicator.tscn" id="2_4mu22"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4jfvk"]
+size = Vector2(60, 128)
+
+[node name="DummyNpc" type="CharacterBody2D" unique_id=1626035717]
+script = ExtResource("1_14nva")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=418395514]
+texture = ExtResource("1_4jfvk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=785805551]
+shape = SubResource("RectangleShape2D_4jfvk")
+
+[node name="Label" parent="." unique_id=348841000 instance=ExtResource("2_4mu22")]
+offset_left = -32.0
+offset_top = -92.0
+offset_right = 37.0
+offset_bottom = -69.0

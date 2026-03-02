@@ -51,7 +51,10 @@ directories/dtl_directory={
 "scene-3": "res://dialogue/story-mode/akademi-bintang-utama/prologue/scene-3.dtl",
 "story-select-npc": "res://dialogue/overworld/story-select-npc.dtl"
 }
-layout/style_directory={}
+layout/style_directory={
+"": "res://dialogue/styles/main-style.tres",
+"main-style": "res://dialogue/styles/main-style.tres"
+}
 glossary/default_case_sensitive=true
 variables={}
 extensions_folder="res://addons/dialogic_additions"
@@ -90,14 +93,15 @@ audio/channel_defaults={
 Noray="*res://addons/netfox.noray/noray.gd"
 PacketHandshake="*res://addons/netfox.noray/packet-handshake.gd"
 Network_Manager="*res://autoloads/network-manager.gd"
-layout/style_list=[]
-layout/default_style="Default"
+layout/style_list=["res://dialogue/styles/main-style.tres"]
+layout/default_style="res://dialogue/styles/main-style.tres"
 
 [display]
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
 window/stretch/mode="viewport"
+window/vsync/vsync_mode=0
 
 [editor_plugins]
 
@@ -111,7 +115,8 @@ folder_colors={
 "res://components/": "yellow",
 "res://data/": "teal",
 "res://dialogue/": "purple",
-"res://scenes/": "orange"
+"res://scenes/": "orange",
+"res://scenes/ui/": "blue"
 }
 
 [global_group]
@@ -224,6 +229,7 @@ paused={
 [physics]
 
 2d/default_gravity=8000.0
+common/physics_interpolation=true
 
 [rendering]
 

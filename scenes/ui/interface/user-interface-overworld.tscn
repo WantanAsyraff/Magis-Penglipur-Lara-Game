@@ -3,6 +3,9 @@
 [ext_resource type="PackedScene" uid="uid://dh675vcu2br3h" path="res://scenes/ui/phone-ui/phone-ui.tscn" id="1_awj58"]
 [ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="2_0k00g"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_awj58"]
+font_size = 24
+
 [node name="UserInterfaceOverworld" type="Control" unique_id=2137878262]
 layout_mode = 3
 anchors_preset = 15
@@ -12,7 +15,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="PhoneUI" parent="." unique_id=842712817 instance=ExtResource("1_awj58")]
-visible = false
 layout_mode = 1
 offset_left = 0.0
 offset_top = 0.0
@@ -71,3 +73,24 @@ anchor_bottom = 0.208
 offset_left = 0.67993164
 offset_bottom = 0.3600006
 grow_horizontal = 0
+
+[node name="CurrentWorldLabel" type="Label" parent="CurrentWorldContainer" unique_id=811725078]
+layout_mode = 2
+text = "CURRENT WORLD"
+label_settings = SubResource("LabelSettings_awj58")
+
+[node name="Quest Container" type="PanelContainer" parent="." unique_id=362047373]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.795
+anchor_top = 0.22800002
+anchor_right = 1.0
+anchor_bottom = 0.34300002
+offset_left = 0.5999756
+offset_top = -0.24002075
+offset_bottom = -0.44003296
+grow_horizontal = 0
+
+[node name="Label" type="Label" parent="Quest Container" unique_id=36905458]
+layout_mode = 2
+text = "CURRENT GOAL"

@@ -4,8 +4,8 @@ extends Control
 @onready var screen = %Screen      
 
 @export var phone_selected : bool = false
-@export var up_pos : Vector2 = Vector2(900, 450)
-@export var down_pos : Vector2 = Vector2(900, 1100)
+@export var up_pos : Vector2 = Vector2(1388.0, 450)
+@export var down_pos : Vector2 = Vector2(1388.0, 1000.0)
 
 var current_app_node : Control = null
 

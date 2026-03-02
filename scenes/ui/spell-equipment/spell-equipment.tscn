@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://c5obdg8c3r1as"]
+
+[ext_resource type="Script" uid="uid://di4bshpljowuu" path="res://scenes/ui/spell-equipment/spell_equipment.gd" id="1_woww4"]
+
+[node name="SpellEquipment" type="Control" unique_id=1952377803]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_woww4")
+
+[node name="SpellEquipPanel" type="Panel" parent="." unique_id=261602049]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.69600004
+anchor_bottom = 1.0
+offset_right = 0.67993164
+offset_bottom = -3.0
+
+[node name="PanelContainer" type="PanelContainer" parent="SpellEquipPanel" unique_id=602556505]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.038000003
+anchor_top = 0.053000003
+anchor_right = 0.975
+anchor_bottom = 0.96500003
+offset_left = 0.19399643
+offset_top = -0.0810051
+offset_right = 0.42492676
+offset_bottom = -0.3050537
+
+[node name="Panel" type="Panel" parent="." unique_id=747578804]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.707
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.5599365
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel" unique_id=1717072152]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 31.0
+offset_top = 45.0
+offset_right = -33.0
+offset_bottom = -37.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer" unique_id=221878560]
+unique_name_in_owner = true
+layout_mode = 2
+alignment = 1

@@ -1,4 +1,4 @@
-class_name Camera extends Camera2D
+class_name PlayerCamera extends Camera2D
 
 @onready var combatUI: Control = %UserInterfaceCombat
 @onready var overworldUI: Control = %UserInterfaceOverworld
@@ -6,19 +6,16 @@ class_name Camera extends Camera2D
 
 func _ready():
 	add_to_group("camera")
-	
-	# Enable smooth camera following
+	physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_ON
 	position_smoothing_enabled = true
-	position_smoothing_speed = 5.0
+	position_smoothing_speed = 10.0
 	
-	# Connect signals
 	Player_Global_Data.combat_mode_changed.connect(_on_combat_mode_changed)
 	
-	# Set initial UI state
 	pauseMenuUI.visible = false
 	_on_combat_mode_changed(Player_Global_Data.combat_mode)
 
-func _physics_process(_delta):
+func _process(_delta):
 	_handle_pause_input()
 
 # -------------------------

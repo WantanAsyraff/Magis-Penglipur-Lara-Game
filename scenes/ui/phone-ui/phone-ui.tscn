@@ -3,22 +3,24 @@
 [ext_resource type="Script" uid="uid://c370b7uc5j2lr" path="res://scenes/ui/phone-ui/phone_ui.gd" id="1_e010p"]
 [ext_resource type="PackedScene" uid="uid://dbwcpjgic86os" path="res://scenes/ui/phone-ui/app.tscn" id="1_qb4dd"]
 [ext_resource type="PackedScene" uid="uid://5j53l67p7ufs" path="res://scenes/ui/phone-ui/e-hailing-ui/e-hailingUI.tscn" id="3_s57sm"]
+[ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="3_xhcjq"]
+[ext_resource type="PackedScene" uid="uid://c5obdg8c3r1as" path="res://scenes/ui/spell-equipment/spell-equipment.tscn" id="4_xhcjq"]
 
 [node name="PhoneUI" type="Control" unique_id=993725934]
 clip_children = 2
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 1388.0
-offset_top = 1003.0
-offset_right = -84.0
-offset_bottom = 563.0
+anchor_left = 0.72300005
+anchor_top = 0.929
+anchor_right = 0.95600003
+anchor_bottom = 1.521
+offset_left = -0.16015625
+offset_top = -3.3200073
+offset_right = 0.47998047
+offset_bottom = -2.6800537
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_e010p")
-up_pos = Vector2(1384, 450)
-down_pos = Vector2(1384, 1005)
+metadata/_edit_group_ = true
 
 [node name="PhoneBG" type="Panel" parent="." unique_id=1661318320]
 unique_name_in_owner = true
@@ -41,6 +43,7 @@ grow_vertical = 2
 
 [node name="AppList" type="Panel" parent="PhoneBG/Screen" unique_id=1370866763]
 unique_name_in_owner = true
+modulate = Color(6.930828e-06, 0.632768, 0.8240567, 1)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -49,9 +52,27 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="E-Hailing" parent="PhoneBG/Screen/AppList" unique_id=1562965948 instance=ExtResource("1_qb4dd")]
-layout_mode = 0
+clip_contents = true
+layout_mode = 1
+anchor_right = 0.30400002
+anchor_bottom = 0.224
 offset_left = 0.0
 offset_top = 0.0
-offset_right = 125.0
-offset_bottom = 125.0
+offset_right = 0.055992126
+offset_bottom = 0.23199463
+icon = ExtResource("3_xhcjq")
 newApp = ExtResource("3_s57sm")
+
+[node name="SpellKu" parent="PhoneBG/Screen/AppList" unique_id=1666271398 instance=ExtResource("1_qb4dd")]
+clip_contents = true
+layout_mode = 1
+anchor_left = 0.38900003
+anchor_right = 0.693
+anchor_bottom = 0.22800002
+offset_left = 0.12098694
+offset_top = 2.0
+offset_right = 0.17700195
+offset_bottom = 0.0039901733
+icon = ExtResource("3_xhcjq")
+newApp = ExtResource("4_xhcjq")
+fullscreen = true

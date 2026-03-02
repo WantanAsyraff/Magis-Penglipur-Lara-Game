@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://db43cii5up0h2" path="res://scenes/ui/menus/pause_menu.tscn" id="5_503qr"]
 
 [node name="Camera2D" type="Camera2D" unique_id=1424154472]
+ignore_rotation = false
 zoom = Vector2(0.7, 0.7)
 limit_enabled = false
 position_smoothing_speed = 2.0

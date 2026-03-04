@@ -1,10 +1,10 @@
-[gd_resource type="Resource" script_class="CourseData" load_steps=6 format=3 uid="uid://sn2uvvlutfah"]
+[gd_resource type="Resource" script_class="CourseData" format=3 uid="uid://sn2uvvlutfah"]
 
 [ext_resource type="Script" uid="uid://mj2k1sm83ebr" path="res://data/Resources/ilmu/course.gd" id="1_bcweu"]
 [ext_resource type="Script" uid="uid://b6vkafnios50y" path="res://data/Resources/ilmu/subject.gd" id="2_qkgyo"]
-[ext_resource type="Resource" uid="uid://dgt20mxmfh0w3" path="res://data/magis/fields/natural-science/core-subjects/Botany.tres" id="3_jjprw"]
-[ext_resource type="Resource" uid="uid://nmdqwprwyaf4" path="res://data/magis/fields/natural-science/core-subjects/Atmospheric Physics.tres" id="4_jjprw"]
-[ext_resource type="Resource" uid="uid://s6tau28u35o4" path="res://data/magis/fields/natural-science/core-subjects/Hydrodynamics.tres" id="5_dsc4r"]
+[ext_resource type="Resource" uid="uid://dgt20mxmfh0w3" path="res://data/magis/ilmiah/natural-science/core-subjects/Botany.tres" id="3_jjprw"]
+[ext_resource type="Resource" uid="uid://nmdqwprwyaf4" path="res://data/magis/ilmiah/natural-science/core-subjects/Atmospheric Physics.tres" id="4_jjprw"]
+[ext_resource type="Resource" uid="uid://s6tau28u35o4" path="res://data/magis/ilmiah/natural-science/core-subjects/Hydrodynamics.tres" id="5_dsc4r"]
 
 [resource]
 script = ExtResource("1_bcweu")

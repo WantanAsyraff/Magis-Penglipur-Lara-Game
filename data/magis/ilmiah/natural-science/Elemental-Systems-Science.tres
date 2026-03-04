@@ -1,12 +1,12 @@
-[gd_resource type="Resource" script_class="CourseData" load_steps=8 format=3]
+[gd_resource type="Resource" script_class="CourseData" format=3]
 
 [ext_resource type="Script" uid="uid://mj2k1sm83ebr" path="res://data/Resources/ilmu/course.gd" id="1_course"]
 [ext_resource type="Script" uid="uid://b6vkafnios50y" path="res://data/Resources/ilmu/subject.gd" id="2_subject"]
-[ext_resource type="Resource" uid="uid://dgt20mxmfh0w3" path="res://data/magis/fields/natural-science/core-subjects/Botany.tres" id="3_botany"]
-[ext_resource type="Resource" uid="uid://nmdqwprwyaf4" path="res://data/magis/fields/natural-science/core-subjects/Atmospheric Physics.tres" id="4_atmo"]
-[ext_resource type="Resource" uid="uid://s6tau28u35o4" path="res://data/magis/fields/natural-science/core-subjects/Hydrodynamics.tres" id="5_hydro"]
-[ext_resource type="Resource" path="res://data/magis/fields/natural-science/core-subjects/Electrodynamics.tres" id="6_electro"]
-[ext_resource type="Resource" path="res://data/magis/fields/natural-science/core-subjects/Watershed Dynamics.tres" id="7_watershed"]
+[ext_resource type="Resource" uid="uid://dgt20mxmfh0w3" path="res://data/magis/ilmiah/natural-science/core-subjects/Botany.tres" id="3_botany"]
+[ext_resource type="Resource" uid="uid://nmdqwprwyaf4" path="res://data/magis/ilmiah/natural-science/core-subjects/Atmospheric Physics.tres" id="4_atmo"]
+[ext_resource type="Resource" uid="uid://s6tau28u35o4" path="res://data/magis/ilmiah/natural-science/core-subjects/Hydrodynamics.tres" id="5_hydro"]
+[ext_resource type="Resource" path="res://data/magis/ilmiah/natural-science/core-subjects/Electrodynamics.tres" id="6_electro"]
+[ext_resource type="Resource" path="res://data/magis/ilmiah/natural-science/core-subjects/Watershed Dynamics.tres" id="7_watershed"]
 
 [resource]
 script = ExtResource("1_course")

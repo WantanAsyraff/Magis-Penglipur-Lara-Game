@@ -4,6 +4,7 @@ extends Control
 signal spell_selected(spell: SpellData)
 
 @export var spell_data: SpellData
+@export var is_equipped: bool = false
 
 @onready var spellNameLabel: Label = %SpellNameLabel
 @onready var spellMoveLabel: Label = %SpellMoveLabel
@@ -11,6 +12,7 @@ signal spell_selected(spell: SpellData)
 
 func _ready() -> void:
 	mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	if spell_data:
 		display_spell()
 
@@ -26,7 +28,8 @@ func display_spell() -> void:
 	spellMoveLabel.text = " - ".join(spell_data.spell_incantation.filter(func(s): return s != ""))
 	spellCostLabel.text = str(spell_data.upfront_cost) + " MP"
 
-func set_spell(data: SpellData) -> void:
+func set_spell(data: SpellData, equipped: bool = false) -> void:
 	spell_data = data
+	is_equipped = equipped
 	if is_node_ready():
 		display_spell()

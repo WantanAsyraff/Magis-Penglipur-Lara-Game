@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://mj2k1sm83ebr" path="res://data/Resources/ilmu/course.gd" id="1_course"]
 [ext_resource type="Script" uid="uid://b6vkafnios50y" path="res://data/Resources/ilmu/subject.gd" id="2_subject"]
 [ext_resource type="Resource" path="res://data/magis/ilmiah/computer-science/core-subjects/Programming Fundamentals.tres" id="3_prog"]
-[ext_resource type="Resource" path="res://data/magis/ilmiah/computer-science/core-subjects/Computer Networks.tres" id="4_net"]
+[ext_resource type="Resource" uid="uid://bgrij1ksp02yb" path="res://data/magis/ilmiah/computer-science/core-subjects/Computer Networks.tres" id="4_net"]
 [ext_resource type="Resource" path="res://data/magis/ilmiah/computer-science/core-subjects/Cybersecurity Principles.tres" id="5_sec"]
 [ext_resource type="Resource" path="res://data/magis/ilmiah/computer-science/core-subjects/Applied Cryptography.tres" id="6_crypto"]
 [ext_resource type="Resource" path="res://data/magis/ilmiah/computer-science/core-subjects/Network Security.tres" id="7_netsec"]

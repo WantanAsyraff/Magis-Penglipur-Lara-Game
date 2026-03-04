@@ -3,12 +3,12 @@ audio -
 A sharp jolt from the train tracks snapped me awake.
 Through the window, I see it—Nillayah City. A sprawling metropolis covering the entire island, with massive ports below handling shipments from across the world.
 Two days and three nights of packing and commuting. That’s what it took to finally get here.
-join yunira (neutral) center
+join yunira (neutral) left
 yunira: To think this tiny island was just a fishing village a generation ago.
 Through the glass pane, I see large shipping containers being craned over from docked ships.
 The containers are labeled with familiar logos, recognizable no matter where you’re from.
 Yunira, my older sister, scrolls through her phone absently. Her eyes drift to my luggage tucked under the seat.
-join yunira (concerned) center
+join yunira (concerned) left
 yunira (concerned): Hey. Sit down properly. Someone might steal your stuff.
 - "Whatever, Gramps."
 	Yunira grabs Player’s ear and yanks them away from window

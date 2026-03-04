@@ -1,7 +1,7 @@
 [background fade="0.0"]
 audio -
 player: The Academy’s entrance… It looked even bigger in person!
-join yunira (neutral) center
+join yunira (neutral) left
 yunira (yapping): The place looks well-maintained, too. It must be direct funding from the Ministry of Higher Magistry Education. I can’t imagine the cost of the gate alone.
 We arrived two hours early, but the entrance was already packed.
 I could see a long line of students waiting patiently, luggage in hand. I guess the early bird really does catch the worm.
@@ -39,7 +39,7 @@ leave yunira
 # [TRANSITION] After The Spectacle
 [background fade="0.0"]
 We went through security and made our way to registration. The officer told me I had to queue up for attendance
-join yunira center
+join yunira left
 yunira (neutral): Alright, I’m sure you can handle it from here.
 - “Yes.”
 She looks at me with a melancholy smile.

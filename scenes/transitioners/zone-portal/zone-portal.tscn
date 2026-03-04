@@ -1,18 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://c5a41lx0gq8be"]
+[gd_scene format=3 uid="uid://c5a41lx0gq8be"]
 
 [ext_resource type="Script" uid="uid://c0xk7l7idx70l" path="res://scenes/transitioners/zone-portal/zone_portal.gd" id="1_saikc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cnpwf"]
 size = Vector2(218, 308)
 
-[node name="ZonePortal" type="Area2D"]
+[node name="ZonePortal" type="Area2D" unique_id=362818532]
 script = ExtResource("1_saikc")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=935585302]
 position = Vector2(13, 27)
 shape = SubResource("RectangleShape2D_cnpwf")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2040158024]
 scale = Vector2(2.0881925, 1.8730313)
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

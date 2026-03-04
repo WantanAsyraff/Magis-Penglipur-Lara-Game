@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bua4p61hbx7gg"]
+[gd_scene format=3 uid="uid://bua4p61hbx7gg"]
 
 [ext_resource type="Script" uid="uid://ptovwywxq7sp" path="res://components/Destructables/box.gd" id="1_8qeyv"]
 [ext_resource type="Texture2D" uid="uid://cu6j36h4d1f3g" path="res://assets/template/cratebox.png" id="2_d72mo"]
@@ -32,10 +32,10 @@ color_ramp = SubResource("GradientTexture1D_6mnq1")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6mnq1"]
 size = Vector2(126, 128)
 
-[node name="Box" type="RigidBody2D"]
+[node name="Box" type="RigidBody2D" unique_id=595538560]
 script = ExtResource("1_8qeyv")
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=303737870]
 emitting = false
 amount = 20
 lifetime = 0.4
@@ -43,9 +43,9 @@ one_shot = true
 explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_d72mo")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1319515656]
 shape = SubResource("RectangleShape2D_6mnq1")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=394622711]
 scale = Vector2(2.0153105, 1.9859239)
 texture = ExtResource("2_d72mo")

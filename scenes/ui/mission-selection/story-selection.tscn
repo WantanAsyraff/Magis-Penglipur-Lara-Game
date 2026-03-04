@@ -2,7 +2,8 @@
 
 [ext_resource type="Script" uid="uid://yu4qfawb5trg" path="res://scenes/ui/mission-selection/story_selection.gd" id="1_gbkoh"]
 [ext_resource type="PackedScene" uid="uid://t3o4osbl3bct" path="res://scenes/worlds/hubs/akademi-bintang-utama/missions-hub/story/prologue/Prologue.tscn" id="2_cx7n8"]
-[ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="3_6odkk"]
+[ext_resource type="PackedScene" uid="uid://1hc7ytvu02en" path="res://scenes/ui/mission-selection/chapter/chapter.tscn" id="3_6odkk"]
+[ext_resource type="PackedScene" uid="uid://dm7l67wbrc0iw" path="res://scenes/worlds/hubs/akademi-bintang-utama/missions-hub/story/tutorial/tutorial-world.tscn" id="4_yfnlw"]
 
 [node name="StorySelection" type="Control" unique_id=133484749]
 layout_mode = 3
@@ -38,17 +39,18 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Prologue" type="VBoxContainer" parent="PanelContainer/Panel/Chapter" unique_id=111287145]
+[node name="HScrollBar" type="HScrollBar" parent="PanelContainer/Panel/Chapter" unique_id=220066712]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="PanelContainer/Panel/Chapter/Prologue" unique_id=1684980254]
-custom_minimum_size = Vector2(0, 400)
+[node name="Tutorial" parent="PanelContainer/Panel/Chapter" unique_id=1264350038 instance=ExtResource("3_6odkk")]
 layout_mode = 2
-texture = ExtResource("3_6odkk")
+chapter_name = "Tutorial"
+destination_scene = ExtResource("4_yfnlw")
 
-[node name="Button" type="Button" parent="PanelContainer/Panel/Chapter/Prologue" unique_id=1109657905]
+[node name="Prologue" parent="PanelContainer/Panel/Chapter" unique_id=740914405 instance=ExtResource("3_6odkk")]
 layout_mode = 2
-text = "PROLOGUE"
+chapter_name = "Prologue"
+destination_scene = ExtResource("2_cx7n8")
 
 [node name="BackButton" type="Button" parent="." unique_id=462491519]
 layout_mode = 0
@@ -56,5 +58,4 @@ offset_right = 300.0
 offset_bottom = 110.0
 text = "BACK "
 
-[connection signal="pressed" from="PanelContainer/Panel/Chapter/Prologue/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]

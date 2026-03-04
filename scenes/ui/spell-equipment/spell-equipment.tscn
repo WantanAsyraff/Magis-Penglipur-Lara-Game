@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c5obdg8c3r1as"]
 
 [ext_resource type="Script" uid="uid://di4bshpljowuu" path="res://scenes/ui/spell-equipment/spell_equipment.gd" id="1_woww4"]
+[ext_resource type="PackedScene" uid="uid://bmma1j10p3fv7" path="res://scenes/ui/spell-combat-ui/spell-slot.tscn" id="2_tdbmc"]
 
 [node name="SpellEquipment" type="Control" unique_id=1952377803]
 layout_mode = 3
@@ -10,6 +11,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_woww4")
+next_scene_id = "akademi_bintang_utama_library"
 
 [node name="SpellEquipPanel" type="Panel" parent="." unique_id=261602049]
 layout_mode = 1
@@ -49,7 +51,7 @@ anchor_bottom = 1.0
 offset_left = 31.0
 offset_top = 45.0
 offset_right = -33.0
-offset_bottom = -37.0
+offset_bottom = -115.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -57,3 +59,25 @@ grow_vertical = 2
 unique_name_in_owner = true
 layout_mode = 2
 alignment = 1
+
+[node name="SpellSlot" parent="Panel/ScrollContainer/VBoxContainer" unique_id=1481730352 instance=ExtResource("2_tdbmc")]
+layout_mode = 2
+
+[node name="SpellSlot2" parent="Panel/ScrollContainer/VBoxContainer" unique_id=216556874 instance=ExtResource("2_tdbmc")]
+layout_mode = 2
+
+[node name="SpellSlot3" parent="Panel/ScrollContainer/VBoxContainer" unique_id=227164485 instance=ExtResource("2_tdbmc")]
+layout_mode = 2
+
+[node name="SpellSlot4" parent="Panel/ScrollContainer/VBoxContainer" unique_id=108097681 instance=ExtResource("2_tdbmc")]
+layout_mode = 2
+
+[node name="BackButton" type="Button" parent="Panel" unique_id=324422509]
+layout_mode = 0
+offset_left = 140.0
+offset_top = 947.0
+offset_right = 418.0
+offset_bottom = 1018.0
+text = "BACK"
+
+[connection signal="pressed" from="Panel/BackButton" to="." method="_on_back_button_pressed"]

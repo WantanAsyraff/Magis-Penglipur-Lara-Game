@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://1hc7ytvu02en"]
+
+[ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="1_farwj"]
+[ext_resource type="Script" uid="uid://crc60awkj48pg" path="res://scenes/ui/mission-selection/chapter/chapter.gd" id="1_p82ix"]
+
+[node name="Chapter" type="VBoxContainer" unique_id=1264350038]
+script = ExtResource("1_p82ix")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1039132123]
+custom_minimum_size = Vector2(0, 400)
+layout_mode = 2
+texture = ExtResource("1_farwj")
+
+[node name="SelectButton" type="Button" parent="." unique_id=548278851]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(450, 100)
+layout_mode = 2
+text = "CHAPTER SELECT"
+
+[connection signal="pressed" from="SelectButton" to="." method="_on_select_button_pressed"]

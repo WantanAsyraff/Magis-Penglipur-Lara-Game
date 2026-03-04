@@ -13,6 +13,7 @@ func change_scene():
 	_triggered = true
 	
 	var scene_data = Scene_Registry.get_scene(next_scene_id)
+	Player_Global_Data.combat_mode = false
 	if not scene_data:
 		_triggered = false
 		return

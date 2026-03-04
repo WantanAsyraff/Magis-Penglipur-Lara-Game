@@ -8,6 +8,7 @@
 size = Vector2(60, 128)
 
 [node name="DummyNpc" type="CharacterBody2D" unique_id=1626035717]
+scale = Vector2(2, 2)
 script = ExtResource("1_14nva")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=418395514]

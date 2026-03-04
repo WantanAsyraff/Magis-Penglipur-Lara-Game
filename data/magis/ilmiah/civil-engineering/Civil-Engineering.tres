@@ -2,13 +2,13 @@
 
 [ext_resource type="Script" uid="uid://mj2k1sm83ebr" path="res://data/Resources/ilmu/course.gd" id="1_kbcq0"]
 [ext_resource type="Script" uid="uid://b6vkafnios50y" path="res://data/Resources/ilmu/subject.gd" id="2_bdh6k"]
-[ext_resource type="Resource" uid="uid://bcqolxsdxt3qo" path="res://data/magis/fields/civil-engineering/core-subjects/Construction Materials.tres" id="3_gmmj2"]
-[ext_resource type="Resource" uid="uid://cxw253oogrcwj" path="res://data/magis/fields/civil-engineering/core-subjects/Engineering Mathematics.tres" id="4_svjr1"]
-[ext_resource type="Resource" uid="uid://daswhfr6efpng" path="res://data/magis/fields/civil-engineering/core-subjects/Fluid Mechanics & Hydraulics.tres" id="5_vw55q"]
-[ext_resource type="Resource" uid="uid://c1cs7qnfdr111" path="res://data/magis/fields/civil-engineering/core-subjects/Geotechnical Engineering.tres" id="6_e4u83"]
-[ext_resource type="Resource" uid="uid://65c7oww8efhx" path="res://data/magis/fields/civil-engineering/core-subjects/Structural Analysis.tres" id="7_ajm2o"]
-[ext_resource type="Resource" uid="uid://bccmufnl67n4k" path="res://data/magis/fields/civil-engineering/core-subjects/Structural Dynamics.tres" id="8_i76g4"]
-[ext_resource type="Resource" uid="uid://ce04oldwsdnpo" path="res://data/magis/fields/civil-engineering/core-subjects/Transportation Engineering.tres" id="9_6x860"]
+[ext_resource type="Resource" uid="uid://bcqolxsdxt3qo" path="res://data/magis/ilmiah/civil-engineering/core-subjects/Construction Materials.tres" id="3_gmmj2"]
+[ext_resource type="Resource" uid="uid://cxw253oogrcwj" path="res://data/magis/ilmiah/civil-engineering/core-subjects/Engineering Mathematics.tres" id="4_svjr1"]
+[ext_resource type="Resource" uid="uid://daswhfr6efpng" path="res://data/magis/ilmiah/civil-engineering/core-subjects/Fluid Mechanics & Hydraulics.tres" id="5_vw55q"]
+[ext_resource type="Resource" uid="uid://c1cs7qnfdr111" path="res://data/magis/ilmiah/civil-engineering/core-subjects/Geotechnical Engineering.tres" id="6_e4u83"]
+[ext_resource type="Resource" uid="uid://65c7oww8efhx" path="res://data/magis/ilmiah/civil-engineering/core-subjects/Structural Analysis.tres" id="7_ajm2o"]
+[ext_resource type="Resource" uid="uid://bccmufnl67n4k" path="res://data/magis/ilmiah/civil-engineering/core-subjects/Structural Dynamics.tres" id="8_i76g4"]
+[ext_resource type="Resource" uid="uid://ce04oldwsdnpo" path="res://data/magis/ilmiah/civil-engineering/core-subjects/Transportation Engineering.tres" id="9_6x860"]
 
 [resource]
 script = ExtResource("1_kbcq0")

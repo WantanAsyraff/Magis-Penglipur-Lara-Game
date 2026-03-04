@@ -28,7 +28,7 @@ var JUMP_VELOCITY := Player_Global_Data.p_jump_height
 # Dash — charge based
 var DASH_SPEED := 3200.0
 var DASH_TIME := 0.12
-var DASH_COOLDOWN := 1.4        # seconds per charge to regenerate
+var DASH_COOLDOWN := 1.4
 var MAX_DASH_CHARGES := 3
 
 var dash_timer := 0.0
@@ -63,7 +63,6 @@ func _physics_process(delta: float) -> void:
 	_update_aim_direction()
 	_regen_mana(delta)
 
-	# Freeze movement but still apply gravity and slide
 	if not Player_Global_Data.p_moveable:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		move_and_slide()
@@ -94,13 +93,11 @@ func _handle_movement() -> void:
 # DASH
 # -------------------------
 func _handle_dash_timers(delta: float) -> void:
-	# Tick active dash duration
 	if is_dashing:
 		dash_timer -= delta
 		if dash_timer <= 0:
 			is_dashing = false
 
-	# Regenerate one charge at a time
 	if dash_charges < MAX_DASH_CHARGES:
 		dash_regen_timer += delta
 		if dash_regen_timer >= DASH_COOLDOWN:
@@ -176,7 +173,7 @@ func _process_incantation_inputs() -> void:
 # SPELLS
 # -------------------------
 func _sync_spells_from_global() -> void:
-	spell_inventory = Player_Global_Data.learned_spells.duplicate()
+	spell_inventory = Player_Global_Data.equipped_spells.duplicate()
 
 func _add_sequence(incantation: String) -> void:
 	spell_string.append(incantation)
@@ -185,6 +182,9 @@ func _add_sequence(incantation: String) -> void:
 		_try_cast_spell()
 
 func _try_cast_spell() -> void:
+	if spell_inventory.is_empty():
+		_fail_cast("No spells equipped!")
+		return
 	var matched_spell = _find_spell_match()
 	if not matched_spell:
 		_fail_cast("Invalid sequence!")

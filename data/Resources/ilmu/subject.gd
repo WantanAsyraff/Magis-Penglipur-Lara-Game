@@ -8,7 +8,9 @@ class_name subjectData extends Resource
 "Humanities", "Arts", "Engineering", "Technology", "Language")
 var subject_archetype: String = "Life Sciences"
 
-@export_multiline var subject_description: String
+@export_multiline var field_of_study: String
+@export_multiline var theoretical_foundation: String
+@export_multiline var casters_notes: String
 
 @export_enum ("Mana Manipulation", "Elementalist", "Technical", "Alnur", "Alzalam","Celestial")
 var magis_archetype: String = "Mana Manipulation"

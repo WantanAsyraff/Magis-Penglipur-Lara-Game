@@ -1,8 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://bix1nk2keebsx"]
+[gd_scene format=3 uid="uid://bix1nk2keebsx"]
 
 [ext_resource type="Script" uid="uid://cpbp6jcqiumr8" path="res://scenes/spell-tree/subject_panel.gd" id="1_cfyhi"]
 [ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="1_djdju"]
-[ext_resource type="Resource" uid="uid://s6tau28u35o4" path="res://data/magis/fields/natural-science/core-subjects/Hydrodynamics.tres" id="2_kqsy7"]
+[ext_resource type="Resource" uid="uid://s6tau28u35o4" path="res://data/magis/ilmiah/natural-science/core-subjects/Hydrodynamics.tres" id="2_kqsy7"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_kqsy7"]
 font_size = 18

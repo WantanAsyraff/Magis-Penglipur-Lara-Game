@@ -35,9 +35,9 @@ func _on_casting_changed(casting: bool) -> void:
 
 func _populate_grid() -> void:
 	for child in grid.get_children():
-		child.free()
-
-	for spell in Player_Global_Data.learned_spells:
+		child.queue_free()
+	await get_tree().process_frame
+	for spell in Player_Global_Data.equipped_spells:
 		var slot = SPELL_SLOT.instantiate()
 		grid.add_child(slot)
 		slot.set_spell(spell)

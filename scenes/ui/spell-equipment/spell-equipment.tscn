@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c5obdg8c3r1as"]
 
-[ext_resource type="Script" uid="uid://di4bshpljowuu" path="res://scenes/ui/spell-equipment/spell_equipment.gd" id="1_woww4"]
+[ext_resource type="Script" uid="uid://di4bshpljowuu" path="res://scenes/ui/spell-equipment/spell-equipment.gd" id="1_woww4"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_woww4"]
 font_size = 60

@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://cnk0mojfc2m4"]
+
+[ext_resource type="Script" uid="uid://b04l3a6yyiafy" path="res://scenes/spell-tree/subject-node.gd" id="1_0drkt"]
+
+[node name="SubjectNode" type="Button" unique_id=1060616794]
+anchors_preset = -1
+anchor_right = 0.156
+anchor_bottom = 0.179
+offset_right = -0.52001953
+offset_bottom = -94.32001
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0drkt")

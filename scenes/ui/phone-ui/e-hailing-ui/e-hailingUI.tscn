@@ -1,10 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://5j53l67p7ufs"]
+[gd_scene format=3 uid="uid://5j53l67p7ufs"]
 
-[ext_resource type="Script" uid="uid://b5ma0yonok3pj" path="res://scenes/ui/phone-ui/e-hailing-ui/e_hailing_ui.gd" id="1_f1hos"]
-[ext_resource type="PackedScene" uid="uid://1b5xcv84ouja" path="res://scenes/ui/phone-ui/e-hailing-ui/route-panel/route_panel.tscn" id="1_s4xdm"]
+[ext_resource type="Script" uid="uid://b5ma0yonok3pj" path="res://scenes/ui/phone-ui/e-hailing-ui/e-hailing-ui.gd" id="1_f1hos"]
+[ext_resource type="PackedScene" uid="uid://1b5xcv84ouja" path="res://scenes/ui/phone-ui/e-hailing-ui/route-panel/route-panel.tscn" id="1_s4xdm"]
 [ext_resource type="PackedScene" uid="uid://0g01kyenn650" path="res://scenes/worlds/hubs/akademi-bintang-utama/missions-hub/story/prologue/prologue-scene-03.tscn" id="3_8tlr5"]
 
-[node name="E-HailingApp" type="Control"]
+[node name="E-HailingApp" type="Control" unique_id=1861485113]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,7 +13,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_f1hos")
 
-[node name="UI" type="Panel" parent="."]
+[node name="UI" type="Panel" parent="." unique_id=174961443]
 self_modulate = Color(16.039173, 3.198309, 8.259297, 1)
 layout_mode = 1
 anchors_preset = 15
@@ -22,42 +22,42 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="UI"]
+[node name="PanelContainer" type="PanelContainer" parent="UI" unique_id=1847841669]
 layout_mode = 0
 offset_right = 411.0
 offset_bottom = 557.0
 
-[node name="UI" type="VBoxContainer" parent="UI/PanelContainer"]
+[node name="UI" type="VBoxContainer" parent="UI/PanelContainer" unique_id=718439176]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/PanelContainer/UI"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/PanelContainer/UI" unique_id=678796637]
 layout_mode = 2
 alignment = 1
 
-[node name="Back button" type="Button" parent="UI/PanelContainer/UI/HBoxContainer"]
+[node name="Back button" type="Button" parent="UI/PanelContainer/UI/HBoxContainer" unique_id=247824658]
 layout_mode = 2
 text = "BACK"
 
-[node name="E-HailingVBoxContainer" type="VBoxContainer" parent="UI/PanelContainer/UI"]
+[node name="E-HailingVBoxContainer" type="VBoxContainer" parent="UI/PanelContainer/UI" unique_id=770960207]
 layout_mode = 2
 
-[node name="SelectLabel" type="Label" parent="UI/PanelContainer/UI/E-HailingVBoxContainer"]
+[node name="SelectLabel" type="Label" parent="UI/PanelContainer/UI/E-HailingVBoxContainer" unique_id=1400423259]
 layout_mode = 2
 text = "Select Your Location:"
 
-[node name="RoutePanel" parent="UI/PanelContainer/UI/E-HailingVBoxContainer" instance=ExtResource("1_s4xdm")]
+[node name="RoutePanel" parent="UI/PanelContainer/UI/E-HailingVBoxContainer" unique_id=1707784299 instance=ExtResource("1_s4xdm")]
 layout_mode = 2
 destination_scene = ExtResource("3_8tlr5")
 
-[node name="ButtonHBoxContainer" type="HBoxContainer" parent="UI/PanelContainer/UI"]
+[node name="ButtonHBoxContainer" type="HBoxContainer" parent="UI/PanelContainer/UI" unique_id=887622537]
 layout_mode = 2
 alignment = 1
 
-[node name="PrevButton" type="Button" parent="UI/PanelContainer/UI/ButtonHBoxContainer"]
+[node name="PrevButton" type="Button" parent="UI/PanelContainer/UI/ButtonHBoxContainer" unique_id=139442939]
 layout_mode = 2
 text = "<"
 
-[node name="NextButton" type="Button" parent="UI/PanelContainer/UI/ButtonHBoxContainer"]
+[node name="NextButton" type="Button" parent="UI/PanelContainer/UI/ButtonHBoxContainer" unique_id=761560034]
 layout_mode = 2
 text = ">"
 

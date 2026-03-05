@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c5a41lx0gq8be"]
 
-[ext_resource type="Script" uid="uid://c0xk7l7idx70l" path="res://scenes/transitioners/zone-portal/zone_portal.gd" id="1_saikc"]
+[ext_resource type="Script" uid="uid://c0xk7l7idx70l" path="res://scenes/transitioners/zone-portal/zone-portal.gd" id="1_saikc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cnpwf"]
 size = Vector2(218, 308)

@@ -2,7 +2,7 @@ extends Control
 class_name SpellTreeView
 
 @onready var container = %SpellPath # This is the Control node with spell_path.gd
-const SUBJECT_NODE_SCENE = preload("res://scenes/spell-tree/subject_node.tscn")
+const SUBJECT_NODE_SCENE = preload("res://scenes/spell-tree/subject-node.tscn")
 const SUBJECT_PANEL_SCENE = preload("res://scenes/spell-tree/subject-panel.tscn")
 
 @export var course_data: CourseData

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://upitc0orkqpy"]
 
 [ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="1_7jglb"]
-[ext_resource type="Script" uid="uid://ggxhydq3yor4" path="res://scenes/dueling-grounds-selection/duel_selection_node.gd" id="1_yoxf7"]
+[ext_resource type="Script" uid="uid://ggxhydq3yor4" path="res://scenes/dueling-grounds-selection/duel-selection-node.gd" id="1_yoxf7"]
 
 [node name="HBoxContainer" type="HBoxContainer" unique_id=491323514]
 anchors_preset = -1

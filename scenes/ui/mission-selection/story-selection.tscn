@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://40eyximxy17o"]
 
-[ext_resource type="Script" uid="uid://yu4qfawb5trg" path="res://scenes/ui/mission-selection/story_selection.gd" id="1_gbkoh"]
+[ext_resource type="Script" uid="uid://yu4qfawb5trg" path="res://scenes/ui/mission-selection/story-selection.gd" id="1_gbkoh"]
 [ext_resource type="PackedScene" uid="uid://t3o4osbl3bct" path="res://scenes/worlds/hubs/akademi-bintang-utama/missions-hub/story/prologue/Prologue.tscn" id="2_cx7n8"]
 [ext_resource type="PackedScene" uid="uid://1hc7ytvu02en" path="res://scenes/ui/mission-selection/chapter/chapter.tscn" id="3_6odkk"]
 [ext_resource type="PackedScene" uid="uid://dm7l67wbrc0iw" path="res://scenes/worlds/hubs/akademi-bintang-utama/missions-hub/story/tutorial/tutorial-world.tscn" id="4_yfnlw"]

@@ -92,6 +92,14 @@ custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 value = 100.0
 
+[node name="VSeparator2" type="VSeparator" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox/DataContainer" unique_id=1968476027]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="Dashes" type="HBoxContainer" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox/DataContainer" unique_id=1871866452]
+unique_name_in_owner = true
+layout_mode = 2
+
 [node name="TempHeart" type="TextureRect" parent="." unique_id=1257596511]
 layout_mode = 0
 offset_left = 563.0

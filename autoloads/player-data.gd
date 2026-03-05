@@ -8,6 +8,7 @@ signal casting_changed(is_casting: bool)
 signal mana_changed(new_value: float)
 signal health_changed(new_value: int)
 signal spells_updated()
+signal dash_charges_changed(current: int)
 # -------------------------
 # IDENTITY
 # -------------------------
@@ -23,6 +24,14 @@ var p_jumpable: bool = true
 var p_visible: bool = true
 var p_invincible: bool = false
 var p_hidden: bool = false
+# -------------------------
+# DASHES
+# -------------------------
+var MAX_DASH_CHARGES := 3
+var current_dash_charges := MAX_DASH_CHARGES :
+	set(value):
+		current_dash_charges = value
+		dash_charges_changed.emit(current_dash_charges)
 # -------------------------
 # CASTING  (guarded setter)
 # -------------------------

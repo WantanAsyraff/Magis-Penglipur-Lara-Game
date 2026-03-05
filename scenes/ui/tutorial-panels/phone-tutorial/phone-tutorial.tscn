@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://bphpaolkabwfr"]
+
+[ext_resource type="Script" uid="uid://5vs01pjuvxsw" path="res://scenes/ui/tutorial-panels/phone-tutorial/phone-tutorial.gd" id="1_vi4qs"]
+[ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="2_3e15e"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ftqij"]
+font_size = 32
+
+[node name="PhoneTutorial" type="Panel" unique_id=1469469424]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 125.0
+offset_top = 104.0
+offset_right = -125.0
+offset_bottom = -160.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vi4qs")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1773553088]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=1711642700]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/VBoxContainer" unique_id=852606802]
+custom_minimum_size = Vector2(0, 560)
+layout_mode = 2
+texture = ExtResource("2_3e15e")
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer" unique_id=308923872]
+layout_mode = 2
+text = "PRESS \"F\" TO OPEN YOUR PHONE. THE PHONE IS USED FOR MANY THINGS LIKE FAST TRAVEL OR ACCESSING YOUR SPELL NOTES. BUT EATING IS NOT ONE OF THEM!"
+label_settings = SubResource("LabelSettings_ftqij")
+autowrap_mode = 2
+
+[node name="CloseButton" type="Button" parent="PanelContainer/VBoxContainer" unique_id=962338997]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+text = "CLOSE"
+
+[connection signal="pressed" from="PanelContainer/VBoxContainer/CloseButton" to="." method="_on_close_button_pressed"]

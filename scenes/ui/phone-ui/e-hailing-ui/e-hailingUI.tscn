@@ -49,16 +49,4 @@ text = "Select Your Location:"
 layout_mode = 2
 destination_scene = ExtResource("3_8tlr5")
 
-[node name="ButtonHBoxContainer" type="HBoxContainer" parent="UI/PanelContainer/UI" unique_id=887622537]
-layout_mode = 2
-alignment = 1
-
-[node name="PrevButton" type="Button" parent="UI/PanelContainer/UI/ButtonHBoxContainer" unique_id=139442939]
-layout_mode = 2
-text = "<"
-
-[node name="NextButton" type="Button" parent="UI/PanelContainer/UI/ButtonHBoxContainer" unique_id=761560034]
-layout_mode = 2
-text = ">"
-
 [connection signal="pressed" from="UI/PanelContainer/UI/HBoxContainer/Back button" to="." method="_on_back_button_pressed"]

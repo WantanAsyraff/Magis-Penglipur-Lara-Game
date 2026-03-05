@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://ca23coml0cwtj"]
 
-[ext_resource type="Texture2D" uid="uid://yc3tgp66iwpq" path="res://assets/template/dummy-temp.png" id="1_4jfvk"]
+[ext_resource type="Texture2D" uid="uid://yc3tgp66iwpq" path="res://assets/temp/dummy-temp.png" id="1_4jfvk"]
 [ext_resource type="Script" uid="uid://b2q3tyq2ua5ow" path="res://components/NPCs/enemies/dummy/dummy-npc.gd" id="1_14nva"]
 [ext_resource type="PackedScene" uid="uid://dcclmw35clpaq" path="res://components/damage-indicator/damage-indicator.tscn" id="2_4mu22"]
 

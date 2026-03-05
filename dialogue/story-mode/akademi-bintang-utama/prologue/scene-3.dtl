@@ -1,4 +1,4 @@
-[background fade="0.0"]
+[background arg="res://assets/temp/academy_opening_day.jpg" fade="0.0"]
 audio -
 player: The Academy’s entrance… It looked even bigger in person!
 join yunira (neutral) left
@@ -37,17 +37,17 @@ player: Incredible…
 yunira (concerned): Player… are you sure about this? I never knew this was the “normal” for a caster.
 leave yunira
 # [TRANSITION] After The Spectacle
-[background fade="0.0"]
+[background arg="res://assets/temp/academy_opening_day.jpg" fade="0.0"]
 We went through security and made our way to registration. The officer told me I had to queue up for attendance
 join yunira left
 yunira (neutral): Alright, I’m sure you can handle it from here.
 - “Yes.”
 She looks at me with a melancholy smile.
 I can tell she’s trying her best not to cry.
-yunira (sad): I swear, you were such a crybaby when you were little. Look at you now—a soon-to-be scholar. 
+yunira (sad): I swear, you were such a crybaby when you were little. Look at you now—a soon-to-be scholar.
 audio -
 Yunira Hugs you
-She pulls me into a warm, secure embrace. 
+She pulls me into a warm, secure embrace.
 I realize then how much I might actually miss her.
 - "I’ll miss you too."
  yunira (sad): Do your best, okay? A Magis Caster has to excel both academically and in their magis intellect. Not many people can balance both.

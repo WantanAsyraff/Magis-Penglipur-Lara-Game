@@ -1,15 +1,33 @@
 class_name RoutePanel extends PanelContainer
 
-@export var destination_scene : PackedScene
-@export var completion_signal_name : String = "route_selected"
+@export var destinations: Array[SceneData] = []
+@export var completion_signal_name: String = "route_selected"
+
+var current_index: int = 0
+
+func _ready() -> void:
+	_update_label()
 
 func _on_button_pressed() -> void:
-	# 1. Logic to handle scene specific data if needed
-	print("Route selected: ", completion_signal_name)
-	
-	# 2. Emit the signal through a global bus so the Sequence Manager hears it
-	# We pass the signal_name as a parameter so the manager knows which one finished
+	_travel_to(destinations[current_index])
+
+func _on_prev_button_pressed() -> void:
+	current_index = wrapi(current_index - 1, 0, destinations.size())
+	_update_label()
+
+func _on_next_button_pressed() -> void:
+	current_index = wrapi(current_index + 1, 0, destinations.size())
+	_update_label()
+
+func _update_label() -> void:
+	if destinations.is_empty():
+		%LocationLabel.text = "No destinations"
+		return
+	%LocationLabel.text = destinations[current_index].scene_name
+
+func _travel_to(scene_data: SceneData) -> void:
+	if not scene_data:
+		push_error("RoutePanel: Invalid SceneData!")
+		return
 	Player_Global_Data.custom_signal_emitted.emit(completion_signal_name)
-	print("emitted", completion_signal_name)
-	# Optional: If the button should also change the scene immediately:
-	SceneManager.change_scene(destination_scene.resource_path)
+	SceneManager.change_scene(scene_data.scene.resource_path)

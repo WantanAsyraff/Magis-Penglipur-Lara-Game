@@ -1,4 +1,4 @@
-[background fade="0.0"]
+[background arg="res://assets/temp/train_station_entrance_day.jpg" fade="0.0"]
 audio -
 join yunira (happy) left
 player: How are you  here first!

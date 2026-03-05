@@ -51,6 +51,7 @@ npc_timeline = ExtResource("5_6kok4")
 position = Vector2(-8722, 835)
 is_overworld_npc = true
 destination_scene = ExtResource("4_1mfm7")
+has_tutorial = true
 
 [node name="Characters" type="Node2D" parent="World/GameComponents" unique_id=275324597]
 

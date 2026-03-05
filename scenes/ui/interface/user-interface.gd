@@ -6,7 +6,7 @@ class_name UserInterface extends Control
 @onready var mana_bar = %ManaProgressBar
 @onready var dashes = %Dashes  # HBoxContainer
 
-const DASH_ICON = preload("res://assets/template/temp-mana.png")
+const DASH_ICON = preload("res://assets/temp/temp-mana.png")
 
 func _ready() -> void:
 	if Player_Global_Data == null:

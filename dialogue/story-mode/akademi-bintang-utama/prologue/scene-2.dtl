@@ -1,4 +1,4 @@
-[background fade="0.0"]
+[background arg="res://assets/temp/train_station_entrance_day.jpg" fade="0.0"]
 audio -
 yunira (happy): Come on, I’ll help with the baggage. Head to the staircase exit
 yunira: I need to withdraw some cash.

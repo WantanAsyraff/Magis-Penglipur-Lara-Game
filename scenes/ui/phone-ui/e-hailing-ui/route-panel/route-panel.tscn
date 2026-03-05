@@ -1,9 +1,22 @@
 [gd_scene format=3 uid="uid://1b5xcv84ouja"]
 
 [ext_resource type="Script" uid="uid://uk2d70i0npqx" path="res://scenes/ui/phone-ui/e-hailing-ui/route-panel/route-panel.gd" id="1_bjcnm"]
+[ext_resource type="Script" uid="uid://bxc44phagq28x" path="res://data/Resources/worlds/scene-data.gd" id="2_whdwk"]
+[ext_resource type="Resource" uid="uid://db8q4sqjnubuk" path="res://data/worlds/hubs/akademi-bintang-utama/story/missions-selection.tres" id="3_g15rk"]
+[ext_resource type="Resource" uid="uid://6tl1um0gbnu" path="res://data/worlds/hubs/akademi-bintang-utama/abu-campus-entrance.tres" id="4_a6xn1"]
+[ext_resource type="Resource" uid="uid://kh3isqhmfkk8" path="res://data/worlds/hubs/akademi-bintang-utama/abu-courtyard.tres" id="5_yp1dy"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_whdwk"]
+font_size = 32
 
 [node name="RoutePanel" type="PanelContainer" unique_id=347543441]
+anchors_preset = -1
+anchor_right = 0.16100001
+anchor_bottom = 0.42800003
+offset_right = -309.12003
+offset_bottom = -462.24002
 script = ExtResource("1_bjcnm")
+destinations = Array[ExtResource("2_whdwk")]([ExtResource("4_a6xn1"), ExtResource("5_yp1dy"), ExtResource("3_g15rk")])
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1935913122]
 layout_mode = 2
@@ -15,12 +28,31 @@ layout_mode = 2
 [node name="LocationVBoxContainer" type="VBoxContainer" parent="VBoxContainer" unique_id=632555956]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/LocationVBoxContainer" unique_id=1395691497]
+[node name="LocationLabel" type="Label" parent="VBoxContainer/LocationVBoxContainer" unique_id=1395691497]
+unique_name_in_owner = true
 layout_mode = 2
-text = "LOCATION: AKADEMU BINTANG UTAMA "
+text = "Lorem"
+label_settings = SubResource("LabelSettings_whdwk")
+autowrap_mode = 3
 
-[node name="Button" type="Button" parent="VBoxContainer/LocationVBoxContainer" unique_id=286133166]
+[node name="TravelButton" type="Button" parent="VBoxContainer/LocationVBoxContainer" unique_id=286133166]
 layout_mode = 2
-text = "FAST TRAVEL 1"
+text = "GO NOW!1"
 
-[connection signal="pressed" from="VBoxContainer/LocationVBoxContainer/Button" to="." method="_on_button_pressed"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/LocationVBoxContainer" unique_id=1503955034]
+layout_mode = 2
+alignment = 1
+
+[node name="PrevButton" type="Button" parent="VBoxContainer/LocationVBoxContainer/HBoxContainer" unique_id=580481479]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+text = "<"
+
+[node name="NextButton" type="Button" parent="VBoxContainer/LocationVBoxContainer/HBoxContainer" unique_id=1963194092]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+text = ">"
+
+[connection signal="pressed" from="VBoxContainer/LocationVBoxContainer/TravelButton" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/LocationVBoxContainer/HBoxContainer/PrevButton" to="." method="_on_prev_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/LocationVBoxContainer/HBoxContainer/NextButton" to="." method="_on_next_button_pressed"]

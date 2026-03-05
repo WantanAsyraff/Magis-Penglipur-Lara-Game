@@ -1,11 +1,11 @@
 extends Control
 
 const SPELL_SLOT = preload("res://scenes/ui/spell-combat-ui/spell-slot.tscn")
+const MAX_EQUIPPED_SPELLS = 8
 
 @export var next_scene_id: String
-
 @onready var vbox: VBoxContainer = %LearnedSpells
-@onready var spellEquip: VBoxContainer = %SpellEquipmentContainer
+@onready var spellEquip: GridContainer = %SpellEquipmentContainer
 
 func _ready() -> void:
 	Player_Global_Data.spells_updated.connect(_populate_both.bind().call_deferred)
@@ -38,6 +38,9 @@ func _populate_equipped() -> void:
 		slot.spell_selected.connect(_on_equipped_spell_selected)
 
 func _on_learned_spell_selected(spell: SpellData) -> void:
+	if Player_Global_Data.equipped_spells.size() >= MAX_EQUIPPED_SPELLS:
+		push_warning("Cannot equip more than %d spells." % MAX_EQUIPPED_SPELLS)
+		return
 	Player_Global_Data.equip_spell(spell)
 
 func _on_equipped_spell_selected(spell: SpellData) -> void:
@@ -46,20 +49,15 @@ func _on_equipped_spell_selected(spell: SpellData) -> void:
 func _on_back_button_pressed() -> void:
 	print("--- Transition Attempt Started ---")
 	print("Target ID: ", next_scene_id)
-
 	if next_scene_id == "":
 		push_error("FAILED: next_scene_id is empty in the Inspector!")
 		return
-
 	var scene_data = Scene_Registry.get_scene(next_scene_id)
-
 	if not scene_data:
 		push_error("FAILED: Scene_Registry could not find ID: " + next_scene_id)
 		print("Available IDs: ", Scene_Registry.scenes.keys())
 		return
-
 	print("SUCCESS: Found path: ", scene_data.scene.resource_path)
-
 	if SceneManager:
 		SceneManager.change_scene(scene_data.scene.resource_path)
 	else:

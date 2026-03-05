@@ -7,7 +7,7 @@
 [sub_resource type="LabelSettings" id="LabelSettings_kqsy7"]
 font_size = 18
 
-[node name="SubjectPanel" type="Control"]
+[node name="SubjectPanel" type="Control" unique_id=1781568512]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 191.0
@@ -18,13 +18,13 @@ script = ExtResource("1_cfyhi")
 subject_data = ExtResource("2_kqsy7")
 metadata/_edit_group_ = true
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Panel" type="Panel" parent="." unique_id=1314844687]
 custom_minimum_size = Vector2(500, 300)
 layout_mode = 0
 offset_right = 1572.0
 offset_bottom = 930.0
 
-[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+[node name="MarginContainer" type="MarginContainer" parent="Panel" unique_id=1942027216]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -37,40 +37,51 @@ theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
-[node name="SubjectContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
+[node name="SubjectContainer" type="VBoxContainer" parent="Panel/MarginContainer" unique_id=936356489]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="TitleContainer" type="HBoxContainer" parent="Panel/MarginContainer/SubjectContainer"]
+[node name="TitleContainer" type="HBoxContainer" parent="Panel/MarginContainer/SubjectContainer" unique_id=2083615064]
 unique_name_in_owner = true
 layout_mode = 2
 alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="Panel/MarginContainer/SubjectContainer/TitleContainer"]
+[node name="TextureRect" type="TextureRect" parent="Panel/MarginContainer/SubjectContainer/TitleContainer" unique_id=622515026]
 unique_name_in_owner = true
 layout_mode = 2
 texture = ExtResource("1_djdju")
 
-[node name="SubjectLabel" type="Label" parent="Panel/MarginContainer/SubjectContainer/TitleContainer"]
+[node name="MPLSubjectLabel" type="Label" parent="Panel/MarginContainer/SubjectContainer/TitleContainer" unique_id=1747799397]
 unique_name_in_owner = true
 layout_mode = 2
-text = "SUBJECT NAME"
+text = "MINISTRY OF HIGHER MAGISTERY EDUCATION BINTANG UTAMA ACADEMY — SUBJECT ENROLLMENT"
 
-[node name="SubjectDescContainer" type="HBoxContainer" parent="Panel/MarginContainer/SubjectContainer"]
-unique_name_in_owner = true
+[node name="SubjectDescContainer" type="HBoxContainer" parent="Panel/MarginContainer/SubjectContainer" unique_id=1451859412]
 layout_mode = 2
 alignment = 1
 
-[node name="CourseContainer" type="VBoxContainer" parent="Panel/MarginContainer/SubjectContainer/SubjectDescContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer/SubjectContainer/SubjectDescContainer" unique_id=485729361]
+layout_mode = 2
+
+[node name="FieldContainer" type="VBoxContainer" parent="Panel/MarginContainer/SubjectContainer/SubjectDescContainer/VBoxContainer" unique_id=779886377]
 layout_mode = 2
 alignment = 1
 
-[node name="CourseOutlineLabel" type="Label" parent="Panel/MarginContainer/SubjectContainer/SubjectDescContainer/CourseContainer"]
+[node name="FieldOfStudyLabel" type="Label" parent="Panel/MarginContainer/SubjectContainer/SubjectDescContainer/VBoxContainer/FieldContainer" unique_id=133333308]
 unique_name_in_owner = true
 layout_mode = 2
-text = "COURSE OUTLINE"
+text = "FIELD OF STUDY"
 
-[node name="CourseDescriptionLabel" type="Label" parent="Panel/MarginContainer/SubjectContainer/SubjectDescContainer/CourseContainer"]
+[node name="CourseContainer" type="VBoxContainer" parent="Panel/MarginContainer/SubjectContainer/SubjectDescContainer/VBoxContainer" unique_id=968564545]
+layout_mode = 2
+alignment = 1
+
+[node name="TheorecticalFoundationLabel" type="Label" parent="Panel/MarginContainer/SubjectContainer/SubjectDescContainer/VBoxContainer/CourseContainer" unique_id=975091940]
+unique_name_in_owner = true
+layout_mode = 2
+text = "THEORECTICAL FOUNDATION"
+
+[node name="CourseDescriptionLabel" type="Label" parent="Panel/MarginContainer/SubjectContainer/SubjectDescContainer/VBoxContainer/CourseContainer" unique_id=268418327]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(500, 200)
 layout_mode = 2
@@ -82,36 +93,53 @@ COURSE DESCRIPTION
 label_settings = SubResource("LabelSettings_kqsy7")
 autowrap_mode = 3
 
-[node name="SpellList" type="VBoxContainer" parent="Panel/MarginContainer/SubjectContainer/SubjectDescContainer"]
+[node name="CasterNoteContainer" type="VBoxContainer" parent="Panel/MarginContainer/SubjectContainer/SubjectDescContainer/VBoxContainer" unique_id=457226069]
+layout_mode = 2
+alignment = 1
+
+[node name="CasterNoteTitleLabel" type="Label" parent="Panel/MarginContainer/SubjectContainer/SubjectDescContainer/VBoxContainer/CasterNoteContainer" unique_id=675504046]
+unique_name_in_owner = true
+layout_mode = 2
+text = "CASTER'S NOTES"
+
+[node name="CasterNoteLabel" type="Label" parent="Panel/MarginContainer/SubjectContainer/SubjectDescContainer/VBoxContainer/CasterNoteContainer" unique_id=2007707002]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(500, 200)
+layout_mode = 2
+text = "CASTER'S NOTES ABOUT WHAT THIS SUBJECT WILL TEACH EM"
+label_settings = SubResource("LabelSettings_kqsy7")
+autowrap_mode = 3
+
+[node name="SpellList" type="VBoxContainer" parent="Panel/MarginContainer/SubjectContainer/SubjectDescContainer" unique_id=1754087220]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="SpellListLabel" type="Label" parent="Panel/MarginContainer/SubjectContainer/SubjectDescContainer/SpellList"]
+[node name="SpellListLabel" type="Label" parent="Panel/MarginContainer/SubjectContainer/SubjectDescContainer/SpellList" unique_id=1393946445]
 unique_name_in_owner = true
 layout_mode = 2
 text = "SPELLS YOU WILL LEARN"
 
-[node name="SpellLabel" type="Label" parent="Panel/MarginContainer/SubjectContainer/SubjectDescContainer/SpellList"]
+[node name="SpellLabel" type="Label" parent="Panel/MarginContainer/SubjectContainer/SubjectDescContainer/SpellList" unique_id=1978812077]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(500, 200)
 layout_mode = 2
 text = "- SPELL LIST"
 autowrap_mode = 3
 
-[node name="ButtonContainer" type="HBoxContainer" parent="Panel/MarginContainer/SubjectContainer"]
+[node name="ButtonContainer" type="HBoxContainer" parent="Panel/MarginContainer/SubjectContainer" unique_id=362796371]
 unique_name_in_owner = true
 layout_mode = 2
 alignment = 1
 
-[node name="CancelButton" type="Button" parent="Panel/MarginContainer/SubjectContainer/ButtonContainer"]
+[node name="CancelButton" type="Button" parent="Panel/MarginContainer/SubjectContainer/ButtonContainer" unique_id=223767422]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Hmm.... later."
+text = "DEFER ENROLLMENT"
 
-[node name="ConfirmButton" type="Button" parent="Panel/MarginContainer/SubjectContainer/ButtonContainer"]
+[node name="ConfirmButton" type="Button" parent="Panel/MarginContainer/SubjectContainer/ButtonContainer" unique_id=1518116183]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Study!"
+text = "ENROLL NOW"
 
 [connection signal="pressed" from="Panel/MarginContainer/SubjectContainer/ButtonContainer/CancelButton" to="." method="_on_cancel_button_pressed"]
 [connection signal="pressed" from="Panel/MarginContainer/SubjectContainer/ButtonContainer/ConfirmButton" to="." method="_on_confirm_button_pressed"]

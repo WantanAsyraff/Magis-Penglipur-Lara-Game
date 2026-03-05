@@ -2,6 +2,9 @@
 
 [ext_resource type="Script" uid="uid://di4bshpljowuu" path="res://scenes/ui/spell-equipment/spell_equipment.gd" id="1_woww4"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_woww4"]
+font_size = 60
+
 [node name="SpellEquipment" type="Control" unique_id=1952377803]
 layout_mode = 3
 anchors_preset = 15
@@ -20,17 +23,30 @@ anchor_bottom = 1.0
 offset_right = 0.67993164
 offset_bottom = -3.0
 
+[node name="EquipLearnedSpellLabel" type="Label" parent="SpellEquipPanel" unique_id=1127299645]
+layout_mode = 0
+offset_right = 1337.0
+offset_bottom = 83.0
+grow_horizontal = 2
+text = "EQUIP LEARNED SPELLS (MAXIMUM 8)"
+label_settings = SubResource("LabelSettings_woww4")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="ScrollContainer" type="ScrollContainer" parent="SpellEquipPanel" unique_id=1729953582]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = -1
+anchor_top = 0.113000005
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 0.29899597
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="SpellEquipmentContainer" type="VBoxContainer" parent="SpellEquipPanel/ScrollContainer" unique_id=1030169276]
+[node name="SpellEquipmentContainer" type="GridContainer" parent="SpellEquipPanel/ScrollContainer" unique_id=1584296140]
 unique_name_in_owner = true
 layout_mode = 2
+columns = 3
 
 [node name="Panel" type="Panel" parent="." unique_id=747578804]
 layout_mode = 1

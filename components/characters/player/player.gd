@@ -29,12 +29,15 @@ var JUMP_VELOCITY := Player_Global_Data.p_jump_height
 var DASH_SPEED := 3200.0
 var DASH_TIME := 0.12
 var DASH_COOLDOWN := 1.4
-var MAX_DASH_CHARGES := 3
+var max_dashes = Player_Global_Data.MAX_DASH_CHARGES
 
 var dash_timer := 0.0
 var dash_direction := Vector2.ZERO
 var is_dashing := false
-var dash_charges := MAX_DASH_CHARGES
+var dash_charges: int = Player_Global_Data.MAX_DASH_CHARGES:
+	set(value):
+		dash_charges = clampi(value, 0, max_dashes)
+		Player_Global_Data.current_dash_charges = dash_charges
 var dash_regen_timer := 0.0
 
 # Spells
@@ -53,6 +56,8 @@ func _ready() -> void:
 		Player_Global_Data.spells_updated.connect(_sync_spells_from_global)
 
 	combat_mode = Player_Global_Data.combat_mode
+	# Sync initial dash charges to UI
+	Player_Global_Data.current_dash_charges = dash_charges
 
 # -------------------------
 # LOGIC: PHYSICS & MOVEMENT
@@ -98,16 +103,16 @@ func _handle_dash_timers(delta: float) -> void:
 		if dash_timer <= 0:
 			is_dashing = false
 
-	if dash_charges < MAX_DASH_CHARGES:
+	if dash_charges < max_dashes:
 		dash_regen_timer += delta
 		if dash_regen_timer >= DASH_COOLDOWN:
-			dash_charges += 1
+			dash_charges += 1  # setter handles clamp + signal
 			dash_regen_timer = 0.0
 
 func _try_dash() -> void:
 	var dir := Input.get_axis("ui_left", "ui_right")
 	if dir != 0 and dash_charges > 0:
-		dash_charges -= 1
+		dash_charges -= 1  # setter handles clamp + signal
 		dash_regen_timer = 0.0
 		is_dashing = true
 		dash_timer = DASH_TIME

@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://cpbp6jcqiumr8" path="res://scenes/spell-tree/subject-panel.gd" id="1_cfyhi"]
 [ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="1_djdju"]
-[ext_resource type="Resource" uid="uid://s6tau28u35o4" path="res://data/magis/ilmiah/natural-science/core-subjects/Hydrodynamics.tres" id="2_kqsy7"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_kqsy7"]
 font_size = 18
@@ -15,7 +14,6 @@ offset_top = 65.0
 offset_right = 1763.0
 offset_bottom = 996.0
 script = ExtResource("1_cfyhi")
-subject_data = ExtResource("2_kqsy7")
 metadata/_edit_group_ = true
 
 [node name="Panel" type="Panel" parent="." unique_id=1314844687]
@@ -54,7 +52,7 @@ texture = ExtResource("1_djdju")
 [node name="MPLSubjectLabel" type="Label" parent="Panel/MarginContainer/SubjectContainer/TitleContainer" unique_id=1747799397]
 unique_name_in_owner = true
 layout_mode = 2
-text = "MINISTRY OF HIGHER MAGISTERY EDUCATION BINTANG UTAMA ACADEMY — SUBJECT ENROLLMENT"
+text = "MINISTRY OF HIGHER MAGISTERY EDUCATION BINTANG UTAMA ACADEMY SUBJECT ENROLLMENT"
 
 [node name="SubjectDescContainer" type="HBoxContainer" parent="Panel/MarginContainer/SubjectContainer" unique_id=1451859412]
 layout_mode = 2

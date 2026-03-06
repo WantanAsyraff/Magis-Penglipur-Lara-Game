@@ -5,15 +5,28 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cnpwf"]
 size = Vector2(218, 308)
 
+[sub_resource type="LabelSettings" id="LabelSettings_saikc"]
+font_size = 32
+
 [node name="ZonePortal" type="Area2D" unique_id=362818532]
 script = ExtResource("1_saikc")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=935585302]
-position = Vector2(13, 27)
+position = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_cnpwf")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2040158024]
 scale = Vector2(2.0881925, 1.8730313)
+
+[node name="EnterLabel" type="Label" parent="." unique_id=1056206482]
+unique_name_in_owner = true
+offset_left = -108.0
+offset_top = -220.0
+offset_right = 109.0
+offset_bottom = -162.0
+text = "ENTER [E]"
+label_settings = SubResource("LabelSettings_saikc")
+horizontal_alignment = 1
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]

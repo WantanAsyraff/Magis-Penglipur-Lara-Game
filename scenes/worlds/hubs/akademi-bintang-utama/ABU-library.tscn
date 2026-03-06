@@ -41,13 +41,13 @@ tile_map_data = PackedByteArray("AAAAAA8AAAAAAAAAAAABAA8AAAABAAAAAAAAABAAAAAAAAA
 [node name="Doors" type="Node2D" parent="World/GameComponents" unique_id=717460403]
 
 [node name="ZonePortal(Courtyard)" parent="World/GameComponents/Doors" unique_id=430207757 instance=ExtResource("3_jry4t")]
-position = Vector2(2344, 783)
+position = Vector2(2367, 806)
 is_door = true
 next_scene_id = "akademi_bintang_utama_courtyard"
 spawn_marker_override = "IntoCourtyard"
 
 [node name="ZonePortal(SpellTree)" parent="World/GameComponents/Doors" unique_id=1563206237 instance=ExtResource("3_jry4t")]
-position = Vector2(-1058, 778)
+position = Vector2(-1054, 806)
 is_door = true
 next_scene_id = "spell_tree"
 

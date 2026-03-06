@@ -82,7 +82,7 @@ offset_left = -2449.0
 offset_top = 652.0
 offset_right = -2021.0
 offset_bottom = 697.0
-text = "PRESS \"SPACE\"/\"I\" TO JUMP!"
+text = "PRESS \"SPACE\" TO JUMP!"
 label_settings = SubResource("LabelSettings_6kok4")
 
 [node name="TutorialLabel3" type="Label" parent="World/TutorialLabels" unique_id=184379997]
@@ -92,4 +92,12 @@ offset_right = -3131.0
 offset_bottom = 625.0
 text = "PRESS \"SHIFT\" IN ANY DIRECTION
 TO DASH"
+label_settings = SubResource("LabelSettings_6kok4")
+
+[node name="TutorialLabel5" type="Label" parent="World/TutorialLabels" unique_id=442624596]
+offset_left = -8510.0
+offset_top = 698.0
+offset_right = -8000.0
+offset_bottom = 791.0
+text = "<-- PRESS E"
 label_settings = SubResource("LabelSettings_6kok4")

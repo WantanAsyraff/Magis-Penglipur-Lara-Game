@@ -28,6 +28,10 @@ func change_scene():
 	if not scene_data:
 		_triggered = false
 		return
+	if not scene_data.scene:
+		push_error("ZonePortal: scene_id '%s' has no scene assigned." % next_scene_id)
+		_triggered = false
+		return
 	
 	var spawn_marker = spawn_marker_override if spawn_marker_override else scene_data.default_spawn_marker
 	

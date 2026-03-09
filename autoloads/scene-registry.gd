@@ -1,50 +1,43 @@
-# scenes_registry.gd (Autoload as "ScenesRegistry")
 extends Node
 
 var scenes: Dictionary = {}
 
-func _ready():
+# Export-safe registry using explicit resource paths.
+const SCENE_DATA_PATHS: PackedStringArray = [
+	"res://data/worlds/hubs/akademi-bintang-utama/abu-campus-entrance.tres",
+	"res://data/worlds/hubs/akademi-bintang-utama/abu-courtyard.tres",
+	"res://data/worlds/hubs/akademi-bintang-utama/abu-library.tres",
+	"res://data/worlds/hubs/akademi-bintang-utama/dueling-grounds-selection.tres",
+	"res://data/worlds/hubs/akademi-bintang-utama/dueling-grounds.tres",
+	"res://data/worlds/hubs/akademi-bintang-utama/spell-tree.tres",
+	"res://data/worlds/hubs/akademi-bintang-utama/dormitory/abu-dorm-room.tres",
+	"res://data/worlds/hubs/akademi-bintang-utama/dormitory/abu-dormitory-hallway.tres",
+	"res://data/worlds/hubs/akademi-bintang-utama/dueling-grounds/dueling-selection.tres",
+	"res://data/worlds/hubs/akademi-bintang-utama/story/e-hailing.tres",
+	"res://data/worlds/hubs/akademi-bintang-utama/story/missions-selection.tres",
+	"res://data/worlds/hubs/akademi-bintang-utama/story/train-station.tres",
+]
+
+func _ready() -> void:
 	_load_all_scene_data()
 
-func _load_all_scene_data():
-	var base_path = "res://data/worlds/hubs/"
-	_load_scene_data_recursive(base_path)
-
-func _load_scene_data_recursive(path: String):
-	var dir = DirAccess.open(path)
-	
-	if not dir:
-		push_error("Failed to open directory: " + path)
-		return
-	
-	dir.list_dir_begin()
-	var file_name = dir.get_next()
-	
-	while file_name != "":
-		var full_path = path + file_name
-		
-		# Skip hidden files and special directories
-		if file_name.begins_with("."):
-			file_name = dir.get_next()
+func _load_all_scene_data() -> void:
+	scenes.clear()
+	for path in SCENE_DATA_PATHS:
+		var scene_data = load(path) as SceneData
+		if not scene_data:
+			push_warning("SceneRegistry: Failed to load SceneData at %s" % path)
 			continue
-		
-		# If it's a directory, recurse into it
-		if dir.current_is_dir():
-			_load_scene_data_recursive(full_path + "/")
-		
-		# If it's a .tres file, load it
-		elif file_name.ends_with(".tres"):
-			var scene_data = load(full_path) as SceneData
-			
-			if scene_data and scene_data.scene_id:
-				scenes[scene_data.scene_id] = scene_data
-				print("Loaded scene: ", scene_data.scene_id, " from ", full_path)
-			else:
-				push_warning("Invalid SceneData in: " + full_path)
-		
-		file_name = dir.get_next()
-	
-	dir.list_dir_end()
+		_register_scene_data(scene_data)
+
+func _register_scene_data(scene_data: SceneData) -> void:
+	if not scene_data:
+		push_warning("SceneRegistry: Null SceneData in SCENE_DATA_RESOURCES.")
+		return
+	if scene_data.scene_id.is_empty():
+		push_warning("SceneRegistry: SceneData missing scene_id (%s)." % scene_data.resource_path)
+		return
+	scenes[scene_data.scene_id] = scene_data
 
 # API Methods (same as before)
 func get_scene(scene_id: String) -> SceneData:

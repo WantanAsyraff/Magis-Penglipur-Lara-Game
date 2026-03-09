@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene format=3 uid="uid://dwg50enh6sl67"]
 
 [ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="1_tex"]
 
@@ -15,7 +15,7 @@ scale_min = 0.15
 scale_max = 0.4
 color = Color(0.18039216, 0.7490196, 1, 0.85)
 
-[node name="PressureJetTrail" type="GPUParticles2D"]
+[node name="PressureJetTrail" type="GPUParticles2D" unique_id=1393109193]
 amount = 18
 texture = ExtResource("1_tex")
 lifetime = 0.3

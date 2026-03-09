@@ -37,8 +37,12 @@ func _on_quit_button_pressed() -> void:
 	# Unpause before changing scenes to avoid issues
 	get_tree().paused = false
 	
-	# Option 1: Return to main menu (recommended)
-	SceneManager.change_scene("res://scenes/main_menu.tscn")
+	# Return to the configured project main scene.
+	var main_scene: String = str(ProjectSettings.get_setting("application/run/main_scene", ""))
+	if main_scene.is_empty():
+		push_error("FAILED: application/run/main_scene is empty.")
+		return
+	SceneManager.change_scene(main_scene)
 	
 	# Option 2: Quit to desktop
 	# get_tree().quit()

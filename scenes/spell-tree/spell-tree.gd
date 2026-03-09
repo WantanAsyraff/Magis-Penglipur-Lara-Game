@@ -96,6 +96,9 @@ func _on_button_pressed() -> void:
 		# Print all known IDs so you can see if there is a typo
 		print("Available IDs: ", Scene_Registry.scenes.keys()) 
 		return
+	if not scene_data.scene:
+		push_error("FAILED: SceneData exists but has no scene assigned for ID: " + next_scene_id)
+		return
 
 	print("SUCCESS: Found path: ", scene_data.scene.resource_path)
 

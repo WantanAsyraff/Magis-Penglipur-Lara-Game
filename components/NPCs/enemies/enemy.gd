@@ -28,7 +28,6 @@ enum AttackType { MELEE, RANGED, BOTH }
 ## Optional SpellData for ranged attacks.
 @export var ranged_spell: SpellData = null
 
-
 # ─────────────────────────────────────────
 # STATS
 # ─────────────────────────────────────────
@@ -174,6 +173,8 @@ func _on_state_entered(state: State) -> void:
 			_play_animation("walk")
 		State.ATTACK:
 			_play_animation("attack")
+			# ── Fire once on entry, then wait for timer to return to CHASE ──
+			_execute_attack()
 		State.HURT:
 			_play_animation("hurt")
 			hurt_timer.start()
@@ -181,7 +182,6 @@ func _on_state_entered(state: State) -> void:
 			_play_animation("death")
 			hitbox.clear_all_effects()
 			set_physics_process(false)
-			# Defer free to allow death animation to finish
 			await sprite.animation_finished
 			queue_free()
 
@@ -190,8 +190,8 @@ func _run_state(delta: float) -> void:
 		State.IDLE:    _state_idle()
 		State.PATROL:  _state_patrol(delta)
 		State.CHASE:   _state_chase()
-		State.ATTACK:  _state_attack()
-		State.HURT:    pass  # Hurt timer handles exit
+		State.ATTACK:  _state_attack_hold()  # Just holds position — no re-firing
+		State.HURT:    pass
 		State.DEATH:   pass
 
 # ─────────────────────────────────────────
@@ -199,7 +199,6 @@ func _run_state(delta: float) -> void:
 # ─────────────────────────────────────────
 func _state_idle() -> void:
 	velocity.x = move_toward(velocity.x, 0, move_speed)
-	# Transition to patrol after a short settle
 	if _player == null:
 		_set_state(State.PATROL)
 
@@ -246,26 +245,21 @@ func _state_chase() -> void:
 	# Movement logic
 	match attack_type:
 		AttackType.MELEE:
-			# Always close in
 			velocity.x = direction.x * chase_speed
 			_update_facing(direction.x)
 
 		AttackType.RANGED:
 			if dist < retreat_threshold:
-				# Too close — back away
 				velocity.x = -direction.x * chase_speed
 				_update_facing(direction.x)
 			elif dist > ranged_trigger_distance:
-				# Too far — close in
 				velocity.x = direction.x * chase_speed
 				_update_facing(direction.x)
 			else:
-				# In preferred zone — strafe or hold still
 				velocity.x = move_toward(velocity.x, 0, chase_speed)
 
 		AttackType.BOTH:
 			if dist < retreat_threshold:
-				# Retreat if player is too close and melee isn't preferred
 				velocity.x = -direction.x * chase_speed
 				_update_facing(direction.x)
 			elif dist > ranged_trigger_distance:
@@ -274,22 +268,16 @@ func _state_chase() -> void:
 			else:
 				velocity.x = move_toward(velocity.x, 0, chase_speed)
 
-func _state_attack() -> void:
-	# Ranged enemies hold position while attacking
+# Called every frame while in ATTACK state — only holds position, no re-firing.
+# _execute_attack() already ran once in _on_state_entered(State.ATTACK).
+# The attack_timer timeout will call _on_attack_timer_timeout() which returns
+# the enemy to CHASE, completing the attack cycle.
+func _state_attack_hold() -> void:
 	match attack_type:
 		AttackType.RANGED, AttackType.BOTH:
 			velocity.x = move_toward(velocity.x, 0, chase_speed)
 		AttackType.MELEE:
 			pass  # Melee can keep momentum
-
-	if not _can_attack:
-		if _player != null:
-			_set_state(State.CHASE)
-		else:
-			_set_state(State.PATROL)
-		return
-
-	_execute_attack()
 
 # ─────────────────────────────────────────
 # PATROL HELPERS
@@ -332,21 +320,18 @@ func _execute_attack() -> void:
 		AttackType.RANGED:
 			_do_ranged_attack()
 		AttackType.BOTH:
-			# Prefer melee if in range, otherwise ranged
 			if dist <= melee_range:
 				_do_melee_attack()
 			elif ranged_spell != null and dist <= ranged_trigger_distance:
 				_do_ranged_attack()
 
 func _do_melee_attack() -> void:
-	# Check if player is still in melee range at moment of hit
 	if _player == null:
 		return
 	var dist := global_position.distance_to(_player.global_position)
 	if dist <= melee_range:
 		var player_hitbox := _player.get_node_or_null("HitboxComponent") as HitboxComponent
 		if player_hitbox:
-			# Build a minimal SpellData-like hit using melee_damage
 			var direction: Vector2 = (_player.global_position - global_position).normalized()
 			var fake_spell := SpellData.new()
 			fake_spell.projectile_damage = melee_damage
@@ -362,10 +347,10 @@ func _do_ranged_attack() -> void:
 
 	var inst = scene_to_use.instantiate()
 	inst.spell_data = ranged_spell
-	# Offset spawn position forward by enough to clear the enemy's collider
-	inst.position = global_position + direction * 260.0
+	inst.position = global_position + direction * 250.0
 	inst.direction = direction
 	get_parent().add_child(inst)
+
 # ─────────────────────────────────────────
 # DETECTION & SIGHT
 # ─────────────────────────────────────────
@@ -376,7 +361,6 @@ func _has_line_of_sight() -> bool:
 	raycast.force_raycast_update()
 	if not raycast.is_colliding():
 		return true
-	# Colliding with something — check if it's the player
 	return raycast.get_collider() == _player
 
 func _update_sight_memory(delta: float) -> void:
@@ -391,8 +375,7 @@ func _on_detection_area_body_entered(body: Node) -> void:
 
 func _on_detection_area_body_exited(body: Node) -> void:
 	if body == _player:
-		# Don't immediately forget — sight memory handles the delay
-		pass
+		pass  # Sight memory handles the delay
 
 # ─────────────────────────────────────────
 # HITBOX CALLBACKS
@@ -412,6 +395,12 @@ func _on_died() -> void:
 # ─────────────────────────────────────────
 func _on_attack_timer_timeout() -> void:
 	_can_attack = true
+	# Return to chase after cooldown — CHASE will re-enter ATTACK if still in range
+	if current_state == State.ATTACK:
+		if _player != null:
+			_set_state(State.CHASE)
+		else:
+			_set_state(State.PATROL)
 
 func _on_hurt_timer_timeout() -> void:
 	if current_state == State.HURT:

@@ -25,6 +25,7 @@ scenes/error_scene_path="res://addons/yet_another_scene_manager/Scenes/Error.tsc
 
 Player_Global_Data="*res://autoloads/player-data.gd"
 Spell_Library="*res://autoloads/spell-library.gd"
+Scene_Transition="*res://autoloads/scene-transition.gd"
 Player_Manager="*res://autoloads/player-manager.gd"
 Network_Manager="*res://autoloads/network-manager.gd"
 SceneManager="*uid://j20v4cg7v8m1"

@@ -32,18 +32,23 @@ const DIRECTION_ICONS := {
 # -------------------------
 # VARIABLES
 # -------------------------
-var SPEED := Player_Global_Data.p_speed
-var JUMP_VELOCITY := Player_Global_Data.p_jump_height
+var SPEED : float = Player_Global_Data.p_speed
+var JUMP_VELOCITY : float = Player_Global_Data.p_jump_height
 
 # Dash — charge based
-var DASH_SPEED := 3200.0
-var DASH_TIME := 0.12
-var DASH_COOLDOWN := 1.4
+var DASH_SPEED : float = 3200.0
+var DASH_TIME : float = 0.12
+var DASH_COOLDOWN : float = 1.4
 var max_dashes = Player_Global_Data.MAX_DASH_CHARGES
 
-var dash_timer := 0.0
+var dash_timer : float = 0.0
 var dash_direction := Vector2.ZERO
-var is_dashing := false
+
+var is_dashing := false:
+	set(value):
+		is_dashing = value
+		Player_Global_Data.is_dashing = value
+
 var dash_charges: int = Player_Global_Data.MAX_DASH_CHARGES:
 	set(value):
 		dash_charges = clampi(value, 0, max_dashes)

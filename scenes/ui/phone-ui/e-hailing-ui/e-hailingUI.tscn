@@ -5,14 +5,16 @@
 
 [node name="E-HailingApp" type="Control" unique_id=1861485113]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_right = 0.23700002
+anchor_bottom = 0.546
+offset_right = -16.04004
+offset_bottom = 0.32000732
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_f1hos")
 
 [node name="UI" type="Panel" parent="." unique_id=174961443]
+visible = false
 self_modulate = Color(16.039173, 3.198309, 8.259297, 1)
 layout_mode = 1
 anchors_preset = 15
@@ -21,30 +23,28 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="UI" unique_id=1847841669]
-layout_mode = 0
-offset_right = 411.0
-offset_bottom = 557.0
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1847841669]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.989
+anchor_bottom = 1.0
+offset_right = -0.17102051
 
-[node name="UI" type="VBoxContainer" parent="UI/PanelContainer" unique_id=718439176]
+[node name="UI" type="VBoxContainer" parent="PanelContainer" unique_id=718439176]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/PanelContainer/UI" unique_id=678796637]
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/UI" unique_id=678796637]
 layout_mode = 2
 alignment = 1
 
-[node name="Back button" type="Button" parent="UI/PanelContainer/UI/HBoxContainer" unique_id=247824658]
+[node name="Back button" type="Button" parent="PanelContainer/UI/HBoxContainer" unique_id=247824658]
 layout_mode = 2
 text = "BACK"
 
-[node name="E-HailingVBoxContainer" type="VBoxContainer" parent="UI/PanelContainer/UI" unique_id=770960207]
+[node name="E-HailingVBoxContainer" type="VBoxContainer" parent="PanelContainer/UI" unique_id=770960207]
 layout_mode = 2
 
-[node name="SelectLabel" type="Label" parent="UI/PanelContainer/UI/E-HailingVBoxContainer" unique_id=1400423259]
-layout_mode = 2
-text = "Select Your Location:"
-
-[node name="RoutePanel" parent="UI/PanelContainer/UI/E-HailingVBoxContainer" unique_id=1707784299 instance=ExtResource("1_s4xdm")]
+[node name="RoutePanel" parent="PanelContainer/UI/E-HailingVBoxContainer" unique_id=1707784299 instance=ExtResource("1_s4xdm")]
 layout_mode = 2
 
-[connection signal="pressed" from="UI/PanelContainer/UI/HBoxContainer/Back button" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="PanelContainer/UI/HBoxContainer/Back button" to="." method="_on_back_button_pressed"]

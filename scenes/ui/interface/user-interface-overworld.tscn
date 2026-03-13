@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://c5g6ie7nadata"]
 
 [ext_resource type="PackedScene" uid="uid://dh675vcu2br3h" path="res://scenes/ui/phone-ui/phone-ui.tscn" id="1_awj58"]
-[ext_resource type="Texture2D" uid="uid://dcqaf6xqbiyn6" path="res://assets/ui/panels/character-panel.png" id="2_tvpvp"]
+[ext_resource type="Script" uid="uid://rf4x2k7qsc14" path="res://scenes/ui/interface/user-interface-overworld.gd" id="1_tvpvp"]
+[ext_resource type="Texture2D" uid="uid://oftfr7qfand2" path="res://assets/ui/panels/character-panel.png" id="2_tvpvp"]
 [ext_resource type="LabelSettings" uid="uid://dk40du64xk8k7" path="res://assets/custom-labels/ui-stats-label.tres" id="3_0k00g"]
 
 [sub_resource type="Theme" id="Theme_0k00g"]
@@ -16,6 +17,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_tvpvp")
 
 [node name="PhoneUI" parent="." unique_id=842712817 instance=ExtResource("1_awj58")]
 layout_mode = 1
@@ -25,9 +27,12 @@ offset_right = 0.0
 offset_bottom = 0.0
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1823503517]
-layout_mode = 0
-offset_right = 663.0
-offset_bottom = 193.0
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.347
+anchor_bottom = 0.209
+offset_right = -3.2399902
+offset_bottom = -32.72
 texture = ExtResource("2_tvpvp")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=495427362]
@@ -113,3 +118,16 @@ grow_horizontal = 0
 [node name="Label" type="Label" parent="Quest Container" unique_id=36905458]
 layout_mode = 2
 text = "CURRENT GOAL"
+
+[node name="Dashes" type="HBoxContainer" parent="." unique_id=849782500]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.081
+anchor_top = 0.18800001
+anchor_right = 0.312
+anchor_bottom = 0.24400002
+offset_left = -0.5200043
+offset_top = -0.040008545
+offset_right = -0.040039063
+offset_bottom = 0.47998047

@@ -1,29 +1,28 @@
-[gd_resource type="Resource" script_class="SpellData" load_steps=6 format=3]
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://y6sfjbxmdfvv"]
 
 [ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="1_tex"]
 [ext_resource type="PackedScene" uid="uid://c0o52csqnxnvo" path="res://components/effects/impact/root-snare-impact.tscn" id="2_impact"]
 [ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="3_spell"]
 [ext_resource type="PackedScene" path="res://components/effects/trails/ground-slam-charge-particle.tscn" id="4_trail"]
-[ext_resource type="Script" uid="uid://b6vkafnios50y" path="res://data/Resources/ilmu/subject.gd" id="5_subject"]
 
 [resource]
 script = ExtResource("3_spell")
 spell_name = "Fault Bind"
 spell_id = "fault_bind"
+theory_desc = "\"By mapping stress discontinuities and fracture planes, the caster induces a localized ground lock that arrests movement and destabilizes a target's stance through sudden subsurface displacement.\""
 spell_manifest = 4
-spell_incantation = Array[String](["up", "left", "down", "left"])
 magis_archetype = "Technical"
 magis_comprehension = "Intermediate"
+spell_incantation = Array[String](["up", "left", "down", "left"])
 upfront_cost = 34
 cast_time = 0.4
+projectile_texture = ExtResource("1_tex")
 projectile_particles = ExtResource("4_trail")
 impact_particles = ExtResource("2_impact")
 projectile_range = 420.0
 projectile_size = 1.1
 projectile_damage = 24.0
 projectile_speed = 620.0
-projectile_texture = ExtResource("1_tex")
 stunnable = true
 stun_dur = 1.1
-theory_desc = "\"By mapping stress discontinuities and fracture planes, the caster induces a localized ground lock that arrests movement and destabilizes a target's stance through sudden subsurface displacement.\""
 metadata/_custom_type_script = "uid://ddmcw1l0ht73f"

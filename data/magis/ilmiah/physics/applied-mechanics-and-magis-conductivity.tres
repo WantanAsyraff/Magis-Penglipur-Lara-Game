@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="CourseData" format=3 uid="uid://blq8djoly85kr"]
+
+[ext_resource type="Script" uid="uid://mj2k1sm83ebr" path="res://data/Resources/ilmu/course.gd" id="1_2pn3k"]
+[ext_resource type="Script" uid="uid://b6vkafnios50y" path="res://data/Resources/ilmu/subject.gd" id="2_m2cl0"]
+[ext_resource type="Resource" uid="uid://6mlntgj10y84" path="res://data/magis/ilmiah/physics/core-subjects/classical-mechanics.tres" id="3_m2cl0"]
+[ext_resource type="Resource" uid="uid://bkvuom2jofuw" path="res://data/magis/ilmiah/physics/core-subjects/wave-physics-and-propogation.tres" id="4_0mipb"]
+[ext_resource type="Resource" uid="uid://bpgul5ntyvufn" path="res://data/magis/ilmiah/physics/core-subjects/thermodynamics-i-energy-transfer.tres" id="5_xs760"]
+[ext_resource type="Resource" uid="uid://cjrmty6v32nql" path="res://data/magis/ilmiah/physics/core-subjects/optics-and-light-behaviour.tres" id="6_045b5"]
+[ext_resource type="Resource" uid="uid://h5qs75322rjc" path="res://data/magis/ilmiah/physics/core-subjects/electricity-and-magnetism.tres" id="7_s1011"]
+[ext_resource type="Resource" uid="uid://c2w8n6w1nx4my" path="res://data/magis/ilmiah/physics/core-subjects/fluid-mechanics.tres" id="8_pyoyh"]
+
+[resource]
+script = ExtResource("1_2pn3k")
+course_name = "Newton's First Law — inertia. The caster saturates the target's mana field with resistance opposing any change in motion state. A moving target is slowed dramatically; a stationary target is rooted. No damage — pure motion denial. Duration scales with how still the target already is at time of impact.Synergy: Cast on a stunned target (Third Law Impact) for maximum anchor duration."
+course_id = "PHY-001"
+course_archetype = "PHY-001"
+course_description = "A foundational course in applied physics for aspiring Technical casters. Students learn to translate the laws governing force, motion, energy, waves, heat, light, electromagnetism, fluids, atomic structure, and quantum behaviour into structured Magis output.
+"
+magis_archetype = "Ilmiah"
+difficulty_level = 3
+subjects = Array[ExtResource("2_m2cl0")]([ExtResource("3_m2cl0"), ExtResource("4_0mipb"), ExtResource("5_xs760"), ExtResource("6_045b5"), ExtResource("7_s1011"), ExtResource("8_pyoyh")])
+metadata/_custom_type_script = "uid://mj2k1sm83ebr"

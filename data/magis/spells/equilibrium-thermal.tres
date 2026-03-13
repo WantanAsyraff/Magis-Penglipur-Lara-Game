@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://ci55hciovv7tr"]
+
+[ext_resource type="PackedScene" uid="uid://5ductlj8s53t" path="res://components/effects/impact/pressure-jet-particle.tscn" id="1_bbhr8"]
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="1_iqdi6"]
+[ext_resource type="PackedScene" path="res://components/effects/impact/firewall-impact.tscn" id="2_phqh0"]
+[ext_resource type="Texture2D" uid="uid://cnnad3qojgc2y" path="res://assets/temp/temp-mana.png" id="2_pqliw"]
+[ext_resource type="PackedScene" uid="uid://bv7k8xal2arhv" path="res://components/projectiles/magis-projectile.tscn" id="3_t7y7m"]
+
+[resource]
+script = ExtResource("1_iqdi6")
+spell_name = "Thermal Equilibrium"
+spell_id = "PHY-TH-003"
+spell_icon = ExtResource("2_pqliw")
+spell_flavour_text = "Two systems. One temperature. He gives freely what he has too much of."
+theory_desc = "Thermal equilibrium — energy transfers between systems until both reach the same state. Caster equalises their mana with an ally's, redistributing from the higher-reserve party to the lower. Not a heal — a share. If the caster has less mana than the target the transfer reverses. Useful when one party is near overdraw.
+Synergy: Follow with Thermal Siphon on an enemy — restock a depleted ally and immediately drain the opponent in the same rotation."
+spell_type = 5
+spell_manifest = 5
+magis_archetype = "Ilmiah"
+spell_incantation = Array[String](["down", "right", "left", "up", "left"])
+upfront_cost = 25
+cast_time = 0.5
+spell_scene = ExtResource("3_t7y7m")
+projectile_texture = ExtResource("2_pqliw")
+projectile_particles = ExtResource("2_phqh0")
+impact_particles = ExtResource("1_bbhr8")
+projectile_range = 4000.0
+projectile_size = 0.3
+projectile_speed = 1200.0
+projectile_count = 8
+projectile_spread = 45.0
+piercing = true
+aoe_spell_radius = 12.0
+explosive = 14.0
+metadata/_custom_type_script = "uid://ddmcw1l0ht73f"

@@ -8,8 +8,8 @@ const SUBJECT_PANEL_SCENE = preload("res://scenes/spell-tree/subject-panel.tscn"
 @export var course_data: CourseData
 @export var next_scene_id: String
 
-const H_SPACING = 300 # Width of each "tier"
-const V_SPACING = 180 # Vertical gap between nodes
+const H_SPACING = 400 # Width of each "tier"
+const V_SPACING = 280 # Vertical gap between nodes
 
 func _ready():
 	if course_data:

@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="subjectData" format=3 uid="uid://cjrmty6v32nql"]
+
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="1_gs7yy"]
+[ext_resource type="Resource" uid="uid://bfbnvb7tgbbr4" path="res://data/magis/spells/focal-point.tres" id="2_cmc12"]
+[ext_resource type="Script" uid="uid://b6vkafnios50y" path="res://data/Resources/ilmu/subject.gd" id="2_t3ral"]
+[ext_resource type="Resource" uid="uid://cm46w70hrwo5j" path="res://data/magis/spells/diffraction-veil.tres" id="3_5payj"]
+[ext_resource type="Texture2D" uid="uid://c27hlpd2ups03" path="res://assets/temp/temp-lightbulb.png" id="3_t3ral"]
+[ext_resource type="Resource" uid="uid://dxw4jt7k8r0ai" path="res://data/magis/spells/refraction-step.tres" id="4_gt4by"]
+
+[resource]
+script = ExtResource("2_t3ral")
+subject_name = "Optics & Light Behaviour"
+subject_icon = ExtResource("3_t3ral")
+subject_id = "PHY-001-OP"
+subject_archetype = "Physical Sciences"
+field_of_study = "The study of light propagation, reflection, refraction, diffraction, and the behaviour of electromagnetic waves in the visible spectrum."
+theoretical_foundation = "Snell's Law of Refraction: light bends when crossing medium boundaries at an angle proportional to the refractive index difference between mediums. A caster who models this can reposition along non-linear angles — harder to anticipate than a straight dash.
+
+Diffraction: waves bend around obstacles and spread into shadow regions. The caster can exploit this to make their mana signature harder to target-lock.
+
+Converging Lens Behaviour: parallel rays focus to a single point, maximising energy density at that point. The theoretical basis for high-damage narrow beam spells — all available mana converged to one irresistible point."
+casters_notes = "Optics rewards patience. Every spell in this subject has a precision requirement — the caster who rushes the visualisation gets a fizzle, not a miss. Light does not forgive imprecise geometry. Know your angles before you move."
+magis_archetype = "Ilmiah"
+difficulty_level = 3
+prerequisites = Array[String](["PHY-001-WP"])
+contained_spells = Array[ExtResource("1_gs7yy")]([ExtResource("2_cmc12"), ExtResource("3_5payj"), ExtResource("4_gt4by")])
+metadata/_custom_type_script = "uid://b6vkafnios50y"

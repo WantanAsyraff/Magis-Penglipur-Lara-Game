@@ -12,7 +12,7 @@ var subject_archetype: String = "Life Sciences"
 @export_multiline var theoretical_foundation: String
 @export_multiline var casters_notes: String
 
-@export_enum ("Mana Manipulation", "Elementalist", "Technical", "Alnur", "Alzalam","Celestial")
+@export_enum ("Mana Manipulation", "Ilmiah", "Alnur", "Alzalam","Semesta")
 var magis_archetype: String = "Mana Manipulation"
 
 @export_enum("Novice", "Intermediate", "Advanced", "Expert")

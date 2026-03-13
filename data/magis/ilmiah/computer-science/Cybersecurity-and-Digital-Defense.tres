@@ -5,11 +5,11 @@
 [ext_resource type="Resource" path="res://data/magis/ilmiah/computer-science/core-subjects/Programming Fundamentals.tres" id="3_prog"]
 [ext_resource type="Resource" uid="uid://bgrij1ksp02yb" path="res://data/magis/ilmiah/computer-science/core-subjects/Computer Networks.tres" id="4_net"]
 [ext_resource type="Resource" path="res://data/magis/ilmiah/computer-science/core-subjects/Cybersecurity Principles.tres" id="5_sec"]
-[ext_resource type="Resource" uid="uid://tocqk5cmxbmk" path="res://data/magis/ilmiah/computer-science/core-subjects/Applied Cryptography.tres" id="6_crypto"]
+[ext_resource type="Resource" uid="uid://ctjp30mi4yh4t" path="res://data/magis/ilmiah/computer-science/core-subjects/Applied Cryptography.tres" id="6_crypto"]
 [ext_resource type="Resource" path="res://data/magis/ilmiah/computer-science/core-subjects/Network Security.tres" id="7_netsec"]
 [ext_resource type="Resource" path="res://data/magis/ilmiah/computer-science/core-subjects/Digital Forensics.tres" id="8_forensics"]
 [ext_resource type="Resource" path="res://data/magis/ilmiah/computer-science/core-subjects/Secure Systems Engineering.tres" id="9_sse"]
-[ext_resource type="Resource" uid="uid://np26lkruxfap" path="res://data/magis/ilmiah/computer-science/core-subjects/Algorithms.tres" id="10_algo"]
+[ext_resource type="Resource" uid="uid://do8mkmm2a4vbi" path="res://data/magis/ilmiah/computer-science/core-subjects/Algorithms.tres" id="10_algo"]
 
 [resource]
 script = ExtResource("1_course")

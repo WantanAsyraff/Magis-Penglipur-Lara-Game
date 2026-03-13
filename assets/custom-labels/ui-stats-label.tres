@@ -1,0 +1,7 @@
+[gd_resource type="LabelSettings" format=3 uid="uid://dk40du64xk8k7"]
+
+[ext_resource type="FontFile" uid="uid://bk4pyfyvg33i3" path="res://assets/font/Bitter/static/Bitter-Bold.ttf" id="1_fhwda"]
+
+[resource]
+font = ExtResource("1_fhwda")
+font_size = 28

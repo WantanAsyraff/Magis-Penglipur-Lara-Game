@@ -1,5 +1,5 @@
 class_name RepetoirePanel
-extends PanelContainer
+extends Control
 
 const SPELL_SLOT = preload("res://scenes/ui/spell-combat-ui/spell-slot.tscn")
 

@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://bfbnvb7tgbbr4"]
+
+[ext_resource type="PackedScene" uid="uid://5847o4yjb45a" path="res://components/effects/impact/ground-slam-impact.tscn" id="1_mu8tg"]
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="1_umba0"]
+[ext_resource type="PackedScene" path="res://components/effects/impact/harmonic-bloom-impact.tscn" id="2_a8ci8"]
+[ext_resource type="Texture2D" uid="uid://cnnad3qojgc2y" path="res://assets/temp/temp-mana.png" id="2_y7w47"]
+[ext_resource type="PackedScene" uid="uid://bv7k8xal2arhv" path="res://components/projectiles/magis-projectile.tscn" id="5_s13t7"]
+
+[resource]
+script = ExtResource("1_umba0")
+spell_name = "Focal Point"
+spell_id = "PHY-OP-003"
+spell_icon = ExtResource("2_y7w47")
+spell_flavour_text = "All of it. To one point. Nowhere left to scatter."
+theory_desc = "Converging lens behaviour — parallel rays focus to a single point maximising energy density. Caster gathers ambient mana waves along a line and converges them through their conductor to a needle-point projectile. Extremely high damage, extremely narrow. Misses entirely if the target moves laterally — the beam does not track.
+Synergy: Inertial Anchor first → target cannot move laterally → guaranteed full damage with no evasion window."
+spell_manifest = 1
+magis_archetype = "Ilmiah"
+magis_comprehension = "Intermediate"
+spell_incantation = Array[String](["up", "up", "right", "right"])
+upfront_cost = 52
+cast_time = 1.3
+spell_scene = ExtResource("5_s13t7")
+projectile_texture = ExtResource("2_y7w47")
+projectile_particles = ExtResource("2_a8ci8")
+impact_particles = ExtResource("1_mu8tg")
+projectile_range = 1800.0
+projectile_size = 0.5
+projectile_damage = 68.0
+projectile_speed = 1000.0
+metadata/_custom_type_script = "uid://ddmcw1l0ht73f"

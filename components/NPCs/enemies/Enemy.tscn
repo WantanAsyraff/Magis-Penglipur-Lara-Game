@@ -1,0 +1,67 @@
+[gd_scene format=3 uid="uid://bire3b68skqpf"]
+
+[ext_resource type="Script" uid="uid://m3k0car8wstp" path="res://components/NPCs/enemies/hitbox-component.gd" id="1_gcguh"]
+[ext_resource type="Script" uid="uid://dlnd3allorrc8" path="res://components/NPCs/enemies/enemy.gd" id="1_ya25k"]
+[ext_resource type="Resource" uid="uid://by4dm8igq3oep" path="res://data/magis/spells/viscous-drag.tres" id="2_ivyq4"]
+[ext_resource type="Texture2D" uid="uid://caaqv80a8h88s" path="res://assets/temp/player-temp-left.png" id="4_ivyq4"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gcguh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_ivyq4")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gcguh"]
+size = Vector2(108, 144)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gcguh"]
+radius = 521.0154
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ya25k"]
+radius = 417.55478
+
+[node name="Enemy" type="CharacterBody2D" unique_id=1787106916]
+script = ExtResource("1_ya25k")
+enemy_name = "TestNPC"
+ranged_spell = ExtResource("2_ivyq4")
+max_health = 40.0
+move_speed = 200.0
+chase_speed = 500.0
+attack_type = 1
+melee_range = 0.0
+preferred_distance = 500.0
+retreat_threshold = 300.0
+detection_radius = 500.0
+sight_memory = 1.0
+
+[node name="HitboxComponent" type="Node" parent="." unique_id=1497920414]
+script = ExtResource("1_gcguh")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1879544315]
+scale = Vector2(1.25, 1.25)
+sprite_frames = SubResource("SpriteFrames_gcguh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=62178440]
+shape = SubResource("RectangleShape2D_gcguh")
+
+[node name="DetectionArea" type="Area2D" parent="." unique_id=1614778578]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=739688052]
+shape = SubResource("CircleShape2D_gcguh")
+
+[node name="AttackArea" type="Area2D" parent="." unique_id=854814806]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=175817154]
+shape = SubResource("CircleShape2D_ya25k")
+
+[node name="RayCast2D" type="RayCast2D" parent="." unique_id=1198764537]
+target_position = Vector2(92, 0)
+
+[node name="AttackTimer" type="Timer" parent="." unique_id=1777788952]
+
+[node name="HurtTimer" type="Timer" parent="." unique_id=540869356]

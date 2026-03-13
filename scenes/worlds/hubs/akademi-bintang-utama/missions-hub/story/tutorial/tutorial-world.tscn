@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://ca23coml0cwtj" path="res://components/NPCs/enemies/dummy/dummy-npc.tscn" id="4_0agag"]
 [ext_resource type="PackedScene" uid="uid://blgha2eib1lvt" path="res://components/Destructables/floating/balloon.tscn" id="5_quxmb"]
 [ext_resource type="PackedScene" uid="uid://c5a41lx0gq8be" path="res://scenes/transitioners/zone-portal/zone-portal.tscn" id="6_hqvtg"]
+[ext_resource type="PackedScene" uid="uid://bire3b68skqpf" path="res://components/NPCs/enemies/Enemy.tscn" id="8_464bf"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_6kok4"]
 font_size = 38
@@ -167,3 +168,13 @@ offset_right = -2033.0
 offset_bottom = 674.0
 text = "THIS IS A DUMMY, BECAUSE IT'S DUMB >:DDDD"
 label_settings = SubResource("LabelSettings_6kok4")
+
+[node name="Enemy" parent="." unique_id=1787106916 instance=ExtResource("8_464bf")]
+position = Vector2(-1996, 666)
+scale = Vector2(2, 2)
+move_speed = 100.0
+melee_damage = 0.0
+ranged_trigger_distance = 1500.0
+preferred_distance = 200.0
+retreat_threshold = 500.0
+patrol_points = Array[Vector2]([Vector2(666, 0), Vector2(400, 0)])

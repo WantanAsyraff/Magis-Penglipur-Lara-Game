@@ -5,7 +5,7 @@ class_name CourseData extends Resource
 @export var course_archetype: String
 @export_multiline var course_description: String
 
-@export_enum ("Mana Manipulation", "Elementalist", "Technical", "Alnur", "Alzalam","Celestial")
+@export_enum ("Mana Manipulation", "Ilmiah", "Alnur", "Alzalam","Semesta")
 var magis_archetype: String = "Mana Manipulation"
 
 @export_enum("Novice", "Intermediate", "Advanced", "Expert")

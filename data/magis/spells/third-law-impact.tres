@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://tct3excvt5t"]
+
+[ext_resource type="PackedScene" path="res://components/effects/impact/harmonic-bloom-impact.tscn" id="1_cbbwj"]
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="1_dou7o"]
+[ext_resource type="Texture2D" uid="uid://cnnad3qojgc2y" path="res://assets/temp/temp-mana.png" id="2_q1ub3"]
+[ext_resource type="PackedScene" uid="uid://h0msm0ixfq2n" path="res://components/effects/trails/root-snare-particle.tscn" id="2_s5int"]
+[ext_resource type="PackedScene" uid="uid://bv7k8xal2arhv" path="res://components/projectiles/magis-projectile.tscn" id="5_cy0ri"]
+
+[resource]
+script = ExtResource("1_dou7o")
+spell_name = "Third Law Impact"
+spell_id = "PHY-CM-001"
+spell_icon = ExtResource("2_q1ub3")
+spell_colour = Color(0.85, 0.9, 1, 1)
+spell_flavour_text = "He doesn't hit you. He returns what you were always going to receive."
+theory_desc = "Newton's Third Law. The caster redirects their own mana pressure as an equal-opposite force pair through their conductor. Not force generation — force redirection. The caster must brace or absorb partial mana backlash. Visualisation anchor: you are the wall. The opponent is what hits it."
+magis_archetype = "Ilmiah"
+spell_incantation = Array[String](["up", "down", "up", "right"])
+upfront_cost = 20
+cast_time = 0.3
+spell_scene = ExtResource("5_cy0ri")
+projectile_texture = ExtResource("2_q1ub3")
+projectile_particles = ExtResource("2_s5int")
+impact_particles = ExtResource("1_cbbwj")
+projectile_range = 200.0
+projectile_size = 0.8
+projectile_damage = 35.0
+projectile_speed = 18.0
+knockback_force = 280.0
+stunnable = true
+stun_dur = 0.4
+metadata/_custom_type_script = "uid://ddmcw1l0ht73f"

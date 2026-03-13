@@ -1,13 +1,17 @@
 [gd_scene format=3 uid="uid://cnk0mojfc2m4"]
 
+[ext_resource type="Theme" uid="uid://cv8bqu76ln7kj" path="res://assets/styles/generic-theme.tres" id="1_lfcci"]
 [ext_resource type="Script" uid="uid://b04l3a6yyiafy" path="res://scenes/spell-tree/subject-node.gd" id="1_yfpea"]
 
 [node name="SubjectNode" type="Button" unique_id=1060616794]
+custom_minimum_size = Vector2(100, 80)
 anchors_preset = -1
 anchor_right = 0.156
-anchor_bottom = 0.179
-offset_right = -0.52001953
-offset_bottom = -94.32001
+anchor_bottom = 0.09200001
+offset_right = 0.47998047
+offset_bottom = 0.63999176
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_lfcci")
+theme_type_variation = &"FlatButton"
 script = ExtResource("1_yfpea")

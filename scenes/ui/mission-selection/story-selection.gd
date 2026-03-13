@@ -13,6 +13,9 @@ func _on_button_pressed() -> void:
 		push_error("FAILED: Scene_Registry could not find ID: " + next_scene_id)
 		print("Available IDs: ", Scene_Registry.scenes.keys())
 		return
+	if not scene_data.scene:
+		push_error("FAILED: SceneData exists but has no scene assigned for ID: " + next_scene_id)
+		return
 	
 	SceneManager.change_scene(scene_data.scene.resource_path)
 
@@ -29,6 +32,9 @@ func _on_back_button_pressed() -> void:
 	if not scene_data:
 		push_error("FAILED: Scene_Registry could not find ID: " + next_scene_id)
 		print("Available IDs: ", Scene_Registry.scenes.keys()) 
+		return
+	if not scene_data.scene:
+		push_error("FAILED: SceneData exists but has no scene assigned for ID: " + next_scene_id)
 		return
 
 	print("SUCCESS: Found path: ", scene_data.scene.resource_path)

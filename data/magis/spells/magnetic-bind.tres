@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://b220ru5xigdyl"]
+
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="1_82vfx"]
+[ext_resource type="PackedScene" path="res://components/effects/trails/ground-slam-charge-particle.tscn" id="1_uwu0c"]
+[ext_resource type="PackedScene" uid="uid://5847o4yjb45a" path="res://components/effects/impact/ground-slam-impact.tscn" id="2_mmw5b"]
+[ext_resource type="Texture2D" uid="uid://cnnad3qojgc2y" path="res://assets/temp/temp-mana.png" id="2_wgurv"]
+[ext_resource type="PackedScene" uid="uid://bv7k8xal2arhv" path="res://components/projectiles/magis-projectile.tscn" id="5_rsfj2"]
+
+[resource]
+script = ExtResource("1_82vfx")
+spell_name = "Magnetic Bind"
+spell_id = "PHY-EM-002"
+spell_icon = ExtResource("2_wgurv")
+spell_flavour_text = "Opposite poles attract. He decided which one you are."
+theory_desc = "Electromagnetism — magnetic fields exert forces on moving charges. Caster magnetises the target's mana field relative to a fixed point, either pulling them toward a location or locking them via equal opposing forces from multiple poles. Initial damage from the magnetisation pulse; stun duration is the hold.
+Synergy: Magnetic Bind holds → Focal Point cannot be dodged → guaranteed damage window."
+spell_type = 7
+spell_manifest = 1
+magis_archetype = "Ilmiah"
+magis_comprehension = "Intermediate"
+spell_incantation = Array[String](["up", "down", "down"])
+upfront_cost = 44
+cast_time = 0.9
+spell_scene = ExtResource("5_rsfj2")
+projectile_texture = ExtResource("2_wgurv")
+projectile_particles = ExtResource("2_mmw5b")
+impact_particles = ExtResource("1_uwu0c")
+projectile_range = 10.0
+projectile_size = 1.0
+projectile_damage = 30.0
+projectile_speed = 400.0
+stunnable = true
+stun_dur = 1.5
+metadata/_custom_type_script = "uid://ddmcw1l0ht73f"

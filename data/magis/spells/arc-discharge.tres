@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://bnfb15oa2v774"]
+
+[ext_resource type="PackedScene" path="res://components/effects/trails/ground-slam-charge-particle.tscn" id="1_2td53"]
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="1_hrlih"]
+[ext_resource type="PackedScene" uid="uid://5ductlj8s53t" path="res://components/effects/impact/pressure-jet-particle.tscn" id="1_vfesr"]
+[ext_resource type="Texture2D" uid="uid://cnnad3qojgc2y" path="res://assets/temp/temp-mana.png" id="2_hud7w"]
+[ext_resource type="PackedScene" uid="uid://bv7k8xal2arhv" path="res://components/projectiles/magis-projectile.tscn" id="3_xmvky"]
+
+[resource]
+script = ExtResource("1_hrlih")
+spell_name = "Arc Discharge"
+spell_id = "PHY-EM-001"
+spell_icon = ExtResource("2_hud7w")
+spell_flavour_text = "Charge always finds its way home. He just picks the destination."
+theory_desc = "Electrical discharge — charge differential between two points creates a conductive arc. Caster builds mana charge polarisation between their conductor and the target then releases. Targets with disrupted mana auras take increased damage — the arc follows the path of least resistance, and a weakened aura is exactly that.
+Synergy: Thermal Siphon suppresses mana regen (weakened aura) → Arc Discharge damage scales up significantly."
+spell_manifest = 1
+magis_archetype = "Ilmiah"
+magis_comprehension = "Intermediate"
+spell_incantation = Array[String](["up", "left", "right", "up"])
+upfront_cost = 40
+cast_time = 0.5
+spell_scene = ExtResource("3_xmvky")
+projectile_texture = ExtResource("2_hud7w")
+projectile_particles = ExtResource("1_2td53")
+impact_particles = ExtResource("1_vfesr")
+projectile_range = 2400.0
+projectile_damage = 50.0
+projectile_speed = 600.0
+stunnable = true
+stun_dur = 0.8
+metadata/_custom_type_script = "uid://ddmcw1l0ht73f"

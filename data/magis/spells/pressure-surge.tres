@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://ba3eqcwlwyeai"]
+
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="1_cr2b3"]
+[ext_resource type="PackedScene" path="res://components/effects/trails/packet-stream-trail.tscn" id="1_fxe6h"]
+[ext_resource type="PackedScene" uid="uid://5847o4yjb45a" path="res://components/effects/impact/ground-slam-impact.tscn" id="2_mv1ja"]
+[ext_resource type="Texture2D" uid="uid://cnnad3qojgc2y" path="res://assets/temp/temp-mana.png" id="3_kji37"]
+[ext_resource type="PackedScene" uid="uid://bv7k8xal2arhv" path="res://components/projectiles/magis-projectile.tscn" id="3_sqvn1"]
+[ext_resource type="Texture2D" uid="uid://yc3tgp66iwpq" path="res://assets/temp/dummy-temp.png" id="3_y282b"]
+
+[resource]
+script = ExtResource("1_cr2b3")
+spell_name = "Pressure Surge"
+spell_id = "PHY-FM-001"
+spell_icon = ExtResource("3_kji37")
+spell_flavour_text = "Pressure in a confined space always finds a way out. Today, that way is through you."
+theory_desc = "Pascal's Law — pressure applied to a confined fluid transmits equally in all directions. Caster encapsulates the target briefly in a pressurised mana shell and detonates it inward. The explosion is internal — force radiates outward from inside the target's own aura space. Bypasses surface-level defensive spells including Dampening Field because the pressure originates inside the boundary.
+Synergy: Magnetic Bind holds the target inside the compression shell long enough for full pressure build — increases explosive damage by ~40%."
+spell_manifest = 1
+magis_archetype = "Ilmiah"
+magis_comprehension = "Intermediate"
+spell_incantation = Array[String](["up", "left", "up", "right", "up"])
+upfront_cost = 45
+cast_time = 0.8
+spell_scene = ExtResource("3_sqvn1")
+projectile_texture = ExtResource("3_y282b")
+projectile_particles = ExtResource("2_mv1ja")
+impact_particles = ExtResource("1_fxe6h")
+projectile_range = 1100.0
+projectile_size = 1.0
+projectile_damage = 42.0
+projectile_speed = 300.0
+aoe_spell_radius = 2.0
+explosive = 1.0
+knockback_force = 340.0
+metadata/_custom_type_script = "uid://ddmcw1l0ht73f"

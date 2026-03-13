@@ -6,7 +6,7 @@ class_name UserInterface extends Control
 @onready var mana_bar = %ManaProgressBar
 @onready var dashes = %Dashes  # HBoxContainer
 
-const DASH_ICON = preload("res://assets/temp/temp-mana.png")
+const DASH_ICON = preload("res://assets/icons/dash-icon.png")
 
 func _ready() -> void:
 	if Player_Global_Data == null:
@@ -33,7 +33,7 @@ func _build_dash_display(max_charges: int) -> void:
 	for i in max_charges:
 		var icon = TextureRect.new()
 		icon.texture = DASH_ICON
-		icon.custom_minimum_size = Vector2(DASH_ICON.get_width(), DASH_ICON.get_height()) * 0.2
+		icon.custom_minimum_size = Vector2(DASH_ICON.get_width(), DASH_ICON.get_height()) * 1
 		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		dashes.add_child(icon)
@@ -45,11 +45,11 @@ func _on_dash_charges_changed(current_charges: int) -> void:
 		icon.modulate.a = 1.0 if i < current_charges else 0.3
 
 func _on_mana_changed(new_value: int) -> void:
-	mana.text = "Mana: " + str(new_value) + "/" + str(Player_Global_Data.p_max_mana)
+	mana.text = "Mana"
 	mana_bar.max_value = Player_Global_Data.p_max_mana
 	mana_bar.value = new_value
 
 func _on_health_changed(new_value: int) -> void:
-	health.text = "Health: " + str(new_value) + "/" + str(Player_Global_Data.p_max_health)
+	health.text = "Health"
 	health_bar.max_value = Player_Global_Data.p_max_health
 	health_bar.value = new_value

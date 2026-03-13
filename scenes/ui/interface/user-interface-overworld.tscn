@@ -1,7 +1,10 @@
 [gd_scene format=3 uid="uid://c5g6ie7nadata"]
 
 [ext_resource type="PackedScene" uid="uid://dh675vcu2br3h" path="res://scenes/ui/phone-ui/phone-ui.tscn" id="1_awj58"]
-[ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="2_0k00g"]
+[ext_resource type="Texture2D" uid="uid://dcqaf6xqbiyn6" path="res://assets/ui/panels/character-panel.png" id="2_tvpvp"]
+[ext_resource type="LabelSettings" uid="uid://dk40du64xk8k7" path="res://assets/custom-labels/ui-stats-label.tres" id="3_0k00g"]
+
+[sub_resource type="Theme" id="Theme_0k00g"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_awj58"]
 font_size = 24
@@ -21,46 +24,62 @@ offset_top = 0.0
 offset_right = 0.0
 offset_bottom = 0.0
 
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1823503517]
+layout_mode = 0
+offset_right = 663.0
+offset_bottom = 193.0
+texture = ExtResource("2_tvpvp")
+
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=495427362]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -1257.0
-offset_bottom = -887.0
+offset_left = 211.0
+offset_top = 50.0
+offset_right = -1297.0
+offset_bottom = -899.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="PlayerProfileVBox" type="VBoxContainer" parent="PanelContainer" unique_id=251891525]
 layout_mode = 2
-
-[node name="OverworldLabel" type="Label" parent="PanelContainer/PlayerProfileVBox" unique_id=195919722]
-layout_mode = 2
-text = "OVERWORLD UI"
+alignment = 1
 
 [node name="PlayerStatsHBox" type="HBoxContainer" parent="PanelContainer/PlayerProfileVBox" unique_id=2043589470]
 layout_mode = 2
 
-[node name="ProfileIcon" type="TextureRect" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox" unique_id=142561417]
-layout_mode = 2
-texture = ExtResource("2_0k00g")
-
 [node name="HealthContainer" type="VBoxContainer" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox" unique_id=1772330646]
 layout_mode = 2
+alignment = 1
 
-[node name="HealthLabel" type="Label" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox/HealthContainer" unique_id=246936141]
+[node name="HealthBoxContainer" type="HBoxContainer" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox/HealthContainer" unique_id=2094871775]
+custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
-text = "HEALTH BAR "
 
-[node name="HealthProgressBar" type="ProgressBar" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox/HealthContainer" unique_id=103052014]
+[node name="HealthLabel" type="Label" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox/HealthContainer/HealthBoxContainer" unique_id=246936141]
+custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
+text = "NYAWA"
+label_settings = ExtResource("3_0k00g")
+
+[node name="HealthProgressBar" type="ProgressBar" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox/HealthContainer/HealthBoxContainer" unique_id=103052014]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme = SubResource("Theme_0k00g")
 value = 100.0
 
-[node name="ManaLabel" type="Label" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox/HealthContainer" unique_id=105284984]
+[node name="StatusBoxContainer" type="HBoxContainer" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox/HealthContainer" unique_id=1788481593]
+layout_mode = 2
+
+[node name="StatusLabel" type="Label" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox/HealthContainer/StatusBoxContainer" unique_id=105284984]
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "MANA"
+label_settings = ExtResource("3_0k00g")
 
-[node name="ManaProgressBar" type="ProgressBar" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox/HealthContainer" unique_id=472968052]
+[node name="StatusProgressBar" type="ProgressBar" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox/HealthContainer/StatusBoxContainer" unique_id=472968052]
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 value = 100.0
 

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="SpellData" load_steps=6 format=3]
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://bmnqedpnjf23f"]
 
 [ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="1_tex"]
 [ext_resource type="PackedScene" uid="uid://c0o52csqnxnvo" path="res://components/effects/impact/root-snare-impact.tscn" id="2_impact"]
@@ -10,18 +10,19 @@
 script = ExtResource("3_spell")
 spell_name = "Rebar Lance"
 spell_id = "rebar_lance"
+theory_desc = "\"Material stiffness and tensile reinforcement principles are condensed into a narrow, high-penetration construct designed to maintain shape under impact loading.\""
 spell_manifest = 1
-spell_incantation = Array[String](["down", "right", "down", "left"])
 magis_archetype = "Technical"
+spell_incantation = Array[String](["down", "right", "down", "left"])
 upfront_cost = 22
 cast_time = 0.2
+projectile_texture = ExtResource("1_tex")
 projectile_particles = ExtResource("4_trail")
 impact_particles = ExtResource("2_impact")
 projectile_range = 540.0
 projectile_size = 0.95
 projectile_damage = 32.0
 projectile_speed = 840.0
-projectile_texture = ExtResource("1_tex")
+projectile_count = 10
 piercing = true
-theory_desc = "\"Material stiffness and tensile reinforcement principles are condensed into a narrow, high-penetration construct designed to maintain shape under impact loading.\""
 metadata/_custom_type_script = "uid://ddmcw1l0ht73f"

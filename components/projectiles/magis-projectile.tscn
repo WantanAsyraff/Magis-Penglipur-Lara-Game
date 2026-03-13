@@ -1,19 +1,21 @@
-[gd_scene load_steps=4 format=3 uid="uid://bv7k8xal2arhv"]
+[gd_scene format=3 uid="uid://bv7k8xal2arhv"]
 
 [ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="1_tksus"]
 [ext_resource type="Script" uid="uid://4wkq0lyt31wi" path="res://components/projectiles/magis-projectile.gd" id="1_xe6p8"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_b708s"]
 
-[node name="MagisProjectile" type="Area2D"]
+[node name="MagisProjectile" type="Area2D" unique_id=1202338616]
 script = ExtResource("1_xe6p8")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2119993349]
+light_mask = 2
+visibility_layer = 2
 texture = ExtResource("1_tksus")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=446688397]
 scale = Vector2(7.0800004, 6.5200005)
 shape = SubResource("CircleShape2D_b708s")
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1015692282]
 scale = Vector2(7.1490726, 6.538463)

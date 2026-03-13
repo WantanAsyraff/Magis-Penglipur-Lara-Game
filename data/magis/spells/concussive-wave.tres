@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://cys1hdm7ejycg"]
+
+[ext_resource type="PackedScene" path="res://components/effects/impact/packet-burst-impact.tscn" id="1_4s03u"]
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="1_fk0o8"]
+[ext_resource type="Texture2D" uid="uid://cnnad3qojgc2y" path="res://assets/temp/temp-mana.png" id="2_oufa4"]
+[ext_resource type="PackedScene" uid="uid://5ductlj8s53t" path="res://components/effects/impact/pressure-jet-particle.tscn" id="2_wrbjq"]
+[ext_resource type="PackedScene" uid="uid://bv7k8xal2arhv" path="res://components/projectiles/magis-projectile.tscn" id="5_cmnpk"]
+
+[resource]
+script = ExtResource("1_fk0o8")
+spell_name = "Concussive Wave"
+spell_id = "PHY-WP-003"
+spell_icon = ExtResource("2_oufa4")
+spell_flavour_text = "The medium does the work. He just gives it a reason."
+theory_desc = "The medium does the work. He just gives it a reason.\"
+theory_desc = \"\"\"Mechanical wave propagation through medium. Caster compresses mana at a point and releases omnidirectionally — ground, air, or solid medium carries the pressure wave outward. Damage falls off with distance from origin (inverse square law). Effective in enclosed spaces where the medium cannot dissipate the wave freely.
+Synergy: Inertial Anchor roots a group first — rooted targets cannot exit the radius and take full damage with no falloff evasion."
+spell_type = 3
+spell_manifest = 4
+magis_archetype = "Ilmiah"
+spell_incantation = Array[String](["down", "down", "up"])
+upfront_cost = 42
+cast_time = 0.7
+spell_scene = ExtResource("5_cmnpk")
+projectile_texture = ExtResource("2_oufa4")
+projectile_particles = ExtResource("2_wrbjq")
+impact_particles = ExtResource("1_4s03u")
+is_self_cast = true
+aoe_spell_radius = 10.5
+knockback_force = 420.0
+stunnable = true
+stun_dur = 0.6
+metadata/_custom_type_script = "uid://ddmcw1l0ht73f"

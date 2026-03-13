@@ -1,8 +1,25 @@
 [gd_scene format=3 uid="uid://dd5g0ufrdt4m2"]
 
 [ext_resource type="Script" uid="uid://ccluasuhpw85o" path="res://scenes/spell-tree/spell-tree.gd" id="1_df1co"]
-[ext_resource type="Resource" path="res://data/magis/ilmiah/computer-science/Computer-Science.tres" id="2_4wqj6"]
+[ext_resource type="Resource" uid="uid://blq8djoly85kr" path="res://data/magis/ilmiah/physics/applied-mechanics-and-magis-conductivity.tres" id="2_ksrjs"]
 [ext_resource type="Script" uid="uid://dknkru5fm2jo6" path="res://scenes/spell-tree/spell-path.gd" id="3_4wqj6"]
+[ext_resource type="FontFile" uid="uid://bk4pyfyvg33i3" path="res://assets/font/Bitter/static/Bitter-Bold.ttf" id="3_ksrjs"]
+[ext_resource type="StyleBox" uid="uid://bs4dt5ctqw4hq" path="res://assets/styles/generic-button.tres" id="4_niine"]
+[ext_resource type="Texture2D" uid="uid://deahx3qvy1nma" path="res://assets/ui/spell-tree/field-title.svg" id="6_ag3jv"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ksrjs"]
+font = ExtResource("3_ksrjs")
+font_size = 64
+font_color = Color(0.039215688, 0.03137255, 0.13333334, 1)
+
+[sub_resource type="Theme" id="Theme_er1oa"]
+default_font = ExtResource("3_ksrjs")
+default_font_size = 60
+Button/colors/font_color = Color(0, 0, 0, 1)
+Button/fonts/font = ExtResource("3_ksrjs")
+Button/styles/hover = ExtResource("4_niine")
+Button/styles/hover_pressed = ExtResource("4_niine")
+Button/styles/normal = ExtResource("4_niine")
 
 [node name="SpellTree" type="Control" unique_id=1241520483]
 layout_mode = 3
@@ -12,39 +29,43 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_df1co")
-course_data = ExtResource("2_4wqj6")
+course_data = ExtResource("2_ksrjs")
 next_scene_id = "akademi_bintang_utama_library"
 
-[node name="Button" type="Button" parent="." unique_id=1965567055]
+[node name="ColorRect" type="ColorRect" parent="." unique_id=690006750]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.273
-anchor_top = 0.003
-anchor_right = 0.411
-anchor_bottom = 0.066
-offset_left = 0.8399658
-offset_top = -0.24000001
-offset_right = 0.8800049
-offset_bottom = -0.27999878
-text = "BACK"
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.06666667, 0.039215688, 0.15294118, 1)
+
+[node name="FieldTitle" type="Sprite2D" parent="." unique_id=1595839443]
+position = Vector2(990, 120)
+texture = ExtResource("6_ag3jv")
 
 [node name="FieldLabel" type="Label" parent="." unique_id=1854951881]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 68.0
-offset_top = 4.0
-offset_right = 464.0
-offset_bottom = 69.0
+offset_left = 785.0
+offset_top = 91.0
+offset_right = 1181.0
+offset_bottom = 168.0
 text = "Field Name"
+label_settings = SubResource("LabelSettings_ksrjs")
 horizontal_alignment = 1
 
 [node name="SpellGenerator" type="ScrollContainer" parent="." unique_id=1112173863]
 unique_name_in_owner = true
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = -1
+anchor_top = 0.209
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 75.0
+offset_left = 72.0
+offset_top = 0.27999878
+offset_right = -60.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -54,4 +75,17 @@ layout_mode = 2
 size_flags_horizontal = 0
 script = ExtResource("3_4wqj6")
 
-[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[node name="ExitButton" type="Button" parent="." unique_id=1965567055]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.841
+anchor_top = 0.89300007
+anchor_right = 0.97900003
+anchor_bottom = 0.975
+offset_left = -0.7200928
+offset_top = -0.44006348
+offset_right = -0.6800537
+theme = SubResource("Theme_er1oa")
+text = "EXIT"
+
+[connection signal="pressed" from="ExitButton" to="." method="_on_button_pressed"]

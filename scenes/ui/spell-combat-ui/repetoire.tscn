@@ -1,13 +1,35 @@
 [gd_scene format=3 uid="uid://we1fcxlf1wm8"]
 
 [ext_resource type="Script" uid="uid://yo7hj03ngpav" path="res://scenes/ui/spell-combat-ui/repetoire.gd" id="1_mq6y2"]
+[ext_resource type="Texture2D" uid="uid://b7ii6cpeqa2i4" path="res://assets/ui/spells/RepetoireBook.png" id="2_m5sx0"]
 
-[node name="Repetoire" type="PanelContainer" unique_id=982998006]
-offset_right = 1539.0
-offset_bottom = 280.0
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m5sx0"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="Theme" id="Theme_m5sx0"]
+Panel/styles/panel = SubResource("StyleBoxFlat_m5sx0")
+
+[node name="Repetoire" type="Control" unique_id=741921041]
+layout_mode = 3
+anchor_right = 0.94500005
+anchor_bottom = 0.319
+offset_right = 0.5998535
+offset_bottom = -1.5200195
 script = ExtResource("1_mq6y2")
 
 [node name="RepetoireGrid" type="GridContainer" parent="." unique_id=1195367958]
 unique_name_in_owner = true
-layout_mode = 2
+layout_mode = 0
+offset_left = 52.0
+offset_top = 107.0
+offset_right = 1761.0
+offset_bottom = 326.0
+theme = SubResource("Theme_m5sx0")
 columns = 4
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=520523741]
+z_index = -1
+layout_mode = 0
+offset_right = 1815.0
+offset_bottom = 344.0
+texture = ExtResource("2_m5sx0")

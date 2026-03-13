@@ -2,9 +2,8 @@
 
 [ext_resource type="Script" uid="uid://dq721grj8qapv" path="res://scenes/ui/interface/user-interface.gd" id="1_284y0"]
 [ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="2_3yar4"]
-[ext_resource type="Texture2D" uid="uid://dtbr53nljfqb0" path="res://assets/temp/temp-embed-ui.png" id="3_bqmsd"]
-[ext_resource type="Texture2D" uid="uid://xsg3u0yhvpo4" path="res://assets/temp/temp-heart.png" id="4_48p3t"]
-[ext_resource type="Texture2D" uid="uid://cnnad3qojgc2y" path="res://assets/temp/temp-mana.png" id="5_6pnla"]
+[ext_resource type="Texture2D" uid="uid://dcqaf6xqbiyn6" path="res://assets/ui/panels/character-panel.png" id="2_gjesd"]
+[ext_resource type="LabelSettings" uid="uid://dk40du64xk8k7" path="res://assets/custom-labels/ui-stats-label.tres" id="4_gjesd"]
 [ext_resource type="PackedScene" uid="uid://we1fcxlf1wm8" path="res://scenes/ui/spell-combat-ui/repetoire.tscn" id="6_gadla"]
 
 [node name="UserInterface(Combat)" type="Control" unique_id=1778911143]
@@ -16,12 +15,14 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_284y0")
 
-[node name="TempEmbedUi" type="Sprite2D" parent="." unique_id=1775177104]
-position = Vector2(351.0698, 108)
-scale = Vector2(0.38550368, 0.41860464)
-texture = ExtResource("3_bqmsd")
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1515818397]
+layout_mode = 0
+offset_right = 666.0
+offset_bottom = 226.0
+texture = ExtResource("2_gjesd")
 
 [node name="ProfileIcon" type="TextureRect" parent="." unique_id=697833912]
+visible = false
 layout_mode = 0
 offset_left = 88.0
 offset_top = 30.0
@@ -34,19 +35,16 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 259.0
-offset_top = 15.0
-offset_right = -1294.0
-offset_bottom = -879.0
+offset_left = 211.0
+offset_top = 50.0
+offset_right = -1295.0
+offset_bottom = -894.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="PlayerProfileVBox" type="VBoxContainer" parent="PanelContainer" unique_id=1916342234]
 layout_mode = 2
-
-[node name="OverworldLabel" type="Label" parent="PanelContainer/PlayerProfileVBox" unique_id=1085789028]
-layout_mode = 2
-text = "OVERWORLD UI"
+alignment = 1
 
 [node name="PlayerStatsHBox" type="HBoxContainer" parent="PanelContainer/PlayerProfileVBox" unique_id=1595563284]
 layout_mode = 2
@@ -60,10 +58,8 @@ layout_mode = 2
 [node name="HealthLabel" type="Label" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox/DataContainer/HealthBoxContainer" unique_id=1395845122]
 unique_name_in_owner = true
 layout_mode = 2
-text = "HEALTH: 00/00"
-
-[node name="VSeparator" type="VSeparator" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox/DataContainer/HealthBoxContainer" unique_id=437937008]
-layout_mode = 2
+text = "NYAWA"
+label_settings = ExtResource("4_gjesd")
 
 [node name="HealthProgressBar" type="ProgressBar" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox/DataContainer/HealthBoxContainer" unique_id=1854441703]
 unique_name_in_owner = true
@@ -71,20 +67,15 @@ custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 value = 100.0
 
-[node name="VSeparator" type="VSeparator" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox/DataContainer" unique_id=1428364951]
-custom_minimum_size = Vector2(0, 20)
-layout_mode = 2
-
 [node name="ManaBoxContainer" type="HBoxContainer" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox/DataContainer" unique_id=1437261995]
 layout_mode = 2
 
 [node name="ManaLabel" type="Label" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox/DataContainer/ManaBoxContainer" unique_id=1633765243]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
-text = "MANA: 00/00"
-
-[node name="VSeparator" type="VSeparator" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox/DataContainer/ManaBoxContainer" unique_id=1298904630]
-layout_mode = 2
+text = "MANA"
+label_settings = ExtResource("4_gjesd")
 
 [node name="ManaProgressBar" type="ProgressBar" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox/DataContainer/ManaBoxContainer" unique_id=1545218631]
 unique_name_in_owner = true
@@ -92,43 +83,29 @@ custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 value = 100.0
 
-[node name="VSeparator2" type="VSeparator" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox/DataContainer" unique_id=1968476027]
-custom_minimum_size = Vector2(0, 20)
-layout_mode = 2
-
-[node name="Dashes" type="HBoxContainer" parent="PanelContainer/PlayerProfileVBox/PlayerStatsHBox/DataContainer" unique_id=1871866452]
+[node name="Dashes" type="HBoxContainer" parent="." unique_id=1871866452]
 unique_name_in_owner = true
-layout_mode = 2
-
-[node name="TempHeart" type="TextureRect" parent="." unique_id=1257596511]
-layout_mode = 0
-offset_left = 563.0
-offset_top = 24.0
-offset_right = 843.0
-offset_bottom = 304.0
-scale = Vector2(0.2, 0.2)
-texture = ExtResource("4_48p3t")
-
-[node name="TempMana" type="TextureRect" parent="." unique_id=762054000]
-layout_mode = 0
-offset_left = 550.0
-offset_top = 83.00001
-offset_right = 843.0
-offset_bottom = 363.0
-scale = Vector2(0.2, 0.2)
-texture = ExtResource("5_6pnla")
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.081
+anchor_top = 0.18800001
+anchor_right = 0.312
+anchor_bottom = 0.24400002
+offset_left = -0.5200043
+offset_top = -0.040008545
+offset_right = -0.040039063
+offset_bottom = 0.47998047
 
 [node name="Repetoire" parent="." unique_id=982998006 instance=ExtResource("6_gadla")]
 unique_name_in_owner = true
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.15200001
-anchor_top = 0.74100006
-anchor_right = 0.859
-anchor_bottom = 1.0
-offset_left = 0.15997314
-offset_top = -0.28009033
-offset_right = -0.2800293
-offset_bottom = 0.0
+anchor_left = 0.021000002
+anchor_top = 0.68200004
+anchor_right = 0.96700007
+anchor_bottom = 0.99700004
+offset_left = -0.3200035
+offset_top = 0.4399414
+offset_right = -0.6401367
+offset_bottom = 0.23999023
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2

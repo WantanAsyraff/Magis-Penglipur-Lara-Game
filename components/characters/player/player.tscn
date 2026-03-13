@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cw0ml7a8dvemo" path="res://components/camera/camera.tscn" id="3_dc6tm"]
 [ext_resource type="Texture2D" uid="uid://bqbot7ncx7r8f" path="res://assets/temp/player-temp-right.png" id="3_x0p2c"]
 [ext_resource type="Script" uid="uid://dkwipe7wope6u" path="res://components/characters/player/anim-player-controller.gd" id="5_k8mmp"]
+[ext_resource type="Script" uid="uid://m3k0car8wstp" path="res://components/NPCs/enemies/hitbox-component.gd" id="8_x0p2c"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_k8mmp"]
 animations = [{
@@ -109,6 +110,18 @@ text = "CASTING TEXT"
 label_settings = SubResource("LabelSettings_42y4n")
 horizontal_alignment = 1
 
+[node name="SpellIconBox" type="HBoxContainer" parent="." unique_id=1653929520]
+unique_name_in_owner = true
+anchors_preset = -1
+anchor_left = -0.38500002
+anchor_right = 1.338
+anchor_bottom = 1.5710001
+offset_left = -188.0
+offset_top = -225.0
+offset_right = 184.0
+offset_bottom = -152.0
+alignment = 1
+
 [node name="DashParticles" type="GPUParticles2D" parent="." unique_id=1973096397 groups=["player"]]
 unique_name_in_owner = true
 emitting = false
@@ -127,3 +140,6 @@ position_smoothing_speed = 4.2
 
 [node name="AnimPlayerController" type="Node" parent="." unique_id=2111395895]
 script = ExtResource("5_k8mmp")
+
+[node name="HitboxComponent" type="Node" parent="." unique_id=1929820848]
+script = ExtResource("8_x0p2c")

@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://5ductlj8s53t" path="res://components/effects/impact/pressure-jet-particle.tscn" id="2_impact"]
 [ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="2_rs734"]
-[ext_resource type="PackedScene" path="res://components/effects/trails/pressure-jet-trail.tscn" id="3_trail"]
+[ext_resource type="PackedScene" uid="uid://dwg50enh6sl67" path="res://components/effects/trails/pressure-jet-trail.tscn" id="3_trail"]
 [ext_resource type="PackedScene" uid="uid://bv7k8xal2arhv" path="res://components/projectiles/magis-projectile.tscn" id="5_iefc0"]
 [ext_resource type="Texture2D" uid="uid://cnnad3qojgc2y" path="res://assets/temp/temp-mana.png" id="5_m6hma"]
 

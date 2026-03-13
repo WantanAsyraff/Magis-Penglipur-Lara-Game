@@ -11,7 +11,7 @@
 
 [resource]
 script = ExtResource("1_2pn3k")
-course_name = "Newton's First Law — inertia. The caster saturates the target's mana field with resistance opposing any change in motion state. A moving target is slowed dramatically; a stationary target is rooted. No damage — pure motion denial. Duration scales with how still the target already is at time of impact.Synergy: Cast on a stunned target (Third Law Impact) for maximum anchor duration."
+course_name = "Applied Mechanics & Magis Conductivity"
 course_id = "PHY-001"
 course_archetype = "PHY-001"
 course_description = "A foundational course in applied physics for aspiring Technical casters. Students learn to translate the laws governing force, motion, energy, waves, heat, light, electromagnetism, fluids, atomic structure, and quantum behaviour into structured Magis output.

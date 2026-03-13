@@ -27,7 +27,8 @@ var p_hidden: bool = false
 # -------------------------
 # DASHES
 # -------------------------
-var MAX_DASH_CHARGES := 3
+var is_dashing: bool = false
+var MAX_DASH_CHARGES := 4
 var current_dash_charges := MAX_DASH_CHARGES :
 	set(value):
 		current_dash_charges = value

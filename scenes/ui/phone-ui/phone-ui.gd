@@ -1,7 +1,7 @@
 extends Control
 
 @onready var app_list = %AppList   
-@onready var screen = %Screen      
+@onready var screen = %PhoneBG
 
 @export var phone_selected : bool = false
 @export var up_pos : Vector2 = Vector2(1388.0, 450)
@@ -10,6 +10,8 @@ extends Control
 var current_app_node : Control = null
 
 func _ready():
+	print("AppList node: ", app_list)
+	print("Screen node: ", screen)
 	# Start the phone in the "down" position
 	position = down_pos
 	
@@ -47,13 +49,13 @@ func _on_app_opened(app_resource: PackedScene):
 	current_app_node = app_resource.instantiate()
 	
 	# 2. Add to screen
-	%Screen.add_child(current_app_node)
+	%PhoneBG.add_child(current_app_node)
 	
 	# 3. FORCE VISIBILITY AND SIZE (Fixes the "invisible app" bug)
 	current_app_node.visible = true
 	# This forces the app to fill the screen container regardless of scene settings
 	current_app_node.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	%Screen.visible = true
+	%PhoneBG.visible = true
 	
 	# 4. Connect the App's internal back button signal if it exists
 	if current_app_node.has_signal("back_pressed"):

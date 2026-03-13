@@ -13,8 +13,8 @@ font_size = 32
 anchors_preset = -1
 anchor_right = 0.16100001
 anchor_bottom = 0.42800003
-offset_right = -309.12003
-offset_bottom = -462.24002
+offset_right = -9.120026
+offset_bottom = -2.2400208
 script = ExtResource("1_bjcnm")
 destinations = Array[ExtResource("2_whdwk")]([ExtResource("4_a6xn1"), ExtResource("5_yp1dy"), ExtResource("3_g15rk")])
 
@@ -22,7 +22,7 @@ destinations = Array[ExtResource("2_whdwk")]([ExtResource("4_a6xn1"), ExtResourc
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="VBoxContainer" unique_id=1416336791]
-custom_minimum_size = Vector2(300, 400)
+custom_minimum_size = Vector2(300, 280)
 layout_mode = 2
 
 [node name="LocationVBoxContainer" type="VBoxContainer" parent="VBoxContainer" unique_id=632555956]

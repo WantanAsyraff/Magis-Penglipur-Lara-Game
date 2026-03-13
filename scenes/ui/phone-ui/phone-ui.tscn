@@ -2,9 +2,11 @@
 
 [ext_resource type="Script" uid="uid://c370b7uc5j2lr" path="res://scenes/ui/phone-ui/phone-ui.gd" id="1_e010p"]
 [ext_resource type="PackedScene" uid="uid://dbwcpjgic86os" path="res://scenes/ui/phone-ui/app.tscn" id="1_qb4dd"]
+[ext_resource type="Texture2D" uid="uid://bglvo21vds5tk" path="res://assets/ui/phone/phone-bg.png" id="2_cs0d0"]
 [ext_resource type="PackedScene" uid="uid://5j53l67p7ufs" path="res://scenes/ui/phone-ui/e-hailing-ui/e-hailingUI.tscn" id="3_s57sm"]
-[ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="3_xhcjq"]
+[ext_resource type="Texture2D" uid="uid://cchpqd7mt0cu8" path="res://assets/ui/phone/fast-travel-icon.png" id="4_mipeb"]
 [ext_resource type="PackedScene" uid="uid://c5obdg8c3r1as" path="res://scenes/ui/spell-equipment/spell-equipment.tscn" id="4_xhcjq"]
+[ext_resource type="Texture2D" uid="uid://btj5nr55dhubd" path="res://assets/ui/phone/spells-icon.png" id="6_h2a1j"]
 
 [node name="PhoneUI" type="Control" unique_id=993725934]
 clip_children = 2
@@ -28,22 +30,17 @@ layout_mode = 0
 offset_right = 448.0
 offset_bottom = 640.0
 
-[node name="Screen" type="Panel" parent="PhoneBG" unique_id=1448778715]
-unique_name_in_owner = true
+[node name="TextureRect" type="TextureRect" parent="PhoneBG" unique_id=946069824]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 18.0
-offset_top = 23.0
-offset_right = -19.0
-offset_bottom = -60.0
 grow_horizontal = 2
 grow_vertical = 2
+texture = ExtResource("2_cs0d0")
 
-[node name="AppList" type="Panel" parent="PhoneBG/Screen" unique_id=1370866763]
+[node name="AppList" type="Control" parent="." unique_id=370690793]
 unique_name_in_owner = true
-modulate = Color(6.930828e-06, 0.632768, 0.8240567, 1)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -51,28 +48,31 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="E-Hailing" parent="PhoneBG/Screen/AppList" unique_id=1562965948 instance=ExtResource("1_qb4dd")]
+[node name="E-Hailing" parent="AppList" unique_id=1562965948 instance=ExtResource("1_qb4dd")]
 clip_contents = true
 layout_mode = 1
-anchor_right = 0.30400002
-anchor_bottom = 0.224
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 0.055992126
-offset_bottom = 0.23199463
-icon = ExtResource("3_xhcjq")
+anchor_left = 0.040000003
+anchor_top = 0.66700006
+anchor_right = 0.344
+anchor_bottom = 0.88400006
+offset_left = 0.07999802
+offset_top = 0.25997925
+offset_right = 0.13601685
+offset_bottom = 0.23999023
+icon = ExtResource("4_mipeb")
 newApp = ExtResource("3_s57sm")
 
-[node name="SpellKu" parent="PhoneBG/Screen/AppList" unique_id=1666271398 instance=ExtResource("1_qb4dd")]
+[node name="SpellKu" parent="AppList" unique_id=1666271398 instance=ExtResource("1_qb4dd")]
 clip_contents = true
 layout_mode = 1
 anchor_left = 0.38900003
+anchor_top = 0.74300003
 anchor_right = 0.693
-anchor_bottom = 0.22800002
-offset_left = 0.12098694
-offset_top = 2.0
-offset_right = 0.17700195
-offset_bottom = 0.0039901733
-icon = ExtResource("3_xhcjq")
+anchor_bottom = 0.96800005
+offset_left = 3.7279816
+offset_top = -48.380005
+offset_right = 3.7839966
+offset_bottom = -48.659973
+icon = ExtResource("6_h2a1j")
 newApp = ExtResource("4_xhcjq")
 fullscreen = true

@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://5ductlj8s53t" path="res://components/effects/impact/pressure-jet-particle.tscn" id="2_impact"]
 [ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="2_rs734"]
 [ext_resource type="Script" uid="uid://b6vkafnios50y" path="res://data/Resources/ilmu/subject.gd" id="3_m6hma"]
-[ext_resource type="PackedScene" path="res://components/effects/trails/pressure-jet-trail.tscn" id="3_trail"]
+[ext_resource type="PackedScene" uid="uid://dwg50enh6sl67" path="res://components/effects/trails/pressure-jet-trail.tscn" id="3_trail"]
 
 [resource]
 script = ExtResource("2_rs734")

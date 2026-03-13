@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="SpellData" load_steps=6 format=3]
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://bx1jnrvipafwh"]
 
 [ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="1_tex"]
 [ext_resource type="PackedScene" uid="uid://c0o52csqnxnvo" path="res://components/effects/impact/root-snare-impact.tscn" id="2_impact"]

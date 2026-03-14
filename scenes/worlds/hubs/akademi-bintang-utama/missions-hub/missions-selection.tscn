@@ -50,6 +50,7 @@ position = Vector2(-691, 844)
 npc_timeline = ExtResource("3_i8uou")
 is_overworld_npc = true
 destination_scene = ExtResource("3_mpw22")
+has_tutorial = true
 tutorial_panel_scene = ExtResource("7_vsrb1")
 tutorial_data = ExtResource("8_rsrql")
 

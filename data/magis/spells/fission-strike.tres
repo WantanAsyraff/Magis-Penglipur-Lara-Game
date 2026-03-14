@@ -1,0 +1,39 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://bcq2bktowdhv4"]
+
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="1_2moy8"]
+[ext_resource type="PackedScene" path="res://components/effects/impact/resonance-crack-impact.tscn" id="1_hloiq"]
+[ext_resource type="Texture2D" uid="uid://cnnad3qojgc2y" path="res://assets/temp/temp-mana.png" id="2_ciogl"]
+[ext_resource type="PackedScene" uid="uid://c0o52csqnxnvo" path="res://components/effects/impact/root-snare-impact.tscn" id="2_dtr77"]
+[ext_resource type="PackedScene" uid="uid://bv7k8xal2arhv" path="res://components/projectiles/magis-projectile.tscn" id="3_qpf27"]
+
+[resource]
+script = ExtResource("1_2moy8")
+spell_name = "Fission Strike"
+spell_id = "PHY-NP-001"
+spell_icon = ExtResource("2_ciogl")
+spell_colour = Color(1, 0.92, 0.6, 1)
+spell_flavour_text = "The energy was always there. Held together by force. He simply asked it to stop."
+theory_desc = "Nuclear fission — a heavy nucleus splits into smaller fragments releasing its binding energy. Caster targets the densest mana concentration point of the opponent's structure and fractures it. Binding energy releases as explosion; residual mana shards continue as DoT radiation fallout. High cost and cast time reflect theoretical complexity — a caster who cannot visualise atomic structure misfires entirely.
+Synergy: Entropy Accelerate weakens mana structural integrity zone-wide first — the nuclear core becomes easier to locate and fracture under entropy conditions."
+spell_manifest = 1
+magis_archetype = "Ilmiah"
+magis_comprehension = "Advanced"
+spell_incantation = Array[String](["down", "left", "left", "down", "right", "down"])
+upfront_cost = 75
+mana_per_second = 1.0
+cast_time = 5.0
+spell_scene = ExtResource("3_qpf27")
+projectile_texture = ExtResource("2_ciogl")
+projectile_particles = ExtResource("2_dtr77")
+impact_particles = ExtResource("1_hloiq")
+projectile_range = 3000.0
+projectile_size = 2.0
+projectile_damage = 30.0
+projectile_speed = 900.0
+aoe_spell_radius = 4.0
+explosive = 1.0
+knockback_force = 800.0
+dot = true
+dot_damage = 9.0
+dot_duration = 4.0
+metadata/_custom_type_script = "uid://ddmcw1l0ht73f"

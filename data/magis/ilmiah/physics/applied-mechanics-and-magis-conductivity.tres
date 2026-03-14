@@ -8,6 +8,8 @@
 [ext_resource type="Resource" uid="uid://cjrmty6v32nql" path="res://data/magis/ilmiah/physics/core-subjects/optics-and-light-behaviour.tres" id="6_045b5"]
 [ext_resource type="Resource" uid="uid://h5qs75322rjc" path="res://data/magis/ilmiah/physics/core-subjects/electricity-and-magnetism.tres" id="7_s1011"]
 [ext_resource type="Resource" uid="uid://c2w8n6w1nx4my" path="res://data/magis/ilmiah/physics/core-subjects/fluid-mechanics.tres" id="8_pyoyh"]
+[ext_resource type="Resource" uid="uid://d1wqwgpgp57a2" path="res://data/magis/ilmiah/physics/core-subjects/atomic-and-nuclear-physics.tres" id="9_rt87k"]
+[ext_resource type="Resource" uid="uid://bdixg68knynff" path="res://data/magis/ilmiah/physics/core-subjects/statistical-mechanics.tres" id="10_a2lec"]
 
 [resource]
 script = ExtResource("1_2pn3k")
@@ -18,5 +20,5 @@ course_description = "A foundational course in applied physics for aspiring Tech
 "
 magis_archetype = "Ilmiah"
 difficulty_level = 3
-subjects = Array[ExtResource("2_m2cl0")]([ExtResource("3_m2cl0"), ExtResource("4_0mipb"), ExtResource("5_xs760"), ExtResource("6_045b5"), ExtResource("7_s1011"), ExtResource("8_pyoyh")])
+subjects = Array[ExtResource("2_m2cl0")]([ExtResource("3_m2cl0"), ExtResource("4_0mipb"), ExtResource("5_xs760"), ExtResource("6_045b5"), ExtResource("7_s1011"), ExtResource("8_pyoyh"), ExtResource("9_rt87k"), ExtResource("10_a2lec")])
 metadata/_custom_type_script = "uid://mj2k1sm83ebr"

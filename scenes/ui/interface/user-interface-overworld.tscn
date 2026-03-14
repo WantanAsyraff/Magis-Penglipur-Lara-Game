@@ -4,11 +4,17 @@
 [ext_resource type="Script" uid="uid://rf4x2k7qsc14" path="res://scenes/ui/interface/user-interface-overworld.gd" id="1_tvpvp"]
 [ext_resource type="Texture2D" uid="uid://oftfr7qfand2" path="res://assets/ui/panels/character-panel.png" id="2_tvpvp"]
 [ext_resource type="LabelSettings" uid="uid://dk40du64xk8k7" path="res://assets/custom-labels/ui-stats-label.tres" id="3_0k00g"]
+[ext_resource type="Texture2D" uid="uid://b4hw02ctw4xo4" path="res://assets/ui/panels/location-panel.png" id="5_c1ax3"]
+[ext_resource type="FontFile" uid="uid://bid56dcwfjc8v" path="res://assets/font/Bitter/static/Bitter-Bold.ttf" id="6_m0o5q"]
 
 [sub_resource type="Theme" id="Theme_0k00g"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_awj58"]
 font_size = 24
+
+[sub_resource type="LabelSettings" id="LabelSettings_8k13i"]
+font = ExtResource("6_m0o5q")
+font_size = 28
 
 [node name="UserInterfaceOverworld" type="Control" unique_id=2137878262]
 layout_mode = 3
@@ -98,10 +104,19 @@ offset_left = 0.67993164
 offset_bottom = 0.3600006
 grow_horizontal = 0
 
+[node name="PanelContainerTexture" type="TextureRect" parent="CurrentWorldContainer" unique_id=108092278]
+layout_mode = 2
+texture = ExtResource("5_c1ax3")
+
 [node name="CurrentWorldLabel" type="Label" parent="CurrentWorldContainer" unique_id=811725078]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 text = "CURRENT WORLD"
 label_settings = SubResource("LabelSettings_awj58")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
 
 [node name="Quest Container" type="PanelContainer" parent="." unique_id=362047373]
 layout_mode = 1
@@ -115,9 +130,16 @@ offset_top = -0.24002075
 offset_bottom = -0.44003296
 grow_horizontal = 0
 
+[node name="PanelContainerTexture2" type="TextureRect" parent="Quest Container" unique_id=1779467555]
+layout_mode = 2
+texture = ExtResource("5_c1ax3")
+
 [node name="Label" type="Label" parent="Quest Container" unique_id=36905458]
 layout_mode = 2
 text = "CURRENT GOAL"
+label_settings = SubResource("LabelSettings_8k13i")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Dashes" type="HBoxContainer" parent="." unique_id=849782500]
 unique_name_in_owner = true

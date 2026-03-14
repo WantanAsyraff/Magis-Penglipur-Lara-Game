@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="subjectData" format=3 uid="uid://bdixg68knynff"]
+
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="1_u0kjw"]
+[ext_resource type="Resource" uid="uid://dbmn1e7ntjb7n" path="res://data/magis/spells/maxwell's-sortition.tres" id="2_4ml5o"]
+[ext_resource type="Script" uid="uid://b6vkafnios50y" path="res://data/Resources/ilmu/subject.gd" id="2_07cr5"]
+[ext_resource type="Texture2D" uid="uid://cnnad3qojgc2y" path="res://assets/temp/temp-mana.png" id="3_07cr5"]
+[ext_resource type="Resource" uid="uid://dnwnhml3byab1" path="res://data/magis/spells/phase-collapse.tres" id="3_ri7vo"]
+
+[resource]
+script = ExtResource("2_07cr5")
+subject_name = "Thermodynamics II: Statistical Mechanics"
+subject_icon = ExtResource("3_07cr5")
+subject_id = "PHY-001-SM"
+subject_archetype = "Physical Sciences"
+field_of_study = "he study of thermodynamic systems through the statistical behaviour of large numbers of particles. Covers Maxwell's distribution, phase transitions, and emergent macroscopic behaviour from microscopic states."
+theoretical_foundation = "Maxwell's Demon: a hypothetical entity sorting fast and slow molecules, creating order from disorder at an information cost. A caster who acts as Maxwell's Demon over an opponent's mana selectively suppresses high-energy particles — degrading offensive output while generating thermal noise that disrupts concentration.
+
+Phase Transitions: matter changes state at critical temperature thresholds, releasing or absorbing latent energy. Driving the mana structure of an area past its phase transition point causes shields to liquefy, DoT spells to detach, and a latent energy release that stuns."
+casters_notes = "Statistical Mechanics is where physics becomes philosophy. You are not controlling individual outcomes — you are controlling distributions. The caster who understands this stops trying to target specific opponents and starts shaping the field itself."
+magis_archetype = "Ilmiah"
+magis_comprehension = "Advanced"
+difficulty_level = 4
+prerequisites = Array[String](["PHY-001-FM"])
+contained_spells = Array[ExtResource("1_u0kjw")]([ExtResource("2_4ml5o"), ExtResource("3_ri7vo")])
+metadata/_custom_type_script = "uid://b6vkafnios50y"

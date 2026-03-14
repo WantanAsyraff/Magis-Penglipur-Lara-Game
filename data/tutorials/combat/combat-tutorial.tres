@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="TutorialData" format=3 uid="uid://dl0wedlire1md"]
+
+[ext_resource type="Script" uid="uid://bgh41gug308cv" path="res://data/tutorials/tutorial-page.gd" id="1_iwy0b"]
+[ext_resource type="Script" uid="uid://fsuqb010n5v8" path="res://data/tutorials/tutorial-data.gd" id="2_jn2xb"]
+[ext_resource type="Resource" uid="uid://u5ifvu6krjts" path="res://data/tutorials/combat/combat-page-1.tres" id="2_md6lo"]
+[ext_resource type="Resource" uid="uid://bdkptol6wcsyu" path="res://data/tutorials/combat/combat-page-2.tres" id="3_5vy11"]
+
+[resource]
+script = ExtResource("2_jn2xb")
+tutorial_title = "COMBAT TUTORIAL"
+pages = Array[ExtResource("1_iwy0b")]([ExtResource("2_md6lo"), ExtResource("3_5vy11")])
+metadata/_custom_type_script = "uid://fsuqb010n5v8"

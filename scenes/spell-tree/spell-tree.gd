@@ -2,17 +2,19 @@ extends Control
 class_name SpellTreeView
 
 @onready var container = %SpellPath # This is the Control node with spell_path.gd
+@onready var field_label: Label = %FieldLabel
 const SUBJECT_NODE_SCENE = preload("res://scenes/spell-tree/subject-node.tscn")
 const SUBJECT_PANEL_SCENE = preload("res://scenes/spell-tree/subject-panel.tscn")
 
 @export var course_data: CourseData
 @export var next_scene_id: String
 
-const H_SPACING = 400 # Width of each "tier"
+const H_SPACING = 700 # Width of each "tier"
 const V_SPACING = 280 # Vertical gap between nodes
 
 func _ready():
 	if course_data:
+		field_label.text = course_data.course_name
 		build_spell_field()
 
 func build_spell_field():

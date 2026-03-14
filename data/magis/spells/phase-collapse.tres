@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://dnwnhml3byab1"]
+
+[ext_resource type="PackedScene" path="res://components/effects/trails/packet-stream-trail.tscn" id="1_7dqhy"]
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="1_qr5la"]
+[ext_resource type="Texture2D" uid="uid://cnnad3qojgc2y" path="res://assets/temp/temp-mana.png" id="2_8ppw2"]
+[ext_resource type="PackedScene" uid="uid://c0o52csqnxnvo" path="res://components/effects/impact/root-snare-impact.tscn" id="2_ss10g"]
+[ext_resource type="PackedScene" uid="uid://bv7k8xal2arhv" path="res://components/projectiles/magis-projectile.tscn" id="5_dsiin"]
+
+[resource]
+script = ExtResource("1_qr5la")
+spell_name = "Phase Collapse"
+spell_id = "PHY-SM-002"
+spell_icon = ExtResource("2_8ppw2")
+spell_flavour_text = "Every system has a temperature at which it can no longer hold its shape. He found yours."
+theory_desc = "Phase transitions — matter changes state at critical temperature thresholds releasing or absorbing latent energy. Caster drives the mana structure of everything in the area past its phase transition point: solid defensive structures liquefy (shields break), liquid mana flows disperse (DoT spells detach), gas-phase mana ignites momentarily (stun pulse from latent energy release). A caster who misjudges the phase transition threshold overshoots — triggering collapse in their own mana structure too.
+Synergy: Maxwell's Sortition pre-identifies the exact phase threshold — reduces Phase Collapse cast time by 0.6 seconds and eliminates self-collapse risk."
+spell_type = 3
+spell_manifest = 4
+magis_archetype = "Ilmiah"
+magis_comprehension = "Advanced"
+spell_incantation = Array[String](["right", "up", "up", "down", "right"])
+upfront_cost = 34
+cast_time = 2.0
+spell_scene = ExtResource("5_dsiin")
+projectile_texture = ExtResource("2_8ppw2")
+projectile_particles = ExtResource("2_ss10g")
+impact_particles = ExtResource("1_7dqhy")
+is_self_cast = true
+aoe_spell_radius = 7.0
+knockback_force = 300.0
+stunnable = true
+stun_dur = 1.2
+metadata/_custom_type_script = "uid://ddmcw1l0ht73f"

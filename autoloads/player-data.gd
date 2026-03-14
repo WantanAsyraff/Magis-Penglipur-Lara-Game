@@ -24,6 +24,12 @@ var p_jumpable: bool = true
 var p_visible: bool = true
 var p_invincible: bool = false
 var p_hidden: bool = false
+signal world_changed(world_name: String)
+var current_world: String = "":
+	set(value):
+		current_world = value
+		emit_signal("world_changed", value)
+
 # -------------------------
 # DASHES
 # -------------------------

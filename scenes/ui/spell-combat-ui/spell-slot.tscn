@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://ddnqy10k0s7qq" path="res://scenes/ui/spell-combat-ui/spell-slot.gd" id="1_03n0a"]
 [ext_resource type="Resource" uid="uid://dmuos14tj2ww3" path="res://data/magis/spells/botany.tres" id="2_ajyhg"]
 [ext_resource type="Texture2D" uid="uid://c27hlpd2ups03" path="res://assets/temp/temp-lightbulb.png" id="2_edymq"]
-[ext_resource type="Texture2D" uid="uid://dmsv5775adsk2" path="res://assets/ui/spells/spell-move.png" id="3_0fcwh"]
+[ext_resource type="Texture2D" uid="uid://c1nk3gref80yh" path="res://assets/ui/spells/spell-move.png" id="3_0fcwh"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_nvrkb"]
 font_size = 12

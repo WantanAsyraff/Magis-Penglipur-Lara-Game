@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="subjectData" format=3 uid="uid://d1wqwgpgp57a2"]
+
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="1_l81c0"]
+[ext_resource type="Script" uid="uid://b6vkafnios50y" path="res://data/Resources/ilmu/subject.gd" id="2_8vfke"]
+[ext_resource type="Resource" uid="uid://d12esjj3y7trt" path="res://data/magis/spells/binding-force.tres" id="2_55s8u"]
+[ext_resource type="Texture2D" uid="uid://c27hlpd2ups03" path="res://assets/temp/temp-lightbulb.png" id="3_8vfke"]
+[ext_resource type="Resource" uid="uid://bcq2bktowdhv4" path="res://data/magis/spells/fission-strike.tres" id="3_tdbfr"]
+
+[resource]
+script = ExtResource("2_8vfke")
+subject_name = "Atomic & Nuclear Physics"
+subject_icon = ExtResource("3_8vfke")
+subject_id = "PHY-001-NP"
+subject_archetype = "Physical Sciences"
+field_of_study = "The study of atomic structure, nuclear forces, radioactive decay, fission, fusion, and the binding energy of atomic nuclei."
+theoretical_foundation = "Nuclear Fission: a heavy nucleus splits into smaller fragments, releasing the binding energy that held it together. Targeting the densest mana concentration point — the equivalent of a nucleus — and fracturing it releases that energy as explosive damage with radioactive fallout.
+
+Strong Nuclear Force: the most powerful fundamental force, operating at extremely short range, binding protons and neutrons against electromagnetic repulsion. Internalised as a mana aura it creates structural resistance that cannot be cancelled by interference-based defences."
+casters_notes = "A caster who cannot clearly visualise atomic structure will misfire on Fission Strike — targeting the wrong density point reduces damage to near zero. This is not a subject for students who skipped theoretical fundamentals. The mana cost reflects how much the body has to understand, not just how hard it has to work."
+magis_archetype = "Ilmiah"
+magis_comprehension = "Advanced"
+difficulty_level = 4
+prerequisites = Array[String](["PHY-001-OP"])
+contained_spells = Array[ExtResource("1_l81c0")]([ExtResource("2_55s8u"), ExtResource("3_tdbfr")])
+metadata/_custom_type_script = "uid://b6vkafnios50y"

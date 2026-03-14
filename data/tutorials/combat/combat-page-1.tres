@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="TutorialPage" format=3 uid="uid://u5ifvu6krjts"]
+
+[ext_resource type="Texture2D" uid="uid://b2vi8jaa4ycg" path="res://assets/player/player-walk-temp-2.png" id="1_5byxh"]
+[ext_resource type="Script" uid="uid://bgh41gug308cv" path="res://data/tutorials/tutorial-page.gd" id="1_b8h11"]
+
+[resource]
+script = ExtResource("1_b8h11")
+page_title = "BASICS OF CONTROLS"
+page_desc = "Welcome Spellcaster! This tutorial section will explain the basics of movement, spellcasting and navigation.
+
+Keep in mind that this is all as I like to call it— \"A proof of concept\" so definitely keep that in mind!
+
+To walk you use \"WASD\", the formal yk.
+
+\"Shift is for dash, you have that too.\"
+
+To interact with NPC, doors and any interactables in general is \"E\"."
+page_image = ExtResource("1_5byxh")
+metadata/_custom_type_script = "uid://bgh41gug308cv"

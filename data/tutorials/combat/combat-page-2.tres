@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="TutorialPage" format=3 uid="uid://bdkptol6wcsyu"]
+
+[ext_resource type="Script" uid="uid://bgh41gug308cv" path="res://data/tutorials/tutorial-page.gd" id="1_ngd1k"]
+[ext_resource type="Texture2D" uid="uid://dpyetdt0dlb76" path="res://assets/player/player-aim-left.png" id="1_ptdsm"]
+
+[resource]
+script = ExtResource("1_ngd1k")
+page_title = "BASICS OF SPELLCASTING"
+page_desc = "As a spellcaster, your chance of winning combat is depends on your spell comprehension and incantations. Press \"O\" to begin spellcasting.
+
+Spells are activated by combo incantations.
+
+I - Spellcast up
+J - Spellcast left
+K - Spellcast down
+L - Spellcast right
+
+Aiming your spells:
+W - Aim up 
+A - Aim left
+S - Aim down
+D - Aim right
+
+You can also aim diagonally by combining your aiming keys.
+
+While aiming, you can hold down \"F\" key to force stop so that you don't move. (Useful when space is limited/trying to aim at a specific target).
+
+The stronger the spell, the more combos it requires. "
+page_image = ExtResource("1_ptdsm")
+metadata/_custom_type_script = "uid://bgh41gug308cv"

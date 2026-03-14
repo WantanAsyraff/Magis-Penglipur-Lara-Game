@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cu2bg17e15wfx" path="res://scenes/ui/phone-ui/app.gd" id="1_q5kro"]
 
 [node name="App" type="Control" unique_id=1666271398]
+custom_minimum_size = Vector2(118, 118)
 layout_mode = 3
 anchor_right = 0.066
 anchor_bottom = 0.117000006

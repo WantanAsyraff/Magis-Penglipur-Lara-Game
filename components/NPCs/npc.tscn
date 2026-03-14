@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://iije0qme33th" path="res://components/NPCs/npc.gd" id="1_cgdws"]
 [ext_resource type="Texture2D" uid="uid://doaygnck5qus5" path="res://assets/temp/player-temp.png" id="1_exqg5"]
 [ext_resource type="Resource" uid="uid://wwx3njg3vpa6" path="res://dialogue/characters/scene-2-a.dtl" id="2_fw4mo"]
+[ext_resource type="LabelSettings" uid="uid://dk40du64xk8k7" path="res://assets/custom-labels/ui-stats-label.tres" id="4_iyu70"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_exqg5"]
 size = Vector2(150, 124)
@@ -26,6 +27,13 @@ shape = SubResource("RectangleShape2D_exqg5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1101491522]
 shape = SubResource("RectangleShape2D_cgdws")
+
+[node name="InteractLabel" type="Label" parent="." unique_id=93149769]
+offset_left = -19.5
+offset_top = -100.5
+offset_right = 20.5
+offset_bottom = -77.5
+label_settings = ExtResource("4_iyu70")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

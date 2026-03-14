@@ -15,3 +15,5 @@ grow_vertical = 2
 theme = ExtResource("1_lfcci")
 theme_type_variation = &"FlatButton"
 script = ExtResource("1_yfpea")
+locked_modulate = Color(0.2592937, 0.2592937, 0.2592937, 1)
+lock_suffix = " 🔒Locked"

@@ -1,7 +1,9 @@
 [gd_scene format=3 uid="uid://bix1nk2keebsx"]
 
 [ext_resource type="Script" uid="uid://cpbp6jcqiumr8" path="res://scenes/spell-tree/subject-panel.gd" id="1_cfyhi"]
-[ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="1_djdju"]
+[ext_resource type="Texture2D" uid="uid://3nx632b178qm" path="res://assets/ui/phone/quest-icon.png" id="2_kqsy7"]
+[ext_resource type="LabelSettings" uid="uid://dk40du64xk8k7" path="res://assets/custom-labels/ui-stats-label.tres" id="3_3gc4p"]
+[ext_resource type="Theme" uid="uid://cv8bqu76ln7kj" path="res://assets/styles/generic-theme.tres" id="3_kqsy7"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_kqsy7"]
 font_size = 18
@@ -13,6 +15,7 @@ offset_left = 191.0
 offset_top = 65.0
 offset_right = 1763.0
 offset_bottom = 996.0
+theme = ExtResource("3_kqsy7")
 script = ExtResource("1_cfyhi")
 metadata/_edit_group_ = true
 
@@ -47,39 +50,45 @@ alignment = 1
 [node name="TextureRect" type="TextureRect" parent="Panel/MarginContainer/SubjectContainer/TitleContainer" unique_id=622515026]
 unique_name_in_owner = true
 layout_mode = 2
-texture = ExtResource("1_djdju")
+texture = ExtResource("2_kqsy7")
 
 [node name="MPLSubjectLabel" type="Label" parent="Panel/MarginContainer/SubjectContainer/TitleContainer" unique_id=1747799397]
 unique_name_in_owner = true
 layout_mode = 2
 text = "MINISTRY OF HIGHER MAGISTERY EDUCATION BINTANG UTAMA ACADEMY SUBJECT ENROLLMENT"
+label_settings = ExtResource("3_3gc4p")
 
 [node name="SubjectDescContainer" type="HBoxContainer" parent="Panel/MarginContainer/SubjectContainer" unique_id=1451859412]
 layout_mode = 2
+theme = ExtResource("3_kqsy7")
 alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer/SubjectContainer/SubjectDescContainer" unique_id=485729361]
 layout_mode = 2
 
-[node name="FieldContainer" type="VBoxContainer" parent="Panel/MarginContainer/SubjectContainer/SubjectDescContainer/VBoxContainer" unique_id=779886377]
+[node name="FieldInfoContainer" type="ScrollContainer" parent="Panel/MarginContainer/SubjectContainer/SubjectDescContainer/VBoxContainer" unique_id=274266195]
+custom_minimum_size = Vector2(800, 500)
 layout_mode = 2
-alignment = 1
 
-[node name="FieldOfStudyLabel" type="Label" parent="Panel/MarginContainer/SubjectContainer/SubjectDescContainer/VBoxContainer/FieldContainer" unique_id=133333308]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer/SubjectContainer/SubjectDescContainer/VBoxContainer/FieldInfoContainer" unique_id=995205587]
+layout_mode = 2
+
+[node name="FieldOfStudyLabel" type="Label" parent="Panel/MarginContainer/SubjectContainer/SubjectDescContainer/VBoxContainer/FieldInfoContainer/VBoxContainer" unique_id=133333308]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(800, 0)
 layout_mode = 2
 text = "FIELD OF STUDY"
+label_settings = ExtResource("3_3gc4p")
+autowrap_mode = 3
 
-[node name="CourseContainer" type="VBoxContainer" parent="Panel/MarginContainer/SubjectContainer/SubjectDescContainer/VBoxContainer" unique_id=968564545]
-layout_mode = 2
-alignment = 1
-
-[node name="TheorecticalFoundationLabel" type="Label" parent="Panel/MarginContainer/SubjectContainer/SubjectDescContainer/VBoxContainer/CourseContainer" unique_id=975091940]
+[node name="TheorecticalFoundationLabel" type="Label" parent="Panel/MarginContainer/SubjectContainer/SubjectDescContainer/VBoxContainer/FieldInfoContainer/VBoxContainer" unique_id=975091940]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(800, 0)
 layout_mode = 2
 text = "THEORECTICAL FOUNDATION"
+autowrap_mode = 3
 
-[node name="CourseDescriptionLabel" type="Label" parent="Panel/MarginContainer/SubjectContainer/SubjectDescContainer/VBoxContainer/CourseContainer" unique_id=268418327]
+[node name="CourseDescriptionLabel" type="Label" parent="Panel/MarginContainer/SubjectContainer/SubjectDescContainer/VBoxContainer/FieldInfoContainer/VBoxContainer" unique_id=268418327]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(500, 200)
 layout_mode = 2
@@ -91,16 +100,14 @@ COURSE DESCRIPTION
 label_settings = SubResource("LabelSettings_kqsy7")
 autowrap_mode = 3
 
-[node name="CasterNoteContainer" type="VBoxContainer" parent="Panel/MarginContainer/SubjectContainer/SubjectDescContainer/VBoxContainer" unique_id=457226069]
-layout_mode = 2
-alignment = 1
-
-[node name="CasterNoteTitleLabel" type="Label" parent="Panel/MarginContainer/SubjectContainer/SubjectDescContainer/VBoxContainer/CasterNoteContainer" unique_id=675504046]
+[node name="CasterNoteTitleLabel" type="Label" parent="Panel/MarginContainer/SubjectContainer/SubjectDescContainer/VBoxContainer/FieldInfoContainer/VBoxContainer" unique_id=675504046]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(800, 0)
 layout_mode = 2
 text = "CASTER'S NOTES"
+autowrap_mode = 3
 
-[node name="CasterNoteLabel" type="Label" parent="Panel/MarginContainer/SubjectContainer/SubjectDescContainer/VBoxContainer/CasterNoteContainer" unique_id=2007707002]
+[node name="CasterNoteLabel" type="Label" parent="Panel/MarginContainer/SubjectContainer/SubjectDescContainer/VBoxContainer/FieldInfoContainer/VBoxContainer" unique_id=2007707002]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(500, 200)
 layout_mode = 2
@@ -114,8 +121,10 @@ layout_mode = 2
 
 [node name="SpellListLabel" type="Label" parent="Panel/MarginContainer/SubjectContainer/SubjectDescContainer/SpellList" unique_id=1393946445]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
 text = "SPELLS YOU WILL LEARN"
+autowrap_mode = 3
 
 [node name="SpellLabel" type="Label" parent="Panel/MarginContainer/SubjectContainer/SubjectDescContainer/SpellList" unique_id=1978812077]
 unique_name_in_owner = true
@@ -131,12 +140,20 @@ alignment = 1
 
 [node name="CancelButton" type="Button" parent="Panel/MarginContainer/SubjectContainer/ButtonContainer" unique_id=223767422]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(500, 140)
 layout_mode = 2
+theme = ExtResource("3_kqsy7")
 text = "DEFER ENROLLMENT"
+
+[node name="HSeparator" type="HSeparator" parent="Panel/MarginContainer/SubjectContainer/ButtonContainer" unique_id=294597814]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
 
 [node name="ConfirmButton" type="Button" parent="Panel/MarginContainer/SubjectContainer/ButtonContainer" unique_id=1518116183]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
+theme = ExtResource("3_kqsy7")
 text = "ENROLL NOW"
 
 [connection signal="pressed" from="Panel/MarginContainer/SubjectContainer/ButtonContainer/CancelButton" to="." method="_on_cancel_button_pressed"]

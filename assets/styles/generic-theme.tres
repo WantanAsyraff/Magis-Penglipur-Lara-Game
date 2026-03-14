@@ -1,7 +1,10 @@
 [gd_resource type="Theme" format=3 uid="uid://cv8bqu76ln7kj"]
 
-[ext_resource type="FontFile" uid="uid://bk4pyfyvg33i3" path="res://assets/font/Bitter/static/Bitter-Bold.ttf" id="1_crxs4"]
+[ext_resource type="FontFile" uid="uid://bid56dcwfjc8v" path="res://assets/font/Bitter/static/Bitter-Bold.ttf" id="1_crxs4"]
 [ext_resource type="StyleBox" uid="uid://bs4dt5ctqw4hq" path="res://assets/styles/generic-button.tres" id="2_jm6ik"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_crxs4"]
+bg_color = Color(0.12583932, 0.13739917, 0.24041909, 1)
 
 [resource]
 default_font = ExtResource("1_crxs4")
@@ -11,3 +14,4 @@ Button/fonts/font = ExtResource("1_crxs4")
 Button/styles/hover = ExtResource("2_jm6ik")
 Button/styles/hover_pressed = ExtResource("2_jm6ik")
 Button/styles/normal = ExtResource("2_jm6ik")
+Panel/styles/panel = SubResource("StyleBoxFlat_crxs4")

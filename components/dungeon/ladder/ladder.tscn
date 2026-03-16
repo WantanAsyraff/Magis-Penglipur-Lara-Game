@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://bubodn3ale83b"]
+
+[ext_resource type="Script" uid="uid://cn00tjqs8vyes" path="res://components/dungeon/ladder/ladder.gd" id="1_iiy03"]
+[ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="2_4einq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iiy03"]
+size = Vector2(82, 20)
+
+[node name="Ladder" type="Area2D" unique_id=807638962]
+script = ExtResource("1_iiy03")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=274175971]
+scale = Vector2(1, 10.040001)
+shape = SubResource("RectangleShape2D_iiy03")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1870975172]
+scale = Vector2(0.640625, 1.5781249)
+texture = ExtResource("2_4einq")

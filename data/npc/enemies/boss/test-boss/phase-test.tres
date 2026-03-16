@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="BossPhaseData" format=3 uid="uid://35pan20cuj13"]
+
+[ext_resource type="Script" uid="uid://mosqxd6t24fg" path="res://data/npc/enemies/boss-attack-data.gd" id="1_0b5gf"]
+[ext_resource type="Script" uid="uid://clnqcffal3c4d" path="res://data/npc/enemies/boss-phase.gd" id="2_6l2gs"]
+[ext_resource type="Resource" uid="uid://0kbwdbamjtp6" path="res://data/npc/enemies/boss/test-boss/attack1.tres" id="2_ypwjw"]
+[ext_resource type="Resource" uid="uid://cugjgxtphm1aw" path="res://data/npc/enemies/boss/test-boss/attack2.tres" id="3_5psqh"]
+
+[resource]
+script = ExtResource("2_6l2gs")
+move_speed = 300.0
+chase_speed = 500.0
+attacks = Array[ExtResource("1_0b5gf")]([ExtResource("2_ypwjw"), ExtResource("3_5psqh")])
+metadata/_custom_type_script = "uid://clnqcffal3c4d"

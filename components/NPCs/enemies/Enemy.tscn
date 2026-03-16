@@ -3,7 +3,9 @@
 [ext_resource type="Script" uid="uid://m3k0car8wstp" path="res://components/NPCs/enemies/hitbox-component.gd" id="1_gcguh"]
 [ext_resource type="Script" uid="uid://dlnd3allorrc8" path="res://components/NPCs/enemies/enemy.gd" id="1_ya25k"]
 [ext_resource type="Resource" uid="uid://by4dm8igq3oep" path="res://data/magis/spells/viscous-drag.tres" id="2_ivyq4"]
+[ext_resource type="Script" uid="uid://ekbdftjptdw2" path="res://components/NPCs/enemies/damage-indicator-component.gd" id="4_4mp5v"]
 [ext_resource type="Texture2D" uid="uid://caaqv80a8h88s" path="res://assets/temp/player-temp-left.png" id="4_ivyq4"]
+[ext_resource type="FontFile" uid="uid://bid56dcwfjc8v" path="res://assets/font/Bitter/static/Bitter-Bold.ttf" id="5_o6qrg"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_gcguh"]
 animations = [{
@@ -17,7 +19,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gcguh"]
-size = Vector2(108, 144)
+size = Vector2(226, 155)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gcguh"]
 radius = 521.0154
@@ -42,11 +44,19 @@ sight_memory = 1.0
 [node name="HitboxComponent" type="Node" parent="." unique_id=1497920414]
 script = ExtResource("1_gcguh")
 
+[node name="DamageIndicatorComponent" type="Node" parent="." unique_id=194822805]
+script = ExtResource("4_4mp5v")
+font = ExtResource("5_o6qrg")
+font_size = 30
+crit_scale = 2.3
+spawn_offset_y = -150.0
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1879544315]
 scale = Vector2(1.25, 1.25)
 sprite_frames = SubResource("SpriteFrames_gcguh")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=62178440]
+position = Vector2(0, 1.5)
 shape = SubResource("RectangleShape2D_gcguh")
 
 [node name="DetectionArea" type="Area2D" parent="." unique_id=1614778578]

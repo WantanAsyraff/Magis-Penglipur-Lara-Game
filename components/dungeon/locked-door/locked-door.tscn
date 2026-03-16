@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://cafjq0lngh4y4"]
+
+[ext_resource type="Texture2D" uid="uid://b4hw02ctw4xo4" path="res://assets/ui/panels/location-panel.png" id="1_0pon7"]
+[ext_resource type="Script" uid="uid://cs8ghwiryim85" path="res://components/dungeon/locked-door/locked-door.gd" id="1_uhror"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_uhror"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uhror"]
+size = Vector2(186, 374)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hdl1o"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_0pon7")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hdl1o"]
+size = Vector2(484, 374)
+
+[node name="LockedDoor" type="StaticBody2D" unique_id=850129219]
+physics_material_override = SubResource("PhysicsMaterial_uhror")
+script = ExtResource("1_uhror")
+prompt_unlocked_text = "Press [E] to open"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=350642807]
+rotation = -0.0017466077
+shape = SubResource("RectangleShape2D_uhror")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=642575219]
+rotation = 1.5655835
+sprite_frames = SubResource("SpriteFrames_hdl1o")
+
+[node name="InteractArea" type="Area2D" parent="." unique_id=1138599908]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea" unique_id=1456394027]
+shape = SubResource("RectangleShape2D_hdl1o")

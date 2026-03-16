@@ -5,8 +5,8 @@
 [ext_resource type="PackedScene" uid="uid://cy3c7eiatv07j" path="res://components/platforms/temptilemap.tscn" id="2_ksqxv"]
 [ext_resource type="PackedScene" uid="uid://c5a41lx0gq8be" path="res://scenes/transitioners/zone-portal/zone-portal.tscn" id="3_b28ng"]
 [ext_resource type="Resource" uid="uid://dftf3r7ouy6t1" path="res://dialogue/overworld/story-select-npc.dtl" id="3_i8uou"]
-[ext_resource type="PackedScene" uid="uid://40eyximxy17o" path="res://scenes/ui/mission-selection/story-selection.tscn" id="3_mpw22"]
 [ext_resource type="PackedScene" uid="uid://cvr4657rrr2mc" path="res://components/tilemaps/palleteTemp.tscn" id="6_i8uou"]
+[ext_resource type="PackedScene" uid="uid://40eyximxy17o" path="res://scenes/ui/mission-selection/story-selection.tscn" id="6_vsrb1"]
 [ext_resource type="PackedScene" uid="uid://cp36hiyn6nkuo" path="res://components/panels/tutorials/tutorial-panel.tscn" id="7_vsrb1"]
 [ext_resource type="Resource" uid="uid://dl0wedlire1md" path="res://data/tutorials/combat/combat-tutorial.tres" id="8_rsrql"]
 
@@ -49,7 +49,7 @@ tile_map_data = PackedByteArray("AAD8/w8AAAABAAAAAAD9/w8AAAAAAAAAAAD+/w8AAAABAAA
 position = Vector2(-691, 844)
 npc_timeline = ExtResource("3_i8uou")
 is_overworld_npc = true
-destination_scene = ExtResource("3_mpw22")
+destination_scene = ExtResource("6_vsrb1")
 tutorial_panel_scene = ExtResource("7_vsrb1")
 tutorial_data = ExtResource("8_rsrql")
 

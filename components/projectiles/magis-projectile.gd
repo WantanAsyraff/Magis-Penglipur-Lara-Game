@@ -6,6 +6,8 @@ class_name MagicProjectile extends Area2D
 var spell_data: SpellData = null
 var direction: Vector2 = Vector2.RIGHT
 var lifetime: float = 5.0
+## Assign to the firing node so it can't hit itself.
+var source: Node = null
 
 var _hit_bodies: Array = []       # For piercing — track already-hit bodies
 var _particle_instance: GPUParticles2D
@@ -60,6 +62,9 @@ func _physics_process(delta: float) -> void:
 # HIT
 # ─────────────────────────────────────────
 func _on_body_entered(body: Node2D) -> void:
+	# Never hit the entity that fired this projectile
+	if body == source:
+		return
 	# Piercing — don't re-hit the same body
 	if spell_data.piercing and body in _hit_bodies:
 		return
@@ -94,7 +99,7 @@ func _apply_aoe() -> void:
 	var results := space.intersect_shape(query)
 	for result in results:
 		var body := result.collider as Node2D
-		if body == null or body == self or body in _hit_bodies:
+		if body == null or body == self or body == source or body in _hit_bodies:
 			continue
 		_hit_bodies.append(body)
 

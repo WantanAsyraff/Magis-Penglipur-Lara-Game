@@ -65,6 +65,10 @@ var _in_casting_stance: bool = false
 # Aim lock — true while shift is held during casting stance
 var _aim_locked: bool = false
 
+# Ladder
+const CLIMB_SPEED: float = 1500.0
+var _climbing: bool = false
+
 # -------------------------
 # BOOTSTRAP
 # -------------------------
@@ -95,7 +99,6 @@ func _ready() -> void:
 # -------------------------
 func _physics_process(delta: float) -> void:
 	_handle_dash_timers(delta)
-	_apply_gravity(delta)
 	_update_aim_direction()
 	_regen_mana(delta)
 
@@ -113,9 +116,15 @@ func _physics_process(delta: float) -> void:
 	if multiplayer.has_multiplayer_peer() and not is_multiplayer_authority():
 		return
 
+	# Ladder takes priority over normal gravity + movement
+	if _update_climbing():
+		move_and_slide()
+		return
+
 	if is_dashing:
 		velocity = dash_direction * DASH_SPEED
 	else:
+		_apply_gravity(delta)
 		_handle_movement()
 
 	move_and_slide()
@@ -137,6 +146,45 @@ func _handle_movement() -> void:
 
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
+
+# -------------------------
+# LADDER
+# -------------------------
+func _update_climbing() -> bool:
+	var on_ladder: bool = has_meta("on_ladder")
+
+	if not on_ladder:
+		if _climbing:
+			_climbing = false
+		return false
+
+	# Jump cancels climbing and launches player upward
+	if Input.is_action_just_pressed("ui_accept"):
+		_climbing = false
+		remove_meta("on_ladder")
+		velocity.y = JUMP_VELOCITY
+		return false
+
+	var up := Input.is_action_pressed("ui_up")
+	var down := Input.is_action_pressed("ui_down")
+
+	# Start climbing only when holding a direction
+	if up or down:
+		_climbing = true
+
+	if _climbing:
+		velocity.x = 0.0
+		velocity.y = 0.0
+		if up:
+			velocity.y = -CLIMB_SPEED
+		elif down:
+			velocity.y = CLIMB_SPEED
+		return true
+
+	# On ladder but not yet holding a direction — just kill gravity and wait
+	velocity.x = 0.0
+	velocity.y = 0.0
+	return true
 
 # -------------------------
 # DASH
@@ -302,6 +350,7 @@ func _execute_spell_instantiation(spell: SpellData) -> void:
 	for i in count:
 		var inst = scene_to_use.instantiate()
 		inst.spell_data = spell
+		inst.source = self
 		inst.position = castMarker.global_position
 
 		if spell.is_self_cast:

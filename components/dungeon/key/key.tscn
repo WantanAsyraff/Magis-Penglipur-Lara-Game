@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://ictbjlhkl0of"]
+
+[ext_resource type="Script" uid="uid://cwec17dsfgf1" path="res://components/dungeon/key/key.gd" id="1_feqck"]
+[ext_resource type="Texture2D" uid="uid://cu6j36h4d1f3g" path="res://assets/temp/cratebox.png" id="2_vo13a"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vo13a"]
+radius = 276.0018
+
+[node name="Key" type="Area2D" unique_id=476036428]
+script = ExtResource("1_feqck")
+prompt_text = "Press [E] to pick up"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=168047224]
+shape = SubResource("CircleShape2D_vo13a")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=296039244]
+texture = ExtResource("2_vo13a")

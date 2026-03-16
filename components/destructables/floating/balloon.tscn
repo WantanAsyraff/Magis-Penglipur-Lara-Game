@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://blgha2eib1lvt"]
 
-[ext_resource type="Script" uid="uid://cgqqhxhylnuog" path="res://components/Destructables/floating/balloon.gd" id="1_503ge"]
+[ext_resource type="Script" uid="uid://cgqqhxhylnuog" path="res://components/destructables/floating/balloon.gd" id="1_503ge"]
 [ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="2_u1nht"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u1nht"]

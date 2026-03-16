@@ -179,10 +179,12 @@ func _on_state_entered(state: State) -> void:
 			_play_animation("hurt")
 			hurt_timer.start()
 		State.DEATH:
-			_play_animation("death")
+			enemy_died.emit()
 			hitbox.clear_all_effects()
 			set_physics_process(false)
-			await sprite.animation_finished
+			if sprite.sprite_frames and sprite.sprite_frames.has_animation("death"):
+				sprite.play("death")
+				await sprite.animation_finished
 			queue_free()
 
 func _run_state(delta: float) -> void:
@@ -313,6 +315,7 @@ func _execute_attack() -> void:
 	attack_timer.start()
 
 	var dist := global_position.distance_to(_player.global_position)
+	print("[Enemy] Executing attack — type: %s | dist: %.1f | melee_range: %.1f" % [AttackType.keys()[attack_type], dist, melee_range])
 
 	match attack_type:
 		AttackType.MELEE:
@@ -328,15 +331,18 @@ func _execute_attack() -> void:
 func _do_melee_attack() -> void:
 	if _player == null:
 		return
-	var dist := global_position.distance_to(_player.global_position)
-	if dist <= melee_range:
-		var player_hitbox := _player.get_node_or_null("HitboxComponent") as HitboxComponent
-		if player_hitbox:
-			var direction: Vector2 = (_player.global_position - global_position).normalized()
-			var fake_spell := SpellData.new()
-			fake_spell.projectile_damage = melee_damage
-			fake_spell.knockback_force = 120.0
-			player_hitbox.receive_hit(fake_spell, direction)
+
+	var player_hitbox := _player.get_node_or_null("HitboxComponent") as HitboxComponent
+	if player_hitbox == null:
+		push_warning("Enemy melee: Player has no HitboxComponent node!")
+		return
+
+	var direction: Vector2 = (_player.global_position - global_position).normalized()
+	var fake_spell := SpellData.new()
+	fake_spell.projectile_damage = melee_damage
+	fake_spell.knockback_force = 120.0
+	player_hitbox.receive_hit(fake_spell, direction)
+	print("[Enemy] Melee hit player for: ", melee_damage)
 
 func _do_ranged_attack() -> void:
 	if ranged_spell == null or _player == null:
@@ -347,7 +353,8 @@ func _do_ranged_attack() -> void:
 
 	var inst = scene_to_use.instantiate()
 	inst.spell_data = ranged_spell
-	inst.position = global_position + direction * 250.0
+	inst.source = self
+	inst.position = global_position + direction * 40.0
 	inst.direction = direction
 	get_parent().add_child(inst)
 
@@ -383,12 +390,16 @@ func _on_detection_area_body_exited(body: Node) -> void:
 func _on_damage_taken(amount: float) -> void:
 	current_health = maxf(current_health - amount, 0.0)
 	enemy_hurt.emit(amount)
-	if current_state != State.DEATH and current_state != State.HURT:
+	if current_state == State.DEATH:
+		return
+	if current_health <= 0.0:
+		_set_state(State.DEATH)
+	elif current_state != State.HURT:
 		_set_state(State.HURT)
 
 func _on_died() -> void:
+	# Kept for external signal listeners — death is driven by _on_damage_taken
 	enemy_died.emit()
-	_set_state(State.DEATH)
 
 # ─────────────────────────────────────────
 # TIMER CALLBACKS

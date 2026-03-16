@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://cvr4657rrr2mc" path="res://components/tilemaps/palleteTemp.tscn" id="2_vg7ch"]
 [ext_resource type="PackedScene" uid="uid://cy3c7eiatv07j" path="res://components/platforms/temptilemap.tscn" id="3_rrxkd"]
 [ext_resource type="PackedScene" uid="uid://ca23coml0cwtj" path="res://components/NPCs/enemies/dummy/dummy-npc.tscn" id="4_0agag"]
-[ext_resource type="PackedScene" uid="uid://blgha2eib1lvt" path="res://components/Destructables/floating/balloon.tscn" id="5_quxmb"]
+[ext_resource type="PackedScene" uid="uid://blgha2eib1lvt" path="res://components/destructables/floating/balloon.tscn" id="5_quxmb"]
 [ext_resource type="PackedScene" uid="uid://c5a41lx0gq8be" path="res://scenes/transitioners/zone-portal/zone-portal.tscn" id="6_hqvtg"]
 [ext_resource type="PackedScene" uid="uid://bire3b68skqpf" path="res://components/NPCs/enemies/Enemy.tscn" id="8_464bf"]
 
@@ -14,6 +14,7 @@ font_size = 38
 
 [node name="TutorialWorld" type="Node" unique_id=252806271]
 script = ExtResource("1_fspe6")
+zone_combat_mode = true
 
 [node name="World" type="Node2D" parent="." unique_id=1667180650]
 script = ExtResource("2_hrv4e")

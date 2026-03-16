@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="TutorialPage" format=3 uid="uid://cvwp0d50slyek"]
+
+[ext_resource type="Script" uid="uid://bgh41gug308cv" path="res://data/tutorials/tutorial-page.gd" id="1_hbqxv"]
+[ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="1_rw078"]
+
+[resource]
+script = ExtResource("1_hbqxv")
+page_title = "Ladders"
+page_desc = "Ladders are climbables, u latch onto them and then press either \"W\" to go up or \"S\" to go down. Press \"SPACE\" to cancel climbing"
+page_image = ExtResource("1_rw078")
+metadata/_custom_type_script = "uid://bgh41gug308cv"

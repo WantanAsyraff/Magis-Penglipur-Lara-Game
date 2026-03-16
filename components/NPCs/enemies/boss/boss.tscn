@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://887mf6tgem4r"]
+
+[ext_resource type="Script" uid="uid://bura413djx3y4" path="res://components/NPCs/enemies/boss/boss.gd" id="1_tqppl"]
+[ext_resource type="Script" uid="uid://m3k0car8wstp" path="res://components/NPCs/enemies/hitbox-component.gd" id="2_knh5o"]
+[ext_resource type="Texture2D" uid="uid://bqbot7ncx7r8f" path="res://assets/temp/player-temp-right.png" id="3_ak16v"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_knh5o"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_ak16v")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_knh5o"]
+size = Vector2(43.666668, 113.333336)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ak16v"]
+radius = 400.78326
+
+[node name="Boss" type="CharacterBody2D" unique_id=550343309]
+scale = Vector2(3, 3)
+script = ExtResource("1_tqppl")
+
+[node name="HitboxComponent" type="Node" parent="." unique_id=1397030021]
+unique_name_in_owner = true
+script = ExtResource("2_knh5o")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=40898606]
+unique_name_in_owner = true
+scale = Vector2(0.9375, 0.9375)
+sprite_frames = SubResource("SpriteFrames_knh5o")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1204978039]
+position = Vector2(5.5, 0)
+shape = SubResource("RectangleShape2D_knh5o")
+
+[node name="DetectionArea" type="Area2D" parent="." unique_id=1521467050]
+unique_name_in_owner = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=441392195]
+shape = SubResource("CircleShape2D_ak16v")
+
+[node name="RayCast2D" type="RayCast2D" parent="." unique_id=535999850]
+unique_name_in_owner = true
+target_position = Vector2(90, 0)
+
+[node name="AttackTimer" type="Timer" parent="." unique_id=1285673497]
+unique_name_in_owner = true
+
+[node name="HurtTimer" type="Timer" parent="." unique_id=1538708128]
+unique_name_in_owner = true

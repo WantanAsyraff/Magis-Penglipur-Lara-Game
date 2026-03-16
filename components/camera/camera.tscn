@@ -10,7 +10,10 @@
 ignore_rotation = false
 zoom = Vector2(0.7, 0.7)
 limit_enabled = false
-position_smoothing_speed = 2.0
+position_smoothing_enabled = true
+position_smoothing_speed = 16.0
+rotation_smoothing_enabled = true
+rotation_smoothing_speed = 20.0
 script = ExtResource("1_s8cyt")
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1184681844]

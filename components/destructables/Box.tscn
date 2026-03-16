@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bua4p61hbx7gg"]
 
-[ext_resource type="Script" uid="uid://ptovwywxq7sp" path="res://components/Destructables/box.gd" id="1_8qeyv"]
+[ext_resource type="Script" uid="uid://ptovwywxq7sp" path="res://components/destructables/box.gd" id="1_8qeyv"]
 [ext_resource type="Texture2D" uid="uid://cu6j36h4d1f3g" path="res://assets/temp/cratebox.png" id="2_d72mo"]
 
 [sub_resource type="Gradient" id="Gradient_d72mo"]

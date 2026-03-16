@@ -130,6 +130,7 @@ texture = ExtResource("1_kjygs")
 
 [node name="castingText" type="Label" parent="." unique_id=379667302]
 unique_name_in_owner = true
+visible = false
 offset_left = -106.0
 offset_top = -207.0
 offset_right = 107.0

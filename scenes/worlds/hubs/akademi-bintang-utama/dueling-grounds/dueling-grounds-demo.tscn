@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://cvr4657rrr2mc" path="res://components/tilemaps/palleteTemp.tscn" id="3_ai471"]
 [ext_resource type="PackedScene" uid="uid://cy3c7eiatv07j" path="res://components/platforms/temptilemap.tscn" id="4_5ft3u"]
 [ext_resource type="PackedScene" uid="uid://ca23coml0cwtj" path="res://components/NPCs/enemies/dummy/dummy-npc.tscn" id="4_5171i"]
-[ext_resource type="PackedScene" uid="uid://blgha2eib1lvt" path="res://components/Destructables/floating/balloon.tscn" id="4_ughw0"]
+[ext_resource type="PackedScene" uid="uid://blgha2eib1lvt" path="res://components/destructables/floating/balloon.tscn" id="4_ughw0"]
 
 [node name="DuelingGroundsDemo" type="Node" unique_id=1415202585]
 script = ExtResource("1_pxp06")

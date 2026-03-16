@@ -15,7 +15,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="Magis Penglipur Lara"
-run/main_scene="uid://ojuwskp4k3a2"
+run/main_scene="uid://5h52stxd7o1g"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 scenes/loading_scene_path="res://addons/yet_another_scene_manager/Scenes/Loading.tscn"

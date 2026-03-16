@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://bvvsrqdblf5ow"]
+
+[ext_resource type="PackedScene" uid="uid://bire3b68skqpf" path="res://components/NPCs/enemies/Enemy.tscn" id="1_mkrr6"]
+
+[node name="Enemy" unique_id=1787106916 instance=ExtResource("1_mkrr6")]
+max_health = 120.0
+move_speed = 500.0
+chase_speed = 800.0
+melee_damage = 0.0
+attack_cooldown = 5.0
+ranged_trigger_distance = 1000.0
+preferred_distance = 800.0
+retreat_threshold = 600.0
+patrol_range = 1000.0
+detection_radius = 2000.0
+
+[node name="AnimatedSprite2D" parent="." index="2" unique_id=1879544315]
+modulate = Color(0.70942366, 0.5409906, 0.91352874, 1)

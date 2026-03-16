@@ -14,7 +14,8 @@ const SCENE_DATA_PATHS: PackedStringArray = [
 	"res://data/worlds/hubs/akademi-bintang-utama/dormitory/abu-dormitory-hallway.tres",
 	"res://data/worlds/hubs/akademi-bintang-utama/dueling-grounds/dueling-selection.tres",
 	"res://data/worlds/hubs/akademi-bintang-utama/story/e-hailing.tres",
-	"res://data/worlds/hubs/akademi-bintang-utama/story/missions-selection.tres"
+	"res://data/worlds/hubs/akademi-bintang-utama/story/missions-selection.tres",
+	"res://data/worlds/hubs/akademi-bintang-utama/story/prologue.tres"
 	
 ]
 

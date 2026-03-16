@@ -1,62 +1,12 @@
-[background arg="res://assets/temp/academy_opening_day.jpg" fade="0.0"]
-audio -
-player: The Academy’s entrance… It looked even bigger in person!
-join yunira (neutral) left
-yunira (yapping): The place looks well-maintained, too. It must be direct funding from the Ministry of Higher Magistry Education. I can’t imagine the cost of the gate alone.
-We arrived two hours early, but the entrance was already packed.
-I could see a long line of students waiting patiently, luggage in hand. I guess the early bird really does catch the worm.
-As we walked through the campus, we saw a blur of facilities\: a sports stadium, dueling grounds, and massive faculty buildings.
-One group caught our attention—an ongoing duel in a nearby dueling cage.
-They looked like seniors. Their incantations were barely three words long, but the constructs they formed held perfect geometric stability—no wasted mana.
-One of them took a hit to the shoulder. The crowd roared, but the duelists pressed on. I naturally drifted toward the fight, but Yunira dragged me back.
-Killjoy.
-yunira (serious): Focus.
-player: Can we see just one match? Please?
-yunira (sigh): Sigh….. Just this once, okay?
-player: YAY!
-We joined the spectators.
-The reactions from both sides were intense. Yunira looked completely bewildered, her mouth agape as she tried to comprehend the chaos. The ground of the battlefield seemed to bend and crack.
-Rocks and debris were used as ammunition as one duelist narrowly avoided falling into a crater.
-random-student: Is that—did he just rip the ground apart?!
-player: Geological stress manipulation. He's using compression theory to fracture the substrate.
-random-student: Look at the precision! He's calculating fault lines in real-time!
-player: From the looks of their outfits, it seems like both of them are from the same faculty.
-player: My guess is they could be from the Applied Geology course under the Faculty of Science.
-yunira (surprised): How did you even know that?
-player: I read the website portal, duh.
-yunira (annoyed): Nerd.
-Suddenly, one of the duelists conjured a massive sandstorm and blasted it toward his opponent.
-The crowd went wild. Debris hammered against the mana cage, which kept the spectators safe.
-random-student: Did you see that? What was that! How is he even doing that?!?!
-random-student: He's combining aerodynamic flow manipulation with particulate density control. That's advanced Elementalist synthesis!
-player: The mana efficiency alone... he sustained that storm without showing any strain. That's master-level control.
-The duelist caught in the storm fainted and conceded defeat.
-The sandstorm dissipated, and the debris fell to the ground. As the mana cage flickered off, cheers erupted from parents, freshmen, and seniors alike.
-duelist-winner: Thank you for watching, everyone! My partner and I are from the Faculty of Science. If you enjoyed today’s demonstration, be sure to check out our faculty. Welcome to Bintang Utama Academy!
-player: Incredible…
-yunira (concerned): Player… are you sure about this? I never knew this was the “normal” for a caster.
-leave yunira
-# [TRANSITION] After The Spectacle
-[background arg="res://assets/temp/academy_opening_day.jpg" fade="0.0"]
-We went through security and made our way to registration. The officer told me I had to queue up for attendance
-join yunira left
-yunira (neutral): Alright, I’m sure you can handle it from here.
-- “Yes.”
-She looks at me with a melancholy smile.
-I can tell she’s trying her best not to cry.
-yunira (sad): I swear, you were such a crybaby when you were little. Look at you now—a soon-to-be scholar.
-audio -
-Yunira Hugs you
-She pulls me into a warm, secure embrace.
-I realize then how much I might actually miss her.
-- "I’ll miss you too."
- yunira (sad): Do your best, okay? A Magis Caster has to excel both academically and in their magis intellect. Not many people can balance both.
- player: I know. But think about the future! Once I graduate, I’ll secure a high-end job, and you won’t have to work anymore!
- She chuckles and ruffles my hair.
- yunira (happy): Even after all this, you’re still saying that. You’ve got this!
-- "It’s not like you can’t come here…."
- yunira (concerned): ….
- yunira: Yeah, but you know how far this place is from our hometown.
- yunira (gentle): I’m proud of you. Especially since we’re the only ones left.
- player: Thank you for everything, Sis. You sacrificed so much for me, I’ll become the best Magis Caster there is!
-- [Embrace and reciprocate the hug]
+norman-hili: Madam, there's—
+norman-hili: AHH
+uknown: Well,\
+well,\
+weeeell...
+uknown: look do we have here...
+uknown: Oh? A student's uniform?
+uknown: Ah! Is that  The Bintang Utama Academy's badge. How honourable~
+norman-hili: Damn you...
+norman-hili: Who are you? What are you doing here?
+uknown: Frankly, it's not nice to come unnanounce to someone's domain~
+uknown: Oh well~ It's nice knowing you~

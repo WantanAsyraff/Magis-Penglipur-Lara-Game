@@ -5,9 +5,6 @@
 [ext_resource type="PackedScene" uid="uid://c5a41lx0gq8be" path="res://scenes/transitioners/zone-portal/zone-portal.tscn" id="2_nyarj"]
 [ext_resource type="PackedScene" uid="uid://cvr4657rrr2mc" path="res://components/tilemaps/palleteTemp.tscn" id="3_xptdv"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_xptdv"]
-font_size = 40
-
 [node name="AbuCampusEntrance" type="Node" unique_id=1572806100]
 script = ExtResource("1_nyarj")
 
@@ -45,31 +42,13 @@ tile_map_data = PackedByteArray("AADT/wQAAAABAAMAAADT/wUAAAABAAMAAADT/wYAAAABAAM
 
 [node name="ZonePortal(Courtyard)" parent="World/GameComponents/Doors" unique_id=753972868 instance=ExtResource("2_nyarj")]
 position = Vector2(-2265, 803)
+is_door = true
 next_scene_id = "akademi_bintang_utama_courtyard"
 spawn_marker_override = "EHailing"
-
-[node name="ZonePortal(EHailingScene)" parent="World/GameComponents/Doors" unique_id=1063928536 instance=ExtResource("2_nyarj")]
-position = Vector2(1345, 773)
-is_door = true
-next_scene_id = "e_hailing"
-spawn_marker_override = "Ehailing"
 
 [node name="SpawnPoints" type="Node2D" parent="World/GameComponents" unique_id=1700927705]
 
 [node name="CourtyardEntrance" type="Marker2D" parent="World/GameComponents/SpawnPoints" unique_id=1589591619]
 position = Vector2(-1827, 872)
 
-[node name="EHailing" type="Marker2D" parent="World/GameComponents/SpawnPoints" unique_id=1316386770]
-position = Vector2(1152, 896)
-
 [node name="Temp" type="Node" parent="." unique_id=187211741]
-
-[node name="Label" type="Label" parent="Temp" unique_id=994729478]
-offset_left = -785.0
-offset_top = 505.0
-offset_right = -156.0
-offset_bottom = 676.0
-text = "WASD TO MOVE, SHIFT TO DASH.
-E TO INTERACT
-F TO TOGGLE PHONE"
-label_settings = SubResource("LabelSettings_xptdv")

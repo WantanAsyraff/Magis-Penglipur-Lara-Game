@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="DialogicGlossary" format=3 uid="uid://b72mepwie50f3"]
+
+[ext_resource type="Script" uid="uid://80elcodyqohb" path="res://addons/dialogic/Modules/Glossary/glossary_resource.gd" id="1_g6pfq"]
+
+[resource]
+script = ExtResource("1_g6pfq")
+entries = {
+"Al-Zalam": {
+"alternatives": ["Magis Al-Zalam"],
+"name": "Al-Zalam",
+"text": "Derived from the word \"Dark\", Al-Zalam feeds on strong emotions, creating manifestations of the mind of the caster.",
+"title": "The Dark Magic"
+},
+"Magis": {
+"case_sensitive": true,
+"color": Color(0.48742676, 0.9453125, 0.9238491, 1),
+"name": "Magis",
+"text": "Magis, the core foundation of all mythical and beyond.",
+"title": "This world's magic."
+},
+"Magis Al-Zalam": "Al-Zalam"
+}

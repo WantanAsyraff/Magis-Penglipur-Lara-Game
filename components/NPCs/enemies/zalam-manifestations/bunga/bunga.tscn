@@ -20,12 +20,22 @@ max_health = 70.0
 move_speed = 180.0
 chase_speed = 350.0
 melee_damage = 5.0
-attack_cooldown = 5.0
+attack_cooldown = 8.0
 attack_type = 0
-melee_range = 400.0
-ranged_trigger_distance = 350.0
-retreat_threshold = 400.0
-patrol_range = 800.0
+melee_range = 500.0
+ranged_trigger_distance = 900.0
+preferred_distance = 100.0
+retreat_threshold = 0.0
+patrol_range = 1200.0
+detection_radius = 1200.0
+
+[node name="DamageIndicatorComponent" parent="." index="1" unique_id=194822805]
+float_distance = 80.0
+lifetime = 1.4
+vertical_spread = 50.0
+spawn_scale = 1.5
+spawn_offset_y = 0.0
+stagger_step = 25.0
 
 [node name="AnimatedSprite2D" parent="." index="2" unique_id=1879544315]
 modulate = Color(0.90703017, 0.36390698, 0.38780087, 1)

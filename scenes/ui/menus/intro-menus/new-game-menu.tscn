@@ -3,6 +3,7 @@
 [ext_resource type="FontFile" uid="uid://bid56dcwfjc8v" path="res://assets/font/Bitter/static/Bitter-Bold.ttf" id="1_b2o0j"]
 [ext_resource type="Script" uid="uid://c80bdm8il8hud" path="res://scenes/ui/menus/intro-menus/new-game-menu.gd" id="1_pjcfg"]
 [ext_resource type="Theme" uid="uid://cv8bqu76ln7kj" path="res://assets/styles/generic-theme.tres" id="2_ipmmi"]
+[ext_resource type="LabelSettings" uid="uid://dk40du64xk8k7" path="res://assets/custom-labels/ui-stats-label.tres" id="3_vlpc8"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ipmmi"]
 font = ExtResource("1_b2o0j")
@@ -16,6 +17,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_pjcfg")
+next_scene_id = "prologue_entrance"
 
 [node name="Panel" type="Panel" parent="." unique_id=1375183239]
 layout_mode = 1
@@ -50,9 +52,33 @@ layout_mode = 2
 custom_minimum_size = Vector2(800, 800)
 layout_mode = 2
 
+[node name="Label2" type="Label" parent="Panel/VBoxContainer/HBoxContainer/DifficultySettingsPanel" unique_id=1250892993]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "COMING SOON"
+label_settings = ExtResource("3_vlpc8")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="DifficultyExplainationPanel" type="Panel" parent="Panel/VBoxContainer/HBoxContainer" unique_id=1337436526]
 custom_minimum_size = Vector2(1000, 800)
 layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/HBoxContainer/DifficultyExplainationPanel" unique_id=1333676383]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "COMING SOON"
+label_settings = ExtResource("3_vlpc8")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="BeginButton" type="Button" parent="." unique_id=1334338481]
 layout_mode = 1

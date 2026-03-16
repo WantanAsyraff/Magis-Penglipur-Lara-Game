@@ -39,9 +39,13 @@ PacketHandshake="*uid://tt3j25a05n7c"
 directories/dch_directory={
 "amal-fakhri": "res://dialogue/characters/amal-fakhri.dch",
 "duelist-winner": "res://dialogue/characters/duelist-winner.dch",
+"madam-lara": "res://dialogue/characters/madam-lara.dch",
 "narrator": "res://dialogue/characters/narrator.dch",
+"norman-hili": "res://dialogue/characters/norman-hili.dch",
 "player": "res://dialogue/characters/player.dch",
 "random-student": "res://dialogue/characters/random-student.dch",
+"uknown": "res://dialogue/characters/uknown.dch",
+"yan": "res://dialogue/glossaries/yan.dch",
 "yunira": "res://dialogue/characters/yunira.dch"
 }
 directories/dtl_directory={
@@ -49,6 +53,7 @@ directories/dtl_directory={
 "scene-2": "res://dialogue/story-mode/akademi-bintang-utama/prologue/scene-2.dtl",
 "scene-2-a": "res://dialogue/characters/scene-2-a.dtl",
 "scene-3": "res://dialogue/story-mode/akademi-bintang-utama/prologue/scene-3.dtl",
+"scene-4": "res://dialogue/story-mode/akademi-bintang-utama/prologue/scene-4.dtl",
 "story-select-npc": "res://dialogue/overworld/story-select-npc.dtl"
 }
 layout/style_directory={
@@ -58,7 +63,7 @@ layout/style_directory={
 glossary/default_case_sensitive=true
 variables={}
 extensions_folder="res://addons/dialogic_additions"
-text/letter_speed=0.01
+text/letter_speed=0.05
 text/initial_text_reveal_skippable=true
 text/text_reveal_skip_delay=0.1
 text/advance_delay=0.1
@@ -95,6 +100,7 @@ PacketHandshake="*res://addons/netfox.noray/packet-handshake.gd"
 Network_Manager="*res://autoloads/network-manager.gd"
 layout/style_list=["res://dialogue/styles/main-style.tres"]
 layout/default_style="res://dialogue/styles/main-style.tres"
+glossary/glossary_files=["uid://b72mepwie50f3"]
 
 [display]
 

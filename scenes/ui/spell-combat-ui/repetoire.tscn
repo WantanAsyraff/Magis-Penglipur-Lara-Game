@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://we1fcxlf1wm8"]
 
 [ext_resource type="Script" uid="uid://yo7hj03ngpav" path="res://scenes/ui/spell-combat-ui/repetoire.gd" id="1_mq6y2"]
-[ext_resource type="Texture2D" uid="uid://b7ii6cpeqa2i4" path="res://assets/ui/spells/RepetoireBook.png" id="2_m5sx0"]
+[ext_resource type="Texture2D" uid="uid://diiqo28q375lq" path="res://assets/ui/spells/RepetoireBook.png" id="2_m5sx0"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m5sx0"]
 bg_color = Color(0.6, 0.6, 0.6, 0)

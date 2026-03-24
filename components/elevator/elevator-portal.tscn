@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://bo2dxawk45o12"]
+
+[ext_resource type="Script" uid="uid://d0khbbfasl6li" path="res://components/elevator/elevator-portal.gd" id="1_qvv3s"]
+[ext_resource type="PackedScene" uid="uid://bxsgrrm88omme" path="res://scenes/ui/menus/elevator-menu/elevator-ui.tscn" id="2_lr235"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5ajax"]
+size = Vector2(314, 358)
+
+[node name="ElevatorPortal" type="Area2D" unique_id=321055077]
+script = ExtResource("1_qvv3s")
+elevator_ui_scene = ExtResource("2_lr235")
+use_locking = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=258458305]
+shape = SubResource("RectangleShape2D_5ajax")
+
+[node name="EnterLabel" type="Label" parent="." unique_id=447914880]
+unique_name_in_owner = true
+offset_left = -22.0
+offset_top = -236.0
+offset_right = 20.0
+offset_bottom = -213.0
+text = "Enter"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

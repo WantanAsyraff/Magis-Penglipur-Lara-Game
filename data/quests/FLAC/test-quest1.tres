@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="QuestObjectiveData" format=3 uid="uid://7xvrt44plf7"]
+
+[ext_resource type="Script" uid="uid://ck1o5aitgcrs1" path="res://data/quests/quest-objective-data.gd" id="1_5dw2c"]
+
+[resource]
+script = ExtResource("1_5dw2c")
+objective_id = "test_obj_1"
+description = "I'm a test"
+target_id = "professor_ali"
+metadata/_custom_type_script = "uid://ck1o5aitgcrs1"

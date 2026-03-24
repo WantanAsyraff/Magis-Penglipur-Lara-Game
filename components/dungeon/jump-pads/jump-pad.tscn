@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://cvhkose2u0aoj"]
+
+[ext_resource type="Script" uid="uid://du56fy8xsi2hy" path="res://components/dungeon/jump-pads/jump-pad.gd" id="1_711mm"]
+[ext_resource type="Texture2D" uid="uid://cvb3fnmgyetbw" path="res://assets/ui/spells/casting-icon-down.png" id="2_n0hkn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6vu3h"]
+size = Vector2(80, 76)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_o7aa8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_n0hkn")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="JumpPad" type="Area2D" unique_id=1428190063]
+script = ExtResource("1_711mm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=904696051]
+shape = SubResource("RectangleShape2D_6vu3h")
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=1236307367]
+rotation = -3.1415927
+sprite_frames = SubResource("SpriteFrames_o7aa8")

@@ -3,7 +3,6 @@ extends Control
 const SPELL_SLOT = preload("res://scenes/ui/spell-combat-ui/spell-slot.tscn")
 const MAX_EQUIPPED_SPELLS = 8
 
-@export var next_scene_id: String
 @onready var vbox: VBoxContainer = %LearnedSpells
 @onready var spellEquip: GridContainer = %SpellEquipmentContainer
 
@@ -47,21 +46,13 @@ func _on_equipped_spell_selected(spell: SpellData) -> void:
 	Player_Global_Data.unequip_spell(spell)
 
 func _on_back_button_pressed() -> void:
-	print("--- Transition Attempt Started ---")
-	print("Target ID: ", next_scene_id)
-	if next_scene_id == "":
-		push_error("FAILED: next_scene_id is empty in the Inspector!")
+	var prev := Player_Manager.current_scene
+	if prev == "":
+		prev = Player_Manager.previous_scene_path
+	if prev == "":
+		push_error("SpellEquipView: No scene stored in Player_Manager.")
 		return
-	var scene_data = Scene_Registry.get_scene(next_scene_id)
-	if not scene_data:
-		push_error("FAILED: Scene_Registry could not find ID: " + next_scene_id)
-		print("Available IDs: ", Scene_Registry.scenes.keys())
-		return
-	if not scene_data.scene:
-		push_error("FAILED: SceneData exists but has no scene assigned for ID: " + next_scene_id)
-		return
-	print("SUCCESS: Found path: ", scene_data.scene.resource_path)
 	if SceneManager:
-		SceneManager.change_scene(scene_data.scene.resource_path)
+		SceneManager.change_scene(prev)
 	else:
-		push_error("FAILED: SceneManager Autoload not found!")
+		push_error("SpellEquipView: SceneManager not found!")

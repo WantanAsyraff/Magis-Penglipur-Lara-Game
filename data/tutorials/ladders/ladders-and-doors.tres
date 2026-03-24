@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="TutorialData" format=3 uid="uid://cn3288g66oryj"]
+
+[ext_resource type="Script" uid="uid://bgh41gug308cv" path="res://data/tutorials/tutorial-page.gd" id="1_dih6j"]
+[ext_resource type="Resource" uid="uid://vtuvrd005tk1" path="res://data/tutorials/ladders/doors.tres" id="2_8wtax"]
+[ext_resource type="Script" uid="uid://fsuqb010n5v8" path="res://data/tutorials/tutorial-data.gd" id="2_pwuvq"]
+[ext_resource type="Resource" uid="uid://cvwp0d50slyek" path="res://data/tutorials/ladders/ladder.tres" id="3_k2el3"]
+
+[resource]
+script = ExtResource("2_pwuvq")
+pages = Array[ExtResource("1_dih6j")]([ExtResource("2_8wtax"), ExtResource("3_k2el3")])
+metadata/_custom_type_script = "uid://fsuqb010n5v8"

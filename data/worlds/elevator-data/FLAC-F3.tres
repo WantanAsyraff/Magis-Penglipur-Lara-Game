@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ElevatorFloor" format=3 uid="uid://c2pjhjxekdtje"]
+
+[ext_resource type="Script" uid="uid://dm4ce2mmbf538" path="res://data/worlds/elevator-floor.gd" id="1_1vqqj"]
+
+[resource]
+script = ExtResource("1_1vqqj")
+floor_name = "Floor Three"
+scene_id = "faculty_of_logic_and_computation_f3_central_hub"
+spawn_marker_override = "FromElevatorF3"
+metadata/_custom_type_script = "uid://dm4ce2mmbf538"

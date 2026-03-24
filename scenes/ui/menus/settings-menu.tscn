@@ -1,21 +1,52 @@
 [gd_scene format=3 uid="uid://cepxht00ahv0c"]
 
-[node name="SettingsMenu" type="Control"]
+[ext_resource type="Theme" uid="uid://cv8bqu76ln7kj" path="res://assets/styles/generic-theme.tres" id="1_7yl11"]
+[ext_resource type="Script" uid="uid://dqon5oofrwunq" path="res://scenes/ui/menus/settings_menu.gd" id="1_alri2"]
+[ext_resource type="LabelSettings" uid="uid://dk40du64xk8k7" path="res://assets/custom-labels/ui-stats-label.tres" id="2_alri2"]
+
+[node name="SettingsMenu" type="Control" unique_id=1203913482]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_alri2")
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=934461011]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 91.0
+offset_top = 128.0
+offset_right = -99.0
+offset_bottom = -187.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="PanelContainer"]
+[node name="Label" type="Label" parent="PanelContainer" unique_id=588230272]
 layout_mode = 2
 text = "SETTINGS MENU"
+
+[node name="BackButton" type="Button" parent="." unique_id=1252037161]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 917.0
+offset_right = 351.0
+offset_bottom = 1055.0
+theme = ExtResource("1_7yl11")
+text = "BACK"
+
+[node name="SettingsMenu" type="Label" parent="." unique_id=1489649559]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 118.0
+grow_horizontal = 2
+text = "SETTINGS MENU"
+label_settings = ExtResource("2_alri2")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]

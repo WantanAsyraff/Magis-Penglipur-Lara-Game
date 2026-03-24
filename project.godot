@@ -15,7 +15,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="Magis Penglipur Lara"
-run/main_scene="uid://ojuwskp4k3a2"
+run/main_scene="uid://5h52stxd7o1g"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 scenes/loading_scene_path="res://addons/yet_another_scene_manager/Scenes/Loading.tscn"
@@ -33,22 +33,30 @@ Scene_Registry="*res://autoloads/scene-registry.gd"
 Dialogic="*uid://ds2q0uclmolvu"
 Noray="*uid://gu4bv4tgms3x"
 PacketHandshake="*uid://tt3j25a05n7c"
+World_Manifest="*uid://di6f8axk1wxke"
+QuestManager="*uid://c2imtb0eppc6"
 
 [dialogic]
 
 directories/dch_directory={
 "amal-fakhri": "res://dialogue/characters/amal-fakhri.dch",
 "duelist-winner": "res://dialogue/characters/duelist-winner.dch",
+"madam-lara": "res://dialogue/characters/madam-lara.dch",
 "narrator": "res://dialogue/characters/narrator.dch",
+"norman-hili": "res://dialogue/characters/norman-hili.dch",
 "player": "res://dialogue/characters/player.dch",
 "random-student": "res://dialogue/characters/random-student.dch",
+"uknown": "res://dialogue/characters/uknown.dch",
+"yan": "res://dialogue/glossaries/yan.dch",
 "yunira": "res://dialogue/characters/yunira.dch"
 }
 directories/dtl_directory={
+"chapter-1/scene-1": "res://dialogue/story-mode/akademi-bintang-utama/chapter-1/scene-1.dtl",
 "scene-1": "res://dialogue/story-mode/akademi-bintang-utama/prologue/scene-1.dtl",
 "scene-2": "res://dialogue/story-mode/akademi-bintang-utama/prologue/scene-2.dtl",
 "scene-2-a": "res://dialogue/characters/scene-2-a.dtl",
 "scene-3": "res://dialogue/story-mode/akademi-bintang-utama/prologue/scene-3.dtl",
+"scene-4": "res://dialogue/story-mode/akademi-bintang-utama/prologue/scene-4.dtl",
 "story-select-npc": "res://dialogue/overworld/story-select-npc.dtl"
 }
 layout/style_directory={
@@ -58,7 +66,7 @@ layout/style_directory={
 glossary/default_case_sensitive=true
 variables={}
 extensions_folder="res://addons/dialogic_additions"
-text/letter_speed=0.01
+text/letter_speed=0.03
 text/initial_text_reveal_skippable=true
 text/text_reveal_skip_delay=0.1
 text/advance_delay=0.1
@@ -95,6 +103,7 @@ PacketHandshake="*res://addons/netfox.noray/packet-handshake.gd"
 Network_Manager="*res://autoloads/network-manager.gd"
 layout/style_list=["res://dialogue/styles/main-style.tres"]
 layout/default_style="res://dialogue/styles/main-style.tres"
+glossary/glossary_files=["uid://b72mepwie50f3"]
 
 [display]
 
@@ -223,6 +232,16 @@ casting_aim_lock={
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":70,"key_label":0,"unicode":102,"location":0,"echo":false,"script":null)
 ]
 }
+clear_incantation={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":80,"key_label":0,"unicode":112,"location":0,"echo":false,"script":null)
+]
+}
+god_mode={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":96,"key_label":0,"unicode":96,"location":0,"echo":false,"script":null)
+]
+}
 
 [layer_names]
 
@@ -230,6 +249,9 @@ casting_aim_lock={
 2d_render/layer_2="Enemies"
 2d_render/layer_3="PlayerProjectiles"
 2d_render/layer_4="EnemyProjectiles"
+2d_render/layer_5="Environment"
+2d_render/layer_6="UserInterface"
+2d_render/layer_7="NPCs"
 
 [physics]
 

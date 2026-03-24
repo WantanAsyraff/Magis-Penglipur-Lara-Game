@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SceneData" format=3 uid="uid://bg5m5oa3s4gud"]
+
+[ext_resource type="PackedScene" uid="uid://ct5s3gn12xddu" path="res://scenes/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-three/FLAC-F3-central-hub.tscn" id="1_hgo82"]
+[ext_resource type="Script" uid="uid://bxc44phagq28x" path="res://data/Resources/worlds/scene-data.gd" id="2_rlyuu"]
+
+[resource]
+script = ExtResource("2_rlyuu")
+scene_id = "faculty_of_logic_and_computation_f3_central_hub"
+scene = ExtResource("1_hgo82")
+scene_name = "Central Hub"
+metadata/_custom_type_script = "uid://bxc44phagq28x"

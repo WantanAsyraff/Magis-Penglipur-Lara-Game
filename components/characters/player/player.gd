@@ -28,6 +28,7 @@ const DIRECTION_ICONS := {
 @onready var camera: Camera2D = %Camera2D
 @onready var dash_particles: GPUParticles2D = %DashParticles
 @onready var hitbox: HitboxComponent = $HitboxComponent
+@onready var stop_label: Label = %StopLabel
 
 # -------------------------
 # VARIABLES
@@ -65,6 +66,20 @@ var _in_casting_stance: bool = false
 # Aim lock — true while shift is held during casting stance
 var _aim_locked: bool = false
 
+# Ladder
+const CLIMB_SPEED: float = 1500.0
+var _climbing: bool = false
+
+# Jump — coyote time & input buffering
+const COYOTE_TIME: float = 0.12
+const JUMP_BUFFER_TIME: float = 0.12
+var _coyote_timer: float = 0.0
+var _jump_buffer_timer: float = 0.0
+var _was_on_floor: bool = false
+
+# Stop movement toggle
+var _stop_moving_locked: bool = false
+
 # -------------------------
 # BOOTSTRAP
 # -------------------------
@@ -90,12 +105,16 @@ func _ready() -> void:
 	hitbox.mana_drained.connect(_on_mana_drained)
 	hitbox.knocked_back.connect(_on_knocked_back)
 
+	# Stop label starts hidden
+	if stop_label:
+		stop_label.visible = false
+
 # -------------------------
 # LOGIC: PHYSICS & MOVEMENT
 # -------------------------
 func _physics_process(delta: float) -> void:
 	_handle_dash_timers(delta)
-	_apply_gravity(delta)
+	_handle_jump_timers(delta)
 	_update_aim_direction()
 	_regen_mana(delta)
 
@@ -107,15 +126,27 @@ func _physics_process(delta: float) -> void:
 
 	if not Player_Global_Data.p_moveable:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
+		# Apply gravity so the player still falls naturally when stop mode is active.
+		# This prevents the float-upward bug when jumping into stop mode.
+		if not is_on_floor():
+			velocity += get_gravity() * delta
+		else:
+			velocity.y = 0.0
 		move_and_slide()
 		return
 
 	if multiplayer.has_multiplayer_peer() and not is_multiplayer_authority():
 		return
 
+	# Ladder takes priority over normal gravity + movement
+	if _update_climbing():
+		move_and_slide()
+		return
+
 	if is_dashing:
 		velocity = dash_direction * DASH_SPEED
 	else:
+		_apply_gravity(delta)
 		_handle_movement()
 
 	move_and_slide()
@@ -123,8 +154,7 @@ func _physics_process(delta: float) -> void:
 func _handle_movement() -> void:
 	if _aim_locked:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
-		if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-			velocity.y = JUMP_VELOCITY
+		_try_jump()
 		return
 
 	var current_speed := SPEED * (1.0 - hitbox.get_slow_factor())
@@ -135,8 +165,52 @@ func _handle_movement() -> void:
 	else:
 		velocity.x = move_toward(velocity.x, 0, current_speed)
 
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+	_try_jump()
+
+func _try_jump() -> void:
+	if _jump_buffer_timer > 0.0 and (_coyote_timer > 0.0 or is_on_floor()):
 		velocity.y = JUMP_VELOCITY
+		_coyote_timer = 0.0
+		_jump_buffer_timer = 0.0
+
+# -------------------------
+# LADDER
+# -------------------------
+func _update_climbing() -> bool:
+	var on_ladder: bool = has_meta("on_ladder")
+
+	if not on_ladder:
+		if _climbing:
+			_climbing = false
+		return false
+
+	# Jump cancels climbing and launches player upward
+	if Input.is_action_just_pressed("ui_accept"):
+		_climbing = false
+		remove_meta("on_ladder")
+		velocity.y = JUMP_VELOCITY
+		return false
+
+	var up := Input.is_action_pressed("ui_up")
+	var down := Input.is_action_pressed("ui_down")
+
+	# Start climbing only when holding a direction
+	if up or down:
+		_climbing = true
+
+	if _climbing:
+		velocity.x = 0.0
+		velocity.y = 0.0
+		if up:
+			velocity.y = -CLIMB_SPEED
+		elif down:
+			velocity.y = CLIMB_SPEED
+		return true
+
+	# On ladder but not yet holding a direction — just kill gravity and wait
+	velocity.x = 0.0
+	velocity.y = 0.0
+	return true
 
 # -------------------------
 # DASH
@@ -164,6 +238,26 @@ func _try_dash() -> void:
 		_play_dash_effect()
 
 # -------------------------
+# JUMP TIMERS
+# -------------------------
+func _handle_jump_timers(delta: float) -> void:
+	# Coyote time: start counting down the moment the player leaves the floor
+	if _was_on_floor and not is_on_floor():
+		_coyote_timer = COYOTE_TIME
+	elif is_on_floor():
+		_coyote_timer = COYOTE_TIME  # keep full while grounded
+	else:
+		_coyote_timer = maxf(_coyote_timer - delta, 0.0)
+
+	_was_on_floor = is_on_floor()
+
+	# Jump buffer: store the press for a short window so early inputs still fire
+	if Input.is_action_just_pressed("ui_accept"):
+		_jump_buffer_timer = JUMP_BUFFER_TIME
+	elif _jump_buffer_timer > 0.0:
+		_jump_buffer_timer = maxf(_jump_buffer_timer - delta, 0.0)
+
+# -------------------------
 # GRAVITY
 # -------------------------
 func _apply_gravity(delta: float) -> void:
@@ -186,6 +280,14 @@ func _regen_mana(delta: float) -> void:
 # INPUT
 # -------------------------
 func _unhandled_input(_event: InputEvent) -> void:
+	# Stop movement toggle — works regardless of p_moveable state
+	if Input.is_action_just_pressed("casting_aim_lock"):
+		_stop_moving_locked = not _stop_moving_locked
+		Player_Global_Data.p_moveable = not _stop_moving_locked
+		if stop_label:
+			stop_label.text = "STOP MODE"
+			stop_label.visible = _stop_moving_locked
+
 	if not Player_Global_Data.p_moveable:
 		return
 
@@ -214,17 +316,34 @@ func _unhandled_input(_event: InputEvent) -> void:
 		_process_incantation_inputs()
 
 func _handle_combat_input() -> void:
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
 	move_and_slide()
 
 func _process_incantation_inputs() -> void:
 	if hitbox.is_stunned() or hitbox.is_silenced():
 		return
-	if Input.is_action_just_pressed("incantation_up"):    _add_sequence("up")
-	elif Input.is_action_just_pressed("incantation_down"):  _add_sequence("down")
-	elif Input.is_action_just_pressed("incantation_left"):  _add_sequence("left")
-	elif Input.is_action_just_pressed("incantation_right"): _add_sequence("right")
+
+	# Explicit clear
+	if Input.is_action_just_pressed("clear_incantation"):
+		_clear_sequence()
+		return
+
+	var pressed := ""
+	if Input.is_action_just_pressed("incantation_up"):    pressed = "up"
+	elif Input.is_action_just_pressed("incantation_down"):  pressed = "down"
+	elif Input.is_action_just_pressed("incantation_left"):  pressed = "left"
+	elif Input.is_action_just_pressed("incantation_right"): pressed = "right"
+
+	if pressed == "":
+		return
+
+	# Test if appending this input still has at least one possible match
+	var candidate := spell_string + [pressed]
+	if not _has_partial_match(candidate):
+		# Dead end — flash the bad input and reset
+		_fail_cast("No match!")
+		return
+
+	_add_sequence(pressed)
 
 # -------------------------
 # CASTING STANCE
@@ -250,6 +369,21 @@ func _exit_casting_stance() -> void:
 func _sync_spells_from_global() -> void:
 	spell_inventory = Player_Global_Data.equipped_spells.duplicate()
 
+## Returns true if any equipped spell's incantation starts with candidate.
+func _has_partial_match(candidate: Array) -> bool:
+	for spell in spell_inventory:
+		var keys: Array = spell.spell_incantation.filter(func(k): return k != "")
+		if keys.size() < candidate.size():
+			continue
+		var matches := true
+		for i in candidate.size():
+			if keys[i] != candidate[i]:
+				matches = false
+				break
+		if matches:
+			return true
+	return false
+
 func _add_sequence(incantation: String) -> void:
 	spell_string.append(incantation)
 	_update_spell_icons()
@@ -267,6 +401,11 @@ func _add_sequence(incantation: String) -> void:
 			spell_string.clear()
 			if _in_casting_stance:
 				spell_label.text = ""
+
+func _clear_sequence() -> void:
+	spell_string.clear()
+	spell_label.text = ""
+	_clear_spell_icons()
 
 func _clear_spell_icons() -> void:
 	if not spell_icon_box:
@@ -302,6 +441,7 @@ func _execute_spell_instantiation(spell: SpellData) -> void:
 	for i in count:
 		var inst = scene_to_use.instantiate()
 		inst.spell_data = spell
+		inst.source = self
 		inst.position = castMarker.global_position
 
 		if spell.is_self_cast:

@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://40eyximxy17o"]
 
 [ext_resource type="Script" uid="uid://yu4qfawb5trg" path="res://scenes/ui/mission-selection/story-selection.gd" id="1_gbkoh"]
-[ext_resource type="PackedScene" uid="uid://t3o4osbl3bct" path="res://scenes/worlds/hubs/akademi-bintang-utama/missions-hub/story/prologue/Prologue.tscn" id="2_cx7n8"]
 [ext_resource type="PackedScene" uid="uid://1hc7ytvu02en" path="res://scenes/ui/mission-selection/chapter/chapter.tscn" id="3_6odkk"]
-[ext_resource type="PackedScene" uid="uid://dm7l67wbrc0iw" path="res://scenes/worlds/hubs/akademi-bintang-utama/missions-hub/story/tutorial/tutorial-world.tscn" id="4_yfnlw"]
+[ext_resource type="PackedScene" uid="uid://c0fygmf1y1wu3" path="res://scenes/worlds/hubs/akademi-bintang-utama(ABU)/missions-hub/story/prologue/prologue.tscn" id="4_yfnlw"]
+[ext_resource type="PackedScene" uid="uid://t3o4osbl3bct" path="res://scenes/worlds/world-template.tscn" id="5_vh0tv"]
 
 [node name="StorySelection" type="Control" unique_id=133484749]
 layout_mode = 3
@@ -13,7 +13,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_gbkoh")
-destination_scene = ExtResource("2_cx7n8")
+destination_scene = ExtResource("5_vh0tv")
 next_scene_id = "mission_selection"
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=1008419345]
@@ -50,7 +50,10 @@ destination_scene = ExtResource("4_yfnlw")
 [node name="Prologue" parent="PanelContainer/Panel/Chapter" unique_id=740914405 instance=ExtResource("3_6odkk")]
 layout_mode = 2
 chapter_name = "Prologue"
-destination_scene = ExtResource("2_cx7n8")
+
+[node name="WorldTest" parent="PanelContainer/Panel/Chapter" unique_id=127517621 instance=ExtResource("3_6odkk")]
+layout_mode = 2
+chapter_name = "NewGameTest"
 
 [node name="BackButton" type="Button" parent="." unique_id=462491519]
 layout_mode = 0

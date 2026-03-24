@@ -1,0 +1,49 @@
+[gd_scene format=4 uid="uid://cafjq0lngh4y4"]
+
+[ext_resource type="Texture2D" uid="uid://b4hw02ctw4xo4" path="res://assets/ui/panels/location-panel.png" id="1_0pon7"]
+[ext_resource type="Script" uid="uid://cs8ghwiryim85" path="res://components/dungeon/locked-door/locked-door.gd" id="1_uhror"]
+[ext_resource type="PackedScene" uid="uid://cvr4657rrr2mc" path="res://components/tilemaps/palleteTemp.tscn" id="3_hdl1o"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_uhror"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uhror"]
+size = Vector2(316.1254, 442.00665)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hdl1o"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_0pon7")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hdl1o"]
+size = Vector2(914, 441)
+
+[node name="LockedDoor" type="StaticBody2D" unique_id=850129219]
+physics_material_override = SubResource("PhysicsMaterial_uhror")
+script = ExtResource("1_uhror")
+prompt_unlocked_text = "Press [E] to open"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=350642807]
+position = Vector2(-0.054130778, -30.991919)
+rotation = -0.0017466077
+scale = Vector2(0.9999997, 0.9999997)
+shape = SubResource("RectangleShape2D_uhror")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=642575219]
+visible = false
+rotation = 1.5655835
+sprite_frames = SubResource("SpriteFrames_hdl1o")
+
+[node name="InteractArea" type="Area2D" parent="." unique_id=1138599908]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea" unique_id=1456394027]
+position = Vector2(0, -33.5)
+shape = SubResource("RectangleShape2D_hdl1o")
+
+[node name="PalleteTemp" parent="." unique_id=212640461 instance=ExtResource("3_hdl1o")]
+tile_map_data = PackedByteArray("AAD+/wIAAAACAAMAAAD//wIAAAACAAMAAAAAAAIAAAACAAMAAAABAAIAAAACAAMAAAD+//3/AAACAAMAAAD+//7/AAACAAMAAAD+////AAACAAMAAAD+/wAAAAACAAMAAAD+/wEAAAACAAMAAAD///3/AAACAAMAAAD///7/AAACAAMAAAD/////AAACAAMAAAD//wAAAAACAAMAAAD//wEAAAACAAMAAAAAAP3/AAACAAMAAAAAAP7/AAACAAMAAAAAAP//AAACAAMAAAAAAAAAAAACAAMAAAAAAAEAAAACAAMAAAABAP3/AAACAAMAAAABAP7/AAACAAMAAAABAP//AAACAAMAAAABAAAAAAACAAMAAAABAAEAAAACAAMAAAACAPz/AAAEAAMAAAACAP3/AAAEAAMAAAACAP7/AAAEAAMAAAACAP//AAAEAAMAAAACAAAAAAAEAAMAAAACAAEAAAAEAAMAAAACAAIAAAAEAAMAAAD9//z/AAAEAAMAAAD+//z/AAAEAAMAAAD///z/AAAEAAMAAAAAAPz/AAAEAAMAAAABAPz/AAAEAAMAAAD9//3/AAAEAAMAAAD9//7/AAAEAAMAAAD9////AAAEAAMAAAD9/wAAAAAEAAMAAAD9/wEAAAAEAAMAAAD9/wIAAAAEAAMAAAA=")

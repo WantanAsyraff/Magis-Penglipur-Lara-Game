@@ -9,6 +9,27 @@ signal mana_changed(new_value: float)
 signal health_changed(new_value: int)
 signal spells_updated()
 signal dash_charges_changed(current: int)
+
+# -------------------------
+# GOALS
+# -------------------------
+signal goals_changed(goals: Array[String])
+var active_goals: Array[String] = []:
+	set(value):
+		active_goals = value
+		goals_changed.emit(active_goals)
+
+func set_goal(goal: String) -> void:
+	active_goals = [goal]
+
+func add_goal(goal: String) -> void:
+	if not active_goals.has(goal):
+		active_goals.append(goal)
+		goals_changed.emit(active_goals)
+
+func clear_goals() -> void:
+	active_goals = []
+
 # -------------------------
 # IDENTITY
 # -------------------------
@@ -16,6 +37,13 @@ var p_name: String
 var p_role: String
 var p_curr_ringgit: String
 var p_mood: String
+# -------------------------
+# PROGRESSION
+# -------------------------
+var player_level: int = 1
+var player_exp: int = 0
+var completed_quests: Array[String] = []
+var active_quest_states: Dictionary = {}   # quest_id -> {obj_id: progress} for saving
 # -------------------------
 # FLAGS
 # -------------------------
@@ -67,7 +95,7 @@ var combat_mode: bool:
 # MOVEMENT
 # -------------------------
 var p_position: Vector2
-var p_speed: float = 950.0
+var p_speed: float = 1200.0
 var p_jump_height: float = -2500.0
 var p_size: float = 1.0
 # -------------------------
@@ -81,7 +109,7 @@ var p_curr_health: int = p_max_health:
 # -------------------------
 # MANA
 # -------------------------
-var p_max_mana: float = 250.0
+var p_max_mana: float = 400.0
 var p_curr_mana: float = p_max_mana:
 	set(value):
 		p_curr_mana = clamp(value, 0.0, p_max_mana)

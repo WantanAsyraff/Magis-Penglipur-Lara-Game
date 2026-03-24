@@ -5,6 +5,7 @@
 [ext_resource type="FontFile" uid="uid://bid56dcwfjc8v" path="res://assets/font/Bitter/static/Bitter-Bold.ttf" id="1_pkuyj"]
 [ext_resource type="Resource" uid="uid://dl0wedlire1md" path="res://data/tutorials/combat/combat-tutorial.tres" id="2_153uh"]
 [ext_resource type="Texture2D" uid="uid://cchpqd7mt0cu8" path="res://assets/ui/phone/fast-travel-icon.png" id="3_pkuyj"]
+[ext_resource type="Theme" uid="uid://cv8bqu76ln7kj" path="res://assets/styles/generic-theme.tres" id="6_f2qvl"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_iw2hw"]
 font = ExtResource("1_pkuyj")
@@ -23,54 +24,66 @@ data = ExtResource("2_153uh")
 [node name="TutorialBGPanel" type="Panel" parent="." unique_id=882427976]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.148
+anchor_left = 0.079
 anchor_top = 0.018000001
 anchor_right = 0.84200007
 anchor_bottom = 0.984
-offset_left = 0.83999634
+offset_left = -0.68000793
 offset_top = -0.44000053
 offset_right = -1.6401367
 offset_bottom = 0.2800293
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("6_f2qvl")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TutorialBGPanel" unique_id=1774319637]
+[node name="TextureRect" type="TextureRect" parent="TutorialBGPanel" unique_id=236013928]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(400, 500)
+layout_mode = 0
+offset_left = 1072.0
+offset_top = 30.0
+offset_right = 1472.0
+offset_bottom = 945.0
+scale = Vector2(0.90381026, 0.3570741)
+texture = ExtResource("3_pkuyj")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TutorialBGPanel" unique_id=1003579839]
+custom_minimum_size = Vector2(800, 700)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 16.0
-offset_top = 4.0
-offset_right = -10.0
+offset_left = 39.0
+offset_top = 57.0
+offset_right = -225.0
+offset_bottom = -41.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TitleLabel" type="Label" parent="TutorialBGPanel/VBoxContainer" unique_id=69612503]
+[node name="ScrollContainer" type="ScrollContainer" parent="TutorialBGPanel/HBoxContainer" unique_id=1253713961]
+custom_minimum_size = Vector2(1200, 600)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TutorialBGPanel/HBoxContainer/ScrollContainer" unique_id=1774319637]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="TutorialBGPanel/HBoxContainer/ScrollContainer/VBoxContainer" unique_id=69612503]
 unique_name_in_owner = true
 layout_mode = 2
 text = "TUTORIAL TITLE"
 label_settings = SubResource("LabelSettings_iw2hw")
 horizontal_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="TutorialBGPanel/VBoxContainer" unique_id=1003579839]
-layout_mode = 2
-
-[node name="DescLabel" type="Label" parent="TutorialBGPanel/VBoxContainer/HBoxContainer" unique_id=1963221977]
+[node name="DescLabel" type="Label" parent="TutorialBGPanel/HBoxContainer/ScrollContainer/VBoxContainer" unique_id=1963221977]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(900, 900)
+custom_minimum_size = Vector2(900, 600)
 layout_mode = 2
 text = "TEXT DESC"
 label_settings = ExtResource("1_0qr3h")
 autowrap_mode = 3
 autowrap_trim_flags = 128
 
-[node name="TextureRect" type="TextureRect" parent="TutorialBGPanel/VBoxContainer/HBoxContainer" unique_id=236013928]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(400, 500)
-layout_mode = 2
-texture = ExtResource("3_pkuyj")
-
-[node name="PageIndicator" type="Label" parent="TutorialBGPanel/VBoxContainer" unique_id=1162336926]
+[node name="PageIndicator" type="Label" parent="TutorialBGPanel/HBoxContainer/ScrollContainer/VBoxContainer" unique_id=1162336926]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
@@ -86,11 +99,12 @@ anchor_left = 0.093
 anchor_top = 0.41400003
 anchor_right = 0.141
 anchor_bottom = 0.59400004
-offset_left = 0.44000244
-offset_top = -0.120025635
-offset_right = 0.27999878
-offset_bottom = -0.52001953
+offset_left = -157.56
+offset_top = -8.120026
+offset_right = -157.72
+offset_bottom = -8.52002
 grow_vertical = 2
+theme = ExtResource("6_f2qvl")
 text = "<"
 
 [node name="NextButton" type="Button" parent="." unique_id=179048124]
@@ -100,12 +114,13 @@ anchor_left = 0.845
 anchor_top = 0.41400003
 anchor_right = 0.88400006
 anchor_bottom = 0.59400004
-offset_left = 0.5999756
-offset_top = -0.120025635
-offset_right = -0.28015137
-offset_bottom = -0.52001953
+offset_left = 107.599976
+offset_top = -2.1200256
+offset_right = 106.71985
+offset_bottom = -2.5200195
 grow_horizontal = 0
 grow_vertical = 2
+theme = ExtResource("6_f2qvl")
 text = ">"
 
 [node name="DoneButton" type="Button" parent="." unique_id=103788260]
@@ -119,6 +134,7 @@ offset_left = 0.7598877
 offset_top = 0.079956055
 offset_right = 0.4798584
 offset_bottom = -16.0
+theme = ExtResource("6_f2qvl")
 text = "DONE READING"
 
 [connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]

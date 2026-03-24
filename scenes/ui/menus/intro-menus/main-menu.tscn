@@ -1,0 +1,72 @@
+[gd_scene format=3 uid="uid://5h52stxd7o1g"]
+
+[ext_resource type="Script" uid="uid://bmkjmv4jmjtsw" path="res://scenes/ui/menus/intro-menus/main-menu.gd" id="1_ienob"]
+[ext_resource type="Theme" uid="uid://cv8bqu76ln7kj" path="res://assets/styles/generic-theme.tres" id="1_q56r3"]
+[ext_resource type="Texture2D" uid="uid://dfwmmvec2g6kh" path="res://assets/ui/panels/mpl-title-card.png" id="2_2hhve"]
+[ext_resource type="Script" uid="uid://di6f8axk1wxke" path="res://autoloads/world-manifest.gd" id="4_s2gwe"]
+
+[node name="MainMenu" type="Control" unique_id=1328326644]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ienob")
+
+[node name="Panel" type="Panel" parent="." unique_id=478250584]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1363072632]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.734
+anchor_top = 0.418
+anchor_right = 0.94900006
+anchor_bottom = 0.95100003
+offset_left = 0.7199707
+offset_top = -0.44000244
+offset_right = 0.9199219
+offset_bottom = -0.080078125
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="NewGameButton" type="Button" parent="VBoxContainer" unique_id=1553948150]
+layout_mode = 2
+theme = ExtResource("1_q56r3")
+text = "NEW GAME"
+
+[node name="ContinueButton" type="Button" parent="VBoxContainer" unique_id=1123973696]
+layout_mode = 2
+theme = ExtResource("1_q56r3")
+text = "CONTINUE"
+
+[node name="OptionsButton" type="Button" parent="VBoxContainer" unique_id=1948906517]
+layout_mode = 2
+theme = ExtResource("1_q56r3")
+text = "OPTIONS"
+
+[node name="QuitButton" type="Button" parent="VBoxContainer" unique_id=1727308772]
+layout_mode = 2
+theme = ExtResource("1_q56r3")
+text = "QUIT"
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=662355030]
+layout_mode = 0
+offset_right = 2187.0
+offset_bottom = 884.0
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("2_2hhve")
+
+[node name="WorldManifest" type="Node" parent="." unique_id=460328842]
+script = ExtResource("4_s2gwe")
+
+[connection signal="pressed" from="VBoxContainer/NewGameButton" to="." method="_on_new_game_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/ContinueButton" to="." method="_on_continue_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/OptionsButton" to="." method="_on_options_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]

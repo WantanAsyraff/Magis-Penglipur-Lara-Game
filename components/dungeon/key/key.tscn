@@ -1,0 +1,23 @@
+[gd_scene format=4 uid="uid://ictbjlhkl0of"]
+
+[ext_resource type="Script" uid="uid://cwec17dsfgf1" path="res://components/dungeon/key/key.gd" id="1_feqck"]
+[ext_resource type="Texture2D" uid="uid://cu6j36h4d1f3g" path="res://assets/temp/cratebox.png" id="2_vo13a"]
+[ext_resource type="PackedScene" uid="uid://cvr4657rrr2mc" path="res://components/tilemaps/palleteTemp.tscn" id="3_dqrw4"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vo13a"]
+radius = 276.0018
+
+[node name="Key" type="Area2D" unique_id=476036428]
+script = ExtResource("1_feqck")
+prompt_text = "Press [E] to pick up"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=168047224]
+shape = SubResource("CircleShape2D_vo13a")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=296039244]
+visible = false
+texture = ExtResource("2_vo13a")
+
+[node name="PalleteTemp" parent="." unique_id=602280064 instance=ExtResource("3_dqrw4")]
+scale = Vector2(0.36, 0.40333334)
+tile_map_data = PackedByteArray("AAD//wAAAAAFAAIAAAAAAAAAAAAFAAIAAAABAAAAAAAFAAIAAAACAAAAAAAFAAIAAAACAP//AAAFAAIAAAD+/wAAAAAFAAIAAAAAAP//AAAFAAIAAAAAAP7/AAAFAAIAAAABAP7/AAAFAAIAAAACAP7/AAAFAAIAAAD9////AAAFAAIAAAD9/wAAAAAFAAIAAAA=")

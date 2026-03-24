@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="TutorialPage" format=3 uid="uid://vtuvrd005tk1"]
+
+[ext_resource type="Texture2D" uid="uid://c4wrj62vnntuv" path="res://assets/temp/door.png" id="1_fnyde"]
+[ext_resource type="Script" uid="uid://bgh41gug308cv" path="res://data/tutorials/tutorial-page.gd" id="1_u365n"]
+
+[resource]
+script = ExtResource("1_u365n")
+page_title = "Doors"
+page_desc = "There are locked doors, u need to find the keys (for now they look like crates lole) to unlock them.
+
+To grab and unlocked those items, press \"E\""
+page_image = ExtResource("1_fnyde")
+metadata/_custom_type_script = "uid://bgh41gug308cv"

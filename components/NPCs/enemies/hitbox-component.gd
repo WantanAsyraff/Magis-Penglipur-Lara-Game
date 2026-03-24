@@ -16,9 +16,7 @@ signal knocked_back(force: Vector2)
 # ─────────────────────────────────────────
 # CONFIGURATION
 # ─────────────────────────────────────────
-
 ## If true, this entity can receive status effects (stun, slow, silence etc).
-## Set false for destructables.
 @export var receives_status_effects: bool = true
 
 ## If true, this entity has a mana pool that can be drained.
@@ -27,7 +25,7 @@ signal knocked_back(force: Vector2)
 ## If true, knockback is applied to the parent's velocity.
 @export var receives_knockback: bool = true
 
-## Multiplier for all incoming damage. Use for resistances or weaknesses.
+## Multiplier for all incoming damage.
 @export var damage_multiplier: float = 1.0
 
 ## Flat damage reduction applied before multiplier.
@@ -40,6 +38,7 @@ var _active_effects: Dictionary = {}
 var _is_stunned: bool = false
 var _is_silenced: bool = false
 var _slow_factor: float = 0.0
+var _invincible: bool = false
 
 # ─────────────────────────────────────────
 # REFERENCES
@@ -61,11 +60,12 @@ func _physics_process(delta: float) -> void:
 # ─────────────────────────────────────────
 # PRIMARY ENTRY POINT
 # ─────────────────────────────────────────
-
-## Call this from a projectile or AOE when it hits this entity.
-## Pass the SpellData and the normalised direction the spell came from.
 func receive_hit(spell: SpellData, hit_direction: Vector2 = Vector2.ZERO) -> void:
 	if spell == null:
+		return
+
+	# Invincible — block everything
+	if _invincible:
 		return
 
 	if spell.projectile_damage > 0.0:
@@ -95,33 +95,37 @@ func receive_hit(spell: SpellData, hit_direction: Vector2 = Vector2.ZERO) -> voi
 # ─────────────────────────────────────────
 # STATUS QUERIES
 # ─────────────────────────────────────────
-
-## Returns true if entity cannot move.
 func is_stunned() -> bool:
 	return _is_stunned
 
-## Returns true if entity cannot cast.
 func is_silenced() -> bool:
 	return _is_silenced
 
-## Returns current slow factor (0.0 = no slow, 1.0 = full root).
 func get_slow_factor() -> float:
 	return _slow_factor
+
+func is_invincible() -> bool:
+	return _invincible
+
+func set_invincible(value: bool) -> void:
+	_invincible = value
+	# Clear any active debuffs when turning invincibility on — no point keeping
+	# stun/slow/silence if god mode just activated
+	if _invincible:
+		clear_all_effects()
 
 # ─────────────────────────────────────────
 # EFFECT APPLICATORS
 # ─────────────────────────────────────────
 func _apply_damage(raw_damage: float) -> void:
+	if _invincible:
+		return
 	var final_damage := maxf((raw_damage - damage_reduction) * damage_multiplier, 0.0)
 	damage_taken.emit(final_damage)
 
-	if _parent.get("current_health") != null:
-		_parent.current_health -= final_damage
-		if _parent.current_health <= 0.0:
-			_parent.current_health = 0.0
-			died.emit()
-
 func _apply_knockback(direction: Vector2, force: float) -> void:
+	if _invincible:
+		return
 	if _character_body == null or direction == Vector2.ZERO:
 		return
 	var kb := direction.normalized() * force
@@ -129,10 +133,7 @@ func _apply_knockback(direction: Vector2, force: float) -> void:
 	knocked_back.emit(kb)
 
 func _apply_stun(duration: float) -> void:
-	_active_effects["stun"] = {
-		"timer": duration,
-		"data": {}
-	}
+	_active_effects["stun"] = { "timer": duration, "data": {} }
 	_is_stunned = true
 	status_applied.emit("stun")
 
@@ -166,10 +167,7 @@ func _apply_mana_drain(amount: float, duration: float) -> void:
 	status_applied.emit("mana_drain")
 
 func _apply_silence(duration: float) -> void:
-	_active_effects["silence"] = {
-		"timer": duration,
-		"data": {}
-	}
+	_active_effects["silence"] = { "timer": duration, "data": {} }
 	_is_silenced = true
 	status_applied.emit("silence")
 
@@ -213,24 +211,16 @@ func _expire_effect(effect_name: String) -> void:
 	status_expired.emit(effect_name)
 
 func _drain_mana(amount: float) -> void:
-	# Supports both PlayerGlobalData naming and generic NPC naming
-	if _parent.get("p_curr_mana") != null:
-		_parent.p_curr_mana = maxf(_parent.p_curr_mana - amount, 0.0)
-	elif _parent.get("current_mana") != null:
-		_parent.current_mana = maxf(_parent.current_mana - amount, 0.0)
 	mana_drained.emit(amount)
 
 # ─────────────────────────────────────────
 # UTILITY
 # ─────────────────────────────────────────
-
-## Force-clear all active effects. Call on death or scene transition.
 func clear_all_effects() -> void:
 	_active_effects.clear()
 	_is_stunned = false
 	_is_silenced = false
 	_slow_factor = 0.0
 
-## Returns a read-only copy of active effects for UI or debug use.
 func get_active_effects() -> Dictionary:
 	return _active_effects.duplicate()

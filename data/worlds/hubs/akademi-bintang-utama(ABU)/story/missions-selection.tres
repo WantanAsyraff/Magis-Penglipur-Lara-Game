@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="SceneData" format=3 uid="uid://db8q4sqjnubuk"]
+
+[ext_resource type="PackedScene" uid="uid://dj6lkjig764ox" path="res://scenes/worlds/hubs/akademi-bintang-utama(ABU)/missions-hub/missions-selection.tscn" id="1_ghjun"]
+[ext_resource type="Script" uid="uid://bxc44phagq28x" path="res://data/Resources/worlds/scene-data.gd" id="2_jjsf4"]
+
+[resource]
+script = ExtResource("2_jjsf4")
+scene_id = "mission_selection"
+scene = ExtResource("1_ghjun")
+scene_name = "Missions Hub"
+default_spawn_marker = "MissionsHub"
+metadata/_custom_type_script = "uid://bxc44phagq28x"

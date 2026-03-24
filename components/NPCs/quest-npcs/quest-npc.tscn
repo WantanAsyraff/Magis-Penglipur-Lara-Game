@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://r01cm8px6xbo"]
+
+[ext_resource type="PackedScene" uid="uid://cj3mkhidrb0kx" path="res://components/NPCs/npc.tscn" id="1_am5tr"]
+[ext_resource type="Script" uid="uid://c7dioxu50mjc3" path="res://components/NPCs/quest_npc-component.gd" id="2_hr8ji"]
+[ext_resource type="Script" uid="uid://c0xoolvt1774s" path="res://components/NPCs/dialogic-component.gd" id="3_xeawn"]
+[ext_resource type="Resource" uid="uid://bhmk728qjl3gr" path="res://dialogue/story-mode/akademi-bintang-utama/prologue/scene-1.dtl" id="4_7ka2g"]
+[ext_resource type="Script" uid="uid://p5a5onfhhvqf" path="res://components/NPCs/wander-component.gd" id="5_7ka2g"]
+
+[node name="QuestNPC" unique_id=1277948925 instance=ExtResource("1_am5tr")]
+
+[node name="Area2D" parent="." index="1" unique_id=1040907673]
+unique_name_in_owner = true
+
+[node name="InteractLabel" parent="." index="3" unique_id=93149769]
+unique_name_in_owner = true
+
+[node name="DetectionComponent" parent="." index="4" unique_id=443193764]
+unique_name_in_owner = true
+
+[node name="QuestComponent" type="Node" parent="." index="5" unique_id=1216659226]
+unique_name_in_owner = true
+script = ExtResource("2_hr8ji")
+faculty = 1
+npc_id = "professor_ali"
+
+[node name="DialogicComponent" type="Node" parent="." index="6" unique_id=1155691304]
+unique_name_in_owner = true
+script = ExtResource("3_xeawn")
+npc_timeline = ExtResource("4_7ka2g")
+
+[node name="WanderComponent" type="Node2D" parent="." index="7" unique_id=102624462]
+script = ExtResource("5_7ka2g")
+move_speed = 400.0
+wander_radius = 800.0
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="WanderComponent" index="0" unique_id=228808160]
+unique_name_in_owner = true

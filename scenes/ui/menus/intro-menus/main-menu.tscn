@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bmkjmv4jmjtsw" path="res://scenes/ui/menus/intro-menus/main-menu.gd" id="1_ienob"]
 [ext_resource type="Theme" uid="uid://cv8bqu76ln7kj" path="res://assets/styles/generic-theme.tres" id="1_q56r3"]
 [ext_resource type="Texture2D" uid="uid://dfwmmvec2g6kh" path="res://assets/ui/panels/mpl-title-card.png" id="2_2hhve"]
+[ext_resource type="Script" uid="uid://di6f8axk1wxke" path="res://autoloads/world-manifest.gd" id="4_s2gwe"]
 
 [node name="MainMenu" type="Control" unique_id=1328326644]
 layout_mode = 3
@@ -61,6 +62,9 @@ offset_right = 2187.0
 offset_bottom = 884.0
 scale = Vector2(0.4, 0.4)
 texture = ExtResource("2_2hhve")
+
+[node name="WorldManifest" type="Node" parent="." unique_id=460328842]
+script = ExtResource("4_s2gwe")
 
 [connection signal="pressed" from="VBoxContainer/NewGameButton" to="." method="_on_new_game_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/ContinueButton" to="." method="_on_continue_button_pressed"]

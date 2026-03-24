@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="QuestData" format=3 uid="uid://b08de1w2wl8gc"]
+
+[ext_resource type="Script" uid="uid://ck1o5aitgcrs1" path="res://data/quests/quest-objective-data.gd" id="1_ickq2"]
+[ext_resource type="Script" uid="uid://c7tgt475ebdvf" path="res://data/quests/quest-data.gd" id="2_5v7we"]
+[ext_resource type="Resource" uid="uid://7xvrt44plf7" path="res://data/quests/FLAC/test-quest1.tres" id="2_x4s1u"]
+
+[resource]
+script = ExtResource("2_5v7we")
+faculty = 1
+quest_id = "test_obj_1"
+title = "I'm a quest"
+description = "Yo"
+objectives = Array[ExtResource("1_ickq2")]([ExtResource("2_x4s1u")])
+metadata/_custom_type_script = "uid://c7tgt475ebdvf"

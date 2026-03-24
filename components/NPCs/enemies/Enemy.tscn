@@ -2,7 +2,9 @@
 
 [ext_resource type="Script" uid="uid://m3k0car8wstp" path="res://components/NPCs/enemies/hitbox-component.gd" id="1_gcguh"]
 [ext_resource type="Script" uid="uid://dlnd3allorrc8" path="res://components/NPCs/enemies/enemy.gd" id="1_ya25k"]
-[ext_resource type="Resource" uid="uid://by4dm8igq3oep" path="res://data/magis/spells/viscous-drag.tres" id="2_ivyq4"]
+[ext_resource type="Script" uid="uid://btry5ucl20c8f" path="res://components/NPCs/enemies/enemy-combat.gd" id="2_3wa2o"]
+[ext_resource type="Script" uid="uid://dux371ludfwpy" path="res://components/NPCs/enemies/enemy-patrol.gd" id="2_o6qrg"]
+[ext_resource type="Script" uid="uid://dlcrt2bc2a1ow" path="res://components/NPCs/enemies/enemy-detection.gd" id="3_nqf4a"]
 [ext_resource type="Script" uid="uid://ekbdftjptdw2" path="res://components/damage-indicator/damage-indicator-component.gd" id="4_4mp5v"]
 [ext_resource type="Texture2D" uid="uid://caaqv80a8h88s" path="res://assets/temp/player-temp-left.png" id="4_ivyq4"]
 [ext_resource type="FontFile" uid="uid://bid56dcwfjc8v" path="res://assets/font/Bitter/static/Bitter-Bold.ttf" id="5_o6qrg"]
@@ -22,24 +24,15 @@ animations = [{
 size = Vector2(72, 155)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gcguh"]
-radius = 263.04752
+radius = 621.13605
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ya25k"]
-radius = 176.22997
+radius = 402.19894
 
 [node name="Enemy" type="CharacterBody2D" unique_id=1787106916]
+light_mask = 2
+visibility_layer = 2
 script = ExtResource("1_ya25k")
-enemy_name = "TestNPC"
-ranged_spell = ExtResource("2_ivyq4")
-max_health = 40.0
-move_speed = 200.0
-chase_speed = 500.0
-attack_type = 1
-melee_range = 0.0
-preferred_distance = 500.0
-retreat_threshold = 300.0
-detection_radius = 500.0
-sight_memory = 1.0
 
 [node name="HitboxComponent" type="Node" parent="." unique_id=1497920414]
 script = ExtResource("1_gcguh")
@@ -56,6 +49,15 @@ spawn_scale = 1.5
 spawn_offset_y = 0.0
 stagger_step = 24.0
 
+[node name="EnemyCombat" type="Node" parent="." unique_id=880482526]
+script = ExtResource("2_3wa2o")
+
+[node name="EnemyPatrol" type="Node" parent="." unique_id=1768277637]
+script = ExtResource("2_o6qrg")
+
+[node name="EnemyDetection" type="Node" parent="." unique_id=250253539]
+script = ExtResource("3_nqf4a")
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1879544315]
 scale = Vector2(1.25, 1.25)
 sprite_frames = SubResource("SpriteFrames_gcguh")
@@ -65,6 +67,7 @@ position = Vector2(0, 1.5)
 shape = SubResource("RectangleShape2D_gcguh")
 
 [node name="DetectionArea" type="Area2D" parent="." unique_id=1614778578]
+unique_name_in_owner = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=739688052]
 shape = SubResource("CircleShape2D_gcguh")
@@ -74,9 +77,20 @@ shape = SubResource("CircleShape2D_gcguh")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=175817154]
 shape = SubResource("CircleShape2D_ya25k")
 
-[node name="RayCast2D" type="RayCast2D" parent="." unique_id=1198764537]
+[node name="RayCast2D(Aim)" type="RayCast2D" parent="." unique_id=1198764537]
+unique_name_in_owner = true
 target_position = Vector2(92, 0)
 
-[node name="AttackTimer" type="Timer" parent="." unique_id=1777788952]
+[node name="RayCast2D(Right)" type="RayCast2D" parent="." unique_id=1643728635]
+unique_name_in_owner = true
+position = Vector2(40, 32)
+scale = Vector2(2, 2)
+
+[node name="RayCast2D(Left)" type="RayCast2D" parent="." unique_id=1147442100]
+unique_name_in_owner = true
+position = Vector2(-40, 32)
+scale = Vector2(2, 2)
 
 [node name="HurtTimer" type="Timer" parent="." unique_id=540869356]
+
+[node name="AttackTimer" type="Timer" parent="." unique_id=1777788952]

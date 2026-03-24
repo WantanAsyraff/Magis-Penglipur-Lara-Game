@@ -38,6 +38,7 @@ var _active_effects: Dictionary = {}
 var _is_stunned: bool = false
 var _is_silenced: bool = false
 var _slow_factor: float = 0.0
+var _invincible: bool = false
 
 # ─────────────────────────────────────────
 # REFERENCES
@@ -61,6 +62,10 @@ func _physics_process(delta: float) -> void:
 # ─────────────────────────────────────────
 func receive_hit(spell: SpellData, hit_direction: Vector2 = Vector2.ZERO) -> void:
 	if spell == null:
+		return
+
+	# Invincible — block everything
+	if _invincible:
 		return
 
 	if spell.projectile_damage > 0.0:
@@ -99,16 +104,28 @@ func is_silenced() -> bool:
 func get_slow_factor() -> float:
 	return _slow_factor
 
+func is_invincible() -> bool:
+	return _invincible
+
+func set_invincible(value: bool) -> void:
+	_invincible = value
+	# Clear any active debuffs when turning invincibility on — no point keeping
+	# stun/slow/silence if god mode just activated
+	if _invincible:
+		clear_all_effects()
+
 # ─────────────────────────────────────────
 # EFFECT APPLICATORS
 # ─────────────────────────────────────────
 func _apply_damage(raw_damage: float) -> void:
+	if _invincible:
+		return
 	var final_damage := maxf((raw_damage - damage_reduction) * damage_multiplier, 0.0)
-	# Only emit the signal — let the owner (Player/Enemy) manage their own health.
-	# This prevents double-damage from both the signal handler and direct mutation.
 	damage_taken.emit(final_damage)
 
 func _apply_knockback(direction: Vector2, force: float) -> void:
+	if _invincible:
+		return
 	if _character_body == null or direction == Vector2.ZERO:
 		return
 	var kb := direction.normalized() * force

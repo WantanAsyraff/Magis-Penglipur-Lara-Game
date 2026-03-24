@@ -16,31 +16,33 @@ animations = [{
 
 [node name="Enemy" unique_id=1787106916 instance=ExtResource("1_doauk")]
 enemy_name = "Bunga"
-max_health = 70.0
-move_speed = 180.0
-chase_speed = 350.0
-melee_damage = 5.0
-attack_cooldown = 8.0
-attack_type = 0
-melee_range = 500.0
-ranged_trigger_distance = 900.0
-preferred_distance = 100.0
-retreat_threshold = 0.0
-patrol_range = 1200.0
-detection_radius = 1200.0
+max_health = 40.0
+move_speed = 300.0
+chase_speed = 500.0
 
 [node name="DamageIndicatorComponent" parent="." index="1" unique_id=194822805]
-float_distance = 80.0
 lifetime = 1.4
 vertical_spread = 50.0
-spawn_scale = 1.5
-spawn_offset_y = 0.0
 stagger_step = 25.0
 
-[node name="AnimatedSprite2D" parent="." index="2" unique_id=1879544315]
+[node name="EnemyCombat" parent="." index="2" unique_id=880482526]
+melee_damage = 10.0
+attack_cooldown = 1.0
+melee_range = 200.0
+ranged_trigger_distance = 400.0
+retreat_threshold = 90.0
+
+[node name="EnemyPatrol" parent="." index="3" unique_id=1768277637]
+patrol_range = 600.0
+wall_jump_velocity = -500.0
+
+[node name="AnimatedSprite2D" parent="." index="5" unique_id=1879544315]
 modulate = Color(0.90703017, 0.36390698, 0.38780087, 1)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_txq8m")
 
-[node name="CollisionShape2D" parent="." index="3" unique_id=62178440]
+[node name="CollisionShape2D" parent="." index="6" unique_id=62178440]
 position = Vector2(0, -11.5)
+
+[node name="AttackTimer" parent="." index="13" unique_id=1777788952]
+unique_name_in_owner = true

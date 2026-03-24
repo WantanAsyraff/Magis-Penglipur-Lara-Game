@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SceneData" format=3 uid="uid://dsbiasy4legvs"]
+
+[ext_resource type="PackedScene" uid="uid://do2p6u1snlfqm" path="res://scenes/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-three/FLAC-F3-hallway-room-2.tscn" id="1_dxx5x"]
+[ext_resource type="Script" uid="uid://bxc44phagq28x" path="res://data/Resources/worlds/scene-data.gd" id="2_migh0"]
+
+[resource]
+script = ExtResource("2_migh0")
+scene_id = "faculty_of_logic_and_computation_f3_hallway_2"
+scene = ExtResource("1_dxx5x")
+scene_name = "Hallway 2"
+metadata/_custom_type_script = "uid://bxc44phagq28x"

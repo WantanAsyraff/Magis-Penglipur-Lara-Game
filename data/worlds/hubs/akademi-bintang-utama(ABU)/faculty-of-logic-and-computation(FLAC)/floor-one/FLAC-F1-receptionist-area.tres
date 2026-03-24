@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SceneData" format=3 uid="uid://3tx0xedjc6h1"]
+
+[ext_resource type="PackedScene" uid="uid://bv2ob5nlx1ny5" path="res://scenes/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-one/FLAC-F1-receptionist-area.tscn" id="1_3c0xm"]
+[ext_resource type="Script" uid="uid://bxc44phagq28x" path="res://data/Resources/worlds/scene-data.gd" id="2_kaupg"]
+
+[resource]
+script = ExtResource("2_kaupg")
+scene_id = "faculty_of_logic_and_computation_receptionist_area"
+scene = ExtResource("1_3c0xm")
+scene_name = "Receptionist Area"
+metadata/_custom_type_script = "uid://bxc44phagq28x"

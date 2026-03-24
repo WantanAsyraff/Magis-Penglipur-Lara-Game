@@ -7,6 +7,7 @@ script = ExtResource("1_g6pfq")
 entries = {
 "Al-Zalam": {
 "alternatives": ["Magis Al-Zalam"],
+"case_sensitive": true,
 "name": "Al-Zalam",
 "text": "Derived from the word \"Dark\", Al-Zalam feeds on strong emotions, creating manifestations of the mind of the caster.",
 "title": "The Dark Magic"

@@ -6,25 +6,26 @@
 [resource]
 script = ExtResource("1_ngd1k")
 page_title = "BASICS OF SPELLCASTING"
-page_desc = "As a spellcaster, your chance of winning combat is depends on your spell comprehension and incantations. Press \"O\" to begin spellcasting.
-
+page_desc = "As a spellcaster, your chance of winning combat depends on your spell comprehension and incantations.
 Spells are activated by combo incantations.
+
+O - Enable/Disable Spellcasting Mode
 
 I - Spellcast up
 J - Spellcast left
 K - Spellcast down
 L - Spellcast right
 
+P - Cancel spellcasting string
+
 Aiming your spells:
 W - Aim up 
 A - Aim left
 S - Aim down
 D - Aim right
-
 You can also aim diagonally by combining your aiming keys.
+F - Force stop in spellcasting (Useful when aiming on edges)
 
-While aiming, you can hold down \"F\" key to force stop so that you don't move. (Useful when space is limited/trying to aim at a specific target).
-
-The stronger the spell, the more combos it requires. "
+The stronger the spell, the more combos it requires."
 page_image = ExtResource("1_ptdsm")
 metadata/_custom_type_script = "uid://bgh41gug308cv"

@@ -30,7 +30,6 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_df1co")
 course_data = ExtResource("2_ksrjs")
-next_scene_id = "akademi_bintang_utama_library"
 locked_modulate = Color(1, 1, 1, 1)
 lock_suffix = " (Locked)"
 

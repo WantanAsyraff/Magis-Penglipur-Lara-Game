@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b10ilwfqjf7rw" path="res://scenes/dueling-grounds-selection/dueling-grounds-selection.gd" id="1_2d2ae"]
 [ext_resource type="PackedScene" uid="uid://upitc0orkqpy" path="res://scenes/dueling-grounds-selection/duel-selection-node.tscn" id="2_2d2ae"]
-[ext_resource type="PackedScene" uid="uid://d3w8vnbl6s5qw" path="res://scenes/worlds/hubs/akademi-bintang-utama/dueling-grounds/dueling-grounds-demo.tscn" id="3_n1pgf"]
+[ext_resource type="PackedScene" uid="uid://d3w8vnbl6s5qw" path="res://scenes/worlds/hubs/akademi-bintang-utama(ABU)/dueling-grounds/dueling-grounds-demo.tscn" id="3_n1pgf"]
 
 [node name="DuelingGroundsSelection" type="Control" unique_id=425348589]
 layout_mode = 3

@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" uid="uid://uk2d70i0npqx" path="res://scenes/ui/phone-ui/e-hailing-ui/route-panel/route-panel.gd" id="1_bjcnm"]
 [ext_resource type="Script" uid="uid://bxc44phagq28x" path="res://data/Resources/worlds/scene-data.gd" id="2_whdwk"]
-[ext_resource type="Resource" uid="uid://db8q4sqjnubuk" path="res://data/worlds/hubs/akademi-bintang-utama/story/missions-selection.tres" id="3_g15rk"]
-[ext_resource type="Resource" uid="uid://6tl1um0gbnu" path="res://data/worlds/hubs/akademi-bintang-utama/abu-campus-entrance.tres" id="4_a6xn1"]
-[ext_resource type="Resource" uid="uid://kh3isqhmfkk8" path="res://data/worlds/hubs/akademi-bintang-utama/abu-courtyard.tres" id="5_yp1dy"]
+[ext_resource type="Resource" uid="uid://db8q4sqjnubuk" path="res://data/worlds/hubs/akademi-bintang-utama(ABU)/story/missions-selection.tres" id="3_g15rk"]
+[ext_resource type="Resource" uid="uid://6tl1um0gbnu" path="res://data/worlds/hubs/akademi-bintang-utama(ABU)/abu-campus-entrance.tres" id="4_a6xn1"]
+[ext_resource type="Resource" uid="uid://kh3isqhmfkk8" path="res://data/worlds/hubs/akademi-bintang-utama(ABU)/abu-courtyard.tres" id="5_yp1dy"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_whdwk"]
 font_size = 32

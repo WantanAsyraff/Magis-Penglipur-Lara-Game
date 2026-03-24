@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://bxsgrrm88omme"]
+
+[ext_resource type="Script" uid="uid://c8is40sxivywr" path="res://scenes/ui/menus/elevator-menu/elevator-ui.gd" id="1_kcm8e"]
+
+[node name="ElevatorUI" type="CanvasLayer" unique_id=1203645303]
+script = ExtResource("1_kcm8e")
+
+[node name="Panel" type="Panel" parent="." unique_id=1724600470]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=1603130640]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 346.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer" unique_id=1248210870]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="Panel/VBoxContainer/HBoxContainer" unique_id=2093082391]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="CloseButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer" unique_id=959302093]
+unique_name_in_owner = true
+layout_mode = 2
+text = "BACK BUTTON"
+
+[node name="FloorList" type="VBoxContainer" parent="Panel/VBoxContainer" unique_id=98049981]
+unique_name_in_owner = true
+layout_mode = 2

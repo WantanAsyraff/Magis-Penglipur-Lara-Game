@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="SceneData" format=3 uid="uid://kh3isqhmfkk8"]
+
+[ext_resource type="Script" uid="uid://bxc44phagq28x" path="res://data/Resources/worlds/scene-data.gd" id="1_j4n4y"]
+[ext_resource type="PackedScene" uid="uid://c5d1qbkughamj" path="res://scenes/worlds/hubs/akademi-bintang-utama(ABU)/ABU-courtyard.tscn" id="1_unfjn"]
+
+[resource]
+script = ExtResource("1_j4n4y")
+scene_id = "akademi_bintang_utama_courtyard"
+scene = ExtResource("1_unfjn")
+scene_name = "Interchange of Knowledge"
+default_spawn_marker = "IntoCourtyard"
+description = "The courtyard where students pass by, chasing time as they catch up to their next classes."
+metadata/_custom_type_script = "uid://bxc44phagq28x"

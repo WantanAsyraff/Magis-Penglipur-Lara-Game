@@ -8,7 +8,6 @@ const SUBJECT_NODE_SCENE = preload("res://scenes/spell-tree/subject-node.tscn")
 const SUBJECT_PANEL_SCENE = preload("res://scenes/spell-tree/subject-panel.tscn")
 
 @export var course_data: CourseData
-@export var next_scene_id: String
 
 @export_group("Lock Visuals")
 @export var locked_modulate: Color = Color(1, 1, 1, 0.4)
@@ -47,11 +46,9 @@ func build_spell_field() -> void:
 			container.add_child(node)
 			node.setup(data)
 
-			# Pass lock visual settings from SpellTreeView exports
 			node.locked_modulate = locked_modulate
 			node.lock_suffix = lock_suffix
 
-			# Check if locked
 			var is_locked := _is_subject_locked(data)
 			node.set_locked(is_locked)
 
@@ -105,7 +102,6 @@ func _on_spells_learned(spells: Array[SpellData]) -> void:
 	var player := get_tree().get_first_node_in_group("player")
 	if player:
 		player.add_spells(spells)
-	# Refresh lock states after learning
 	_refresh_lock_states()
 
 func _refresh_lock_states() -> void:
@@ -114,21 +110,11 @@ func _refresh_lock_states() -> void:
 			node.set_locked(_is_subject_locked(node.subject_data))
 
 func _on_button_pressed() -> void:
-	print("--- Transition Attempt Started ---")
-	print("Target ID: ", next_scene_id)
-	if next_scene_id == "":
-		push_error("FAILED: next_scene_id is empty in the Inspector!")
+	var prev := Player_Manager.previous_scene_path
+	if prev == "":
+		push_error("SpellTreeView: No previous scene stored in Player_Manager.")
 		return
-	var scene_data = Scene_Registry.get_scene(next_scene_id)
-	if not scene_data:
-		push_error("FAILED: Scene_Registry could not find ID: " + next_scene_id)
-		print("Available IDs: ", Scene_Registry.scenes.keys())
-		return
-	if not scene_data.scene:
-		push_error("FAILED: SceneData exists but has no scene assigned for ID: " + next_scene_id)
-		return
-	print("SUCCESS: Found path: ", scene_data.scene.resource_path)
 	if SceneManager:
-		SceneManager.change_scene(scene_data.scene.resource_path)
+		SceneManager.change_scene(prev)
 	else:
-		push_error("FAILED: SceneManager Autoload not found!")
+		push_error("SpellTreeView: SceneManager not found!")

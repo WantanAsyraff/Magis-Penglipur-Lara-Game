@@ -1,54 +1,51 @@
+# SceneRegistry.gd
+# Autoload — add this to Project > Autoloads as "SceneRegistry".
+# Does NOT hardcode any scene paths. WorldManifest nodes feed it via register_paths().
 extends Node
 
 var scenes: Dictionary = {}
 
-# Export-safe registry using explicit resource paths.
-const SCENE_DATA_PATHS: PackedStringArray = [
-	"res://data/worlds/hubs/akademi-bintang-utama/abu-campus-entrance.tres",
-	"res://data/worlds/hubs/akademi-bintang-utama/abu-courtyard.tres",
-	"res://data/worlds/hubs/akademi-bintang-utama/abu-library.tres",
-	"res://data/worlds/hubs/akademi-bintang-utama/dueling-grounds-selection.tres",
-	"res://data/worlds/hubs/akademi-bintang-utama/dueling-grounds.tres",
-	"res://data/worlds/hubs/akademi-bintang-utama/spell-tree.tres",
-	"res://data/worlds/hubs/akademi-bintang-utama/dormitory/abu-dorm-room.tres",
-	"res://data/worlds/hubs/akademi-bintang-utama/dormitory/abu-dormitory-hallway.tres",
-	"res://data/worlds/hubs/akademi-bintang-utama/dueling-grounds/dueling-selection.tres",
-	"res://data/worlds/hubs/akademi-bintang-utama/story/e-hailing.tres",
-	"res://data/worlds/hubs/akademi-bintang-utama/story/missions-selection.tres",
-	"res://data/worlds/hubs/akademi-bintang-utama/story/prologue.tres"
-	
-]
-
-func _ready() -> void:
-	_load_all_scene_data()
-
-func _load_all_scene_data() -> void:
-	scenes.clear()
-	for path in SCENE_DATA_PATHS:
-		var scene_data = load(path) as SceneData
+# ─────────────────────────────────────────
+# FEEDING API
+# Called by WorldManifest (or any node) to register a batch of .tres paths.
+# Safe to call multiple times — each call merges into the same dictionary.
+# ─────────────────────────────────────────
+func register_paths(paths: PackedStringArray) -> void:
+	for path in paths:
+		var scene_data := load(path) as SceneData
 		if not scene_data:
-			push_warning("SceneRegistry: Failed to load SceneData at %s" % path)
+			push_warning("SceneRegistry: Failed to load SceneData at '%s'." % path)
 			continue
 		_register_scene_data(scene_data)
 
+func unregister_paths(paths: PackedStringArray) -> void:
+	for path in paths:
+		var scene_data := load(path) as SceneData
+		if scene_data and scenes.has(scene_data.scene_id):
+			scenes.erase(scene_data.scene_id)
+
+# ─────────────────────────────────────────
+# INTERNAL
+# ─────────────────────────────────────────
 func _register_scene_data(scene_data: SceneData) -> void:
-	if not scene_data:
-		push_warning("SceneRegistry: Null SceneData in SCENE_DATA_RESOURCES.")
-		return
 	if scene_data.scene_id.is_empty():
-		push_warning("SceneRegistry: SceneData missing scene_id (%s)." % scene_data.resource_path)
+		push_warning("SceneRegistry: SceneData at '%s' has no scene_id — skipped." % scene_data.resource_path)
 		return
+	if scenes.has(scene_data.scene_id):
+		push_warning("SceneRegistry: Duplicate scene_id '%s' from '%s' — overwriting." % [scene_data.scene_id, scene_data.resource_path])
 	scenes[scene_data.scene_id] = scene_data
 
-# API Methods (same as before)
+# ─────────────────────────────────────────
+# QUERY API
+# ─────────────────────────────────────────
 func get_scene(scene_id: String) -> SceneData:
 	if scenes.has(scene_id):
 		return scenes[scene_id]
-	push_error("Scene '%s' not found in registry!" % scene_id)
+	push_error("SceneRegistry: scene_id '%s' not found." % scene_id)
 	return null
 
 func get_scene_path(scene_id: String) -> String:
-	var scene_data = get_scene(scene_id)
+	var scene_data := get_scene(scene_id)
 	return scene_data.scene.resource_path if scene_data else ""
 
 func get_all_scene_ids() -> Array:
@@ -56,3 +53,6 @@ func get_all_scene_ids() -> Array:
 
 func scene_exists(scene_id: String) -> bool:
 	return scenes.has(scene_id)
+
+func clear() -> void:
+	scenes.clear()

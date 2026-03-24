@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://iije0qme33th" path="res://components/NPCs/npc.gd" id="1_cgdws"]
 [ext_resource type="Texture2D" uid="uid://doaygnck5qus5" path="res://assets/temp/player-temp.png" id="1_exqg5"]
-[ext_resource type="Resource" uid="uid://wwx3njg3vpa6" path="res://dialogue/characters/scene-2-a.dtl" id="2_fw4mo"]
 [ext_resource type="LabelSettings" uid="uid://dk40du64xk8k7" path="res://assets/custom-labels/ui-stats-label.tres" id="4_iyu70"]
+[ext_resource type="Script" uid="uid://cr00q4ld4w7d0" path="res://components/NPCs/detection-component.gd" id="9_qv43j"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_exqg5"]
 size = Vector2(150, 124)
@@ -13,9 +13,8 @@ size = Vector2(40, 118)
 
 [node name="NPC" type="CharacterBody2D" unique_id=1277948925]
 scale = Vector2(2, 2)
-collision_layer = 2
+collision_layer = 8
 script = ExtResource("1_cgdws")
-npc_timeline = ExtResource("2_fw4mo")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=819925731]
 unique_name_in_owner = true
@@ -40,5 +39,8 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
-[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
+[node name="DetectionComponent" type="Node" parent="." unique_id=443193764]
+script = ExtResource("9_qv43j")
+
+[connection signal="body_entered" from="Area2D" to="DetectionComponent" method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="DetectionComponent" method="_on_area_2d_body_exited"]

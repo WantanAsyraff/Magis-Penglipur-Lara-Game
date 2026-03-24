@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="QuestDatabase" format=3 uid="uid://bx12rk02vc77o"]
+
+[ext_resource type="Script" uid="uid://c7tgt475ebdvf" path="res://data/quests/quest-data.gd" id="1_8gn6t"]
+[ext_resource type="Resource" uid="uid://b08de1w2wl8gc" path="res://data/quests/FLAC/quest-data-test-1.tres" id="2_7rsph"]
+[ext_resource type="Script" uid="uid://c8aqxtd2wxmds" path="res://data/quests/quest-database.gd" id="2_hlnii"]
+
+[resource]
+script = ExtResource("2_hlnii")
+quests = Array[ExtResource("1_8gn6t")]([ExtResource("2_7rsph")])
+metadata/_custom_type_script = "uid://c8aqxtd2wxmds"

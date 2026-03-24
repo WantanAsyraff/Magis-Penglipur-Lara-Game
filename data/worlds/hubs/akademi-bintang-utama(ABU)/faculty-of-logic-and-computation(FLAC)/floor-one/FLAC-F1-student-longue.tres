@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="SceneData" format=3 uid="uid://c0cawaepufhrn"]
+
+[ext_resource type="PackedScene" uid="uid://f1tkv4swmyus" path="res://scenes/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-one/FLAC-F1-student-longue.tscn" id="1_ljru3"]
+[ext_resource type="Script" uid="uid://bxc44phagq28x" path="res://data/Resources/worlds/scene-data.gd" id="1_t4mlj"]
+
+[resource]
+script = ExtResource("1_t4mlj")
+scene_id = "faculty_of_logic_and_computation_student_longue"
+scene = ExtResource("1_ljru3")
+scene_name = "Student Longue"
+description = "A place of rest"
+metadata/_custom_type_script = "uid://bxc44phagq28x"

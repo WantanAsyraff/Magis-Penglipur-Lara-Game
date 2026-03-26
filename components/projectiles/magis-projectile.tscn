@@ -6,11 +6,13 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_b708s"]
 
 [node name="MagisProjectile" type="Area2D" unique_id=1202338616]
+light_mask = 0
+visibility_layer = 19
+collision_mask = 19
 script = ExtResource("1_xe6p8")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2119993349]
-light_mask = 2
-visibility_layer = 2
+light_mask = 12
 texture = ExtResource("1_tksus")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=446688397]

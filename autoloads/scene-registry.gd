@@ -1,14 +1,31 @@
 # SceneRegistry.gd
-# Autoload — add this to Project > Autoloads as "SceneRegistry".
-# Does NOT hardcode any scene paths. WorldManifest nodes feed it via register_paths().
 extends Node
 
 var scenes: Dictionary = {}
 
 # ─────────────────────────────────────────
+# SCENE HISTORY
+# ─────────────────────────────────────────
+var _current_scene_id: String = ""
+var _previous_scene_id: String = ""
+
+func set_current_scene(scene_id: String) -> void:
+	if scene_id == _current_scene_id:
+		return
+	_previous_scene_id = _current_scene_id
+	_current_scene_id = scene_id
+
+func get_current_scene_id() -> String:
+	return _current_scene_id
+
+func get_previous_scene_id() -> String:
+	return _previous_scene_id
+
+func has_previous_scene() -> bool:
+	return not _previous_scene_id.is_empty()
+
+# ─────────────────────────────────────────
 # FEEDING API
-# Called by WorldManifest (or any node) to register a batch of .tres paths.
-# Safe to call multiple times — each call merges into the same dictionary.
 # ─────────────────────────────────────────
 func register_paths(paths: PackedStringArray) -> void:
 	for path in paths:

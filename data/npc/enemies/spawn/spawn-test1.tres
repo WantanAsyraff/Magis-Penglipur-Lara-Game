@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SpawnData" format=3 uid="uid://clkwxyoy2neho"]
+
+[ext_resource type="Script" uid="uid://3ff105o768nm" path="res://data/npc/enemies/spawn/spawn-data.gd" id="1_kbjsf"]
+[ext_resource type="PackedScene" uid="uid://c6b3bq2x7rw7c" path="res://components/NPCs/enemies/zalam-manifestations/bunga/bunga.tscn" id="1_njeb2"]
+
+[resource]
+script = ExtResource("1_kbjsf")
+enemy_scene = ExtResource("1_njeb2")
+metadata/_custom_type_script = "uid://3ff105o768nm"

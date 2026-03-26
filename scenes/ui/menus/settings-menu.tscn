@@ -3,6 +3,7 @@
 [ext_resource type="Theme" uid="uid://cv8bqu76ln7kj" path="res://assets/styles/generic-theme.tres" id="1_7yl11"]
 [ext_resource type="Script" uid="uid://dqon5oofrwunq" path="res://scenes/ui/menus/settings_menu.gd" id="1_alri2"]
 [ext_resource type="LabelSettings" uid="uid://dk40du64xk8k7" path="res://assets/custom-labels/ui-stats-label.tres" id="2_alri2"]
+[ext_resource type="PackedScene" uid="uid://wfepc2y40f0o" path="res://scenes/ui/menus/bind-list.tscn" id="4_l1m2r"]
 
 [node name="SettingsMenu" type="Control" unique_id=1203913482]
 layout_mode = 3
@@ -25,9 +26,70 @@ offset_bottom = -187.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="PanelContainer" unique_id=588230272]
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=341092102]
 layout_mode = 2
-text = "SETTINGS MENU"
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer" unique_id=1554099715]
+layout_mode = 2
+
+[node name="Header" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=409897263]
+layout_mode = 2
+alignment = 1
+
+[node name="KeybindTitleLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/Header" unique_id=284815827]
+layout_mode = 2
+text = "KEYBIND"
+label_settings = ExtResource("2_alri2")
+
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1170805975]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1694018719]
+custom_minimum_size = Vector2(0, 600)
+layout_mode = 2
+
+[node name="BindList" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/ScrollContainer" unique_id=1624956283]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="BindList" parent="PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/BindList" unique_id=973394710 instance=ExtResource("4_l1m2r")]
+layout_mode = 2
+
+[node name="Footer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=647265158]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+alignment = 1
+
+[node name="CancelButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/Footer" unique_id=1487691335]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("1_7yl11")
+text = "CANCEL"
+
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/MarginContainer/VBoxContainer/Footer" unique_id=265062813]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="SaveButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/Footer" unique_id=761321041]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+theme = ExtResource("1_7yl11")
+text = "SAVE"
+
+[node name="HSeparator2" type="HSeparator" parent="PanelContainer/MarginContainer/VBoxContainer/Footer" unique_id=1648017368]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="ResetAllButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/Footer" unique_id=470774382]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("1_7yl11")
+text = "RESET ALL"
 
 [node name="BackButton" type="Button" parent="." unique_id=1252037161]
 layout_mode = 0

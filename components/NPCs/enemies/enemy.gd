@@ -53,12 +53,12 @@ enum AttackType { MELEE, RANGED, BOTH }
 # ─────────────────────────────────────────
 # NODE REFERENCES
 # ─────────────────────────────────────────
-@onready var hitbox: HitboxComponent   = $HitboxComponent
-@onready var sprite: AnimatedSprite2D  = $AnimatedSprite2D
-@onready var hurt_timer: Timer         = $HurtTimer
-@onready var detection: EnemyDetection = $EnemyDetection
-@onready var patrol: EnemyPatrol       = $EnemyPatrol
-@onready var combat: EnemyCombat       = $EnemyCombat
+@onready var hitbox: HitboxComponent   = %HitboxComponent
+@onready var sprite: AnimatedSprite2D  = %AnimatedSprite2D
+@onready var hurt_timer: Timer         = %HurtTimer
+@onready var detection: EnemyDetection = %EnemyDetection
+@onready var patrol: EnemyPatrol       = %EnemyPatrol
+@onready var combat: EnemyCombat       = %EnemyCombat
 
 # ─────────────────────────────────────────
 # RUNTIME STATE
@@ -72,7 +72,6 @@ var _facing_right: bool = true
 # ─────────────────────────────────────────
 func _ready() -> void:
 	current_health = max_health
-
 	hitbox.receives_status_effects = receives_status_effects
 	hitbox.has_mana = false
 	hitbox.receives_knockback = true

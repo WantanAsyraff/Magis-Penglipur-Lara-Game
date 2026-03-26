@@ -6,5 +6,7 @@
 script = ExtResource("1_5dw2c")
 objective_id = "test_obj_1"
 description = "I'm a test"
-target_id = "professor_ali"
+type = 2
+target_id = "bunga"
+required_amount = 10
 metadata/_custom_type_script = "uid://ck1o5aitgcrs1"

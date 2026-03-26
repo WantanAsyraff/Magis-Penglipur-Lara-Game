@@ -108,6 +108,7 @@ color_ramp = SubResource("GradientTexture1D_x0p2c")
 
 [node name="Player" type="CharacterBody2D" unique_id=397395271 groups=["player"]]
 texture_filter = 1
+collision_mask = 27
 script = ExtResource("1_viwsh")
 
 [node name="GodModeComponent" type="Node" parent="." unique_id=274210311]

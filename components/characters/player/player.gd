@@ -81,6 +81,19 @@ var _was_on_floor: bool = false
 var _stop_moving_locked: bool = false
 
 # -------------------------
+# BLOCK / PARRY
+# -------------------------
+# How long after pressing "block" the parry window stays open (seconds)
+const PARRY_WINDOW: float = 0.18
+# Cost of a successful block as a fraction of max stat
+const BLOCK_HP_COST_FRACTION: float  = 0.05
+const BLOCK_MANA_COST_FRACTION: float = 0.05
+
+var _is_blocking: bool = false        # true while "block" is held
+var _parry_timer: float  = 0.0        # counts down from PARRY_WINDOW after press
+var _parry_active: bool  = false      # true only inside the parry window
+
+# -------------------------
 # BOOTSTRAP
 # -------------------------
 func _ready() -> void:
@@ -115,6 +128,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	_handle_dash_timers(delta)
 	_handle_jump_timers(delta)
+	_handle_block_timers(delta)
 	_update_aim_direction()
 	_regen_mana(delta)
 
@@ -126,8 +140,6 @@ func _physics_process(delta: float) -> void:
 
 	if not Player_Global_Data.p_moveable:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
-		# Apply gravity so the player still falls naturally when stop mode is active.
-		# This prevents the float-upward bug when jumping into stop mode.
 		if not is_on_floor():
 			velocity += get_gravity() * delta
 		else:
@@ -138,7 +150,6 @@ func _physics_process(delta: float) -> void:
 	if multiplayer.has_multiplayer_peer() and not is_multiplayer_authority():
 		return
 
-	# Ladder takes priority over normal gravity + movement
 	if _update_climbing():
 		move_and_slide()
 		return
@@ -155,11 +166,10 @@ func _handle_movement() -> void:
 	if _aim_locked:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		_try_jump()
-		return
+		return  # horizontal frozen, but _process_incantation_inputs still runs above
 
 	var current_speed := SPEED * (1.0 - hitbox.get_slow_factor())
-
-	var dir := Input.get_axis("ui_left", "ui_right")
+	var dir := Input.get_axis("move_left", "move_right")
 	if dir != 0:
 		velocity.x = dir * current_speed
 	else:
@@ -173,6 +183,33 @@ func _try_jump() -> void:
 		_coyote_timer = 0.0
 		_jump_buffer_timer = 0.0
 
+func _handle_combat_input() -> void:
+	move_and_slide()
+
+func _process_incantation_inputs() -> void:
+	if hitbox.is_stunned() or hitbox.is_silenced():
+		return
+
+	if Input.is_action_just_pressed("clear_incantation"):
+		_clear_sequence()
+		return
+
+	var pressed := ""
+	if Input.is_action_just_pressed("incantation_up"):    pressed = "up"
+	elif Input.is_action_just_pressed("incantation_down"):  pressed = "down"
+	elif Input.is_action_just_pressed("incantation_left"):  pressed = "left"
+	elif Input.is_action_just_pressed("incantation_right"): pressed = "right"
+
+	if pressed == "":
+		return
+
+	var candidate := spell_string + [pressed]
+	if not _has_partial_match(candidate):
+		_fail_cast("No match!")
+		return
+
+	_add_sequence(pressed)
+
 # -------------------------
 # LADDER
 # -------------------------
@@ -184,17 +221,15 @@ func _update_climbing() -> bool:
 			_climbing = false
 		return false
 
-	# Jump cancels climbing and launches player upward
-	if Input.is_action_just_pressed("ui_accept"):
+	if Input.is_action_just_pressed("jump"):
 		_climbing = false
 		remove_meta("on_ladder")
 		velocity.y = JUMP_VELOCITY
 		return false
 
-	var up := Input.is_action_pressed("ui_up")
-	var down := Input.is_action_pressed("ui_down")
+	var up := Input.is_action_pressed("climb_up")
+	var down := Input.is_action_pressed("climb_down")
 
-	# Start climbing only when holding a direction
 	if up or down:
 		_climbing = true
 
@@ -207,7 +242,6 @@ func _update_climbing() -> bool:
 			velocity.y = CLIMB_SPEED
 		return true
 
-	# On ladder but not yet holding a direction — just kill gravity and wait
 	velocity.x = 0.0
 	velocity.y = 0.0
 	return true
@@ -228,7 +262,7 @@ func _handle_dash_timers(delta: float) -> void:
 			dash_regen_timer = 0.0
 
 func _try_dash() -> void:
-	var dir := Input.get_axis("ui_left", "ui_right")
+	var dir := Input.get_axis("move_left", "move_right")
 	if dir != 0 and dash_charges > 0:
 		dash_charges -= 1
 		dash_regen_timer = 0.0
@@ -241,21 +275,35 @@ func _try_dash() -> void:
 # JUMP TIMERS
 # -------------------------
 func _handle_jump_timers(delta: float) -> void:
-	# Coyote time: start counting down the moment the player leaves the floor
 	if _was_on_floor and not is_on_floor():
 		_coyote_timer = COYOTE_TIME
 	elif is_on_floor():
-		_coyote_timer = COYOTE_TIME  # keep full while grounded
+		_coyote_timer = COYOTE_TIME
 	else:
 		_coyote_timer = maxf(_coyote_timer - delta, 0.0)
 
 	_was_on_floor = is_on_floor()
 
-	# Jump buffer: store the press for a short window so early inputs still fire
-	if Input.is_action_just_pressed("ui_accept"):
+	if Input.is_action_just_pressed("jump"):
 		_jump_buffer_timer = JUMP_BUFFER_TIME
 	elif _jump_buffer_timer > 0.0:
 		_jump_buffer_timer = maxf(_jump_buffer_timer - delta, 0.0)
+
+# -------------------------
+# BLOCK / PARRY TIMERS
+# -------------------------
+func _handle_block_timers(delta: float) -> void:
+	# Track hold state so hitbox handlers can query it
+	_is_blocking = Input.is_action_pressed("block")
+
+	# Parry window: open on the frame "block" is first pressed, close after PARRY_WINDOW
+	if Input.is_action_just_pressed("block"):
+		_parry_timer  = PARRY_WINDOW
+		_parry_active = true
+	elif _parry_active:
+		_parry_timer -= delta
+		if _parry_timer <= 0.0:
+			_parry_active = false
 
 # -------------------------
 # GRAVITY
@@ -280,7 +328,7 @@ func _regen_mana(delta: float) -> void:
 # INPUT
 # -------------------------
 func _unhandled_input(_event: InputEvent) -> void:
-	# Stop movement toggle — works regardless of p_moveable state
+	# Stop mode — separate toggle, nothing to do with casting
 	if Input.is_action_just_pressed("casting_aim_lock"):
 		_stop_moving_locked = not _stop_moving_locked
 		Player_Global_Data.p_moveable = not _stop_moving_locked
@@ -291,6 +339,7 @@ func _unhandled_input(_event: InputEvent) -> void:
 	if not Player_Global_Data.p_moveable:
 		return
 
+	# Aim lock — only active while held during casting stance, never blocks spellcast
 	if _in_casting_stance:
 		_aim_locked = Input.is_action_pressed("casting_aim_lock")
 
@@ -312,38 +361,9 @@ func _unhandled_input(_event: InputEvent) -> void:
 		else:
 			_enter_casting_stance()
 
+	# Spellcast inputs always process regardless of aim lock
 	if _in_casting_stance and combat_mode:
 		_process_incantation_inputs()
-
-func _handle_combat_input() -> void:
-	move_and_slide()
-
-func _process_incantation_inputs() -> void:
-	if hitbox.is_stunned() or hitbox.is_silenced():
-		return
-
-	# Explicit clear
-	if Input.is_action_just_pressed("clear_incantation"):
-		_clear_sequence()
-		return
-
-	var pressed := ""
-	if Input.is_action_just_pressed("incantation_up"):    pressed = "up"
-	elif Input.is_action_just_pressed("incantation_down"):  pressed = "down"
-	elif Input.is_action_just_pressed("incantation_left"):  pressed = "left"
-	elif Input.is_action_just_pressed("incantation_right"): pressed = "right"
-
-	if pressed == "":
-		return
-
-	# Test if appending this input still has at least one possible match
-	var candidate := spell_string + [pressed]
-	if not _has_partial_match(candidate):
-		# Dead end — flash the bad input and reset
-		_fail_cast("No match!")
-		return
-
-	_add_sequence(pressed)
 
 # -------------------------
 # CASTING STANCE
@@ -369,7 +389,6 @@ func _exit_casting_stance() -> void:
 func _sync_spells_from_global() -> void:
 	spell_inventory = Player_Global_Data.equipped_spells.duplicate()
 
-## Returns true if any equipped spell's incantation starts with candidate.
 func _has_partial_match(candidate: Array) -> bool:
 	for spell in spell_inventory:
 		var keys: Array = spell.spell_incantation.filter(func(k): return k != "")
@@ -388,19 +407,26 @@ func _add_sequence(incantation: String) -> void:
 	spell_string.append(incantation)
 	_update_spell_icons()
 
-	var matched_spell = _find_spell_match()
+	var matched_spell: SpellData = _find_spell_match()
 	if matched_spell:
 		if Player_Global_Data.p_curr_mana < matched_spell.upfront_cost:
 			_fail_cast("Not enough mana!")
-		else:
-			Player_Global_Data.p_curr_mana -= matched_spell.upfront_cost
-			_execute_spell_instantiation(matched_spell)
-			_clear_spell_icons()
-			spell_label.text = matched_spell.spell_name + " cast!"
-			await get_tree().create_timer(0.5).timeout
-			spell_string.clear()
-			if _in_casting_stance:
-				spell_label.text = ""
+			return
+
+		Player_Global_Data.p_curr_mana -= matched_spell.upfront_cost
+		_execute_spell_instantiation(matched_spell)
+
+		# --- FIX: clear inputs immediately, then show the cast label briefly ---
+		spell_string.clear()
+		_clear_spell_icons()
+		spell_label.text = matched_spell.spell_name + " cast!"
+
+		# Non-blocking label fadeout — does NOT delay the next input window
+		var label_ref := spell_label
+		get_tree().create_timer(0.3).timeout.connect(func():
+			if _in_casting_stance and label_ref:
+				label_ref.text = ""
+		, CONNECT_ONE_SHOT)
 
 func _clear_sequence() -> void:
 	spell_string.clear()
@@ -458,16 +484,43 @@ func _execute_spell_instantiation(spell: SpellData) -> void:
 
 func _fail_cast(message: String) -> void:
 	_clear_spell_icons()
+	spell_string.clear()          # clear immediately so next input isn't blocked
 	spell_label.text = message
-	await get_tree().create_timer(0.5).timeout
-	spell_string.clear()
-	if _in_casting_stance:
-		spell_label.text = ""
+
+	var label_ref := spell_label
+	get_tree().create_timer(0.5).timeout.connect(func():
+		if _in_casting_stance and label_ref:
+			label_ref.text = ""
+	, CONNECT_ONE_SHOT)
 
 # -------------------------
 # HITBOX HANDLERS
 # -------------------------
 func _on_damage_taken(amount: float) -> void:
+	# ---- PARRY: full negation including any attached debuffs ----
+	if _parry_active:
+		_parry_active = false   # consume parry so it only fires once
+		spell_label.text = "Parried!"
+		var label_ref := spell_label
+		get_tree().create_timer(0.5).timeout.connect(func():
+			if label_ref: label_ref.text = ""
+		, CONNECT_ONE_SHOT)
+		return
+
+	# ---- BLOCK: negate damage but pay 5% HP + 5% mana ----
+	if _is_blocking:
+		var hp_cost   = Player_Global_Data.p_max_health * BLOCK_HP_COST_FRACTION
+		var mana_cost = Player_Global_Data.p_max_mana   * BLOCK_MANA_COST_FRACTION
+		Player_Global_Data.p_curr_health = maxf(Player_Global_Data.p_curr_health - hp_cost,   0.0)
+		Player_Global_Data.p_curr_mana   = maxf(Player_Global_Data.p_curr_mana   - mana_cost, 0.0)
+		spell_label.text = "Blocked!"
+		var label_ref := spell_label
+		get_tree().create_timer(0.4).timeout.connect(func():
+			if label_ref: label_ref.text = ""
+		, CONNECT_ONE_SHOT)
+		return
+
+	# ---- Normal hit ----
 	Player_Global_Data.p_curr_health = maxf(
 		Player_Global_Data.p_curr_health - amount, 0.0
 	)
@@ -478,16 +531,27 @@ func _on_died() -> void:
 	_exit_casting_stance()
 
 func _on_mana_drained(amount: float) -> void:
+	# Parry also blocks mana drain
+	if _parry_active or _is_blocking:
+		return
 	Player_Global_Data.p_curr_mana = maxf(
 		Player_Global_Data.p_curr_mana - amount, 0.0
 	)
 
 func _on_knocked_back(force: Vector2) -> void:
+	# Parry and block both cancel knockback
+	if _parry_active or _is_blocking:
+		return
 	if is_dashing:
 		is_dashing = false
 		dash_timer = 0.0
 
 func _on_status_applied(effect_name: String) -> void:
+	# Parry negates debuffs; block does NOT (only damage)
+	if _parry_active:
+		hitbox.remove_effect(effect_name)
+		return
+
 	match effect_name:
 		"stun":
 			_exit_casting_stance()
@@ -514,7 +578,7 @@ func _on_status_expired(effect_name: String) -> void:
 # AIM
 # -------------------------
 func _update_aim_direction() -> void:
-	var aim_input = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+	var aim_input = Input.get_vector("move_left", "move_right", "climb_up", "climb_down")
 	if aim_input != Vector2.ZERO:
 		var target_pos = Vector2.ZERO
 		target_pos.x = aim_input.x * 140.0

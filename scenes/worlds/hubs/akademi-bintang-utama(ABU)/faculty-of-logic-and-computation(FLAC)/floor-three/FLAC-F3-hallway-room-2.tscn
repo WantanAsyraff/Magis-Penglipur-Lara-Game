@@ -30,7 +30,7 @@ is_door = true
 next_scene_id = "spell_tree"
 spawn_marker_override = "FromSpellRoom"
 
-[node name="FromHallwayThreeMarker" type="Marker2D" parent="World/GameComponents/SpawnPoints" parent_id_path=PackedInt32Array(1598029619) index="0" unique_id=1957989273]
+[node name="FromCentralHubMarker" type="Marker2D" parent="World/GameComponents/SpawnPoints" parent_id_path=PackedInt32Array(1598029619) index="0" unique_id=1957989273]
 position = Vector2(1791, 673)
 
 [node name="FromHallwayOneMarker" type="Marker2D" parent="World/GameComponents/SpawnPoints" parent_id_path=PackedInt32Array(1598029619) index="1" unique_id=327396536]

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SceneData" format=3 uid="uid://qonagicvy0i3"]
+
+[ext_resource type="Script" uid="uid://bxc44phagq28x" path="res://data/Resources/worlds/scene-data.gd" id="1_53fqa"]
+[ext_resource type="PackedScene" uid="uid://b5h6oaagq4ehp" path="res://scenes/worlds/hubs/combat-zones/the-echanted-forest(TEF)/deeper-forest/TEF-forest-entrance.tscn" id="1_i70dm"]
+
+[resource]
+script = ExtResource("1_53fqa")
+scene_id = "the_enchanted_forest_entrance"
+scene = ExtResource("1_i70dm")
+scene_name = "Forest Entrance"
+metadata/_custom_type_script = "uid://bxc44phagq28x"

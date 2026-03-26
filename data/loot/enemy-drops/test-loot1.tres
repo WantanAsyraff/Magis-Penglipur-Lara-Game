@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="LootData" format=3 uid="uid://c7hnhpvtmkbkr"]
+
+[ext_resource type="Texture2D" uid="uid://3nx632b178qm" path="res://assets/ui/phone/quest-icon.png" id="1_6ntxc"]
+[ext_resource type="Script" uid="uid://doxgmvpmyr7hx" path="res://data/loot/loot-data.gd" id="1_w26ff"]
+[ext_resource type="PackedScene" uid="uid://d7h0qf38vhdv" path="res://components/loot/dropped-item/dropped-item.tscn" id="2_6ntxc"]
+
+[resource]
+script = ExtResource("1_w26ff")
+item_id = "test_loot_1"
+item_name = "Flower"
+item_icon = ExtResource("1_6ntxc")
+item_scene = ExtResource("2_6ntxc")
+health_restore = 100
+mana_restore = 5.0
+exp_reward = 10
+metadata/_custom_type_script = "uid://doxgmvpmyr7hx"

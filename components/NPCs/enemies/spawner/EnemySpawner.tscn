@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://dcickmh13i62d"]
+
+[ext_resource type="Script" uid="uid://57rfsp8j26so" path="res://components/NPCs/enemies/spawner/enemy-spawner.gd" id="1_jslut"]
+[ext_resource type="Script" uid="uid://3ff105o768nm" path="res://data/npc/enemies/spawn/spawn-data.gd" id="2_knxk3"]
+[ext_resource type="Resource" uid="uid://clkwxyoy2neho" path="res://data/npc/enemies/spawn/spawn-test1.tres" id="3_smuk8"]
+
+[node name="EnemySpawner" type="Marker2D" unique_id=1148696478]
+script = ExtResource("1_jslut")
+spawn_pool = Array[ExtResource("2_knxk3")]([ExtResource("3_smuk8")])

@@ -13,7 +13,6 @@ size = Vector2(40, 118)
 
 [node name="NPC" type="CharacterBody2D" unique_id=1277948925]
 scale = Vector2(2, 2)
-collision_layer = 8
 script = ExtResource("1_cgdws")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=819925731]

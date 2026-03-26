@@ -3,11 +3,15 @@
 [ext_resource type="Script" uid="uid://m3k0car8wstp" path="res://components/NPCs/enemies/hitbox-component.gd" id="1_gcguh"]
 [ext_resource type="Script" uid="uid://dlnd3allorrc8" path="res://components/NPCs/enemies/enemy.gd" id="1_ya25k"]
 [ext_resource type="Script" uid="uid://btry5ucl20c8f" path="res://components/NPCs/enemies/enemy-combat.gd" id="2_3wa2o"]
+[ext_resource type="Script" uid="uid://cx6ykyrncg3mc" path="res://components/NPCs/enemies/enemy-loot-component.gd" id="2_l3qgy"]
 [ext_resource type="Script" uid="uid://dux371ludfwpy" path="res://components/NPCs/enemies/enemy-patrol.gd" id="2_o6qrg"]
+[ext_resource type="Script" uid="uid://doxgmvpmyr7hx" path="res://data/loot/loot-data.gd" id="3_7qnpv"]
 [ext_resource type="Script" uid="uid://dlcrt2bc2a1ow" path="res://components/NPCs/enemies/enemy-detection.gd" id="3_nqf4a"]
 [ext_resource type="Script" uid="uid://ekbdftjptdw2" path="res://components/damage-indicator/damage-indicator-component.gd" id="4_4mp5v"]
+[ext_resource type="Resource" uid="uid://c7hnhpvtmkbkr" path="res://data/loot/enemy-drops/test-loot1.tres" id="4_dwqxt"]
 [ext_resource type="Texture2D" uid="uid://caaqv80a8h88s" path="res://assets/temp/player-temp-left.png" id="4_ivyq4"]
 [ext_resource type="FontFile" uid="uid://bid56dcwfjc8v" path="res://assets/font/Bitter/static/Bitter-Bold.ttf" id="5_o6qrg"]
+[ext_resource type="Script" uid="uid://br5f140a111cx" path="res://components/NPCs/enemies/enemy-quest-observer-component.gd" id="12_dwqxt"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_gcguh"]
 animations = [{
@@ -32,33 +36,16 @@ radius = 402.19894
 [node name="Enemy" type="CharacterBody2D" unique_id=1787106916]
 light_mask = 2
 visibility_layer = 2
+collision_layer = 2
+collision_mask = 23
 script = ExtResource("1_ya25k")
 
 [node name="HitboxComponent" type="Node" parent="." unique_id=1497920414]
+unique_name_in_owner = true
 script = ExtResource("1_gcguh")
 
-[node name="DamageIndicatorComponent" type="Node" parent="." unique_id=194822805]
-script = ExtResource("4_4mp5v")
-font = ExtResource("5_o6qrg")
-font_size = 22
-float_distance = 80.0
-lifetime = 5.0
-horizontal_spread = 30.0
-vertical_spread = 30.0
-spawn_scale = 1.5
-spawn_offset_y = 0.0
-stagger_step = 24.0
-
-[node name="EnemyCombat" type="Node" parent="." unique_id=880482526]
-script = ExtResource("2_3wa2o")
-
-[node name="EnemyPatrol" type="Node" parent="." unique_id=1768277637]
-script = ExtResource("2_o6qrg")
-
-[node name="EnemyDetection" type="Node" parent="." unique_id=250253539]
-script = ExtResource("3_nqf4a")
-
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1879544315]
+unique_name_in_owner = true
 scale = Vector2(1.25, 1.25)
 sprite_frames = SubResource("SpriteFrames_gcguh")
 
@@ -92,5 +79,40 @@ position = Vector2(-40, 32)
 scale = Vector2(2, 2)
 
 [node name="HurtTimer" type="Timer" parent="." unique_id=540869356]
+unique_name_in_owner = true
 
 [node name="AttackTimer" type="Timer" parent="." unique_id=1777788952]
+unique_name_in_owner = true
+
+[node name="DamageIndicatorComponent" type="Node" parent="." unique_id=194822805]
+unique_name_in_owner = true
+script = ExtResource("4_4mp5v")
+font = ExtResource("5_o6qrg")
+font_size = 22
+float_distance = 80.0
+lifetime = 5.0
+horizontal_spread = 30.0
+vertical_spread = 30.0
+spawn_scale = 1.5
+spawn_offset_y = 0.0
+stagger_step = 24.0
+
+[node name="EnemyCombat" type="Node" parent="." unique_id=880482526]
+unique_name_in_owner = true
+script = ExtResource("2_3wa2o")
+
+[node name="EnemyPatrol" type="Node" parent="." unique_id=1768277637]
+unique_name_in_owner = true
+script = ExtResource("2_o6qrg")
+
+[node name="EnemyDetection" type="Node" parent="." unique_id=250253539]
+unique_name_in_owner = true
+script = ExtResource("3_nqf4a")
+
+[node name="EnemyQuestObserverComponent" type="Node" parent="." unique_id=1631308274]
+unique_name_in_owner = true
+script = ExtResource("12_dwqxt")
+
+[node name="EnemyLootComponent" type="Node2D" parent="." unique_id=32140690]
+script = ExtResource("2_l3qgy")
+loot_table = Array[ExtResource("3_7qnpv")]([ExtResource("4_dwqxt")])

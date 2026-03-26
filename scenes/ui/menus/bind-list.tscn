@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://wfepc2y40f0o"]
+
+[ext_resource type="Script" uid="uid://c8r74m68s6ytg" path="res://scenes/ui/menus/bind-list.gd" id="1_8itvh"]
+[ext_resource type="LabelSettings" uid="uid://dk40du64xk8k7" path="res://assets/custom-labels/ui-stats-label.tres" id="1_mbs3g"]
+[ext_resource type="Theme" uid="uid://cv8bqu76ln7kj" path="res://assets/styles/generic-theme.tres" id="3_g3g6a"]
+
+[node name="BindList" type="HBoxContainer" unique_id=1267607769]
+offset_right = 186.0
+offset_bottom = 70.0
+script = ExtResource("1_8itvh")
+
+[node name="ActionLabel" type="Label" parent="." unique_id=2020534332]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "ACTION"
+label_settings = ExtResource("1_mbs3g")
+
+[node name="HSeparator2" type="HSeparator" parent="." unique_id=2002232617]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
+[node name="PrimaryBtn" type="Button" parent="." unique_id=785867088]
+custom_minimum_size = Vector2(120, 80)
+layout_mode = 2
+theme = ExtResource("3_g3g6a")
+text = "ASSIGN KEYBIND"
+
+[node name="HSeparator" type="HSeparator" parent="." unique_id=1866730272]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
+[node name="ResetRowBtn" type="Button" parent="." unique_id=1259008974]
+custom_minimum_size = Vector2(120, 80)
+layout_mode = 2
+theme = ExtResource("3_g3g6a")
+text = "UNDO"

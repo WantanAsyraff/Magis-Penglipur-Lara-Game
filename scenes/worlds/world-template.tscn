@@ -36,6 +36,7 @@ visibility_layer = 16
 
 [node name="Temptilemap" parent="World/GameComponents/Platforms" unique_id=396398656 instance=ExtResource("7_ddlod")]
 modulate = Color(0.46885282, 0.40293953, 0.2854013, 1)
+light_mask = 16
 visibility_layer = 16
 
 [node name="NPCs" type="Node2D" parent="World/GameComponents" unique_id=1746774679]

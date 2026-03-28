@@ -36,12 +36,12 @@ func _ready() -> void:
 		push_error("DetectionComponent: missing Area2D child.")
 
 func _unhandled_input(event: InputEvent) -> void:
-	print("[Detection] _unhandled_input | in_range=%s | action=%s" % [is_player_in_range, event.is_action_pressed("interact")])
 	if not is_player_in_range:
 		return
 	if event.is_action_pressed("interact"):
-		interacted.emit()
 		get_viewport().set_input_as_handled()
+		interacted.emit()
+
 # -------------------------
 # AREA CALLBACKS
 # -------------------------

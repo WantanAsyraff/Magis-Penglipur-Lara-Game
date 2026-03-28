@@ -51,6 +51,7 @@ directories/dch_directory={
 "yunira": "res://dialogue/characters/yunira.dch"
 }
 directories/dtl_directory={
+"QuestDialogue": "res://dialogue/quest/QuestDialogue.dtl",
 "chapter-1/scene-1": "res://dialogue/story-mode/akademi-bintang-utama/chapter-1/scene-1.dtl",
 "scene-1": "res://dialogue/story-mode/akademi-bintang-utama/prologue/scene-1.dtl",
 "scene-2": "res://dialogue/story-mode/akademi-bintang-utama/prologue/scene-2.dtl",
@@ -64,9 +65,11 @@ layout/style_directory={
 "main-style": "res://dialogue/styles/main-style.tres"
 }
 glossary/default_case_sensitive=true
-variables={}
+variables={
+"QuestText": "Ur not supposed to see this"
+}
 extensions_folder="res://addons/dialogic_additions"
-text/letter_speed=0.03
+text/letter_speed=0.02
 text/initial_text_reveal_skippable=true
 text/text_reveal_skip_delay=0.1
 text/advance_delay=0.1
@@ -104,6 +107,15 @@ Network_Manager="*res://autoloads/network-manager.gd"
 layout/style_list=["res://dialogue/styles/main-style.tres"]
 layout/default_style="res://dialogue/styles/main-style.tres"
 glossary/glossary_files=["uid://b72mepwie50f3"]
+translation/enabled=false
+translation/original_locale="en"
+translation/file_mode=1
+translation/translation_folder=""
+translation/save_mode=0
+translation/add_separator=false
+history/simple_history_enabled=false
+history/full_history_enabled=true
+text/autocolor_names=true
 
 [display]
 

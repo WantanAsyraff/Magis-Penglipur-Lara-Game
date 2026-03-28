@@ -6,9 +6,9 @@ enum Status { AVAILABLE, ACTIVE, COMPLETE, HANDED_OFF, EXPIRED }
 var instance_id: String = ""
 var quest_data: QuestData
 var status: Status = Status.AVAILABLE
-var objective_progress: Dictionary = {}   # objective_id -> current amount
+var objective_progress: Dictionary = {}
 var assigned_npc_id: String = ""
-var _despawn_time: float = -1.0           # absolute time in seconds, -1 = no timer
+var _despawn_time: float = -1.0
 
 func _init(data: QuestData, npc_id: String, despawn_after: float = -1.0) -> void:
 	quest_data = data
@@ -41,14 +41,17 @@ func update_objective(objective_id: String, amount: int = 1) -> void:
 
 func is_objectives_met() -> bool:
 	for obj in quest_data.objectives:
-		if objective_progress.get(obj.objective_id, 0) < obj.required_amount:
+		if objective_progress.get(obj.objective_id, 0) < _get_required(obj.objective_id):
 			return false
 	return true
 
 func _get_required(objective_id: String) -> int:
 	for obj in quest_data.objectives:
 		if obj.objective_id == objective_id:
-			return obj.required_amount
+			var total := 0
+			for amount in obj.required_amounts:
+				total += amount
+			return total
 	return 1
 
 # -------------------------
@@ -60,7 +63,7 @@ func get_despawn_seconds_remaining() -> float:
 	return _despawn_time - Time.get_unix_time_from_system()
 
 # -------------------------
-# SERIALISE (for Player_Global_Data save)
+# SERIALISE
 # -------------------------
 func to_dict() -> Dictionary:
 	return {

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="LootData" format=3 uid="uid://div5wmyiwnd0o"]
+
+[ext_resource type="Script" uid="uid://doxgmvpmyr7hx" path="res://data/loot/loot-data.gd" id="1_7ilnl"]
+[ext_resource type="Texture2D" uid="uid://yc3tgp66iwpq" path="res://assets/temp/dummy-temp.png" id="1_50vmc"]
+[ext_resource type="PackedScene" uid="uid://d7h0qf38vhdv" path="res://components/loot/dropped-item/dropped-item.tscn" id="2_4msxi"]
+
+[resource]
+script = ExtResource("1_7ilnl")
+item_id = "pohon_bark_sample"
+item_name = "Pohon Bark Sample"
+item_icon = ExtResource("1_50vmc")
+drop_chance = 0.6
+item_scene = ExtResource("2_4msxi")
+is_quest_item = true
+quest_objective_id = "collect_daun_residue"
+metadata/_custom_type_script = "uid://doxgmvpmyr7hx"

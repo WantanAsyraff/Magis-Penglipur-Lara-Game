@@ -2,13 +2,18 @@
 
 [ext_resource type="Script" uid="uid://ck1o5aitgcrs1" path="res://data/quests/quest-objective-data.gd" id="1_ickq2"]
 [ext_resource type="Script" uid="uid://c7tgt475ebdvf" path="res://data/quests/quest-data.gd" id="2_5v7we"]
-[ext_resource type="Resource" uid="uid://7xvrt44plf7" path="res://data/quests/FLAC/test-quest1.tres" id="2_x4s1u"]
+[ext_resource type="Resource" uid="uid://cw0nd1ppe65cc" path="res://data/quests/FLAC/objectives/controlled-variables.tres" id="3_bxh7i"]
 
 [resource]
 script = ExtResource("2_5v7we")
 faculty = 1
-quest_id = "test_obj_1"
-title = "I'm a quest"
-description = "Yo"
-objectives = Array[ExtResource("1_ickq2")]([ExtResource("2_x4s1u")])
+quest_id = "quest_id_1"
+title = "Scattered Data"
+description = "A researcher lost their field samples. Collect them from the forest."
+objectives = Array[ExtResource("1_ickq2")]([ExtResource("3_bxh7i")])
+dialogue_offer = "Help me out will ya"
+dialogue_incomplete = "You havent completed my quest yet"
+dialogue_complete = "Thanks!"
+reward_xp = 40
+reward_currency = 100
 metadata/_custom_type_script = "uid://c7tgt475ebdvf"

@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://t3o4osbl3bct" path="res://scenes/worlds/world-template.tscn" id="1_3lcc8"]
 [ext_resource type="PackedScene" uid="uid://c5a41lx0gq8be" path="res://scenes/transitioners/zone-portal/zone-portal.tscn" id="2_cf4dk"]
+[ext_resource type="PackedScene" uid="uid://2b15l4stdmm1" path="res://components/NPCs/enemies/spawner/NPC-quest-spawner.tscn" id="3_4x4d4"]
 
 [node name="WorldTemplate" unique_id=426960778 instance=ExtResource("1_3lcc8")]
 
@@ -20,3 +21,7 @@ spawn_marker_override = "FromHallwayBalconyMarker"
 
 [node name="FromHallwayOneMarker" type="Marker2D" parent="World/GameComponents/Doors" parent_id_path=PackedInt32Array(764980959) index="1" unique_id=946821488]
 position = Vector2(1705, 765)
+
+[node name="NpcQuestSpawner" parent="." index="1" unique_id=1297054719 instance=ExtResource("3_4x4d4")]
+room_id = "f3_hallway_balcony"
+room_faculty = 1

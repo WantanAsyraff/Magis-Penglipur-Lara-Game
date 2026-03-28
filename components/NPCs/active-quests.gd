@@ -1,7 +1,7 @@
 class_name ActiveQuest
 
 var data: QuestData
-var objective_progress: Dictionary = {}   # objective_id -> current_amount
+var objective_progress: Dictionary = {}
 var is_completed: bool = false
 
 func _init(quest_data: QuestData) -> void:
@@ -20,7 +20,7 @@ func update_objective(objective_id: String, amount: int = 1) -> bool:
 
 func check_all_complete() -> bool:
 	for obj in data.objectives:
-		if objective_progress.get(obj.objective_id, 0) < obj.required_amount:
+		if objective_progress.get(obj.objective_id, 0) < _get_required(obj.objective_id):
 			return false
 	is_completed = true
 	return true
@@ -28,5 +28,8 @@ func check_all_complete() -> bool:
 func _get_required(objective_id: String) -> int:
 	for obj in data.objectives:
 		if obj.objective_id == objective_id:
-			return obj.required_amount
+			var total := 0
+			for amount in obj.required_amounts:
+				total += amount
+			return total
 	return 1

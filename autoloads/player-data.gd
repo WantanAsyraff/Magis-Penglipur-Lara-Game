@@ -41,7 +41,7 @@ var p_mood: String
 # PROGRESSION
 # -------------------------
 var player_level: int = 1
-var player_exp: int = 0
+var player_exp: float = 0
 var completed_quests: Array[String] = []
 var active_quest_states: Dictionary = {}   # quest_id -> {obj_id: progress} for saving
 # -------------------------

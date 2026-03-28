@@ -12,16 +12,16 @@ signal quest_handed_off(instance: QuestInstance)
 # STATE
 # -------------------------
 var database: QuestDatabase
-var _active_instances: Dictionary = {}    # instance_id -> QuestInstance
-var _npc_instance_map: Dictionary = {}    # npc_id -> instance_id
-var _quest_active_count: Dictionary = {}  # quest_id -> current concurrent count
+var _active_instances: Dictionary = {}
+var _npc_instance_map: Dictionary = {}
+var _quest_active_count: Dictionary = {}
 
 # -------------------------
 # READY
 # -------------------------
 func _ready() -> void:
 	print("[QuestManager] Loading quest database...")
-	database = load("res://data/quests/flac-database.tres") # Change this later
+	database = load("res://data/quests/flac-database.tres")
 	if database:
 		print("[QuestManager] Database loaded — %d quest(s)" % database.quests.size())
 	else:
@@ -30,53 +30,36 @@ func _ready() -> void:
 # -------------------------
 # NPC INTERFACE
 # -------------------------
-
-## Called by QuestNPCComponent on _ready().
-## Returns a QuestInstance if one is available for this faculty, null otherwise.
 func request_quest_for_npc(faculty: QuestData.Faculty, npc_id: String) -> QuestInstance:
 	print("[QuestManager] request_quest_for_npc | faculty=%d | npc_id='%s'" % [faculty, npc_id])
-
 	if not database:
 		push_error("[QuestManager] database is null")
 		return null
-
-	# don't double-assign to the same npc
 	if _npc_instance_map.has(npc_id):
 		print("[QuestManager] '%s' already has an instance — returning existing" % npc_id)
 		return _active_instances.get(_npc_instance_map[npc_id], null)
-
 	var candidates := _get_quests_for_faculty(faculty)
 	print("[QuestManager] %d candidate quest(s) for faculty=%d" % [candidates.size(), faculty])
-
 	for data in candidates:
-		# check prerequisites
 		if not _prerequisites_met(data):
 			print("[QuestManager] Skipping '%s' — prerequisites not met" % data.quest_id)
 			continue
-
-		# check concurrent cap
 		var active_count: int = _quest_active_count.get(data.quest_id, 0)
 		if active_count >= data.max_concurrent:
 			print("[QuestManager] Skipping '%s' — at concurrent cap (%d)" % [data.quest_id, data.max_concurrent])
 			continue
-
-		# check not already completed
 		if Player_Global_Data.completed_quests.has(data.quest_id):
 			print("[QuestManager] Skipping '%s' — already completed" % data.quest_id)
 			continue
-
-		# create instance
 		var instance := QuestInstance.new(data, npc_id, data.despawn_after_seconds)
 		_active_instances[instance.instance_id] = instance
 		_npc_instance_map[npc_id] = instance.instance_id
 		_quest_active_count[data.quest_id] = active_count + 1
 		print("[QuestManager] Assigned instance '%s' to npc '%s'" % [instance.instance_id, npc_id])
 		return instance
-
 	print("[QuestManager] No suitable quest found for npc '%s'" % npc_id)
 	return null
 
-## Called after offer dialogue finishes.
 func accept_quest(instance_id: String) -> void:
 	print("[QuestManager] accept_quest | instance_id='%s'" % instance_id)
 	var instance := _get_instance(instance_id)
@@ -90,7 +73,6 @@ func accept_quest(instance_id: String) -> void:
 	quest_started.emit(instance)
 	_update_goals_from_instance(instance)
 
-## Called from world triggers, enemy deaths, item pickups, etc.
 func update_objective(instance_id: String, objective_id: String, amount: int = 1) -> void:
 	print("[QuestManager] update_objective | instance='%s' | objective='%s' | amount=%d" % [instance_id, objective_id, amount])
 	var instance := _get_instance(instance_id)
@@ -110,12 +92,13 @@ func _update_goals_from_instance(instance: QuestInstance) -> void:
 	var goals: Array[String] = []
 	for obj in instance.quest_data.objectives:
 		var progress: int = instance.objective_progress.get(obj.objective_id, 0)
-		goals.append("%s (%d/%d)" % [obj.description, progress, obj.required_amount])
+		var required := 0
+		for amount in obj.required_amounts:
+			required += amount
+		goals.append("%s (%d/%d)" % [obj.description, progress, required])
 	print("[QuestManager] goals array: %s" % str(goals))
 	Player_Global_Data.active_goals = goals
 
-## Convenience: update by quest_id rather than instance_id.
-## Useful when world triggers don't know the instance_id.
 func update_objective_by_quest(quest_id: String, objective_id: String, amount: int = 1) -> void:
 	print("[QuestManager] update_objective_by_quest | quest='%s' | objective='%s'" % [quest_id, objective_id])
 	for instance_id in _active_instances:
@@ -123,8 +106,6 @@ func update_objective_by_quest(quest_id: String, objective_id: String, amount: i
 		if instance.quest_data.quest_id == quest_id and instance.status == QuestInstance.Status.ACTIVE:
 			update_objective(instance_id, objective_id, amount)
 
-## Called by QuestNPCComponent when player returns to complete.
-## Returns true if hand-off succeeded, false if objectives not met.
 func try_hand_off(instance_id: String) -> bool:
 	print("[QuestManager] try_hand_off | instance_id='%s'" % instance_id)
 	var instance := _get_instance(instance_id)
@@ -133,23 +114,16 @@ func try_hand_off(instance_id: String) -> bool:
 	if instance.status != QuestInstance.Status.COMPLETE:
 		print("[QuestManager] try_hand_off failed — status is '%s', not COMPLETE" % str(instance.status))
 		return false
-
 	instance.status = QuestInstance.Status.HANDED_OFF
 	print("[QuestManager] Instance '%s' status → HANDED_OFF" % instance_id)
-
 	Player_Global_Data.completed_quests.append(instance.quest_data.quest_id)
 	print("[QuestManager] '%s' added to completed_quests" % instance.quest_data.quest_id)
-
-	Player_Global_Data.clear_goals()  # ← add this
-
+	Player_Global_Data.clear_goals()
 	quest_handed_off.emit(instance)
-
 	if instance.quest_data.next_quest_id != "":
 		print("[QuestManager] Chaining to next_quest_id='%s'" % instance.quest_data.next_quest_id)
-
 	return true
 
-## Called by QuestNPCComponent when the NPC despawns (timer expired or handed off).
 func notify_npc_despawned(instance_id: String) -> void:
 	print("[QuestManager] notify_npc_despawned | instance_id='%s'" % instance_id)
 	if instance_id.is_empty():
@@ -157,19 +131,13 @@ func notify_npc_despawned(instance_id: String) -> void:
 	var instance := _get_instance(instance_id)
 	if not instance:
 		return
-
-	# if still available/active and not handed off, mark expired
 	if instance.status == QuestInstance.Status.AVAILABLE or instance.status == QuestInstance.Status.ACTIVE:
 		instance.status = QuestInstance.Status.EXPIRED
 		print("[QuestManager] Instance '%s' status → EXPIRED" % instance_id)
-
-	# free up concurrent slot
 	var quest_id := instance.quest_data.quest_id
 	if _quest_active_count.has(quest_id):
 		_quest_active_count[quest_id] = max(0, _quest_active_count[quest_id] - 1)
 		print("[QuestManager] '%s' concurrent count → %d" % [quest_id, _quest_active_count[quest_id]])
-
-	# clean up maps
 	_npc_instance_map.erase(instance.assigned_npc_id)
 	_active_instances.erase(instance_id)
 	print("[QuestManager] Instance '%s' removed from active pool" % instance_id)

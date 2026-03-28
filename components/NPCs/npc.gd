@@ -1,4 +1,3 @@
-# NPC.gd
 extends CharacterBody2D
 
 # -------------------------
@@ -29,20 +28,19 @@ var sprite: Sprite2D
 # BOOTSTRAP
 # -------------------------
 func _ready() -> void:
+	#ProjectSettings.set_setting("dialogic/layout/layout_scene", "res://dialogue/styles/main-style.tres")
+	#Dialogic.start("QuestDialogue")
 	wander    = get_node_or_null("%WanderComponent")
 	detection = get_node_or_null("%DetectionComponent")
 	dialogic  = get_node_or_null("%DialogicComponent")
 	tutorial  = get_node_or_null("%TutorialComponent")
-	quest = get_node_or_null("%QuestComponent")
+	quest     = get_node_or_null("%QuestNPCComponent")
 	sprite    = get_node_or_null("%Sprite2D")
 
 	if npc_sprite and sprite:
 		sprite.texture = npc_sprite
 
 	if dialogic:
-		if wander:
-			dialogic.dialogue_started.connect(func(): wander.suspend())
-			dialogic.dialogue_ended.connect(func(): wander.resume())
 		dialogic.dialogue_ended.connect(_on_dialogue_ended)
 
 	if detection:
@@ -57,29 +55,28 @@ func _ready() -> void:
 # INTERACT
 # -------------------------
 func _on_interacted() -> void:
-	print("Interacted! ")
+	print("[NPC] _on_interacted | quest=%s | dialogic=%s" % [quest, dialogic])
 	if dialogic and dialogic.is_open():
 		dialogic.close()
-	elif quest and quest.has_quest():
+		return
+	if quest:
 		quest.interact()
-	elif dialogic:
+		return
+	if dialogic:
 		dialogic.start()
-	else:
-		print("[NPC] no dialogic component")
 
 # -------------------------
 # QUEST DIALOGUE
 # -------------------------
-func _on_quest_dialogue_requested(dialogue_key: String, instance: QuestInstance) -> void:
+func _on_quest_dialogue_requested(dialogue_text: String, instance: QuestInstance) -> void:
 	if not dialogic:
-		# no dialogic — just confirm immediately
 		match instance.status:
 			QuestInstance.Status.AVAILABLE:
 				quest.confirm_offer_complete()
 			QuestInstance.Status.HANDED_OFF:
 				quest.confirm_complete_dialogue_done()
 		return
-	await dialogic.start_timeline_by_key(dialogue_key)
+	await dialogic.start_direct_text(dialogue_text)
 	match instance.status:
 		QuestInstance.Status.AVAILABLE:
 			quest.confirm_offer_complete()
@@ -92,8 +89,6 @@ func _on_quest_dialogue_requested(dialogue_key: String, instance: QuestInstance)
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity += get_gravity() * delta
-	if wander and not (dialogic and dialogic.is_open()):
-		wander.tick(delta)
 	move_and_slide()
 
 # -------------------------

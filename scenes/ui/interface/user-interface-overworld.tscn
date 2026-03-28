@@ -12,9 +12,25 @@
 [sub_resource type="LabelSettings" id="LabelSettings_awj58"]
 font_size = 24
 
-[sub_resource type="LabelSettings" id="LabelSettings_8k13i"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m0o5q"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+expand_margin_left = 18.0
+expand_margin_top = 18.0
+expand_margin_right = 18.0
+expand_margin_bottom = 18.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_m0o5q"]
 font = ExtResource("6_m0o5q")
-font_size = 28
+font_size = 24
 
 [node name="UserInterfaceOverworld" type="Control" unique_id=2137878262]
 layout_mode = 3
@@ -127,8 +143,9 @@ anchor_right = 1.0
 anchor_bottom = 0.34300002
 offset_left = 0.5999756
 offset_top = -0.24002075
-offset_bottom = -0.44003296
+offset_bottom = 64.55997
 grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_m0o5q")
 
 [node name="PanelContainerTexture2" type="TextureRect" parent="Quest Container" unique_id=1779467555]
 layout_mode = 2
@@ -137,10 +154,12 @@ texture = ExtResource("5_c1ax3")
 [node name="TempGoalLabel" type="Label" parent="Quest Container" unique_id=36905458]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_constants/line_spacing = 4
 text = "CURRENT GOAL"
-label_settings = SubResource("LabelSettings_8k13i")
+label_settings = SubResource("LabelSettings_m0o5q")
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 3
 
 [node name="Dashes" type="HBoxContainer" parent="." unique_id=849782500]
 unique_name_in_owner = true

@@ -2,6 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://t3o4osbl3bct" path="res://scenes/worlds/world-template.tscn" id="1_j0t2k"]
 [ext_resource type="PackedScene" uid="uid://c5a41lx0gq8be" path="res://scenes/transitioners/zone-portal/zone-portal.tscn" id="2_1inee"]
+[ext_resource type="PackedScene" uid="uid://2b15l4stdmm1" path="res://components/NPCs/enemies/spawner/NPC-quest-spawner.tscn" id="3_710k8"]
+[ext_resource type="PackedScene" uid="uid://r01cm8px6xbo" path="res://components/NPCs/quest-npcs/quest-npc.tscn" id="4_ibgpd"]
 
 [node name="WorldTemplate" unique_id=426960778 instance=ExtResource("1_j0t2k")]
 
@@ -29,3 +31,11 @@ position = Vector2(-128, 732)
 
 [node name="FromHallwayTwoMarker" type="Marker2D" parent="World/GameComponents/SpawnPoints" parent_id_path=PackedInt32Array(1598029619) index="1" unique_id=441856560]
 position = Vector2(1685, 727)
+
+[node name="NpcQuestSpawner" parent="." index="1" unique_id=1297054719 instance=ExtResource("3_710k8")]
+position = Vector2(964, 0)
+room_id = "f3_hallway_1"
+room_faculty = 1
+npc_directory = Dictionary[String, PackedScene]({
+"professor_ali": ExtResource("4_ibgpd")
+})

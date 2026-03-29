@@ -2,23 +2,35 @@
 
 [ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="1_kjygs"]
 [ext_resource type="Script" uid="uid://caoknale6eh0p" path="res://components/characters/player/player.gd" id="1_viwsh"]
+[ext_resource type="PackedScene" path="res://components/effects/impact/packet-burst-impact.tscn" id="2_bio7g"]
 [ext_resource type="Script" uid="uid://6kx0ed4un5ko" path="res://components/characters/player/god-mode-component.gd" id="2_lf6ip"]
 [ext_resource type="Texture2D" uid="uid://dpyetdt0dlb76" path="res://assets/player/player-aim-left.png" id="3_0qtml"]
 [ext_resource type="PackedScene" uid="uid://cw0ml7a8dvemo" path="res://components/camera/camera.tscn" id="3_dc6tm"]
+[ext_resource type="PackedScene" path="res://components/effects/impact/firewall-impact.tscn" id="3_jign8"]
 [ext_resource type="Texture2D" uid="uid://bqbot7ncx7r8f" path="res://assets/temp/player-temp-right.png" id="3_x0p2c"]
 [ext_resource type="Texture2D" uid="uid://cewhd2rrq7kfc" path="res://assets/player/player-aim-right.png" id="4_vosyt"]
 [ext_resource type="Texture2D" uid="uid://65ccydrw1yv3" path="res://assets/player/player-aim-up.png" id="5_ecgei"]
 [ext_resource type="Script" uid="uid://dkwipe7wope6u" path="res://components/characters/player/anim-player-controller.gd" id="5_k8mmp"]
 [ext_resource type="Texture2D" uid="uid://dk04l16drta8k" path="res://assets/player/player-walk-temp-3.png" id="6_40r25"]
 [ext_resource type="Texture2D" uid="uid://c0r72in3w8my2" path="res://assets/player/player-walk-idle.png" id="6_qfthn"]
+[ext_resource type="Texture2D" uid="uid://d208acd7vqlpb" path="res://assets/player/player-temp-block.png" id="8_hbn6d"]
 [ext_resource type="Texture2D" uid="uid://b2vi8jaa4ycg" path="res://assets/player/player-walk-temp-2.png" id="8_qv2h3"]
 [ext_resource type="Script" uid="uid://m3k0car8wstp" path="res://components/NPCs/enemies/hitbox-component.gd" id="8_x0p2c"]
 [ext_resource type="Texture2D" uid="uid://budwcrgoifei7" path="res://assets/player/player-walk-temp-1.png" id="9_lf6ip"]
+[ext_resource type="Texture2D" uid="uid://dsxxqjah364ia" path="res://assets/player/player-temp-falling.png" id="14_3rlg4"]
 [ext_resource type="Script" uid="uid://rqphgdmq63uv" path="res://components/characters/player/on-death-component.gd" id="14_40r25"]
 [ext_resource type="Texture2D" uid="uid://bnro5fvlrlvuc" path="res://assets/ui/spells/casting-icon-right.png" id="14_qv2h3"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_k8mmp"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_hbn6d")
+}],
+"loop": true,
+"name": &"block",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("3_x0p2c")
@@ -57,6 +69,14 @@ animations = [{
 }],
 "loop": true,
 "name": &"dash",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("14_3rlg4")
+}],
+"loop": true,
+"name": &"falling",
 "speed": 5.0
 }, {
 "frames": [{
@@ -110,6 +130,8 @@ color_ramp = SubResource("GradientTexture1D_x0p2c")
 texture_filter = 1
 collision_mask = 27
 script = ExtResource("1_viwsh")
+parry_particles_scene = ExtResource("2_bio7g")
+block_particles_scene = ExtResource("3_jign8")
 
 [node name="GodModeComponent" type="Node" parent="." unique_id=274210311]
 script = ExtResource("2_lf6ip")
@@ -129,8 +151,7 @@ unique_name_in_owner = true
 position = Vector2(0, -2.9999897)
 scale = Vector2(2.174, 1.9531251)
 sprite_frames = SubResource("SpriteFrames_k8mmp")
-animation = &"idle"
-frame_progress = 0.061260242
+animation = &"block"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=68979787]
 position = Vector2(2, 1)

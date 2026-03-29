@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="TutorialData" format=3 uid="uid://bba7hq8fn5hrk"]
+
+[ext_resource type="Script" uid="uid://bgh41gug308cv" path="res://data/tutorials/tutorial-page.gd" id="1_uixmc"]
+[ext_resource type="Resource" uid="uid://do0dflk6hsa53" path="res://data/tutorials/overworld/npcs-and-quests-page-1.tres" id="2_g4one"]
+[ext_resource type="Script" uid="uid://fsuqb010n5v8" path="res://data/tutorials/tutorial-data.gd" id="3_nirqv"]
+
+[resource]
+script = ExtResource("3_nirqv")
+tutorial_title = "Students & Errands"
+pages = Array[ExtResource("1_uixmc")]([ExtResource("2_g4one")])
+metadata/_custom_type_script = "uid://fsuqb010n5v8"

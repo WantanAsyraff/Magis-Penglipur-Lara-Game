@@ -5,6 +5,8 @@
 [resource]
 script = ExtResource("1_5dw2c")
 objective_id = "test_obj_1"
-description = "I'm a test"
+description = "kill!"
 type = 2
+target_ids = Array[String](["pohon"])
+required_amounts = Array[int]([5])
 metadata/_custom_type_script = "uid://ck1o5aitgcrs1"

@@ -7,3 +7,5 @@
 [node name="EnemySpawner" type="Marker2D" unique_id=1148696478]
 script = ExtResource("1_jslut")
 spawn_pool = Array[ExtResource("2_knxk3")]([ExtResource("3_smuk8")])
+use_area_spawning = true
+spawn_area_width = 800.0

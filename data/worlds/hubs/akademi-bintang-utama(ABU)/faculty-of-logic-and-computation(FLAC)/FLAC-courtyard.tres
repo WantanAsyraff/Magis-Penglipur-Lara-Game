@@ -1,11 +1,9 @@
 [gd_resource type="Resource" script_class="SceneData" format=3 uid="uid://d2fdawe0jv56k"]
 
-[ext_resource type="PackedScene" uid="uid://b0prtjnc61wkn" path="res://scenes/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/FLAC-entrance.tscn" id="1_sdt8o"]
 [ext_resource type="Script" uid="uid://bxc44phagq28x" path="res://data/Resources/worlds/scene-data.gd" id="1_yxlia"]
 
 [resource]
 script = ExtResource("1_yxlia")
 scene_id = "faculty_of_logic_and_computation_courtyard"
-scene = ExtResource("1_sdt8o")
 scene_name = "Faculty Of Logic & Computing Courtyard"
 metadata/_custom_type_script = "uid://bxc44phagq28x"

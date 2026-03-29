@@ -2,23 +2,25 @@ class_name PlayerAnim
 extends Node
 
 @onready var playerAnim: AnimatedSprite2D = %PlayerSprite
+@onready var _player: Player = get_parent() as Player
 
 func _process(_delta: float) -> void:
 	_update_flip()
 	_update_animations()
 
 func _update_flip() -> void:
-	var dir := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
-	if dir.x < 0:
+	var dir := Input.get_axis("move_left", "move_right")
+	if dir < 0:
 		playerAnim.flip_h = true
-	elif dir.x > 0:
+	elif dir > 0:
 		playerAnim.flip_h = false
 
 func _update_animations() -> void:
-	var dir := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
-	var is_moving := dir.length() > 0.1
+	var dir := Input.get_axis("move_left", "move_right")
+	var is_moving := absf(dir) > 0.1
+	var is_airborne := not _player.is_on_floor()
 
-	# Casting (highest priority)
+	# 1. Casting
 	if Player_Global_Data.combat_mode and Player_Global_Data.is_casting:
 		if Input.is_action_pressed("incantation_up"):
 			playerAnim.play("casting_up")
@@ -30,15 +32,18 @@ func _update_animations() -> void:
 			playerAnim.play("casting_right")
 		else:
 			playerAnim.play("idle")
-
-	# Dash
+	# 2. Blocking
+	elif Input.is_action_pressed("block"):
+		playerAnim.play("block")
+	# 3. Dash
 	elif Player_Global_Data.is_dashing:
 		playerAnim.play("dash")
-
-	# Walk
+	# 4. Falling
+	elif is_airborne:
+		playerAnim.play("falling")
+	# 5. Walk
 	elif is_moving:
 		playerAnim.play("walk")
-
-	# Idle
+	# 6. Idle
 	else:
 		playerAnim.play("idle")

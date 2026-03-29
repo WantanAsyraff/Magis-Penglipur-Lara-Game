@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_rx4d3")
 objective_id = "scattered_data"
-description = "A researcher NPC lost their field samples after a Pohon shook their bag loose. Simple intro quest teaching the collect mechanic."
+description = "find items"
 type = 1
 target_ids = Array[String](["daun_residue", "pohon_bark_samples"])
 required_amounts = Array[int]([5, 5])

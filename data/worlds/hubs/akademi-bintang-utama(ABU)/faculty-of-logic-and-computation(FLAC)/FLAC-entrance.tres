@@ -8,4 +8,5 @@ script = ExtResource("1_q5q7f")
 scene_id = "faculty_of_logic_and_computation_entrance"
 scene = ExtResource("1_v1646")
 scene_name = "Faculty Of Logic & Computation Entrance"
+description = "Entrance"
 metadata/_custom_type_script = "uid://bxc44phagq28x"

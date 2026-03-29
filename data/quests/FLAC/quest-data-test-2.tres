@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="QuestData" format=3 uid="uid://8i8b2w3v7o81"]
+
+[ext_resource type="Script" uid="uid://ck1o5aitgcrs1" path="res://data/quests/quest-objective-data.gd" id="1_dtkbq"]
+[ext_resource type="Resource" uid="uid://u433ke7apy14" path="res://data/quests/FLAC/objectives/scattered-data.tres" id="2_dtkbq"]
+[ext_resource type="Script" uid="uid://c7tgt475ebdvf" path="res://data/quests/quest-data.gd" id="3_d6np0"]
+
+[resource]
+script = ExtResource("3_d6np0")
+faculty = 2
+quest_id = "quest_id_2"
+title = "Scattered Data"
+description = "I need field data."
+objectives = Array[ExtResource("1_dtkbq")]([ExtResource("2_dtkbq")])
+dialogue_offer = "I'm working on some sensors but it seems that I need some materials."
+dialogue_incomplete = "You havent completed my quest yet"
+dialogue_complete = "Thanks!"
+reward_xp = 40
+reward_currency = 100
+metadata/_custom_type_script = "uid://c7tgt475ebdvf"

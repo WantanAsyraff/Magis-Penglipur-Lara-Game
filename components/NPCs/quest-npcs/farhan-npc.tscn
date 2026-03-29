@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://dl2wa6wofs753"]
+
+[ext_resource type="PackedScene" uid="uid://r01cm8px6xbo" path="res://components/NPCs/quest-npcs/quest-npc.tscn" id="1_73v3s"]
+
+[node name="QuestNPC" unique_id=1277948925 instance=ExtResource("1_73v3s")]
+
+[node name="QuestNPCComponent" parent="." index="6" unique_id=1216659226]
+faculty = 2
+npc_id = "flac_farhan_npc"

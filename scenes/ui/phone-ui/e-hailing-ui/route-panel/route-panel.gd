@@ -10,6 +10,7 @@ func _ready() -> void:
 
 func _on_button_pressed() -> void:
 	_travel_to(destinations[current_index])
+	Player_Global_Data.p_moveable = true
 
 func _on_prev_button_pressed() -> void:
 	current_index = wrapi(current_index - 1, 0, destinations.size())

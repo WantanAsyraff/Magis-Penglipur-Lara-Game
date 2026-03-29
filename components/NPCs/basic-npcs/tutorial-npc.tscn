@@ -9,6 +9,9 @@
 
 [node name="NPC" unique_id=1277948925 instance=ExtResource("1_2la5v")]
 
+[node name="DetectionComponent" parent="." index="4" unique_id=443193764]
+interact_label_text = "E  to interact (Ms. Nara)"
+
 [node name="DialogicComponent" type="Node" parent="." index="5" unique_id=1719193563]
 unique_name_in_owner = true
 script = ExtResource("2_lv8ni")

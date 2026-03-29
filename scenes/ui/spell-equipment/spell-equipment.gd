@@ -46,14 +46,13 @@ func _on_equipped_spell_selected(spell: SpellData) -> void:
 	Player_Global_Data.unequip_spell(spell)
 
 func _on_back_button_pressed() -> void:
-	var prev := Player_Manager.current_scene
-	if prev == "":
-		prev = Player_Manager.previous_scene_path
-	if prev == "":
-		push_error("SpellEquipView: No scene stored in Player_Manager.")
+	print("Current scene, ", Player_Global_Data.current_scene)
+	print("Previous scene, ", Player_Global_Data.previous_scene)
+	if Player_Global_Data.previous_scene == "":
+		push_error("BackButton: No previous scene stored.")
 		return
-	if SceneManager:
-		SceneManager.change_scene(prev)
-		Player_Global_Data.p_moveable = true
-	else:
-		push_error("SpellEquipView: SceneManager not found!")
+	Player_Manager.last_player_position = Player_Global_Data.previous_position
+	SceneManager.change_scene(Player_Global_Data.previous_scene)
+	print("Position, ", Player_Global_Data.previous_position)
+	print("Position, ", Player_Global_Data.previous_position)
+	Player_Global_Data.p_moveable = true

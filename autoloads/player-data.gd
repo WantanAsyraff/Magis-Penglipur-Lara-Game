@@ -11,6 +11,17 @@ signal spells_updated()
 signal dash_charges_changed(current: int)
 
 # -------------------------
+# SCENE HISTORY
+# -------------------------
+var previous_scene: String = ""
+var previous_position: Vector2 = Vector2.ZERO
+var current_scene: String = "":
+	set(value):
+		previous_scene = current_scene
+		previous_position = Player_Manager.last_player_position
+		current_scene = value
+
+# -------------------------
 # GOALS
 # -------------------------
 signal goals_changed(goals: Array[String])

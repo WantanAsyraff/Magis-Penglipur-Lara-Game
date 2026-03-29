@@ -20,6 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://dsxxqjah364ia" path="res://assets/player/player-temp-falling.png" id="14_3rlg4"]
 [ext_resource type="Script" uid="uid://rqphgdmq63uv" path="res://components/characters/player/on-death-component.gd" id="14_40r25"]
 [ext_resource type="Texture2D" uid="uid://bnro5fvlrlvuc" path="res://assets/ui/spells/casting-icon-right.png" id="14_qv2h3"]
+[ext_resource type="Texture2D" uid="uid://c381wirw82php" path="res://assets/player/player-temp-holding-phone.png" id="16_3rlg4"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_k8mmp"]
 animations = [{
@@ -89,6 +90,14 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("16_3rlg4")
+}],
+"loop": true,
+"name": &"phone",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("8_qv2h3")
 }, {
 "duration": 1.0,
@@ -151,7 +160,7 @@ unique_name_in_owner = true
 position = Vector2(0, -2.9999897)
 scale = Vector2(2.174, 1.9531251)
 sprite_frames = SubResource("SpriteFrames_k8mmp")
-animation = &"block"
+animation = &"phone"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=68979787]
 position = Vector2(2, 1)

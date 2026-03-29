@@ -1,5 +1,6 @@
 [gd_resource type="Resource" script_class="TutorialPage" format=3 uid="uid://do0dflk6hsa53"]
 
+[ext_resource type="Texture2D" uid="uid://3nx632b178qm" path="res://assets/ui/phone/quest-icon.png" id="1_0suye"]
 [ext_resource type="Script" uid="uid://bgh41gug308cv" path="res://data/tutorials/tutorial-page.gd" id="1_40nnp"]
 
 [resource]
@@ -8,4 +9,5 @@ page_title = "Students & Errands"
 page_desc = "Roaming around, you will encounter student with icons above their heads. They're nerds who are in need of some errands to do! You can complete these quests in order to level up, earn rewards and other materials.
 
 However keep in mind, students come and go so you might not be able to do quests that you want in the moment but they will be back (Do some other quests in the meantime). You could call them back from the receptionist (Coming Soon)."
+page_image = ExtResource("1_0suye")
 metadata/_custom_type_script = "uid://bgh41gug308cv"

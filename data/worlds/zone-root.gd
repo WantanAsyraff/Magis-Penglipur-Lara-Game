@@ -12,11 +12,15 @@ var _player_setup_done: bool = false
 # ─────────────────────────────────────────
 func _ready() -> void:
 	call_deferred("_deferred_setup")
-
 func _deferred_setup() -> void:
 	if _player_setup_done:
 		return
 	_player_setup_done = true
+
+	# Track scene history
+	Player_Global_Data.previous_scene = Player_Global_Data.current_scene
+	Player_Global_Data.current_scene = scene_file_path
+
 	_update_world_label()
 	_apply_combat_mode()
 	var spawn_position := _get_spawn_position()
@@ -27,7 +31,6 @@ func _deferred_setup() -> void:
 		Player_Manager.spawn_player_for_peer(self, spawn_position, 1)
 		for peer_id in multiplayer.get_peers():
 			Player_Manager.spawn_player_for_peer(self, spawn_position, int(peer_id))
-
 func _exit_tree() -> void:
 	Player_Global_Data.combat_mode = false
 # ─────────────────────────────────────────
@@ -48,7 +51,6 @@ func _update_world_label() -> void:
 # SPAWN
 # ─────────────────────────────────────────
 func _get_spawn_position() -> Vector2:
-	# 1. Explicit spawn marker set by a portal
 	if Player_Manager.has_meta("next_spawn_marker"):
 		var spawn_marker_name := str(Player_Manager.get_meta("next_spawn_marker"))
 		Player_Manager.remove_meta("next_spawn_marker")
@@ -56,21 +58,14 @@ func _get_spawn_position() -> Vector2:
 		if marker:
 			return marker.global_position
 		push_warning("ZoneRoot: Spawn marker '%s' not found, falling back." % spawn_marker_name)
-
-	# 2. Default marker named "PlayerSpawn" exists in this scene
 	var default_marker := find_marker("PlayerSpawn")
 	if default_marker:
 		return default_marker.global_position
-
-	# 3. Last known position before scene transition
 	if Player_Manager.last_player_position != Vector2.ZERO:
 		print("ZoneRoot: No spawn marker found, using last known position ", Player_Manager.last_player_position)
 		return Player_Manager.last_player_position
-
-	# 4. Absolute fallback
 	push_warning("ZoneRoot: No spawn marker or last position available, spawning at (0,0).")
 	return Vector2.ZERO
-
 func find_marker(marker_name: String) -> Node2D:
 	var marker := get_node_or_null(marker_name)
 	if marker and marker is Node2D:

@@ -1,15 +1,18 @@
+#player-manager.gd
 extends Node
-
 @export var player_scene: PackedScene = preload("res://components/characters/player/player.tscn")
-
 var players: Dictionary = {}
 var _is_spawning: bool = false
 var previous_scene_path: String = ""
 var last_player_position: Vector2 = Vector2.ZERO
-
-# Tracks current scene and player coords together
 var current_scene: String = ""
 var current_player_position: Vector2 = Vector2.ZERO
+
+func _process(_delta: float) -> void:
+	var player := get_local_player()
+	if player:
+		last_player_position = player.global_position
+		current_player_position = player.global_position
 
 func get_local_peer_id() -> int:
 	if multiplayer.has_multiplayer_peer():
@@ -46,12 +49,10 @@ func spawn_player_for_peer(parent: Node, spawn_position: Vector2, peer_id: int) 
 		print("Already spawning player, skipping...")
 		return players.get(peer_id, null)
 	_is_spawning = true
-
 	if not player_scene:
 		push_error("Player scene not assigned in Player_Manager!")
 		_is_spawning = false
 		return null
-
 	if players.has(peer_id) and is_instance_valid(players[peer_id]):
 		var p: Node2D = players[peer_id]
 		if p.get_parent() != parent:
@@ -62,7 +63,6 @@ func spawn_player_for_peer(parent: Node, spawn_position: Vector2, peer_id: int) 
 		print("Moved existing player for peer:", peer_id, "to", spawn_position)
 		_is_spawning = false
 		return p
-
 	var player := player_scene.instantiate()
 	player.name = str(peer_id)
 	player.set_multiplayer_authority(peer_id)

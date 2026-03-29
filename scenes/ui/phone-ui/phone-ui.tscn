@@ -7,6 +7,10 @@
 [ext_resource type="Texture2D" uid="uid://cchpqd7mt0cu8" path="res://assets/ui/phone/fast-travel-icon.png" id="4_mipeb"]
 [ext_resource type="PackedScene" uid="uid://c5obdg8c3r1as" path="res://scenes/ui/spell-equipment/spell-equipment.tscn" id="4_xhcjq"]
 [ext_resource type="Texture2D" uid="uid://btj5nr55dhubd" path="res://assets/ui/phone/spells-icon.png" id="6_h2a1j"]
+[ext_resource type="Texture2D" uid="uid://3nx632b178qm" path="res://assets/ui/phone/quest-icon.png" id="8_m42wd"]
+[ext_resource type="PackedScene" uid="uid://dh6nb06qe2j5y" path="res://scenes/ui/quest-ui/quest-ui.tscn" id="9_chuhu"]
+[ext_resource type="Texture2D" uid="uid://kf008rfndaic" path="res://assets/ui/phone/profile-icon.png" id="10_6ol8v"]
+[ext_resource type="PackedScene" uid="uid://dmjknvld3tlat" path="res://scenes/ui/player-stats-ui/player-stats-ui.tscn" id="11_g58nx"]
 
 [node name="PhoneUI" type="Control" unique_id=993725934]
 clip_children = 2
@@ -75,4 +79,34 @@ offset_right = -0.04800415
 offset_bottom = -0.14001465
 icon = ExtResource("6_h2a1j")
 newApp = ExtResource("4_xhcjq")
+fullscreen = true
+
+[node name="Notifikasi" parent="AppList" unique_id=2067408290 instance=ExtResource("1_qb4dd")]
+clip_contents = true
+layout_mode = 1
+anchor_left = 0.587
+anchor_top = 0.66700006
+anchor_right = 0.85
+anchor_bottom = 0.85200006
+offset_left = 0.023986816
+offset_top = 0.25997925
+offset_right = 0.19998169
+offset_bottom = -0.14001465
+icon = ExtResource("8_m42wd")
+newApp = ExtResource("9_chuhu")
+fullscreen = true
+
+[node name="PlayerStats" parent="AppList" unique_id=462390566 instance=ExtResource("1_qb4dd")]
+clip_contents = true
+layout_mode = 1
+anchor_left = 0.042000003
+anchor_top = 0.48000002
+anchor_right = 0.30600002
+anchor_bottom = 0.66400003
+offset_left = 0.18399811
+offset_top = -0.05999756
+offset_right = -0.088012695
+offset_bottom = 0.17999268
+icon = ExtResource("10_6ol8v")
+newApp = ExtResource("11_g58nx")
 fullscreen = true

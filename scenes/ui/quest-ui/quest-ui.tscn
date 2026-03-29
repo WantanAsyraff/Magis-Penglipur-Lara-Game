@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://dh6nb06qe2j5y"]
+
+[ext_resource type="Script" uid="uid://c5vvki6hyvsjo" path="res://scenes/ui/quest-ui/quest-ui.gd" id="1_xrivg"]
+[ext_resource type="Theme" uid="uid://cv8bqu76ln7kj" path="res://assets/styles/generic-theme.tres" id="2_25s8c"]
+
+[node name="Control" type="Control" unique_id=2026444283]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xrivg")
+
+[node name="Panel" type="Panel" parent="." unique_id=1132006504]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 88.0
+offset_right = -66.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="QuestLabel" type="Label" parent="Panel" unique_id=648835964]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 593.0
+offset_top = 66.0
+offset_right = -78.0
+offset_bottom = -75.0
+grow_horizontal = 2
+grow_vertical = 2
+autowrap_mode = 3
+
+[node name="BackButton" type="Button" parent="." unique_id=1424550967]
+layout_mode = 0
+offset_left = 151.0
+offset_top = 56.0
+offset_right = 627.0
+offset_bottom = 218.0
+theme = ExtResource("2_25s8c")
+text = "Back
+"
+
+[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]

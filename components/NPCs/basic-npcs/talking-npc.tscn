@@ -6,9 +6,6 @@
 
 [node name="NPC" unique_id=1277948925 instance=ExtResource("1_6s7fs")]
 
-[node name="DetectionComponent" parent="." index="4" unique_id=443193764]
-unique_name_in_owner = true
-
 [node name="DialogicComponent" type="Node" parent="." index="5" unique_id=634235157]
 unique_name_in_owner = true
 script = ExtResource("2_65il1")

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="TutorialPage" format=3 uid="uid://dudwbqjg1x6hv"]
+
+[ext_resource type="Script" uid="uid://bgh41gug308cv" path="res://data/tutorials/tutorial-page.gd" id="1_gfeo2"]
+[ext_resource type="Texture2D" uid="uid://conxui50x3u82" path="res://assets/ui/phone/messages-icon.png" id="1_suhh8"]
+
+[resource]
+script = ExtResource("1_gfeo2")
+page_title = "Phone "
+page_desc = "Press \"F\" to open/close your phone. There's several apps that lets you:
+-> Fast travel
+-> Equip spells
+-> Check stats
+-> Check Quests
+"
+page_image = ExtResource("1_suhh8")
+metadata/_custom_type_script = "uid://bgh41gug308cv"

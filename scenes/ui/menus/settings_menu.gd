@@ -154,17 +154,16 @@ func _on_cancel() -> void:
 	_go_back()
 
 func _go_back() -> void:
-	var prev_id := Scene_Registry.get_previous_scene_id()
-	if prev_id.is_empty():
-		push_warning("KeybindPanel: no previous scene tracked — falling back to main menu.")
-		get_tree().change_scene_to_file("res://scenes/ui/menus/intro-menus/main-menu.tscn")
+	print("Current scene, ", Player_Global_Data.current_scene)
+	print("Previous scene, ", Player_Global_Data.previous_scene)
+	if Player_Global_Data.current_scene == "":
+		push_error("BackButton: No previous scene stored.")
 		return
-	var path := Scene_Registry.get_scene_path(prev_id)
-	if path.is_empty():
-		push_warning("KeybindPanel: previous scene_id '%s' has no valid path — falling back." % prev_id)
-		get_tree().change_scene_to_file("res://scenes/ui/menus/intro-menus/main-menu.tscn")
-		return
-	get_tree().change_scene_to_file(path)
+	Player_Manager.last_player_position = Player_Global_Data.previous_position
+	SceneManager.change_scene(Player_Global_Data.previous_scene)
+	print("Position, ", Player_Global_Data.previous_position)
+	print("Position, ", Player_Global_Data.previous_position)
+	Player_Global_Data.p_moveable = true
 
 func _on_reset_all() -> void:
 	_stop_listening()

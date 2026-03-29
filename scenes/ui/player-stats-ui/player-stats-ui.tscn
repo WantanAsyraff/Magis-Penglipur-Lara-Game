@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://dmjknvld3tlat"]
+
+[ext_resource type="Script" uid="uid://x6hg2k72em5e" path="res://scenes/ui/player-stats-ui/player-stats-ui.gd" id="1_gju8v"]
+[ext_resource type="Theme" uid="uid://cv8bqu76ln7kj" path="res://assets/styles/generic-theme.tres" id="2_648wt"]
+
+[node name="PlayerStatsUi" type="Control" unique_id=731309757]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_gju8v")
+
+[node name="Panel" type="Panel" parent="." unique_id=1744863315]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.049000002
+anchor_top = 0.020000001
+anchor_right = 0.95100003
+anchor_bottom = 1.0
+offset_left = -0.08000183
+offset_top = -21.600002
+offset_right = 0.079956055
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_648wt")
+
+[node name="PlayerStatsLabel" type="Label" parent="Panel" unique_id=736972506]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.19572748
+anchor_top = 0.06666667
+anchor_right = 0.95669746
+anchor_bottom = 0.93333334
+offset_right = 6.1035156e-05
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_648wt")
+text = "PLAYER STATS"
+metadata/_edit_use_anchors_ = true
+
+[node name="BackButton" type="Button" parent="." unique_id=1575038451]
+layout_mode = 0
+offset_left = 133.0
+offset_top = 39.0
+offset_right = 367.0
+offset_bottom = 216.0
+theme = ExtResource("2_648wt")
+text = "BACK"
+
+[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]

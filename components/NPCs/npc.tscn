@@ -41,6 +41,7 @@ vertical_alignment = 1
 autowrap_mode = 2
 
 [node name="DetectionComponent" type="Node" parent="." unique_id=443193764]
+unique_name_in_owner = true
 script = ExtResource("9_qv43j")
 
 [connection signal="body_entered" from="Area2D" to="DetectionComponent" method="_on_area_2d_body_entered"]

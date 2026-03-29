@@ -1,24 +1,25 @@
 [gd_scene format=3 uid="uid://bvvsrqdblf5ow"]
 
 [ext_resource type="PackedScene" uid="uid://bire3b68skqpf" path="res://components/NPCs/enemies/Enemy.tscn" id="1_mkrr6"]
-[ext_resource type="Resource" uid="uid://737svhw1vvku" path="res://data/magis/spells/resonance-crack.tres" id="2_ojdq4"]
+[ext_resource type="Resource" uid="uid://vkuuxqst8m3c" path="res://data/magis/spells/impulse-burst.tres" id="2_ojdq4"]
 
 [node name="Enemy" unique_id=1787106916 instance=ExtResource("1_mkrr6")]
+scale = Vector2(2, 2)
 enemy_name = "Pohon"
 max_health = 50.0
 move_speed = 500.0
 chase_speed = 800.0
 
-[node name="EnemyCombat" parent="." index="2" unique_id=880482526]
+[node name="AnimatedSprite2D" parent="." index="1" unique_id=1879544315]
+modulate = Color(0.70942366, 0.5409906, 0.91352874, 1)
+
+[node name="EnemyCombat" parent="." index="11" unique_id=880482526]
 attack_type = 1
 melee_damage = 0.0
-ranged_trigger_distance = 800.0
+ranged_trigger_distance = 3000.0
 retreat_threshold = 500.0
 ranged_spell = ExtResource("2_ojdq4")
 
-[node name="EnemyPatrol" parent="." index="3" unique_id=1768277637]
+[node name="EnemyPatrol" parent="." index="12" unique_id=1768277637]
 patrol_range = 800.0
-wall_jump_velocity = -500.0
-
-[node name="AnimatedSprite2D" parent="." index="5" unique_id=1879544315]
-modulate = Color(0.70942366, 0.5409906, 0.91352874, 1)
+wall_jump_velocity = -3000.0

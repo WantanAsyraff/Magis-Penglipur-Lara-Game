@@ -22,6 +22,9 @@ const DIRECTION_ICONS := {
 			Player_Global_Data.combat_mode = value
 		_on_combat_mode_changed(value)
 
+@export var parry_particles_scene: PackedScene
+@export var block_particles_scene: PackedScene
+
 @onready var castMarker: Marker2D = %CastDirectionMarker
 @onready var spell_label: Label = %castingText
 @onready var spell_icon_box: HBoxContainer = %SpellIconBox
@@ -83,15 +86,13 @@ var _stop_moving_locked: bool = false
 # -------------------------
 # BLOCK / PARRY
 # -------------------------
-# How long after pressing "block" the parry window stays open (seconds)
 const PARRY_WINDOW: float = 0.18
-# Cost of a successful block as a fraction of max stat
 const BLOCK_HP_COST_FRACTION: float  = 0.05
 const BLOCK_MANA_COST_FRACTION: float = 0.05
 
-var _is_blocking: bool = false        # true while "block" is held
-var _parry_timer: float  = 0.0        # counts down from PARRY_WINDOW after press
-var _parry_active: bool  = false      # true only inside the parry window
+var _is_blocking: bool = false
+var _parry_timer: float  = 0.0
+var _parry_active: bool  = false
 
 # -------------------------
 # BOOTSTRAP
@@ -107,7 +108,6 @@ func _ready() -> void:
 	combat_mode = Player_Global_Data.combat_mode
 	Player_Global_Data.current_dash_charges = dash_charges
 
-	# Hitbox setup
 	hitbox.receives_status_effects = true
 	hitbox.has_mana = true
 	hitbox.receives_knockback = true
@@ -118,7 +118,6 @@ func _ready() -> void:
 	hitbox.mana_drained.connect(_on_mana_drained)
 	hitbox.knocked_back.connect(_on_knocked_back)
 
-	# Stop label starts hidden
 	if stop_label:
 		stop_label.visible = false
 
@@ -132,7 +131,6 @@ func _physics_process(delta: float) -> void:
 	_update_aim_direction()
 	_regen_mana(delta)
 
-	# Stun halts all movement immediately
 	if hitbox.is_stunned():
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		move_and_slide()
@@ -166,7 +164,7 @@ func _handle_movement() -> void:
 	if _aim_locked:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		_try_jump()
-		return  # horizontal frozen, but _process_incantation_inputs still runs above
+		return
 
 	var current_speed := SPEED * (1.0 - hitbox.get_slow_factor())
 	var dir := Input.get_axis("move_left", "move_right")
@@ -293,10 +291,8 @@ func _handle_jump_timers(delta: float) -> void:
 # BLOCK / PARRY TIMERS
 # -------------------------
 func _handle_block_timers(delta: float) -> void:
-	# Track hold state so hitbox handlers can query it
 	_is_blocking = Input.is_action_pressed("block")
 
-	# Parry window: open on the frame "block" is first pressed, close after PARRY_WINDOW
 	if Input.is_action_just_pressed("block"):
 		_parry_timer  = PARRY_WINDOW
 		_parry_active = true
@@ -328,7 +324,6 @@ func _regen_mana(delta: float) -> void:
 # INPUT
 # -------------------------
 func _unhandled_input(_event: InputEvent) -> void:
-	# Stop mode — separate toggle, nothing to do with casting
 	if Input.is_action_just_pressed("casting_aim_lock"):
 		_stop_moving_locked = not _stop_moving_locked
 		Player_Global_Data.p_moveable = not _stop_moving_locked
@@ -339,7 +334,6 @@ func _unhandled_input(_event: InputEvent) -> void:
 	if not Player_Global_Data.p_moveable:
 		return
 
-	# Aim lock — only active while held during casting stance, never blocks spellcast
 	if _in_casting_stance:
 		_aim_locked = Input.is_action_pressed("casting_aim_lock")
 
@@ -361,7 +355,6 @@ func _unhandled_input(_event: InputEvent) -> void:
 		else:
 			_enter_casting_stance()
 
-	# Spellcast inputs always process regardless of aim lock
 	if _in_casting_stance and combat_mode:
 		_process_incantation_inputs()
 
@@ -416,12 +409,10 @@ func _add_sequence(incantation: String) -> void:
 		Player_Global_Data.p_curr_mana -= matched_spell.upfront_cost
 		_execute_spell_instantiation(matched_spell)
 
-		# --- FIX: clear inputs immediately, then show the cast label briefly ---
 		spell_string.clear()
 		_clear_spell_icons()
 		spell_label.text = matched_spell.spell_name + " cast!"
 
-		# Non-blocking label fadeout — does NOT delay the next input window
 		var label_ref := spell_label
 		get_tree().create_timer(0.3).timeout.connect(func():
 			if _in_casting_stance and label_ref:
@@ -484,7 +475,7 @@ func _execute_spell_instantiation(spell: SpellData) -> void:
 
 func _fail_cast(message: String) -> void:
 	_clear_spell_icons()
-	spell_string.clear()          # clear immediately so next input isn't blocked
+	spell_string.clear()
 	spell_label.text = message
 
 	var label_ref := spell_label
@@ -494,12 +485,47 @@ func _fail_cast(message: String) -> void:
 	, CONNECT_ONE_SHOT)
 
 # -------------------------
+# FLOATING INDICATOR
+# -------------------------
+func _spawn_indicator(text: String, color: String = "#FFFFFF", duration: float = 0.6) -> void:
+	var lbl := Label.new()
+	lbl.text = text
+	lbl.add_theme_color_override("font_color", Color.from_string(color, Color.WHITE))
+	lbl.add_theme_font_size_override("font_size", 18)
+	lbl.global_position = global_position + Vector2(-20.0, -80.0)
+	lbl.z_index = 10
+	get_parent().add_child(lbl)
+
+	var tween := lbl.create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(lbl, "global_position",
+		lbl.global_position + Vector2(0.0, -48.0), duration) \
+		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.tween_property(lbl, "modulate:a", 0.0, duration) \
+		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	tween.chain().tween_callback(lbl.queue_free)
+
+func _spawn_particles(scene: PackedScene) -> void:
+	if not scene:
+		return
+	var inst := scene.instantiate() as GPUParticles2D
+	if not inst:
+		return
+	inst.global_position = global_position
+	inst.emitting = true
+	inst.one_shot = true
+	get_parent().add_child(inst)
+	get_tree().create_timer(inst.lifetime + 0.5).timeout.connect(inst.queue_free, CONNECT_ONE_SHOT)
+
+# -------------------------
 # HITBOX HANDLERS
 # -------------------------
 func _on_damage_taken(amount: float) -> void:
-	# ---- PARRY: full negation including any attached debuffs ----
+	# ---- PARRY: full negation ----
 	if _parry_active:
-		_parry_active = false   # consume parry so it only fires once
+		_parry_active = false
+		_spawn_indicator("PARRIED!", "#A78BFA")
+		_spawn_particles(parry_particles_scene)
 		spell_label.text = "Parried!"
 		var label_ref := spell_label
 		get_tree().create_timer(0.5).timeout.connect(func():
@@ -507,12 +533,14 @@ func _on_damage_taken(amount: float) -> void:
 		, CONNECT_ONE_SHOT)
 		return
 
-	# ---- BLOCK: negate damage but pay 5% HP + 5% mana ----
+	# ---- BLOCK: negate damage, pay HP + mana cost ----
 	if _is_blocking:
 		var hp_cost   = Player_Global_Data.p_max_health * BLOCK_HP_COST_FRACTION
 		var mana_cost = Player_Global_Data.p_max_mana   * BLOCK_MANA_COST_FRACTION
 		Player_Global_Data.p_curr_health = maxf(Player_Global_Data.p_curr_health - hp_cost,   0.0)
 		Player_Global_Data.p_curr_mana   = maxf(Player_Global_Data.p_curr_mana   - mana_cost, 0.0)
+		_spawn_indicator("BLOCKED!", "#60A5FA")
+		_spawn_particles(block_particles_scene)
 		spell_label.text = "Blocked!"
 		var label_ref := spell_label
 		get_tree().create_timer(0.4).timeout.connect(func():
@@ -531,7 +559,6 @@ func _on_died() -> void:
 	_exit_casting_stance()
 
 func _on_mana_drained(amount: float) -> void:
-	# Parry also blocks mana drain
 	if _parry_active or _is_blocking:
 		return
 	Player_Global_Data.p_curr_mana = maxf(
@@ -539,7 +566,6 @@ func _on_mana_drained(amount: float) -> void:
 	)
 
 func _on_knocked_back(force: Vector2) -> void:
-	# Parry and block both cancel knockback
 	if _parry_active or _is_blocking:
 		return
 	if is_dashing:
@@ -547,7 +573,6 @@ func _on_knocked_back(force: Vector2) -> void:
 		dash_timer = 0.0
 
 func _on_status_applied(effect_name: String) -> void:
-	# Parry negates debuffs; block does NOT (only damage)
 	if _parry_active:
 		hitbox.remove_effect(effect_name)
 		return

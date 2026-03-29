@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SpawnData" format=3 uid="uid://dughxiyatr0ml"]
+
+[ext_resource type="Script" uid="uid://3ff105o768nm" path="res://data/npc/enemies/spawn/spawn-data.gd" id="1_xggjw"]
+[ext_resource type="PackedScene" uid="uid://bvvsrqdblf5ow" path="res://components/NPCs/enemies/zalam-manifestations/pohon/pohon.tscn" id="1_y7iwa"]
+
+[resource]
+script = ExtResource("1_xggjw")
+enemy_scene = ExtResource("1_y7iwa")
+metadata/_custom_type_script = "uid://3ff105o768nm"

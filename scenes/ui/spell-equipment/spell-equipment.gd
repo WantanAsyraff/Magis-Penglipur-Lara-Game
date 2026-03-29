@@ -54,5 +54,6 @@ func _on_back_button_pressed() -> void:
 		return
 	if SceneManager:
 		SceneManager.change_scene(prev)
+		Player_Global_Data.p_moveable = true
 	else:
 		push_error("SpellEquipView: SceneManager not found!")

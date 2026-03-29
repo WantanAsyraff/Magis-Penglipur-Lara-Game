@@ -5,7 +5,7 @@
 
 [resource]
 script = ExtResource("2_62bu7")
-scene_id = "faculty_of_logic_and_computation_balconyfaculty_of_logic_and_computation_f2_hallway_balcony"
+scene_id = "faculty_of_logic_and_computation_f2_hallway_balcony"
 scene = ExtResource("1_jx0lh")
 scene_name = "Balcony"
 metadata/_custom_type_script = "uid://bxc44phagq28x"

@@ -2,7 +2,6 @@
 
 [ext_resource type="PackedScene" uid="uid://t3o4osbl3bct" path="res://scenes/worlds/world-template.tscn" id="1_sdtja"]
 [ext_resource type="PackedScene" uid="uid://c5a41lx0gq8be" path="res://scenes/transitioners/zone-portal/zone-portal.tscn" id="2_lu425"]
-[ext_resource type="PackedScene" uid="uid://2b15l4stdmm1" path="res://components/NPCs/enemies/spawner/NPC-quest-spawner.tscn" id="3_kmaiq"]
 
 [node name="WorldTemplate" unique_id=426960778 instance=ExtResource("1_sdtja")]
 
@@ -39,7 +38,3 @@ position = Vector2(-17, 658)
 
 [node name="FromSpellRoom" type="Marker2D" parent="World/GameComponents/SpawnPoints" parent_id_path=PackedInt32Array(1598029619) index="2" unique_id=3827769]
 position = Vector2(896, 681)
-
-[node name="NpcQuestSpawner" parent="." index="1" unique_id=1297054719 instance=ExtResource("3_kmaiq")]
-room_id = "f3_hallway_2"
-room_faculty = 1

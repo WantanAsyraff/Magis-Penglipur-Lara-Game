@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://cwk3bhkoqhu0"]
+
+[ext_resource type="PackedScene" uid="uid://cj3mkhidrb0kx" path="res://components/NPCs/npc.tscn" id="1_2la5v"]
+[ext_resource type="Script" uid="uid://c0xoolvt1774s" path="res://components/NPCs/dialogic-component.gd" id="2_lv8ni"]
+[ext_resource type="Resource" uid="uid://ciwom8uj1f5pd" path="res://dialogue/story-mode/akademi-bintang-utama/prologue/scene-2.dtl" id="3_dj5ni"]
+[ext_resource type="Script" uid="uid://50sks3ied4se" path="res://components/NPCs/tutorial-component.gd" id="4_ylav6"]
+[ext_resource type="PackedScene" uid="uid://cp36hiyn6nkuo" path="res://components/panels/tutorials/tutorial-panel.tscn" id="5_45wxe"]
+[ext_resource type="Resource" uid="uid://bba7hq8fn5hrk" path="res://data/tutorials/overworld/npcs-quests.tres" id="6_k20q5"]
+
+[node name="NPC" unique_id=1277948925 instance=ExtResource("1_2la5v")]
+
+[node name="DialogicComponent" type="Node" parent="." index="5" unique_id=1719193563]
+unique_name_in_owner = true
+script = ExtResource("2_lv8ni")
+npc_timeline = ExtResource("3_dj5ni")
+
+[node name="TutorialComponent" type="Node" parent="." index="6" unique_id=241889589]
+unique_name_in_owner = true
+script = ExtResource("4_ylav6")
+has_tutorial = true
+tutorial_panel_scene = ExtResource("5_45wxe")
+tutorial_data = ExtResource("6_k20q5")

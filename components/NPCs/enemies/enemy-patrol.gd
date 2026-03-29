@@ -1,8 +1,4 @@
 # EnemyPatrol.gd
-# Attach as a child node of Enemy.
-# Shared raycasts: RayCast2D(Right), RayCast2D(Left) — marked unique (%) under Enemy.
-# Call tick(delta) every physics frame from Enemy._physics_process.
-
 class_name EnemyPatrol
 extends Node
 
@@ -21,61 +17,80 @@ extends Node
 # ─────────────────────────────────────────
 # CONSTANTS
 # ─────────────────────────────────────────
-## Bitmask for Layer 5 (Environment). 2^(5-1) = 16.
 const ENVIRONMENT_LAYER: int = 16
 
 # ─────────────────────────────────────────
 # STATE
 # ─────────────────────────────────────────
 var home_position: Vector2 = Vector2.ZERO
-var patrol_direction: int = 1        # 1 = right, -1 = left
+var patrol_direction: int = 1
 var _jump_cooldown: float = 0.0
-var _is_jumping: bool = false        # true from jump until landing
+var _is_jumping: bool = false
+var _direction_lock: float = 0.0
+var _home_initialised: bool = false
+var _grounded_once: bool = false     # don't patrol until first landing
 
 # ─────────────────────────────────────────
 # LIFECYCLE
 # ─────────────────────────────────────────
 func _ready() -> void:
-	home_position = get_parent().global_position
+	pass
 
 # ─────────────────────────────────────────
 # PUBLIC API
 # ─────────────────────────────────────────
 
-## Call from Enemy._physics_process every frame.
 func tick(delta: float, enemy: CharacterBody2D) -> void:
+	if not _home_initialised:
+		home_position = enemy.global_position
+		_home_initialised = true
+
+	# Wait until the enemy has touched the floor at least once before doing anything
+	if not _grounded_once:
+		if enemy.is_on_floor():
+			_grounded_once = true
+			home_position = enemy.global_position  # re-snap home to actual landed position
+		return
+
 	if _jump_cooldown > 0.0:
 		_jump_cooldown -= delta
+	if _direction_lock > 0.0:
+		_direction_lock -= delta
 
-	# Once airborne from a jump, check if environment is still blocking.
-	# If it is, the jump won't clear it — turn around instead.
 	if _is_jumping:
 		if enemy.is_on_floor():
-			_is_jumping = false   # landed cleanly, jump succeeded
-		elif _has_environment_wall(enemy.velocity.x >= 0.0):
-			# Still hitting environment mid-air — turn around on landing
 			_is_jumping = false
-			patrol_direction *= -1
+		elif _has_environment_wall(enemy.velocity.x >= 0.0):
+			_is_jumping = false
+			_flip_direction()
 
-## Run one frame of patrol movement. Returns the desired velocity.x.
 func patrol_tick(enemy: CharacterBody2D, facing_right: bool) -> float:
-	var at_edge  = not _has_ground_ahead(facing_right) and enemy.is_on_floor()
-	var at_limit = abs(enemy.global_position.x - home_position.x) >= patrol_range
+	# Stay still until grounded — prevents spawn tweak
+	if not _grounded_once:
+		return 0.0
 
 	if _has_environment_wall(facing_right) and enemy.is_on_floor() and _jump_cooldown <= 0.0:
 		_do_wall_jump(enemy)
-		return enemy.velocity.x  # keep x during jump frame
+		return enemy.velocity.x
 
-	if at_edge or at_limit:
-		patrol_direction *= -1
+	if _direction_lock <= 0.0:
+		var at_edge  = not _has_ground_ahead(facing_right) and enemy.is_on_floor()
+		var at_limit = abs(enemy.global_position.x - home_position.x) >= patrol_range
+		var hit_enemy := _has_enemy_ahead(facing_right)
+
+		if at_edge or at_limit or hit_enemy:
+			_flip_direction()
+			return 0.0  # one dead frame to let the lock settle before moving
 
 	return patrol_direction * get_parent().move_speed
 
-## Run one frame of return-home movement. Returns desired velocity.x.
-## Returns NAN if the enemy should stop and go IDLE.
+## Returns desired velocity.x, or NAN if arrived home.
 func return_tick(enemy: CharacterBody2D, facing_right: bool) -> float:
+	if not _grounded_once:
+		return 0.0
+
 	if abs(enemy.global_position.x - home_position.x) < 8.0:
-		return NAN  # arrived home
+		return NAN
 
 	var dir = sign(home_position.x - enemy.global_position.x)
 
@@ -83,9 +98,14 @@ func return_tick(enemy: CharacterBody2D, facing_right: bool) -> float:
 		_do_wall_jump(enemy)
 		return enemy.velocity.x
 
-	# Cliff on the way home — stop rather than walk off
-	if not _has_ground_ahead(facing_right) and enemy.is_on_floor():
-		return NAN
+	if _direction_lock <= 0.0:
+		var hit_enemy := _has_enemy_ahead(facing_right)
+		var at_cliff  := not _has_ground_ahead(facing_right) and enemy.is_on_floor()
+
+		if hit_enemy or at_cliff:
+			_flip_direction()
+			home_position.x = get_parent().global_position.x + (-dir * patrol_range)
+			return 0.0
 
 	return dir * get_parent().move_speed
 
@@ -96,7 +116,10 @@ func get_patrol_direction() -> int:
 # INTERNAL
 # ─────────────────────────────────────────
 
-## True if the raycast ahead hits a collider on the Environment layer (Layer 5).
+func _flip_direction() -> void:
+	patrol_direction *= -1
+	_direction_lock = 0.4
+
 func _has_environment_wall(facing_right: bool) -> bool:
 	var rc  := raycast_right if facing_right else raycast_left
 	var dir := 1.0 if facing_right else -1.0
@@ -105,15 +128,22 @@ func _has_environment_wall(facing_right: bool) -> bool:
 	if not rc.is_colliding():
 		return false
 	var collider := rc.get_collider()
-	# TileMapLayer and physics bodies both inherit CollisionObject2D
 	if collider is CollisionObject2D:
 		return (collider.collision_layer & ENVIRONMENT_LAYER) != 0
-	# Fallback: treat any unrecognised collider as environment
 	return true
 
+func _has_enemy_ahead(facing_right: bool) -> bool:
+	var rc  := raycast_right if facing_right else raycast_left
+	var dir := 1.0 if facing_right else -1.0
+	rc.target_position = Vector2(24.0 * dir, 0.0)
+	rc.force_raycast_update()
+	if not rc.is_colliding():
+		return false
+	return rc.get_collider() is Enemy
+
 func _has_ground_ahead(facing_right: bool) -> bool:
-	var rc  = raycast_right if facing_right else raycast_left
-	var dir = 1.0 if facing_right else -1.0
+	var rc  := raycast_right if facing_right else raycast_left
+	var dir := 1.0 if facing_right else -1.0
 	rc.target_position = Vector2(24.0 * dir, 30.0)
 	rc.force_raycast_update()
 	return rc.is_colliding()

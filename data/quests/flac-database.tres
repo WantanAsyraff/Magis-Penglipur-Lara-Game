@@ -3,8 +3,10 @@
 [ext_resource type="Script" uid="uid://c7tgt475ebdvf" path="res://data/quests/quest-data.gd" id="1_8gn6t"]
 [ext_resource type="Resource" uid="uid://b08de1w2wl8gc" path="res://data/quests/FLAC/quest-data-test-1.tres" id="2_7rsph"]
 [ext_resource type="Script" uid="uid://c8aqxtd2wxmds" path="res://data/quests/quest-database.gd" id="2_hlnii"]
+[ext_resource type="Resource" uid="uid://8i8b2w3v7o81" path="res://data/quests/FLAC/quest-data-test-2.tres" id="3_7rsph"]
+[ext_resource type="Resource" uid="uid://c8lp1b0r06mhf" path="res://data/quests/FLAC/quest-data-test-3.tres" id="4_nwwp7"]
 
 [resource]
 script = ExtResource("2_hlnii")
-quests = Array[ExtResource("1_8gn6t")]([ExtResource("2_7rsph")])
+quests = Array[ExtResource("1_8gn6t")]([ExtResource("2_7rsph"), ExtResource("3_7rsph"), ExtResource("4_nwwp7")])
 metadata/_custom_type_script = "uid://c8aqxtd2wxmds"

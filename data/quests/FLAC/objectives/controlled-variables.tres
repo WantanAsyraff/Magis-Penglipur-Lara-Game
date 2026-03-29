@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_ueyqx")
 objective_id = "controlled_variables"
-description = "A lecturer NPC wants combat data on forest enemies. Teaches the defeat mechanic. Framed as an experiment — fits the Theory → Magis loop."
+description = "kill flower monsters"
 type = 2
 target_ids = Array[String](["bunga"])
 required_amounts = Array[int]([10])

@@ -6,12 +6,12 @@
 
 [resource]
 script = ExtResource("2_5v7we")
-faculty = 1
+faculty = 2
 quest_id = "quest_id_1"
 title = "Scattered Data"
-description = "A researcher lost their field samples. Collect them from the forest."
+description = "Kill the small black thingies"
 objectives = Array[ExtResource("1_ickq2")]([ExtResource("3_bxh7i")])
-dialogue_offer = "Help me out will ya"
+dialogue_offer = "Those moving flowers have been really annoying. Can u do me a favour and get em?"
 dialogue_incomplete = "You havent completed my quest yet"
 dialogue_complete = "Thanks!"
 reward_xp = 40

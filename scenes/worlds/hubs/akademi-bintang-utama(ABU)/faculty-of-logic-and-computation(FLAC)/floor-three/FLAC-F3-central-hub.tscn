@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bo2dxawk45o12" path="res://components/elevator/elevator-portal.tscn" id="2_fo7jh"]
 [ext_resource type="Script" uid="uid://dm4ce2mmbf538" path="res://data/worlds/elevator-floor.gd" id="3_6u4g3"]
 [ext_resource type="Resource" uid="uid://fa25c1xn5k1k" path="res://data/worlds/elevator-data/FLAC-F1.tres" id="4_dmo41"]
+[ext_resource type="Resource" uid="uid://lxq212jhgn7w" path="res://data/worlds/elevator-data/FLAC-F2.tres" id="5_6u4g3"]
 [ext_resource type="Resource" uid="uid://c2pjhjxekdtje" path="res://data/worlds/elevator-data/FLAC-F3.tres" id="6_7aqcn"]
 [ext_resource type="PackedScene" uid="uid://c5a41lx0gq8be" path="res://scenes/transitioners/zone-portal/zone-portal.tscn" id="6_fo7jh"]
 
@@ -18,7 +19,7 @@ tile_map_data = PackedByteArray("AAAAAA0AAAAAAAAAAAABAA0AAAABAAAAAAAAAA4AAAAAAAA
 
 [node name="ElevatorPortal" parent="World/GameComponents/Doors" parent_id_path=PackedInt32Array(764980959) index="0" unique_id=321055077 instance=ExtResource("2_fo7jh")]
 position = Vector2(906, 656)
-floors = Array[ExtResource("3_6u4g3")]([ExtResource("4_dmo41"), ExtResource("6_7aqcn")])
+floors = Array[ExtResource("3_6u4g3")]([ExtResource("6_7aqcn"), ExtResource("5_6u4g3"), ExtResource("4_dmo41")])
 spawn_marker_override = "FromFloorThreeMarker"
 
 [node name="ZonePortal(IntoHallwayTwo)" parent="World/GameComponents/Doors" parent_id_path=PackedInt32Array(764980959) index="1" unique_id=362818532 instance=ExtResource("6_fo7jh")]
@@ -34,7 +35,7 @@ next_scene_id = "faculty_of_logic_and_computation_f3_hallway_3"
 spawn_marker_override = "FromHallwayCentralHubMarker"
 
 [node name="FromFloorThreeMarker" type="Marker2D" parent="World/GameComponents/SpawnPoints" parent_id_path=PackedInt32Array(1598029619) index="0" unique_id=1657939714]
-position = Vector2(846, 691)
+position = Vector2(900, 512)
 
 [node name="FromHallwayTwoMarker" type="Marker2D" parent="World/GameComponents/SpawnPoints" parent_id_path=PackedInt32Array(1598029619) index="1" unique_id=1732631565]
 position = Vector2(-207, 722)

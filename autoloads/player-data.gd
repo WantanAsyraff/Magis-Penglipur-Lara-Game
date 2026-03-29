@@ -11,6 +11,20 @@ signal spells_updated()
 signal dash_charges_changed(current: int)
 
 # -------------------------
+# NPC REGISTRY
+# -------------------------
+var active_npc_ids: Array[String] = []
+
+func register_npc(npc_id: String) -> bool:
+	if active_npc_ids.has(npc_id):
+		return false
+	active_npc_ids.append(npc_id)
+	return true
+
+func unregister_npc(npc_id: String) -> void:
+	active_npc_ids.erase(npc_id)
+
+# -------------------------
 # SCENE HISTORY
 # -------------------------
 var previous_scene: String = ""
@@ -46,7 +60,7 @@ func clear_goals() -> void:
 # -------------------------
 var p_name: String
 var p_role: String
-var p_curr_ringgit: String
+var p_curr_ringgit: float = 0
 var p_mood: String
 # -------------------------
 # PROGRESSION

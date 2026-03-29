@@ -19,7 +19,7 @@ func _refresh() -> void:
 	lines.append("Name: %s" % Player_Global_Data.p_name)
 	lines.append("Role: %s" % Player_Global_Data.p_role)
 	lines.append("Mood: %s" % Player_Global_Data.p_mood)
-	lines.append("Ringgit: %s" % Player_Global_Data.p_curr_ringgit)
+	lines.append("Ringgit: RM %.2f" % Player_Global_Data.p_curr_ringgit)
 	lines.append("")
 
 	# Progression

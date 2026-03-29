@@ -42,8 +42,9 @@ position = Vector2(-1756, 747)
 position = Vector2(1811, 741)
 script = ExtResource("2_g2m6d")
 room_id = "flac_f2_h2"
+max_npcs = 4
 room_faculty = 2
-npcs_to_spawn = 1
+npcs_to_spawn = 2
 npc_directory = Dictionary[String, PackedScene]({
 "flac_farhan_npc": ExtResource("3_jeq4w"),
 "flac_leon_npc": ExtResource("4_158ui"),

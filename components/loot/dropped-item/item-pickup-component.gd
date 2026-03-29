@@ -81,10 +81,9 @@ func _apply_loot_logic() -> void:
 		
 	# 4. Currency (Ringgit)
 	if data.currency_reward > 0:
-		var current_amt = int(Player_Global_Data.p_curr_ringgit)
-		var new_amt = current_amt + data.currency_reward
-		Player_Global_Data.p_curr_ringgit = str(new_amt)
-		print(" >> Currency: RM%d -> RM%d (+%d)" % [current_amt, new_amt, data.currency_reward])
+		var old_amt := Player_Global_Data.p_curr_ringgit
+		Player_Global_Data.p_curr_ringgit += data.currency_reward
+		print(" >> Currency: RM%.2f -> RM%.2f (+%d)" % [old_amt, Player_Global_Data.p_curr_ringgit, data.currency_reward])
 
 	# 5. Spells
 	if data.spell_to_unlock:
@@ -94,7 +93,10 @@ func _apply_loot_logic() -> void:
 	# 6. Quests
 	if data.is_quest_item and data.quest_objective_id != "":
 		print(" >> Quest Progress: ", data.quest_objective_id)
-		# Update based on target_id/objective_id
-		QuestManager.update_objective_by_quest_id(data.quest_objective_id, 1)
-
+		for instance in QuestManager.get_all_active():
+			if instance.status == QuestInstance.Status.ACTIVE:
+				for obj in instance.quest_data.objectives:
+					if obj.objective_id == data.quest_objective_id:
+						QuestManager.update_objective(instance.instance_id, data.quest_objective_id, 1)
+						break
 	print("---------------------------------------")

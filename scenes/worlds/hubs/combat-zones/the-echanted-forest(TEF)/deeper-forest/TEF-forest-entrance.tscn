@@ -29,15 +29,18 @@ position = Vector2(1647, 808)
 [node name="EnemySpawner" parent="World/GameComponents/SpawnPoints" parent_id_path=PackedInt32Array(1598029619) index="1" unique_id=1148696478 instance=ExtResource("4_40871")]
 position = Vector2(-1680, 493)
 
-[node name="EnemySpawner4" parent="World/GameComponents/SpawnPoints" parent_id_path=PackedInt32Array(1598029619) index="2" unique_id=1746374132 instance=ExtResource("4_40871")]
+[node name="EnemySpawner5" parent="World/GameComponents/SpawnPoints" parent_id_path=PackedInt32Array(1598029619) index="2" unique_id=1350036554 instance=ExtResource("4_40871")]
+position = Vector2(-5418, -612)
+
+[node name="EnemySpawner4" parent="World/GameComponents/SpawnPoints" parent_id_path=PackedInt32Array(1598029619) index="3" unique_id=1746374132 instance=ExtResource("4_40871")]
 position = Vector2(-7347, 255)
 
-[node name="EnemySpawner2" parent="World/GameComponents/SpawnPoints" parent_id_path=PackedInt32Array(1598029619) index="3" unique_id=1954284807 instance=ExtResource("4_40871")]
+[node name="EnemySpawner2" parent="World/GameComponents/SpawnPoints" parent_id_path=PackedInt32Array(1598029619) index="4" unique_id=1954284807 instance=ExtResource("4_40871")]
 position = Vector2(-5746, -1579)
 spawn_pool = Array[ExtResource("4_a4h6k")]([ExtResource("5_t4red"), ExtResource("6_7x65e")])
 spawn_area_width = 1600.0
 
-[node name="EnemySpawner3" parent="World/GameComponents/SpawnPoints" parent_id_path=PackedInt32Array(1598029619) index="4" unique_id=158713131 instance=ExtResource("4_40871")]
+[node name="EnemySpawner3" parent="World/GameComponents/SpawnPoints" parent_id_path=PackedInt32Array(1598029619) index="5" unique_id=158713131 instance=ExtResource("4_40871")]
 position = Vector2(-101, -1741)
 spawn_pool = Array[ExtResource("4_a4h6k")]([ExtResource("5_t4red"), ExtResource("6_7x65e")])
 spawn_area_width = 1600.0

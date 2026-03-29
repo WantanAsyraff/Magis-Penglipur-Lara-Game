@@ -105,7 +105,7 @@ func _grant_rewards() -> void:
 		return
 	var data := _instance.quest_data
 	Player_Global_Data.player_exp += data.reward_xp
-	Player_Global_Data.p_curr_ringgit = str(int(Player_Global_Data.p_curr_ringgit) + data.reward_currency)
+	Player_Global_Data.p_curr_ringgit += data.reward_currency
 
 func _despawn() -> void:
 	QuestManager.notify_npc_despawned(_instance.instance_id if _instance else "")

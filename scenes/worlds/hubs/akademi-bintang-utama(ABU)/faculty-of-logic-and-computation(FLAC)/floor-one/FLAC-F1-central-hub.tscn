@@ -51,7 +51,7 @@ position = Vector2(1551, 644)
 position = Vector2(-1716, 646)
 
 [node name="FromFloorOneMarker" type="Marker2D" parent="World/GameComponents/SpawnPoints" parent_id_path=PackedInt32Array(1598029619) index="2" unique_id=949794060]
-position = Vector2(74, 602)
+position = Vector2(20, 246)
 
 [node name="Label" type="Label" parent="World/GameComponents/Dungeon" parent_id_path=PackedInt32Array(268330895) index="0" unique_id=689765421]
 offset_left = -1820.0

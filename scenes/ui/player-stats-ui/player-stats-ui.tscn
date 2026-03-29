@@ -26,17 +26,22 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_648wt")
 
-[node name="PlayerStatsLabel" type="Label" parent="Panel" unique_id=736972506]
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel" unique_id=1023915625]
+layout_mode = 0
+offset_left = 320.0
+offset_top = 56.0
+offset_right = 1688.0
+offset_bottom = 1019.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer" unique_id=1907942382]
+layout_mode = 2
+
+[node name="VScrollBar" type="VScrollBar" parent="Panel/ScrollContainer/VBoxContainer" unique_id=821572981]
+layout_mode = 2
+
+[node name="PlayerStatsLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer" unique_id=736972506]
 unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.19572748
-anchor_top = 0.06666667
-anchor_right = 0.95669746
-anchor_bottom = 0.93333334
-offset_right = 6.1035156e-05
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
 theme = ExtResource("2_648wt")
 text = "PLAYER STATS"
 metadata/_edit_use_anchors_ = true

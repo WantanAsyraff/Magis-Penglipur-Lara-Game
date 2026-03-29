@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="QuestData" format=3 uid="uid://bxen6hc2et1pt"]
+
+[ext_resource type="Script" uid="uid://ck1o5aitgcrs1" path="res://data/quests/quest-objective-data.gd" id="1_gxxo4"]
+[ext_resource type="Script" uid="uid://c7tgt475ebdvf" path="res://data/quests/quest-data.gd" id="2_sa76d"]
+
+[resource]
+script = ExtResource("2_sa76d")
+faculty = 2
+quest_id = "shrub_cutting"
+title = "Shrub Cutting"
+description = "Defeat Pohon"
+dialogue_offer = "These Pohons are pretty annoying!"
+dialogue_incomplete = "These Pohons are pretty annoying!"
+dialogue_complete = "Thanks!"
+reward_xp = 10
+reward_currency = 100
+metadata/_custom_type_script = "uid://c7tgt475ebdvf"

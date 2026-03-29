@@ -44,7 +44,7 @@ next_scene_id = "faculty_of_logic_and_computation_f3_hallway_3"
 spawn_marker_override = "FromHallwayCentralHubMarker"
 
 [node name="FromFloorThreeMarker" type="Marker2D" parent="World/GameComponents/SpawnPoints" parent_id_path=PackedInt32Array(1598029619) index="0" unique_id=1657939714]
-position = Vector2(900, 512)
+position = Vector2(901, 463)
 
 [node name="FromHallwayTwoMarker" type="Marker2D" parent="World/GameComponents/SpawnPoints" parent_id_path=PackedInt32Array(1598029619) index="1" unique_id=1732631565]
 position = Vector2(-207, 722)

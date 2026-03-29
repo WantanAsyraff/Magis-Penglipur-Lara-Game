@@ -1,6 +1,9 @@
 [gd_scene format=3 uid="uid://c6b3bq2x7rw7c"]
 
 [ext_resource type="PackedScene" uid="uid://bire3b68skqpf" path="res://components/NPCs/enemies/Enemy.tscn" id="1_doauk"]
+[ext_resource type="Script" uid="uid://doxgmvpmyr7hx" path="res://data/loot/loot-data.gd" id="3_cdfod"]
+[ext_resource type="Resource" uid="uid://c7hnhpvtmkbkr" path="res://data/loot/enemy-drops/test-loot1.tres" id="4_tugyh"]
+[ext_resource type="Resource" uid="uid://cp75og8my4e43" path="res://data/loot/enemy-drops/daun-residue.tres" id="5_nur2k"]
 [ext_resource type="Texture2D" uid="uid://08ogypeio7o6" path="res://assets/enemy/bunga.png" id="7_nur2k"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_txq8m"]
@@ -46,3 +49,6 @@ wall_jump_velocity = -1200.0
 
 [node name="EnemyQuestObserverComponent" parent="." index="14" unique_id=1631308274]
 enemy_id = "bunga"
+
+[node name="EnemyLootComponent" parent="." index="15" unique_id=32140690]
+loot_table = Array[ExtResource("3_cdfod")]([ExtResource("4_tugyh"), ExtResource("5_nur2k")])

@@ -2,24 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://t3o4osbl3bct" path="res://scenes/worlds/world-template.tscn" id="1_itq73"]
 [ext_resource type="PackedScene" uid="uid://c5a41lx0gq8be" path="res://scenes/transitioners/zone-portal/zone-portal.tscn" id="2_e6nbc"]
-[ext_resource type="Script" uid="uid://cojl8pys274v4" path="res://components/NPCs/enemies/spawner/npc-quest-spawner.gd" id="2_g7aqu"]
-[ext_resource type="PackedScene" uid="uid://dl2wa6wofs753" path="res://components/NPCs/quest-npcs/farhan-npc.tscn" id="3_p8kkt"]
-[ext_resource type="PackedScene" uid="uid://dcspfctpja23s" path="res://components/NPCs/quest-npcs/leon-npc.tscn" id="4_0fd00"]
-[ext_resource type="PackedScene" uid="uid://26coxr1n5ylb" path="res://components/NPCs/quest-npcs/sarah-npc.tscn" id="5_x7gua"]
 
 [node name="WorldTemplate" unique_id=426960778 instance=ExtResource("1_itq73")]
-
-[node name="NPCQuestSpawner" type="Node2D" parent="World" parent_id_path=PackedInt32Array(442689472) index="0" unique_id=1484334115]
-position = Vector2(1811, 741)
-script = ExtResource("2_g7aqu")
-room_id = "flac_f2_h1"
-max_npcs = 2
-room_faculty = 2
-npc_directory = Dictionary[String, PackedScene]({
-"flac_farhan_npc": ExtResource("3_p8kkt"),
-"flac_leon_npc": ExtResource("4_0fd00"),
-"flac_sarah_npc": ExtResource("5_x7gua")
-})
 
 [node name="ColorRect" parent="World/GameComponents/Skybox" parent_id_path=PackedInt32Array(2122455167) index="0" unique_id=871121015]
 visible = true

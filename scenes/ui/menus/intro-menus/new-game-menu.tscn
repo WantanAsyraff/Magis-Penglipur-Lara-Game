@@ -59,10 +59,14 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "COMING SOON"
+text = "DISCLAIMER!
+What you're currently playing is very eary play build of MPL. The current visuals, layouts and aesthetics are not implemented fully yet and do not represent the final product. Keep this in mind when trying this out since this has been mostly a two man development at the moment - Brebon :3
+
+"
 label_settings = ExtResource("3_vlpc8")
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 3
 
 [node name="DifficultyExplainationPanel" type="Panel" parent="Panel/VBoxContainer/HBoxContainer" unique_id=1337436526]
 custom_minimum_size = Vector2(1000, 800)

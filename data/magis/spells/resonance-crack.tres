@@ -4,7 +4,6 @@
 [ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="1_u5qbc"]
 [ext_resource type="PackedScene" path="res://components/effects/impact/packet-burst-impact.tscn" id="2_hjdp6"]
 [ext_resource type="Texture2D" uid="uid://cnnad3qojgc2y" path="res://assets/temp/temp-mana.png" id="2_ojqes"]
-[ext_resource type="Texture2D" uid="uid://xsg3u0yhvpo4" path="res://assets/temp/temp-heart.png" id="3_331ig"]
 [ext_resource type="PackedScene" uid="uid://bv7k8xal2arhv" path="res://components/projectiles/magis-projectile.tscn" id="6_aqol5"]
 
 [resource]
@@ -18,18 +17,19 @@ theory_desc = "Mechanical resonance. Caster drives the target at its natural fre
 Synergy: Impulse Burst destabilises the target's aura frequency first, reducing tune time by ~30%."
 spell_manifest = 4
 magis_archetype = "Ilmiah"
-spell_incantation = Array[String](["up", "down", "left", "right"])
+spell_incantation = Array[String](["up", "up", "down", "right"])
 upfront_cost = 35
 cast_time = 1.2
 spell_scene = ExtResource("6_aqol5")
-projectile_texture = ExtResource("3_331ig")
+projectile_texture = ExtResource("2_ojqes")
 projectile_particles = ExtResource("2_hjdp6")
 impact_particles = ExtResource("1_0ngj2")
 projectile_range = 800.0
-projectile_size = 0.8
-projectile_damage = 13.0
-projectile_speed = 500.0
+projectile_size = 0.95
+projectile_damage = 29.0
+projectile_speed = 1300.0
 aoe_spell_radius = 50.0
 dot = true
 dot_damage = 20.0
+dot_duration = 3.0
 metadata/_custom_type_script = "uid://ddmcw1l0ht73f"

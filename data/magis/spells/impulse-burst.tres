@@ -17,7 +17,7 @@ theory_desc = "Impulse-Momentum Theorem (J = Δp = FΔt). Short-duration high-fo
 Synergy: Third Law Impact staggers → Impulse Burst punishes the recovery window."
 spell_manifest = 1
 magis_archetype = "Ilmiah"
-spell_incantation = Array[String](["up", "up", "left", "left"])
+spell_incantation = Array[String](["down", "down"])
 upfront_cost = 28
 cast_time = 0.6
 spell_scene = ExtResource("5_oauju")
@@ -27,7 +27,8 @@ impact_particles = ExtResource("1_1xmf1")
 projectile_range = 3000.0
 projectile_size = 0.4
 projectile_damage = 8.0
-projectile_speed = 650.0
-piercing = true
+projectile_speed = 900.0
+projectile_count = 3
+projectile_spread = 15.0
 knockback_force = 180.0
 metadata/_custom_type_script = "uid://ddmcw1l0ht73f"

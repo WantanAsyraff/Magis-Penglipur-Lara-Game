@@ -63,10 +63,10 @@ var dash_regen_timer := 0.0
 var spell_inventory: Array[SpellData] = []
 var spell_string: Array[String] = []
 
-# Casting stance — stays open until toggled off with "o"
+# Casting stance — stays open until toggled off
 var _in_casting_stance: bool = false
 
-# Aim lock — true while shift is held during casting stance
+# Aim lock — true while held during casting stance
 var _aim_locked: bool = false
 
 # Ladder
@@ -396,6 +396,21 @@ func _has_partial_match(candidate: Array) -> bool:
 			return true
 	return false
 
+func _has_chain_potential(current_sequence: Array) -> bool:
+	for spell in spell_inventory:
+		var keys: Array = spell.spell_incantation.filter(func(k): return k != "")
+		# Must be strictly longer — same length means it's the spell we just cast
+		if keys.size() <= current_sequence.size():
+			continue
+		var matches := true
+		for i in current_sequence.size():
+			if keys[i] != current_sequence[i]:
+				matches = false
+				break
+		if matches:
+			return true
+	return false
+
 func _add_sequence(incantation: String) -> void:
 	spell_string.append(incantation)
 	_update_spell_icons()
@@ -409,15 +424,23 @@ func _add_sequence(incantation: String) -> void:
 		Player_Global_Data.p_curr_mana -= matched_spell.upfront_cost
 		_execute_spell_instantiation(matched_spell)
 
-		spell_string.clear()
-		_clear_spell_icons()
 		spell_label.text = matched_spell.spell_name + " cast!"
 
 		var label_ref := spell_label
-		get_tree().create_timer(0.3).timeout.connect(func():
-			if _in_casting_stance and label_ref:
-				label_ref.text = ""
-		, CONNECT_ONE_SHOT)
+		if _has_chain_potential(spell_string):
+			# Keep sequence alive — player can chain into a longer combo
+			get_tree().create_timer(0.3).timeout.connect(func():
+				if _in_casting_stance and label_ref:
+					label_ref.text = ""
+			, CONNECT_ONE_SHOT)
+		else:
+			# No further combos possible from this sequence, clear it
+			spell_string.clear()
+			_clear_spell_icons()
+			get_tree().create_timer(0.3).timeout.connect(func():
+				if _in_casting_stance and label_ref:
+					label_ref.text = ""
+			, CONNECT_ONE_SHOT)
 
 func _clear_sequence() -> void:
 	spell_string.clear()

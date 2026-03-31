@@ -156,12 +156,11 @@ func _on_cancel() -> void:
 func _go_back() -> void:
 	print("Current scene, ", Player_Global_Data.current_scene)
 	print("Previous scene, ", Player_Global_Data.previous_scene)
-	if Player_Global_Data.current_scene == "":
-		push_error("BackButton: No previous scene stored.")
+	if Player_Global_Data.previous_scene == "":
+		get_tree().change_scene_to_file("res://scenes/ui/menus/intro-menus/main-menu.tscn")
 		return
 	Player_Manager.last_player_position = Player_Global_Data.previous_position
 	SceneManager.change_scene(Player_Global_Data.previous_scene)
-	print("Position, ", Player_Global_Data.previous_position)
 	print("Position, ", Player_Global_Data.previous_position)
 	Player_Global_Data.p_moveable = true
 

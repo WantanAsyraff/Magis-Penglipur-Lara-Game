@@ -3,7 +3,31 @@
 [ext_resource type="Script" uid="uid://bmkjmv4jmjtsw" path="res://scenes/ui/menus/intro-menus/main-menu.gd" id="1_ienob"]
 [ext_resource type="Theme" uid="uid://cv8bqu76ln7kj" path="res://assets/styles/generic-theme.tres" id="1_q56r3"]
 [ext_resource type="Texture2D" uid="uid://dfwmmvec2g6kh" path="res://assets/ui/panels/mpl-title-card.png" id="2_2hhve"]
+[ext_resource type="FontFile" uid="uid://c6jc6tkq8afp2" path="res://assets/font/Bitter/static/Bitter-Black.ttf" id="2_db2sj"]
+[ext_resource type="FontFile" uid="uid://bid56dcwfjc8v" path="res://assets/font/Bitter/static/Bitter-Bold.ttf" id="3_y1sqq"]
+[ext_resource type="StyleBox" uid="uid://bs4dt5ctqw4hq" path="res://assets/styles/generic-button.tres" id="4_e5tib"]
 [ext_resource type="Script" uid="uid://di6f8axk1wxke" path="res://autoloads/world-manifest.gd" id="4_s2gwe"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_crxs4"]
+bg_color = Color(0.12670222, 0.11774974, 0.19741178, 1)
+
+[sub_resource type="Theme" id="Theme_6grum"]
+default_font = ExtResource("3_y1sqq")
+default_font_size = 24
+Button/colors/font_color = Color(0, 0, 0, 1)
+Button/fonts/font = ExtResource("3_y1sqq")
+Button/styles/hover = ExtResource("4_e5tib")
+Button/styles/hover_pressed = ExtResource("4_e5tib")
+Button/styles/normal = ExtResource("4_e5tib")
+Panel/styles/panel = SubResource("StyleBoxFlat_crxs4")
+
+[sub_resource type="LabelSettings" id="LabelSettings_y1sqq"]
+font = ExtResource("3_y1sqq")
+font_size = 90
+
+[sub_resource type="LabelSettings" id="LabelSettings_e5tib"]
+font = ExtResource("3_y1sqq")
+font_size = 50
 
 [node name="MainMenu" type="Control" unique_id=1328326644]
 layout_mode = 3
@@ -13,50 +37,62 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ienob")
+text = "KNOWLEDGE, POWER, INTUITION, FORESIGHT, STRENGTH, PASSION, COURAGE "
+font = ExtResource("2_db2sj")
+font_size = 72
+font_color = Color(0.8980392, 0.8980392, 0.96862745, 0.047058824)
+line_spacing = 100
 
 [node name="Panel" type="Panel" parent="." unique_id=478250584]
+unique_name_in_owner = true
+z_index = -10
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = SubResource("Theme_6grum")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1363072632]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.734
-anchor_top = 0.418
-anchor_right = 0.94900006
-anchor_bottom = 0.95100003
-offset_left = 0.7199707
-offset_top = -0.44000244
-offset_right = 0.9199219
-offset_bottom = -0.080078125
-grow_horizontal = 0
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -500.0
+offset_top = 537.0
+offset_right = 500.0
+offset_bottom = -170.0
+grow_horizontal = 2
 grow_vertical = 2
 
 [node name="NewGameButton" type="Button" parent="VBoxContainer" unique_id=1553948150]
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 theme = ExtResource("1_q56r3")
 text = "NEW GAME"
 
 [node name="ContinueButton" type="Button" parent="VBoxContainer" unique_id=1123973696]
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 theme = ExtResource("1_q56r3")
 text = "CONTINUE"
 
 [node name="OptionsButton" type="Button" parent="VBoxContainer" unique_id=1948906517]
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 theme = ExtResource("1_q56r3")
 text = "OPTIONS"
 
 [node name="QuitButton" type="Button" parent="VBoxContainer" unique_id=1727308772]
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 theme = ExtResource("1_q56r3")
 text = "QUIT"
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=662355030]
+visible = false
 layout_mode = 0
 offset_right = 2187.0
 offset_bottom = 884.0
@@ -65,6 +101,33 @@ texture = ExtResource("2_2hhve")
 
 [node name="WorldManifest" type="Node" parent="." unique_id=460328842]
 script = ExtResource("4_s2gwe")
+
+[node name="TitleLabel" type="Label" parent="." unique_id=10249033]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -525.0
+offset_top = 228.0
+offset_right = 536.0
+offset_bottom = 337.0
+grow_horizontal = 2
+text = "MAGIS PENGLIPUR LARA"
+label_settings = SubResource("LabelSettings_y1sqq")
+
+[node name="TitleLabel2" type="Label" parent="." unique_id=515033004]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -525.0
+offset_top = 340.0
+offset_right = 536.0
+offset_bottom = 449.0
+grow_horizontal = 2
+text = "\"Knowledge is Power\""
+label_settings = SubResource("LabelSettings_e5tib")
+horizontal_alignment = 1
 
 [connection signal="pressed" from="VBoxContainer/NewGameButton" to="." method="_on_new_game_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/ContinueButton" to="." method="_on_continue_button_pressed"]

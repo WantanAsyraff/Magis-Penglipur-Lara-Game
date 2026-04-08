@@ -30,5 +30,6 @@ func _travel_to(scene_data: SceneData) -> void:
 	if not scene_data:
 		push_error("RoutePanel: Invalid SceneData!")
 		return
+	Player_Manager.set_meta("next_spawn_marker", scene_data.default_spawn_marker)
 	Player_Global_Data.custom_signal_emitted.emit(completion_signal_name)
 	SceneManager.change_scene(scene_data.scene.resource_path)

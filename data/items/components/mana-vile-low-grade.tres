@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://dq3xudxn0iw36"]
+
+[ext_resource type="Texture2D" uid="uid://vro0klifwduy" path="res://assets/loot/leaf-drop.png" id="1_svftq"]
+[ext_resource type="Script" uid="uid://dwparggceebhq" path="res://data/items/item-data.gd" id="2_q5wi5"]
+
+[resource]
+script = ExtResource("2_q5wi5")
+item_id = "craft_cons_001"
+item_name = "Mana Vile (Low Grade)"
+item_icon = ExtResource("1_svftq")
+item_type = 5
+description = "A vial of low grade mana, it's mixed impurities of its environment."
+ringgit_value = 1.2
+metadata/_custom_type_script = "uid://dwparggceebhq"

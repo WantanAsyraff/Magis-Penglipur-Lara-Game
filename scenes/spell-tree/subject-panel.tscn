@@ -133,6 +133,13 @@ layout_mode = 2
 text = "- SPELL LIST"
 autowrap_mode = 3
 
+[node name="SpellCostLabel" type="Label" parent="Panel/MarginContainer/SubjectContainer" unique_id=2138784684]
+unique_name_in_owner = true
+layout_mode = 2
+text = "SPELL COST"
+horizontal_alignment = 1
+autowrap_mode = 3
+
 [node name="ButtonContainer" type="HBoxContainer" parent="Panel/MarginContainer/SubjectContainer" unique_id=362796371]
 unique_name_in_owner = true
 layout_mode = 2

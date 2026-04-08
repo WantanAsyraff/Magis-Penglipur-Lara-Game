@@ -8,4 +8,5 @@ script = ExtResource("1_53fqa")
 scene_id = "the_enchanted_forest_entrance"
 scene = ExtResource("1_i70dm")
 scene_name = "Forest Entrance"
+default_spawn_marker = "fromCrackedWallMarker"
 metadata/_custom_type_script = "uid://bxc44phagq28x"

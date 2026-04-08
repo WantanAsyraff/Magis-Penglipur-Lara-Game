@@ -8,7 +8,6 @@ const SUBJECT_NODE_SCENE = preload("res://scenes/spell-tree/subject-node.tscn")
 const SUBJECT_PANEL_SCENE = preload("res://scenes/spell-tree/subject-panel.tscn")
 
 @export var course_data: CourseData
-
 @export_group("Lock Visuals")
 @export var locked_modulate: Color = Color(1, 1, 1, 0.4)
 @export var lock_suffix: String = " 🔒"
@@ -16,12 +15,39 @@ const SUBJECT_PANEL_SCENE = preload("res://scenes/spell-tree/subject-panel.tscn"
 const H_SPACING = 1000
 const V_SPACING = 280
 
+# -------------------------
+# COST FORMULA
+# -------------------------
+const BASE_COST: int = 30
+const SPELL_COUNT_WEIGHT: float = 0.25
+const COMPREHENSION_MULTIPLIER: Dictionary = {
+	"Novice": 1.0,
+	"Intermediate": 1.5,
+	"Advanced": 2.25,
+	"Expert": 3.5
+}
+
+func get_subject_cost(data: subjectData) -> int:
+	var comp_mult: float = COMPREHENSION_MULTIPLIER.get(data.magis_comprehension, 1.0)
+	var spell_mult: float = 1.0 + (data.contained_spells.size() * SPELL_COUNT_WEIGHT)
+	var cost := BASE_COST * (data.difficulty_level * data.difficulty_level) * comp_mult * spell_mult
+	return int(cost)
+
+func can_afford_subject(data: subjectData) -> bool:
+	return Player_Global_Data.player_exp >= get_subject_cost(data)
+
+# -------------------------
+# READY
+# -------------------------
 func _ready() -> void:
 	add_to_group("spell_tree_view")
 	if course_data:
 		field_label.text = course_data.course_name
 		build_spell_field()
 
+# -------------------------
+# BUILD
+# -------------------------
 func build_spell_field() -> void:
 	for child in container.get_children():
 		child.queue_free()
@@ -42,16 +68,12 @@ func build_spell_field() -> void:
 		for i in range(layer_subjects.size()):
 			var data = layer_subjects[i]
 			var node: SubjectNode = SUBJECT_NODE_SCENE.instantiate()
-
 			container.add_child(node)
-			node.setup(data)
-
+			node.setup(data, get_subject_cost(data))
 			node.locked_modulate = locked_modulate
 			node.lock_suffix = lock_suffix
-
 			var is_locked := _is_subject_locked(data)
 			node.set_locked(is_locked)
-
 			node.selected.connect(_on_subject_selected)
 			node.position = Vector2(50 + (depth * H_SPACING), 50 + (i * V_SPACING))
 			container.nodes_map[data.subject_id] = node
@@ -60,6 +82,9 @@ func build_spell_field() -> void:
 	_update_scroll_limits()
 	container.queue_redraw()
 
+# -------------------------
+# LOCK STATE
+# -------------------------
 func _is_subject_locked(data: subjectData) -> bool:
 	for prereq_id in data.prerequisites:
 		if not _player_has_completed_subject(prereq_id):
@@ -75,6 +100,14 @@ func _player_has_completed_subject(subject_id: String) -> bool:
 			return false
 	return false
 
+func _refresh_lock_states() -> void:
+	for node in container.get_children():
+		if node is SubjectNode:
+			node.set_locked(_is_subject_locked(node.subject_data))
+
+# -------------------------
+# DEPTH
+# -------------------------
 func _get_depth(data: subjectData, dict: Dictionary) -> int:
 	if data.prerequisites.is_empty():
 		return 0
@@ -84,6 +117,9 @@ func _get_depth(data: subjectData, dict: Dictionary) -> int:
 			max_d = max(max_d, _get_depth(dict[pid], dict) + 1)
 	return max_d
 
+# -------------------------
+# SCROLL
+# -------------------------
 func _update_scroll_limits() -> void:
 	var max_v = Vector2.ZERO
 	for node in container.get_children():
@@ -92,9 +128,16 @@ func _update_scroll_limits() -> void:
 			max_v.y = max(max_v.y, node.position.y + node.size.y)
 	container.custom_minimum_size = max_v + Vector2(100, 100)
 
+# -------------------------
+# SIGNALS
+# -------------------------
 func _on_subject_selected(subject: subjectData) -> void:
+	if _is_subject_locked(subject):
+		return
+	var cost := get_subject_cost(subject)
 	var panel = SUBJECT_PANEL_SCENE.instantiate()
 	panel.subject_data = subject
+	panel.xp_cost = cost
 	panel.spells_learned.connect(_on_spells_learned)
 	add_child(panel)
 
@@ -103,11 +146,6 @@ func _on_spells_learned(spells: Array[SpellData]) -> void:
 	if player:
 		player.add_spells(spells)
 	_refresh_lock_states()
-
-func _refresh_lock_states() -> void:
-	for node in container.get_children():
-		if node is SubjectNode:
-			node.set_locked(_is_subject_locked(node.subject_data))
 
 func _on_button_pressed() -> void:
 	var prev := Player_Manager.previous_scene_path

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://jmxebnpufars"]
+
+[ext_resource type="Texture2D" uid="uid://cboickmdt8lx" path="res://assets/projectiles/enemy-proj-temp.png" id="1_1d7ct"]
+[ext_resource type="Script" uid="uid://dwparggceebhq" path="res://data/items/item-data.gd" id="1_5thut"]
+
+[resource]
+script = ExtResource("1_5thut")
+item_id = "craft_cons_004"
+item_name = "Tech Scrap (Low Grade)"
+item_icon = ExtResource("1_1d7ct")
+item_type = 5
+description = "Salvaged electronic debris. Broken circuit fragments, stripped wiring, cracked casings. Unstable mana residue still clings to the surfaces.
+"
+ringgit_value = 0.6
+metadata/_custom_type_script = "uid://dwparggceebhq"

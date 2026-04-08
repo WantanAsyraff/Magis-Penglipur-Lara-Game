@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="subjectData" format=3 uid="uid://d0kr2oheo6tk7"]
+
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="1_jw68i"]
+[ext_resource type="Script" uid="uid://b6vkafnios50y" path="res://data/Resources/ilmu/subject.gd" id="2_n52b2"]
+[ext_resource type="Resource" uid="uid://ceh7ek7xhncbp" path="res://data/magis/spells/phys-collapse.tres" id="2_qaug3"]
+[ext_resource type="Texture2D" uid="uid://cnnad3qojgc2y" path="res://assets/temp/temp-mana.png" id="3_n52b2"]
+[ext_resource type="Resource" uid="uid://kom4ljp2308k" path="res://data/magis/spells/phys-resonate.tres" id="3_s0a8h"]
+[ext_resource type="Resource" uid="uid://bta25qt617j2c" path="res://data/magis/spells/phys-shatterwave.tres" id="4_xy33h"]
+[ext_resource type="Resource" uid="uid://dpwxqn23j1ilq" path="res://data/magis/spells/phys-terminal.tres" id="5_8b71i"]
+
+[resource]
+script = ExtResource("2_n52b2")
+subject_name = "Physics II"
+subject_icon = ExtResource("3_n52b2")
+subject_id = "PHY-002"
+subject_archetype = "Physical Sciences"
+field_of_study = "Deeper application of force and wave behaviour. The student begins combining mechanical principles with oscillation theory to manipulate space and timing in combat."
+theoretical_foundation = "ave interference theory describes how two waves meeting in the same medium either amplify (constructive) or cancel (destructive) each other. A caster who plants a frequency with Tremor and follows with Shatterwave is executing destructive interference deliberately."
+casters_notes = "Alamak, fiziks again"
+magis_archetype = "Ilmiah"
+magis_comprehension = "Intermediate"
+difficulty_level = 2
+prerequisites = Array[String](["PHY-001"])
+contained_spells = Array[ExtResource("1_jw68i")]([ExtResource("2_qaug3"), ExtResource("3_s0a8h"), ExtResource("4_xy33h"), ExtResource("5_8b71i")])
+metadata/_custom_type_script = "uid://b6vkafnios50y"

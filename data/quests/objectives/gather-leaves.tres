@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="QuestObjectiveData" format=3 uid="uid://yninh3soydeo"]
+
+[ext_resource type="Script" uid="uid://ck1o5aitgcrs1" path="res://data/quests/quest-objective-data.gd" id="1_dqluv"]
+
+[resource]
+script = ExtResource("1_dqluv")
+objective_id = "gather_daun_residue"
+description = "Gather some leaves (From the walking flowers)"
+type = 1
+target_id = "daun_residue"
+metadata/_custom_type_script = "uid://ck1o5aitgcrs1"

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="QuestObjectiveData" format=3 uid="uid://bere8dunnetsg"]
+
+[ext_resource type="Script" uid="uid://ck1o5aitgcrs1" path="res://data/quests/quest-objective-data.gd" id="1_cgudv"]
+
+[resource]
+script = ExtResource("1_cgudv")
+objective_id = "gather_pohon_bark_sample"
+description = "Gather some tree branches(From Tree monsters)"
+type = 1
+target_id = "pohon_bark_sample"
+metadata/_custom_type_script = "uid://ck1o5aitgcrs1"

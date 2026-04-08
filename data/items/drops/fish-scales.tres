@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://dt8qd635ei554"]
+
+[ext_resource type="Script" uid="uid://dwparggceebhq" path="res://data/items/item-data.gd" id="1_jqu27"]
+[ext_resource type="Texture2D" uid="uid://vro0klifwduy" path="res://assets/loot/leaf-drop.png" id="1_w5oh5"]
+
+[resource]
+script = ExtResource("1_jqu27")
+item_id = "drop_003"
+item_name = "Fish Scales"
+item_icon = ExtResource("1_w5oh5")
+item_type = 4
+description = "Slimy but shimmering scales.
+"
+metadata/_custom_type_script = "uid://dwparggceebhq"

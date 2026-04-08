@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://bndiajknfcv3v"]
+
+[ext_resource type="Resource" uid="uid://jmxebnpufars" path="res://data/items/components/tech-scrap-low-grade.tres" id="1_he263"]
+[ext_resource type="Texture2D" uid="uid://cboickmdt8lx" path="res://assets/projectiles/enemy-proj-temp.png" id="1_nj3pe"]
+[ext_resource type="Script" uid="uid://dwparggceebhq" path="res://data/items/item-data.gd" id="2_he263"]
+
+[resource]
+script = ExtResource("2_he263")
+item_id = "craft_cons_005"
+item_name = "Tech Scrap (Medium Grade)"
+item_icon = ExtResource("1_nj3pe")
+item_type = 5
+description = "Partially functional salvage. cleaned circuit boards and intact wiring bundles. Mana conductivity has been tested and cleared.
+"
+ringgit_value = 1.5
+ingredient_1 = ExtResource("1_he263")
+qty_1 = 10
+metadata/_custom_type_script = "uid://dwparggceebhq"

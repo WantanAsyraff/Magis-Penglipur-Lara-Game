@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://msus8fynpos7"]
+
+[ext_resource type="Resource" uid="uid://jmxebnpufars" path="res://data/items/components/tech-scrap-low-grade.tres" id="1_gpgdi"]
+[ext_resource type="Resource" uid="uid://bndiajknfcv3v" path="res://data/items/components/tech-scrap-medium-grade.tres" id="2_3ie67"]
+[ext_resource type="Texture2D" uid="uid://cboickmdt8lx" path="res://assets/projectiles/enemy-proj-temp.png" id="2_xykmc"]
+[ext_resource type="Script" uid="uid://dwparggceebhq" path="res://data/items/item-data.gd" id="3_3ie67"]
+
+[resource]
+script = ExtResource("3_3ie67")
+item_id = "craft_cons_006"
+item_name = "Tech Scrap (High Grade)"
+item_icon = ExtResource("2_xykmc")
+item_type = 5
+description = "Low level electronics. calibrated microboards and shielded wiring assemblies. Mana-compatible and ready for integration into conductors or devices.
+"
+ringgit_value = 3.4
+ingredient_1 = ExtResource("1_gpgdi")
+qty_1 = 5
+ingredient_2 = ExtResource("2_3ie67")
+qty_2 = 10
+metadata/_custom_type_script = "uid://dwparggceebhq"

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dd5g0ufrdt4m2"]
 
 [ext_resource type="Script" uid="uid://ccluasuhpw85o" path="res://scenes/spell-tree/spell-tree.gd" id="1_df1co"]
-[ext_resource type="Resource" uid="uid://blq8djoly85kr" path="res://data/magis/ilmiah/physics/applied-mechanics-and-magis-conductivity.tres" id="2_ksrjs"]
+[ext_resource type="Resource" uid="uid://vi8s63paycd8" path="res://data/magis/ilmiah/physics-field/physical-science.tres" id="2_ksrjs"]
 [ext_resource type="Script" uid="uid://dknkru5fm2jo6" path="res://scenes/spell-tree/spell-path.gd" id="3_4wqj6"]
 [ext_resource type="FontFile" uid="uid://bid56dcwfjc8v" path="res://assets/font/Bitter/static/Bitter-Bold.ttf" id="3_ksrjs"]
 [ext_resource type="StyleBox" uid="uid://bs4dt5ctqw4hq" path="res://assets/styles/generic-button.tres" id="4_niine"]

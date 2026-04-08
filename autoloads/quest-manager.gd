@@ -1,3 +1,4 @@
+#quest-manager.gd
 extends Node
 
 # -------------------------
@@ -45,8 +46,8 @@ func request_quest_for_npc(faculty: QuestData.Faculty, npc_id: String) -> QuestI
 			print("[QuestManager] Skipping '%s' — prerequisites not met" % data.quest_id)
 			continue
 		var active_count: int = _quest_active_count.get(data.quest_id, 0)
-		if active_count >= data.max_concurrent:
-			print("[QuestManager] Skipping '%s' — at concurrent cap (%d)" % [data.quest_id, data.max_concurrent])
+		if active_count >= 1:
+			print("[QuestManager] Skipping '%s' — already active" % data.quest_id)
 			continue
 		if Player_Global_Data.completed_quests.has(data.quest_id):
 			print("[QuestManager] Skipping '%s' — already completed" % data.quest_id)
@@ -90,12 +91,14 @@ func update_objective(instance_id: String, objective_id: String, amount: int = 1
 func _update_goals_from_instance(instance: QuestInstance) -> void:
 	print("[QuestManager] updating goals — %d objective(s)" % instance.quest_data.objectives.size())
 	var goals: Array[String] = []
+	
 	for obj in instance.quest_data.objectives:
 		var progress: int = instance.objective_progress.get(obj.objective_id, 0)
-		var required := 0
-		for amount in obj.required_amounts:
-			required += amount
+		# Use the singular 'required_amount' from your QuestObjectiveData class
+		var required: int = obj.required_amount 
+		
 		goals.append("%s (%d/%d)" % [obj.description, progress, required])
+	
 	print("[QuestManager] goals array: %s" % str(goals))
 	Player_Global_Data.active_goals = goals
 
@@ -190,3 +193,25 @@ func _prerequisites_met(data: QuestData) -> bool:
 			print("[QuestManager] Prerequisite '%s' not met for '%s'" % [req_id, data.quest_id])
 			return false
 	return true
+
+## Called when an NPC leaves the scene without completing its quest.
+## Frees the slot if the quest was never accepted (AVAILABLE).
+## Leaves ACTIVE/COMPLETE instances untouched so progress persists.
+func release_npc(npc_id: String) -> void:
+	print("[QuestManager] release_npc | npc_id='%s'" % npc_id)
+	if not _npc_instance_map.has(npc_id):
+		print("[QuestManager] release_npc — '%s' not in map, skipping" % npc_id)
+		return
+	var instance_id: String = _npc_instance_map[npc_id]
+	var instance: QuestInstance = _active_instances.get(instance_id, null)
+	if instance and instance.status == QuestInstance.Status.AVAILABLE:
+		var quest_id := instance.quest_data.quest_id
+		_quest_active_count[quest_id] = max(0, _quest_active_count.get(quest_id, 1) - 1)
+		_active_instances.erase(instance_id)
+		print("[QuestManager] release_npc — AVAILABLE instance removed | quest='%s' | count now %d" % [
+			quest_id, _quest_active_count[quest_id]
+		])
+	elif instance:
+		print("[QuestManager] release_npc — instance status=%s, keeping in pool" % str(instance.status))
+	_npc_instance_map.erase(npc_id)
+	print("[QuestManager] release_npc — '%s' removed from npc_instance_map" % npc_id)

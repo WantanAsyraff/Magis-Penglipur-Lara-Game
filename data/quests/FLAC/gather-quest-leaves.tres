@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="QuestData" format=3 uid="uid://ntfrcmxqafy8"]
+
+[ext_resource type="Script" uid="uid://ck1o5aitgcrs1" path="res://data/quests/quest-objective-data.gd" id="1_1katm"]
+[ext_resource type="Script" uid="uid://doxgmvpmyr7hx" path="res://data/loot/loot-data.gd" id="2_f60j2"]
+[ext_resource type="Resource" uid="uid://yninh3soydeo" path="res://data/quests/objectives/gather-leaves.tres" id="2_qajgs"]
+[ext_resource type="Script" uid="uid://c7tgt475ebdvf" path="res://data/quests/quest-data.gd" id="3_qajgs"]
+[ext_resource type="Resource" uid="uid://bere8dunnetsg" path="res://data/quests/objectives/gather-branches.tres" id="3_sqjmw"]
+
+[resource]
+script = ExtResource("3_qajgs")
+quest_id = "gather_quest_leaves"
+title = "Gather some leaves"
+description = "Leaves"
+type = 4
+faculty = 2
+objectives = Array[ExtResource("1_1katm")]([ExtResource("2_qajgs"), ExtResource("3_sqjmw")])
+dialogue_offer = "I need samples! Leaves! Branches!"
+dialogue_incomplete = "Seems like you haven't gotten what I requested."
+dialogue_complete = "A thousand thanks!"
+reward_xp = 200
+reward_currency = 10
+metadata/_custom_type_script = "uid://c7tgt475ebdvf"

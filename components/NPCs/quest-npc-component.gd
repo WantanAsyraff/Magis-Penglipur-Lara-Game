@@ -10,6 +10,11 @@ signal despawned
 @export var npc_id: String = ""
 @export var quest_indicator: Node2D = null
 
+@export_group("Quest Dialogue")
+@export_multiline var dialogue_offer: String = "Hello! I have a task for you."
+@export_multiline var dialogue_incomplete: String = "You haven't finished the task yet!"
+@export_multiline var dialogue_complete: String = "Great job! Here is your reward."
+
 var _instance: QuestInstance = null
 var _npc: CharacterBody2D = null
 var _busy: bool = false
@@ -20,11 +25,25 @@ func _ready() -> void:
 	_npc = get_parent() as CharacterBody2D
 	print("[QuestNPC] ready | npc_id=%s | faculty=%s | _dialogic_comp=%s" % [npc_id, faculty, _dialogic_comp])
 
+func _exit_tree() -> void:
+	print("[QuestNPC] _exit_tree | npc_id=%s | status=%s" % [
+		npc_id,
+		str(_instance.status) if _instance else "no instance"
+	])
+	if not _instance:
+		Player_Global_Data.unregister_npc(npc_id)
+		return
+
+	if _instance.status == QuestInstance.Status.AVAILABLE:
+		print("[QuestNPC] _exit_tree — AVAILABLE instance, releasing slot for '%s'" % npc_id)
+		QuestManager.release_npc(npc_id)
+		Player_Global_Data.unregister_npc(npc_id)
+
 func has_quest() -> bool:
 	return _instance != null
 
 # -------------------------
-# SETUP (called by RoomQuestManager)
+# SETUP
 # -------------------------
 func setup_quest() -> void:
 	_instance = QuestManager.request_quest_for_npc(faculty, npc_id)
@@ -39,28 +58,29 @@ func setup_quest() -> void:
 func interact() -> void:
 	print("[QuestNPC] interact() | _busy=%s | _instance=%s" % [_busy, _instance])
 	if _busy:
-		print("[QuestNPC] busy, bailing")
 		return
+	
 	if not _instance:
 		if _dialogic_comp:
 			_dialogic_comp.start()
 		return
-	print("[QuestNPC] status=%s | dialogue_offer='%s'" % [_instance.status, _instance.quest_data.dialogue_offer])
+
+	# UPDATED: Using local export variables instead of quest_data
 	match _instance.status:
 		QuestInstance.Status.AVAILABLE:
 			_busy = true
-			await _run_quest_sequence(_instance.quest_data.dialogue_offer)
+			await _run_quest_sequence(dialogue_offer)
 			QuestManager.accept_quest(_instance.instance_id)
 			_busy = false
+			
 		QuestInstance.Status.ACTIVE:
+			_busy = true
 			if _instance.is_objectives_met():
-				_busy = true
 				await _complete_flow()
-				_busy = false
 			else:
-				_busy = true
-				await _run_quest_sequence(_instance.quest_data.dialogue_incomplete)
-				_busy = false
+				await _run_quest_sequence(dialogue_incomplete)
+			_busy = false
+			
 		QuestInstance.Status.COMPLETE:
 			_busy = true
 			await _complete_flow()
@@ -82,23 +102,24 @@ func confirm_complete_dialogue_done() -> void:
 # -------------------------
 func _complete_flow() -> void:
 	if QuestManager.try_hand_off(_instance.instance_id):
-		await _run_quest_sequence(_instance.quest_data.dialogue_complete)
+		# UPDATED: Using local export variable
+		await _run_quest_sequence(dialogue_complete)
 		_grant_rewards()
 		_set_indicator_visible(false)
 		_despawn()
 	else:
-		await _run_quest_sequence(_instance.quest_data.dialogue_incomplete)
+		# UPDATED: Using local export variable
+		await _run_quest_sequence(dialogue_incomplete)
 
 func _run_quest_sequence(text: String) -> void:
 	print("[QuestNPC] _run_quest_sequence | text='%s'" % text)
 	if text.is_empty():
-		print("[QuestNPC] text is empty, bailing")
 		return
+		
 	if _dialogic_comp:
-		print("[QuestNPC] calling start_direct_text")
 		await _dialogic_comp.start_direct_text(text)
 	else:
-		print("[QuestNPC] _dialogic_comp is NULL")
+		print("[QuestNPC] WARNING: _dialogic_comp is NULL")
 
 func _grant_rewards() -> void:
 	if not _instance:
@@ -109,6 +130,7 @@ func _grant_rewards() -> void:
 
 func _despawn() -> void:
 	QuestManager.notify_npc_despawned(_instance.instance_id if _instance else "")
+	Player_Global_Data.unregister_npc(npc_id)
 	despawned.emit()
 	if _npc:
 		_npc.queue_free()

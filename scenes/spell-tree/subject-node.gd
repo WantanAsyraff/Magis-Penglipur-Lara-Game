@@ -9,9 +9,9 @@ var _locked: bool = false
 @export var locked_modulate: Color = Color(1, 1, 1, 0.4)
 @export var lock_suffix: String = " 🔒"
 
-func setup(data: subjectData) -> void:
+func setup(data: subjectData, cost: int = 0) -> void:
 	subject_data = data
-	text = data.subject_name
+	text = "%s\n%d XP" % [data.subject_name, cost]
 
 func set_locked(is_locked: bool) -> void:
 	_locked = is_locked

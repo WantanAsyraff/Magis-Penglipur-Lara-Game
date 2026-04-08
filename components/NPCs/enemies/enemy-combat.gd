@@ -147,7 +147,7 @@ func _do_ranged(enemy: CharacterBody2D, player: Node) -> void:
 
 	var dir = (player.global_position - enemy.global_position).normalized()
 	var scene_to_use: PackedScene = ranged_spell.spell_scene if ranged_spell.spell_scene \
-		else preload("res://components/projectiles/magis-projectile.tscn")
+		else preload("res://components/projectiles/enemy-magis-projectile.tscn")
 	var inst = scene_to_use.instantiate()
 	inst.spell_data = ranged_spell
 	inst.source = enemy

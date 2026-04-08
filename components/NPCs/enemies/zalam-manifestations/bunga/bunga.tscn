@@ -1,24 +1,33 @@
 [gd_scene format=3 uid="uid://c6b3bq2x7rw7c"]
 
 [ext_resource type="PackedScene" uid="uid://bire3b68skqpf" path="res://components/NPCs/enemies/Enemy.tscn" id="1_doauk"]
+[ext_resource type="Texture2D" uid="uid://cdb2b3lesaux2" path="res://assets/enemy/bunga-attack.png" id="2_tugyh"]
 [ext_resource type="Script" uid="uid://doxgmvpmyr7hx" path="res://data/loot/loot-data.gd" id="3_cdfod"]
-[ext_resource type="Resource" uid="uid://c7hnhpvtmkbkr" path="res://data/loot/enemy-drops/test-loot1.tres" id="4_tugyh"]
-[ext_resource type="Resource" uid="uid://cp75og8my4e43" path="res://data/loot/enemy-drops/daun-residue.tres" id="5_nur2k"]
+[ext_resource type="Resource" uid="uid://brh5ivq6fih3" path="res://data/loot/enemy-drops/fish-loot.tres" id="5_tugyh"]
 [ext_resource type="Texture2D" uid="uid://08ogypeio7o6" path="res://assets/enemy/bunga.png" id="7_nur2k"]
+[ext_resource type="Script" uid="uid://c6ddc2n1nafdl" path="res://components/NPCs/enemies/enemy-animation-component.gd" id="7_txq8m"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_txq8m"]
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("2_tugyh")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("7_nur2k")
 }],
 "loop": true,
-"name": &"default",
+"name": &"idle",
 "speed": 5.0
 }]
 
 [node name="Enemy" unique_id=1787106916 instance=ExtResource("1_doauk")]
-enemy_name = "Bunga"
+enemy_name = "bunga"
 max_health = 40.0
 move_speed = 300.0
 chase_speed = 500.0
@@ -27,9 +36,13 @@ chase_speed = 500.0
 modulate = Color(0.90703017, 0.36390698, 0.38780087, 1)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_txq8m")
+animation = &"idle"
 
 [node name="CollisionShape2D" parent="." index="2" unique_id=62178440]
 position = Vector2(0, -11.5)
+
+[node name="AttackArea" parent="." index="4" unique_id=854814806]
+unique_name_in_owner = true
 
 [node name="DamageIndicatorComponent" parent="." index="10" unique_id=194822805]
 lifetime = 1.4
@@ -51,4 +64,8 @@ wall_jump_velocity = -1200.0
 enemy_id = "bunga"
 
 [node name="EnemyLootComponent" parent="." index="15" unique_id=32140690]
-loot_table = Array[ExtResource("3_cdfod")]([ExtResource("4_tugyh"), ExtResource("5_nur2k")])
+loot_table = Array[ExtResource("3_cdfod")]([ExtResource("5_tugyh")])
+
+[node name="EnemyAnimationComponent" type="Node" parent="." index="16" unique_id=300494939]
+unique_name_in_owner = true
+script = ExtResource("7_txq8m")

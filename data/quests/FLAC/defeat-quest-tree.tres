@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="QuestData" format=3 uid="uid://bt1qy8l3qc67k"]
+
+[ext_resource type="Script" uid="uid://ck1o5aitgcrs1" path="res://data/quests/quest-objective-data.gd" id="1_ee0dp"]
+[ext_resource type="Script" uid="uid://doxgmvpmyr7hx" path="res://data/loot/loot-data.gd" id="2_dhjma"]
+[ext_resource type="Resource" uid="uid://cwsiwbq86s6dy" path="res://data/quests/objectives/defeat-tree-manifestation.tres" id="2_vw5ne"]
+[ext_resource type="Script" uid="uid://c7tgt475ebdvf" path="res://data/quests/quest-data.gd" id="3_vw5ne"]
+
+[resource]
+script = ExtResource("3_vw5ne")
+quest_id = "defeat_tree_quest"
+title = "Defeat Tree Monsters"
+description = "Defeat some Tree Monsters"
+type = 3
+faculty = 2
+objectives = Array[ExtResource("1_ee0dp")]([ExtResource("2_vw5ne")])
+dialogue_offer = "I hate nature! Kill those tree monsters!"
+dialogue_incomplete = "Those icebergs haven't melted yet, those tree monsters!"
+dialogue_complete = "Yes! Global warming rocks!"
+reward_xp = 200
+reward_currency = 10
+metadata/_custom_type_script = "uid://c7tgt475ebdvf"

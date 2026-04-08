@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="CourseData" format=3 uid="uid://vi8s63paycd8"]
+
+[ext_resource type="Script" uid="uid://mj2k1sm83ebr" path="res://data/Resources/ilmu/course.gd" id="1_6m01t"]
+[ext_resource type="Script" uid="uid://b6vkafnios50y" path="res://data/Resources/ilmu/subject.gd" id="2_h3kd3"]
+[ext_resource type="Resource" uid="uid://b3vd4x36db6qf" path="res://data/magis/ilmiah/physics-field/core-subjects/physics-I.tres" id="3_h3kd3"]
+[ext_resource type="Resource" uid="uid://d0kr2oheo6tk7" path="res://data/magis/ilmiah/physics-field/core-subjects/physics-II.tres" id="4_tl2cy"]
+
+[resource]
+script = ExtResource("1_6m01t")
+course_name = "Study of Pure Science"
+course_id = "sc-stem-0001"
+course_archetype = "Physical Science"
+course_description = "Nerds"
+magis_archetype = "Ilmiah"
+subjects = Array[ExtResource("2_h3kd3")]([ExtResource("3_h3kd3"), ExtResource("4_tl2cy")])
+metadata/_custom_type_script = "uid://mj2k1sm83ebr"

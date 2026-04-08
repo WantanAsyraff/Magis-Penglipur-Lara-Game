@@ -56,6 +56,11 @@ func clear_goals() -> void:
 	active_goals = []
 
 # -------------------------
+# SELECTED SPELL (transient)
+# -------------------------
+var selected_spell: SpellData = null
+
+# -------------------------
 # IDENTITY
 # -------------------------
 var p_name: String
@@ -66,7 +71,7 @@ var p_mood: String
 # PROGRESSION
 # -------------------------
 var player_level: int = 1
-var player_exp: float = 0
+var player_exp: float = 500
 var completed_quests: Array[String] = []
 var active_quest_states: Dictionary = {}   # quest_id -> {obj_id: progress} for saving
 # -------------------------

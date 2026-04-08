@@ -8,7 +8,8 @@
 [node name="MagisProjectile" type="Area2D" unique_id=1202338616]
 light_mask = 0
 visibility_layer = 19
-collision_mask = 19
+collision_layer = 12
+collision_mask = 31
 script = ExtResource("1_xe6p8")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2119993349]

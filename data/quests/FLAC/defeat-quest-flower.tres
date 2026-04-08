@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="QuestData" format=3 uid="uid://ddk4mu15b0w7p"]
+
+[ext_resource type="Script" uid="uid://ck1o5aitgcrs1" path="res://data/quests/quest-objective-data.gd" id="1_ifbjh"]
+[ext_resource type="Resource" uid="uid://c24o0e2jhl17g" path="res://data/quests/objectives/defeat-flower-manifestation.tres" id="2_jd6i2"]
+[ext_resource type="Script" uid="uid://doxgmvpmyr7hx" path="res://data/loot/loot-data.gd" id="3_8dmes"]
+[ext_resource type="Script" uid="uid://c7tgt475ebdvf" path="res://data/quests/quest-data.gd" id="4_bm8sc"]
+
+[resource]
+script = ExtResource("4_bm8sc")
+quest_id = "defeat_flower_quest"
+title = "Flowers"
+description = "Defeat some flowers"
+type = 3
+faculty = 2
+objectives = Array[ExtResource("1_ifbjh")]([ExtResource("2_jd6i2")])
+dialogue_offer = "I heard there's been a growing amount of flowers..."
+dialogue_incomplete = "Have you done my quest yet?"
+dialogue_complete = "Thanks!"
+reward_xp = 200
+reward_currency = 10
+metadata/_custom_type_script = "uid://c7tgt475ebdvf"

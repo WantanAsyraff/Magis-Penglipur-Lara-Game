@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="QuestData" format=3 uid="uid://dhreecndygkqw"]
+
+[ext_resource type="Script" uid="uid://ck1o5aitgcrs1" path="res://data/quests/quest-objective-data.gd" id="1_hey8a"]
+[ext_resource type="Resource" uid="uid://bere8dunnetsg" path="res://data/quests/objectives/gather-branches.tres" id="2_4f83n"]
+[ext_resource type="Script" uid="uid://doxgmvpmyr7hx" path="res://data/loot/loot-data.gd" id="2_rjg2l"]
+[ext_resource type="Script" uid="uid://c7tgt475ebdvf" path="res://data/quests/quest-data.gd" id="3_4f83n"]
+
+[resource]
+script = ExtResource("3_4f83n")
+quest_id = "gather_quest_branches"
+title = "Touch some trees"
+description = "Defeat some tree to get some branches"
+type = 4
+faculty = 2
+objectives = Array[ExtResource("1_hey8a")]([ExtResource("2_4f83n")])
+dialogue_offer = "I need sticks, gimme some"
+dialogue_incomplete = "You're not done with my quest. I need sticks!"
+dialogue_complete = "Thanks!"
+reward_xp = 100
+reward_currency = 12
+metadata/_custom_type_script = "uid://c7tgt475ebdvf"

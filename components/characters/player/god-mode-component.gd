@@ -27,11 +27,12 @@ var _original_collision_mask: int = 0
 # BOOTSTRAP
 # -------------------------
 func _ready() -> void:
-	# Expect to be a direct child of Player
 	_player = get_parent() as Player
 	if not _player:
 		push_error("GodMode: parent is not a Player node.")
 		return
+	# Run our physics step AFTER Player's so we always win the velocity race
+	process_physics_priority = 10  # Player defaults to 0
 	_setup_label()
 
 func _setup_label() -> void:

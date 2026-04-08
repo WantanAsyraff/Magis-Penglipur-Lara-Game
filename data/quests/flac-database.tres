@@ -1,13 +1,13 @@
-[gd_resource type="Resource" script_class="QuestDatabase" format=3 uid="uid://bx12rk02vc77o"]
+[gd_resource type="Resource" script_class="QuestDatabase" format=3 uid="uid://b8mqsuvo8hmak"]
 
-[ext_resource type="Script" uid="uid://c7tgt475ebdvf" path="res://data/quests/quest-data.gd" id="1_8gn6t"]
-[ext_resource type="Resource" uid="uid://b08de1w2wl8gc" path="res://data/quests/FLAC/quest-data-test-1.tres" id="2_7rsph"]
-[ext_resource type="Script" uid="uid://c8aqxtd2wxmds" path="res://data/quests/quest-database.gd" id="2_hlnii"]
-[ext_resource type="Resource" uid="uid://8i8b2w3v7o81" path="res://data/quests/FLAC/quest-data-test-2.tres" id="3_7rsph"]
-[ext_resource type="Resource" uid="uid://c8lp1b0r06mhf" path="res://data/quests/FLAC/quest-data-test-3.tres" id="4_nwwp7"]
-[ext_resource type="Resource" uid="uid://c8i288141rmmy" path="res://data/quests/FLAC/quest-data-test-4.tres" id="5_ffvtg"]
+[ext_resource type="Script" uid="uid://c7tgt475ebdvf" path="res://data/quests/quest-data.gd" id="1_gjs6k"]
+[ext_resource type="Script" uid="uid://c8aqxtd2wxmds" path="res://data/quests/quest-database.gd" id="2_dmq1y"]
+[ext_resource type="Resource" uid="uid://ddk4mu15b0w7p" path="res://data/quests/FLAC/defeat-quest-flower.tres" id="2_uugm3"]
+[ext_resource type="Resource" uid="uid://bt1qy8l3qc67k" path="res://data/quests/FLAC/defeat-quest-tree.tres" id="3_1vxss"]
+[ext_resource type="Resource" uid="uid://ntfrcmxqafy8" path="res://data/quests/FLAC/gather-quest-leaves.tres" id="4_u5nhw"]
+[ext_resource type="Resource" uid="uid://dhreecndygkqw" path="res://data/quests/FLAC/gather-quest-branches.tres" id="5_1vxss"]
 
 [resource]
-script = ExtResource("2_hlnii")
-quests = Array[ExtResource("1_8gn6t")]([ExtResource("2_7rsph"), ExtResource("3_7rsph"), ExtResource("4_nwwp7"), ExtResource("5_ffvtg")])
+script = ExtResource("2_dmq1y")
+quests = Array[ExtResource("1_gjs6k")]([ExtResource("2_uugm3"), ExtResource("3_1vxss"), ExtResource("4_u5nhw"), ExtResource("5_1vxss")])
 metadata/_custom_type_script = "uid://c8aqxtd2wxmds"

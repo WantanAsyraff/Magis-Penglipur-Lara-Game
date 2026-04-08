@@ -68,4 +68,5 @@ func _on_body_exited(body: Node2D) -> void:
 	_player_in_area = false
 	_set_label_visible(false)
 	if is_safe_zone:
+		
 		Player_Global_Data.combat_mode = true

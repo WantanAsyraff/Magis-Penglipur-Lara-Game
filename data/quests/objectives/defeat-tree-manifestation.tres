@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="QuestObjectiveData" format=3 uid="uid://cwsiwbq86s6dy"]
+
+[ext_resource type="Script" uid="uid://ck1o5aitgcrs1" path="res://data/quests/quest-objective-data.gd" id="1_qb3pg"]
+
+[resource]
+script = ExtResource("1_qb3pg")
+objective_id = "defeat_pohon"
+description = "Deafeat the Tree Monsters"
+type = 2
+target_id = "pohon"
+required_amount = 15
+metadata/_custom_type_script = "uid://ck1o5aitgcrs1"

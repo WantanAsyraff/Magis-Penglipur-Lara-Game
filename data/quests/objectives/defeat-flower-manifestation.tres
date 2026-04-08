@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="QuestObjectiveData" format=3 uid="uid://c24o0e2jhl17g"]
+
+[ext_resource type="Script" uid="uid://ck1o5aitgcrs1" path="res://data/quests/quest-objective-data.gd" id="1_u1mb2"]
+
+[resource]
+script = ExtResource("1_u1mb2")
+objective_id = "defeat_flowers"
+description = "Defeat The Flower Manifestations"
+type = 2
+target_id = "bunga"
+required_amount = 10
+metadata/_custom_type_script = "uid://ck1o5aitgcrs1"

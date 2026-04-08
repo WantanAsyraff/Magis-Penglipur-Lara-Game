@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://bfnhodcq2gj04"]
+
+[ext_resource type="Script" uid="uid://dwparggceebhq" path="res://data/items/item-data.gd" id="1_1drmu"]
+[ext_resource type="Texture2D" uid="uid://vro0klifwduy" path="res://assets/loot/leaf-drop.png" id="1_7ukwd"]
+
+[resource]
+script = ExtResource("1_1drmu")
+item_id = "drop_001"
+item_name = "Fish Meat"
+item_icon = ExtResource("1_7ukwd")
+item_type = 6
+description = "A Kocheen's favourite meat! Used for cooking. 
+"
+ringgit_value = 2.5
+health_restore = 5
+metadata/_custom_type_script = "uid://dwparggceebhq"

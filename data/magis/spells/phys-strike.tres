@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://bbjkobdqthylh"]
+
+[ext_resource type="PackedScene" uid="uid://5847o4yjb45a" path="res://components/effects/impact/ground-slam-impact.tscn" id="1_4pgrw"]
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="1_qxd21"]
+[ext_resource type="PackedScene" uid="uid://h0msm0ixfq2n" path="res://components/effects/trails/root-snare-particle.tscn" id="2_2pxgg"]
+[ext_resource type="Texture2D" uid="uid://cnnad3qojgc2y" path="res://assets/temp/temp-mana.png" id="2_malc6"]
+[ext_resource type="PackedScene" uid="uid://b2fvlmdplgevi" path="res://components/projectiles/player-magis-projectile.tscn" id="3_w3vin"]
+
+[resource]
+script = ExtResource("1_qxd21")
+spell_name = "strike"
+spell_id = "phys-strike"
+spell_icon = ExtResource("2_malc6")
+spell_flavour_text = "What moves with purpose, arrives with consequence."
+theory_desc = "Momentum is mass in motion. A precisely launched mana projectile sustains its kinetic state across distance contact transfers the full accumulated momentum to the target on impact."
+spell_manifest = 1
+magis_archetype = "Ilmiah"
+spell_incantation = Array[String](["down", "left", "down"])
+upfront_cost = 15
+cast_time = 0.2
+spell_scene = ExtResource("3_w3vin")
+projectile_texture = ExtResource("2_malc6")
+projectile_particles = ExtResource("2_2pxgg")
+impact_particles = ExtResource("1_4pgrw")
+projectile_range = 950.0
+projectile_size = 0.8
+projectile_damage = 8.0
+projectile_speed = 1000.0
+knockback_force = 700.0
+applies_slow = true
+slow_factor = 0.3
+slow_duration = 5.0
+metadata/_custom_type_script = "uid://ddmcw1l0ht73f"

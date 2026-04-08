@@ -1,14 +1,14 @@
 [gd_scene format=3 uid="uid://bvvsrqdblf5ow"]
 
 [ext_resource type="PackedScene" uid="uid://bire3b68skqpf" path="res://components/NPCs/enemies/Enemy.tscn" id="1_mkrr6"]
-[ext_resource type="Resource" uid="uid://vkuuxqst8m3c" path="res://data/magis/spells/impulse-burst.tres" id="2_ojdq4"]
+[ext_resource type="Resource" uid="uid://dmvvyvtjjqhf8" path="res://data/magis/enemy-spells/pohon-branch.tres" id="2_l8p3l"]
 [ext_resource type="Script" uid="uid://doxgmvpmyr7hx" path="res://data/loot/loot-data.gd" id="3_l8p3l"]
 [ext_resource type="Resource" uid="uid://c7hnhpvtmkbkr" path="res://data/loot/enemy-drops/test-loot1.tres" id="4_7l61k"]
 [ext_resource type="Resource" uid="uid://div5wmyiwnd0o" path="res://data/loot/enemy-drops/pohon-bark-sample.tres" id="5_l17qw"]
 
 [node name="Enemy" unique_id=1787106916 instance=ExtResource("1_mkrr6")]
 scale = Vector2(2, 2)
-enemy_name = "Pohon"
+enemy_name = "pohon"
 max_health = 50.0
 move_speed = 500.0
 chase_speed = 800.0
@@ -22,7 +22,7 @@ melee_damage = 0.0
 attack_cooldown = 2.4
 ranged_trigger_distance = 3000.0
 retreat_threshold = 500.0
-ranged_spell = ExtResource("2_ojdq4")
+ranged_spell = ExtResource("2_l8p3l")
 
 [node name="EnemyPatrol" parent="." index="12" unique_id=1768277637]
 patrol_range = 800.0

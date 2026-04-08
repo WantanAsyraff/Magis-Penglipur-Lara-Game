@@ -16,6 +16,7 @@ func _on_enemy_died() -> void:
 func _notify_quest_manager() -> void:
 	for instance in QuestManager.get_all_active():
 		for objective in instance.quest_data.objectives:
+			print("[EnemyQuestObserver] Objective properties: ", objective.get_property_list().map(func(p): return p.name))
 			if objective.type == QuestObjectiveData.ObjectiveType.DEFEAT_ENEMY:
-				if enemy_id in objective.target_ids:
+				if enemy_id in objective.target_id:
 					QuestManager.update_objective(instance.instance_id, objective.objective_id, 1)

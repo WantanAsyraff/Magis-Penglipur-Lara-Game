@@ -48,10 +48,8 @@ func is_objectives_met() -> bool:
 func _get_required(objective_id: String) -> int:
 	for obj in quest_data.objectives:
 		if obj.objective_id == objective_id:
-			var total := 0
-			for amount in obj.required_amounts:
-				total += amount
-			return total
+			# Check if your resource property is actually 'required_amount'
+			return obj.required_amount 
 	return 1
 
 # -------------------------

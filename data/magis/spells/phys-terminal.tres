@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://dpwxqn23j1ilq"]
+
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="1_87xkn"]
+[ext_resource type="PackedScene" uid="uid://5847o4yjb45a" path="res://components/effects/impact/ground-slam-impact.tscn" id="1_m74oo"]
+[ext_resource type="Texture2D" uid="uid://cnnad3qojgc2y" path="res://assets/temp/temp-mana.png" id="2_as6dd"]
+[ext_resource type="PackedScene" uid="uid://h0msm0ixfq2n" path="res://components/effects/trails/root-snare-particle.tscn" id="2_d2r2p"]
+[ext_resource type="PackedScene" uid="uid://b2fvlmdplgevi" path="res://components/projectiles/player-magis-projectile.tscn" id="5_7jcdk"]
+
+[resource]
+script = ExtResource("1_87xkn")
+spell_name = "Terminal"
+spell_id = "phys-terminal"
+spell_icon = ExtResource("2_as6dd")
+spell_flavour_text = "At a certain speed, arrival and destruction become the same event."
+theory_desc = "Terminal velocity: the point at which acceleration can no longer increase. A projectile sustained at maximum force output across its entire path, not just at launch. The caster must hold the calculation for every metre it travels or the spell degrades mid-flight."
+spell_manifest = 1
+magis_archetype = "Ilmiah"
+magis_comprehension = "Advanced"
+spell_incantation = Array[String](["up", "right", "down", "left", "up", "right", "down"])
+upfront_cost = 55
+cast_time = 0.35
+spell_scene = ExtResource("5_7jcdk")
+projectile_texture = ExtResource("2_as6dd")
+projectile_particles = ExtResource("2_d2r2p")
+impact_particles = ExtResource("1_m74oo")
+projectile_range = 2000.0
+projectile_size = 1.35
+projectile_damage = 85.0
+projectile_speed = 1300.0
+aoe_spell_radius = 200.0
+explosive = 40.0
+knockback_force = 750.0
+metadata/_custom_type_script = "uid://ddmcw1l0ht73f"

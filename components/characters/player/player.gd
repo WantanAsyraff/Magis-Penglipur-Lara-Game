@@ -331,11 +331,26 @@ func _unhandled_input(_event: InputEvent) -> void:
 			stop_label.text = "STOP MODE"
 			stop_label.visible = _stop_moving_locked
 
-	if not Player_Global_Data.p_moveable:
-		return
-
+	# Aim lock flag updated regardless of p_moveable — aim lock IS the casting stance
 	if _in_casting_stance:
 		_aim_locked = Input.is_action_pressed("casting_aim_lock")
+
+	# Casting inputs are intentionally allowed even when movement is locked (aim lock mode)
+	if combat_mode:
+		if Input.is_action_just_pressed("start_incantation"):
+			if hitbox.is_silenced():
+				spell_label.text = "Silenced!"
+				return
+			if _in_casting_stance:
+				_exit_casting_stance()
+			else:
+				_enter_casting_stance()
+
+		if _in_casting_stance:
+			_process_incantation_inputs()
+
+	if not Player_Global_Data.p_moveable:
+		return
 
 	if Input.is_action_just_pressed("dash") \
 		and not is_dashing \
@@ -345,18 +360,6 @@ func _unhandled_input(_event: InputEvent) -> void:
 
 	if combat_mode:
 		_handle_combat_input()
-
-	if Input.is_action_just_pressed("start_incantation") and combat_mode:
-		if hitbox.is_silenced():
-			spell_label.text = "Silenced!"
-			return
-		if _in_casting_stance:
-			_exit_casting_stance()
-		else:
-			_enter_casting_stance()
-
-	if _in_casting_stance and combat_mode:
-		_process_incantation_inputs()
 
 # -------------------------
 # CASTING STANCE

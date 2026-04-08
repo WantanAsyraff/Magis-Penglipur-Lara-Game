@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://c7sukvuu8gbyp"]
+
+[ext_resource type="Script" uid="uid://dwparggceebhq" path="res://data/items/item-data.gd" id="1_8ckqr"]
+[ext_resource type="Texture2D" uid="uid://vro0klifwduy" path="res://assets/loot/leaf-drop.png" id="1_qqpyj"]
+
+[resource]
+script = ExtResource("1_8ckqr")
+item_id = "drop_002"
+item_name = "Fish Bone"
+item_icon = ExtResource("1_qqpyj")
+item_type = 4
+description = "Sharp, brittle bones. used for basic needles.
+"
+metadata/_custom_type_script = "uid://dwparggceebhq"

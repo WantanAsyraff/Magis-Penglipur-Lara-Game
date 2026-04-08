@@ -7,12 +7,10 @@
 [ext_resource type="Resource" uid="uid://bhmk728qjl3gr" path="res://dialogue/story-mode/akademi-bintang-utama/prologue/scene-1.dtl" id="3_cf0wn"]
 [ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="3_jxcyk"]
 [ext_resource type="PackedScene" uid="uid://ictbjlhkl0of" path="res://components/dungeon/key/key.tscn" id="4_jib55"]
-[ext_resource type="Resource" uid="uid://cfmtypqn7uxdp" path="res://data/magis/spells/vortex-dart.tres" id="5_s2oay"]
-[ext_resource type="Resource" uid="uid://dsho28gnfbpb7" path="res://data/magis/spells/resonance-pulse.tres" id="6_pwmim"]
+[ext_resource type="Resource" uid="uid://b61fwo8gl06ag" path="res://data/magis/spells/phys-force.tres" id="5_p66dg"]
+[ext_resource type="Resource" uid="uid://bbjkobdqthylh" path="res://data/magis/spells/phys-strike.tres" id="6_ma6ix"]
 [ext_resource type="PackedScene" uid="uid://cvhkose2u0aoj" path="res://components/dungeon/jump-pads/jump-pad.tscn" id="6_rcvgx"]
-[ext_resource type="Resource" uid="uid://dbmn1e7ntjb7n" path="res://data/magis/spells/maxwell's-sortition.tres" id="7_681m7"]
-[ext_resource type="Resource" uid="uid://ci55hciovv7tr" path="res://data/magis/spells/equilibrium-thermal.tres" id="8_037ge"]
-[ext_resource type="Resource" uid="uid://dnwnhml3byab1" path="res://data/magis/spells/phase-collapse.tres" id="9_rluro"]
+[ext_resource type="Resource" uid="uid://81if5m4i36p7" path="res://data/magis/spells/phys-crash.tres" id="7_3suiw"]
 [ext_resource type="PackedScene" uid="uid://bqbxxblrubkjp" path="res://scenes/worlds/hubs/akademi-bintang-utama(ABU)/missions-hub/story/prologue/post-prologue.tscn" id="11_3suiw"]
 [ext_resource type="PackedScene" uid="uid://ca23coml0cwtj" path="res://components/NPCs/enemies/dummy/dummy-npc.tscn" id="11_smxlg"]
 [ext_resource type="PackedScene" uid="uid://dcickmh13i62d" path="res://components/NPCs/enemies/spawner/EnemySpawner.tscn" id="12_pwcn2"]
@@ -29,7 +27,7 @@ zone_combat_mode = true
 [node name="World" parent="." index="0" unique_id=442689472]
 script = ExtResource("2_1marl")
 npc_timeline = ExtResource("3_cf0wn")
-spells_to_grant = Array[ExtResource("3_jxcyk")]([ExtResource("5_s2oay"), ExtResource("6_pwmim"), ExtResource("7_681m7"), ExtResource("8_037ge"), ExtResource("9_rluro")])
+spells_to_grant = Array[ExtResource("3_jxcyk")]([ExtResource("5_p66dg"), ExtResource("6_ma6ix"), ExtResource("7_3suiw")])
 auto_equip = true
 
 [node name="ColorRect" parent="World/GameComponents/Skybox" parent_id_path=PackedInt32Array(2122455167) index="0" unique_id=871121015]

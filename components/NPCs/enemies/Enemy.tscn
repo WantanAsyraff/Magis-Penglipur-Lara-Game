@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://ekbdftjptdw2" path="res://components/damage-indicator/damage-indicator-component.gd" id="4_4mp5v"]
 [ext_resource type="Resource" uid="uid://c7hnhpvtmkbkr" path="res://data/loot/enemy-drops/test-loot1.tres" id="4_dwqxt"]
 [ext_resource type="Texture2D" uid="uid://caaqv80a8h88s" path="res://assets/temp/player-temp-left.png" id="4_ivyq4"]
+[ext_resource type="Texture2D" uid="uid://bdcs7rwqbbdyy" path="res://assets/enemy/pohon-temp.png" id="4_v8ym2"]
 [ext_resource type="FontFile" uid="uid://bid56dcwfjc8v" path="res://assets/font/Bitter/static/Bitter-Bold.ttf" id="5_o6qrg"]
 [ext_resource type="Script" uid="uid://br5f140a111cx" path="res://components/NPCs/enemies/enemy-quest-observer-component.gd" id="12_dwqxt"]
 
@@ -21,6 +22,14 @@ animations = [{
 }],
 "loop": true,
 "name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_v8ym2")
+}],
+"loop": true,
+"name": &"pohon",
 "speed": 5.0
 }]
 
@@ -48,6 +57,7 @@ script = ExtResource("1_gcguh")
 unique_name_in_owner = true
 scale = Vector2(1.25, 1.25)
 sprite_frames = SubResource("SpriteFrames_gcguh")
+animation = &"pohon"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=62178440]
 position = Vector2(0, 1.5)
@@ -72,11 +82,13 @@ target_position = Vector2(92, 0)
 unique_name_in_owner = true
 position = Vector2(40, 32)
 scale = Vector2(2, 2)
+collision_mask = 17
 
 [node name="RayCast2D(Left)" type="RayCast2D" parent="." unique_id=1147442100]
 unique_name_in_owner = true
 position = Vector2(-40, 32)
 scale = Vector2(2, 2)
+collision_mask = 17
 
 [node name="HurtTimer" type="Timer" parent="." unique_id=540869356]
 unique_name_in_owner = true

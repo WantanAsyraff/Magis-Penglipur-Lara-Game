@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://b61fwo8gl06ag"]
+
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="1_480w5"]
+[ext_resource type="Texture2D" uid="uid://dxhgewyjajudr" path="res://assets/projectiles/small-pojectile-temp.png" id="1_wrdsw"]
+[ext_resource type="Texture2D" uid="uid://cnnad3qojgc2y" path="res://assets/temp/temp-mana.png" id="2_ijav1"]
+[ext_resource type="PackedScene" uid="uid://b2fvlmdplgevi" path="res://components/projectiles/player-magis-projectile.tscn" id="6_m2gji"]
+
+[resource]
+script = ExtResource("1_480w5")
+spell_name = "Force"
+spell_id = "physc_force"
+spell_icon = ExtResource("2_ijav1")
+spell_flavour_text = "You can force a spell to do what you want but never force others."
+theory_desc = "A concentrated burst of kinetic force calculated from F=ma — mana mass accelerated directly into the target. The heavier the intent, the greater the transfer."
+spell_manifest = 1
+magis_archetype = "Ilmiah"
+spell_incantation = Array[String](["up", "down"])
+upfront_cost = 12
+spell_scene = ExtResource("6_m2gji")
+projectile_texture = ExtResource("1_wrdsw")
+projectile_range = 800.0
+projectile_size = 1.0
+projectile_damage = 17.0
+projectile_speed = 700.0
+knockback_force = 320.0
+metadata/_custom_type_script = "uid://ddmcw1l0ht73f"

@@ -37,22 +37,15 @@ func _populate_equipped() -> void:
 		slot.spell_selected.connect(_on_equipped_spell_selected)
 
 func _on_learned_spell_selected(spell: SpellData) -> void:
+	Player_Global_Data.selected_spell = spell
 	if Player_Global_Data.equipped_spells.size() >= MAX_EQUIPPED_SPELLS:
 		push_warning("Cannot equip more than %d spells." % MAX_EQUIPPED_SPELLS)
 		return
 	Player_Global_Data.equip_spell(spell)
 
 func _on_equipped_spell_selected(spell: SpellData) -> void:
+	Player_Global_Data.selected_spell = spell
 	Player_Global_Data.unequip_spell(spell)
 
 func _on_back_button_pressed() -> void:
-	print("Current scene, ", Player_Global_Data.current_scene)
-	print("Previous scene, ", Player_Global_Data.previous_scene)
-	if Player_Global_Data.previous_scene == "":
-		push_error("BackButton: No previous scene stored.")
-		return
-	Player_Manager.last_player_position = Player_Global_Data.previous_position
-	SceneManager.change_scene(Player_Global_Data.previous_scene)
-	print("Position, ", Player_Global_Data.previous_position)
-	print("Position, ", Player_Global_Data.previous_position)
-	Player_Global_Data.p_moveable = true
+	get_tree().change_scene_to_file("res://scenes/ui/spell-equipment/spellku-main-menu.tscn")

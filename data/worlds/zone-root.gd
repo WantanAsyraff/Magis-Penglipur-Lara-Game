@@ -1,3 +1,4 @@
+#zone-root.gd
 extends Node
 # ─────────────────────────────────────────
 # EXPORTS

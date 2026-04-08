@@ -31,6 +31,7 @@ func _ready() -> void:
 	_setup_timer()
 	if autostart:
 		start_spawning()
+	hide()  # hides the Marker2D gizmo dot in-editor and at runtime
 
 func _setup_timer() -> void:
 	add_child(timer)

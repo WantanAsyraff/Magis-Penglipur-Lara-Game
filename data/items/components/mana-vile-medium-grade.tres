@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://b3kcydgqj85os"]
+
+[ext_resource type="Texture2D" uid="uid://vro0klifwduy" path="res://assets/loot/leaf-drop.png" id="1_82ghp"]
+[ext_resource type="Script" uid="uid://dwparggceebhq" path="res://data/items/item-data.gd" id="1_ns67p"]
+[ext_resource type="Resource" uid="uid://dq3xudxn0iw36" path="res://data/items/components/mana-vile-low-grade.tres" id="1_oux85"]
+
+[resource]
+script = ExtResource("1_ns67p")
+item_id = "craft_cons_002"
+item_name = "Mana Vile (Medium Grade)"
+item_icon = ExtResource("1_82ghp")
+item_type = 5
+description = "A vial of processed mana, some impurities still remains.
+"
+ringgit_value = 3.0
+ingredient_1 = ExtResource("1_oux85")
+qty_1 = 10
+metadata/_custom_type_script = "uid://dwparggceebhq"

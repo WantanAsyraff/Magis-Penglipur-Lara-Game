@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://dmvvyvtjjqhf8"]
+
+[ext_resource type="PackedScene" uid="uid://bspp6sp11dr6h" path="res://components/effects/impact/ground-slam-impact-2.tscn" id="1_mw65k"]
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="1_x6ieo"]
+[ext_resource type="Texture2D" uid="uid://dph1iir6fpsmg" path="res://assets/loot/branch.png" id="2_0phky"]
+[ext_resource type="PackedScene" path="res://components/effects/impact/packet-burst-impact.tscn" id="2_mw65k"]
+[ext_resource type="Texture2D" uid="uid://cboickmdt8lx" path="res://assets/projectiles/enemy-proj-temp.png" id="3_t4wf7"]
+[ext_resource type="PackedScene" uid="uid://b3d8ecoaccbfq" path="res://components/projectiles/enemy-magis-projectile.tscn" id="6_0qgub"]
+
+[resource]
+script = ExtResource("1_x6ieo")
+spell_name = "Branch Projectile"
+spell_id = "pohon_branch"
+spell_icon = ExtResource("2_0phky")
+spell_flavour_text = "a twunk"
+theory_desc = "Well it's a branch... you nerd!"
+spell_manifest = 1
+spell_scene = ExtResource("6_0qgub")
+projectile_texture = ExtResource("3_t4wf7")
+projectile_particles = ExtResource("2_mw65k")
+impact_particles = ExtResource("1_mw65k")
+projectile_range = 900.0
+projectile_size = 3.0
+projectile_damage = 12.0
+projectile_speed = 800.0
+knockback_force = 900.0
+metadata/_custom_type_script = "uid://ddmcw1l0ht73f"

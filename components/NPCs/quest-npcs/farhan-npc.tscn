@@ -4,6 +4,9 @@
 
 [node name="QuestNPC" unique_id=1277948925 instance=ExtResource("1_73v3s")]
 
+[node name="Sprite2D" parent="." index="0" unique_id=819925731]
+self_modulate = Color(0.8429339, 0.23645982, 0.2707581, 1)
+
 [node name="QuestNPCComponent" parent="." index="6" unique_id=1216659226]
 faculty = 2
 npc_id = "flac_farhan_npc"

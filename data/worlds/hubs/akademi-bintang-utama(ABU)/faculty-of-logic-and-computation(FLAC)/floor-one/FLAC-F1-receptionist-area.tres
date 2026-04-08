@@ -8,4 +8,5 @@ script = ExtResource("2_kaupg")
 scene_id = "faculty_of_logic_and_computation_receptionist_area"
 scene = ExtResource("1_3c0xm")
 scene_name = "Receptionist Area"
+default_spawn_marker = "FromEntranceMarker"
 metadata/_custom_type_script = "uid://bxc44phagq28x"

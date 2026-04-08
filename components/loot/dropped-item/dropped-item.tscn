@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://d7h0qf38vhdv"]
 
 [ext_resource type="Script" uid="uid://c6yl2h72qovld" path="res://components/loot/dropped-item/dropped-item.gd" id="1_2715u"]
+[ext_resource type="Texture2D" uid="uid://vro0klifwduy" path="res://assets/loot/leaf-drop.png" id="2_iautv"]
 [ext_resource type="Texture2D" uid="uid://3nx632b178qm" path="res://assets/ui/phone/quest-icon.png" id="2_tvomw"]
-[ext_resource type="Texture2D" uid="uid://cnnad3qojgc2y" path="res://assets/temp/temp-mana.png" id="3_0sb14"]
-[ext_resource type="Script" uid="uid://d1xwgv0xhh7cg" path="res://components/loot/dropped-item/it-quest-component.gd" id="4_tvomw"]
+[ext_resource type="Script" uid="uid://d1xwgv0xhh7cg" path="res://components/loot/dropped-item/item-quest-component.gd" id="4_tvomw"]
 [ext_resource type="Script" uid="uid://bdudym88rtnh2" path="res://components/loot/dropped-item/item-pickup-component.gd" id="5_3pwux"]
 [ext_resource type="Script" uid="uid://d2sgakp6rvvrn" path="res://components/loot/dropped-item/magnet-component.gd" id="5_iautv"]
 
@@ -35,14 +35,15 @@ position = Vector2(1.5, 6)
 shape = SubResource("RectangleShape2D_0sb14")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=2036598170]
-scale = Vector2(0.4, 0.4)
+scale = Vector2(0.2, 0.2)
 amount = 4
-texture = ExtResource("3_0sb14")
+texture = ExtResource("2_iautv")
 lifetime = 8.82
 preprocess = 0.64
 speed_scale = 3.96
 randomness = 0.83
 fixed_fps = 12
+collision_base_size = 0.04
 process_material = SubResource("ParticleProcessMaterial_0sb14")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1991570245]
@@ -58,6 +59,7 @@ shape = SubResource("RectangleShape2D_3pwux")
 
 [node name="MagnetComponent" type="Node" parent="." unique_id=1150259843]
 script = ExtResource("5_iautv")
+detection_range = 600.0
 
 [node name="ItemQuestComponent" type="Node" parent="." unique_id=583431065]
 script = ExtResource("4_tvomw")

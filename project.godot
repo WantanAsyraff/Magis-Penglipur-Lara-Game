@@ -35,6 +35,7 @@ Noray="*uid://gu4bv4tgms3x"
 PacketHandshake="*uid://tt3j25a05n7c"
 World_Manifest="*uid://di6f8axk1wxke"
 QuestManager="*uid://c2imtb0eppc6"
+Inventory_Manager="*uid://kj7y3b562h7j"
 
 [dialogic]
 
@@ -139,7 +140,8 @@ folder_colors={
 "res://dialogue/": "purple",
 "res://scenes/": "orange",
 "res://scenes/ui/": "blue",
-"res://scenes/worlds/": "red"
+"res://scenes/worlds/": "red",
+"res://tools/": "pink"
 }
 
 [global_group]

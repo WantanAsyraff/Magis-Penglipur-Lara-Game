@@ -59,8 +59,10 @@ grow_vertical = 2
 [node name="DescLabel" type="Label" parent="Panel/VBoxContainer" unique_id=179914142]
 custom_minimum_size = Vector2(0, 800)
 layout_mode = 2
-text = "LOREM"
+text = "COMING SOON"
 label_settings = SubResource("LabelSettings_hr4vo")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="ContinueButton" type="Button" parent="Panel/VBoxContainer" unique_id=1589979005]
 custom_minimum_size = Vector2(0, 100)

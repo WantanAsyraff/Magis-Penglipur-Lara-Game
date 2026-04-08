@@ -1,9 +1,6 @@
 [gd_scene format=3 uid="uid://bmma1j10p3fv7"]
 
 [ext_resource type="Script" uid="uid://ddnqy10k0s7qq" path="res://scenes/ui/spell-combat-ui/spell-slot.gd" id="1_03n0a"]
-[ext_resource type="Resource" uid="uid://dmuos14tj2ww3" path="res://data/magis/spells/botany.tres" id="2_ajyhg"]
-[ext_resource type="Texture2D" uid="uid://c27hlpd2ups03" path="res://assets/temp/temp-lightbulb.png" id="2_edymq"]
-[ext_resource type="Texture2D" uid="uid://c1nk3gref80yh" path="res://assets/ui/spells/spell-move.png" id="3_0fcwh"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_nvrkb"]
 font_size = 12
@@ -18,27 +15,19 @@ offset_bottom = 0.47999573
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_03n0a")
-spell_data = ExtResource("2_ajyhg")
 
 [node name="SpellName" type="PanelContainer" parent="." unique_id=1259095690]
-visible = false
-custom_minimum_size = Vector2(40, 105)
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.92700005
 anchor_bottom = 0.89000005
-offset_left = 325.0
+offset_left = 2.0
 offset_top = 2.0
-offset_right = 0.14898682
-offset_bottom = -0.055007935
+offset_right = -79.85101
+offset_bottom = -80.810005
 
 [node name="VBoxContainer" type="VBoxContainer" parent="SpellName" unique_id=1394490426]
 layout_mode = 2
-
-[node name="SpellTextureRect" type="TextureRect" parent="SpellName/VBoxContainer" unique_id=737911418]
-layout_mode = 2
-texture = ExtResource("2_edymq")
-expand_mode = 4
 
 [node name="SpellNameLabel" type="Label" parent="SpellName/VBoxContainer" unique_id=349768396]
 unique_name_in_owner = true
@@ -49,17 +38,13 @@ horizontal_alignment = 1
 autowrap_mode = 3
 
 [node name="SpellMove" type="PanelContainer" parent="." unique_id=766755794]
-custom_minimum_size = Vector2(240, 100)
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.92700005
 anchor_bottom = 0.87600005
-offset_right = -139.85101
-offset_bottom = 2.9959946
-
-[node name="TextureRect" type="TextureRect" parent="SpellMove" unique_id=624604168]
-layout_mode = 2
-texture = ExtResource("3_0fcwh")
+offset_top = 32.0
+offset_right = 21.148987
+offset_bottom = -18.004005
 
 [node name="VBoxContainer" type="VBoxContainer" parent="SpellMove" unique_id=1496497152]
 layout_mode = 2
@@ -70,20 +55,16 @@ unique_name_in_owner = true
 layout_mode = 2
 
 [node name="SpellCost" type="PanelContainer" parent="." unique_id=1336688857]
-custom_minimum_size = Vector2(80, 105)
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 0.89900005
-offset_left = 318.0
+offset_left = 294.0
 offset_right = -7.0
+offset_bottom = -78.97101
 
 [node name="VBoxContainer" type="VBoxContainer" parent="SpellCost" unique_id=1219569729]
 layout_mode = 2
-
-[node name="ManaTextureRect" type="TextureRect" parent="SpellCost/VBoxContainer" unique_id=1268380049]
-layout_mode = 2
-expand_mode = 4
 
 [node name="SpellCostLabel" type="Label" parent="SpellCost/VBoxContainer" unique_id=327995156]
 unique_name_in_owner = true

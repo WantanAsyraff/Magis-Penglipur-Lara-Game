@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://c3mxwwdb1je2e"]
+
+[ext_resource type="Script" uid="uid://bt33nue622du1" path="res://scenes/ui/inventory/inventory-ui.gd" id="1_7d16q"]
+[ext_resource type="Theme" uid="uid://cv8bqu76ln7kj" path="res://assets/styles/generic-theme.tres" id="2_0cmcu"]
+
+[node name="InventoryUI" type="Control" unique_id=1362903044]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7d16q")
+
+[node name="Panel" type="Panel" parent="." unique_id=405179175]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.25
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="InventoryContainer" type="GridContainer" parent="Panel" unique_id=285256565]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 4
+
+[node name="BackButton" type="Button" parent="." unique_id=279056474]
+layout_mode = 0
+offset_left = 133.0
+offset_top = 39.0
+offset_right = 367.0
+offset_bottom = 216.0
+theme = ExtResource("2_0cmcu")
+text = "BACK"
+
+[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]

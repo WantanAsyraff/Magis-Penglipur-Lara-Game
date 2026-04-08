@@ -43,12 +43,13 @@ func _draw() -> void:
 			while x > -text_width:
 				draw_string(font, Vector2(x, y), text, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size, font_color)
 				x -= text_width
-
+ 
 		y += line_spacing
 		row += 1
 
 func _on_continue_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/ui/menus/intro-menus/load-menu.tscn")
+	
 
 func _on_new_game_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/ui/menus/intro-menus/new-game-menu.tscn")

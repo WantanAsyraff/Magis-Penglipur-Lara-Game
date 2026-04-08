@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://cuxsreynyesej"]
+
+[ext_resource type="Texture2D" uid="uid://vro0klifwduy" path="res://assets/loot/leaf-drop.png" id="1_1k234"]
+[ext_resource type="Script" uid="uid://dwparggceebhq" path="res://data/items/item-data.gd" id="1_j2tax"]
+[ext_resource type="Resource" uid="uid://dq3xudxn0iw36" path="res://data/items/components/mana-vile-low-grade.tres" id="1_r5vss"]
+[ext_resource type="Resource" uid="uid://b3kcydgqj85os" path="res://data/items/components/mana-vile-medium-grade.tres" id="2_m4uiy"]
+
+[resource]
+script = ExtResource("1_j2tax")
+item_id = "craft_cons_003"
+item_name = "Mana Vile (High Grade)"
+item_icon = ExtResource("1_1k234")
+item_type = 5
+description = "A vial of refined processed mana, it has a high density of mana which has been dissolved into liquid. It's form is rich in powers.
+"
+ringgit_value = 6.7
+ingredient_1 = ExtResource("1_r5vss")
+qty_1 = 5
+ingredient_2 = ExtResource("2_m4uiy")
+qty_2 = 10
+metadata/_custom_type_script = "uid://dwparggceebhq"

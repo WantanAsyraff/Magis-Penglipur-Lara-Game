@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="LootData" format=3 uid="uid://brh5ivq6fih3"]
+
+[ext_resource type="Script" uid="uid://doxgmvpmyr7hx" path="res://data/loot/loot-data.gd" id="1_3fpgb"]
+[ext_resource type="Script" uid="uid://dwparggceebhq" path="res://data/items/item-data.gd" id="1_vujji"]
+[ext_resource type="Resource" uid="uid://bfnhodcq2gj04" path="res://data/items/drops/fish-meat.tres" id="2_vujji"]
+[ext_resource type="Resource" uid="uid://c7sukvuu8gbyp" path="res://data/items/drops/fish-bone.tres" id="3_sqv12"]
+[ext_resource type="Resource" uid="uid://dt8qd635ei554" path="res://data/items/drops/fish-scales.tres" id="4_qxkst"]
+
+[resource]
+script = ExtResource("1_3fpgb")
+item = ExtResource("4_qxkst")
+extra_drops = Array[ExtResource("1_vujji")]([ExtResource("2_vujji"), ExtResource("3_sqv12"), ExtResource("4_qxkst")])
+metadata/_custom_type_script = "uid://doxgmvpmyr7hx"

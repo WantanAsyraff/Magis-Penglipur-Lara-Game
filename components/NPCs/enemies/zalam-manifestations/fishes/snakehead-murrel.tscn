@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://c3d3mwdkopd6v"]
+
+[ext_resource type="PackedScene" uid="uid://bire3b68skqpf" path="res://components/NPCs/enemies/Enemy.tscn" id="1_i5bi7"]
+[ext_resource type="Script" uid="uid://doxgmvpmyr7hx" path="res://data/loot/loot-data.gd" id="2_u3k8a"]
+[ext_resource type="Resource" uid="uid://brh5ivq6fih3" path="res://data/loot/enemy-drops/fish-loot.tres" id="3_5kh26"]
+
+[node name="Enemy" unique_id=1787106916 instance=ExtResource("1_i5bi7")]
+
+[node name="EnemyCombat" parent="." index="11" unique_id=880482526]
+melee_damage = 20.0
+
+[node name="EnemyLootComponent" parent="." index="15" unique_id=32140690]
+loot_table = Array[ExtResource("2_u3k8a")]([ExtResource("3_5kh26")])

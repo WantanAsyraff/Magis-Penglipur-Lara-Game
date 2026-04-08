@@ -18,6 +18,9 @@ extends Node
 # CONSTANTS
 # ─────────────────────────────────────────
 const ENVIRONMENT_LAYER: int = 16
+const WALL_RAY_DIST: float = 24.0
+const GROUND_RAY_DIST: float = 24.0
+const GROUND_RAY_DROP: float = 30.0
 
 # ─────────────────────────────────────────
 # STATE
@@ -28,7 +31,7 @@ var _jump_cooldown: float = 0.0
 var _is_jumping: bool = false
 var _direction_lock: float = 0.0
 var _home_initialised: bool = false
-var _grounded_once: bool = false     # don't patrol until first landing
+var _grounded_once: bool = false
 
 # ─────────────────────────────────────────
 # LIFECYCLE
@@ -45,11 +48,10 @@ func tick(delta: float, enemy: CharacterBody2D) -> void:
 		home_position = enemy.global_position
 		_home_initialised = true
 
-	# Wait until the enemy has touched the floor at least once before doing anything
 	if not _grounded_once:
 		if enemy.is_on_floor():
 			_grounded_once = true
-			home_position = enemy.global_position  # re-snap home to actual landed position
+			home_position = enemy.global_position
 		return
 
 	if _jump_cooldown > 0.0:
@@ -60,27 +62,29 @@ func tick(delta: float, enemy: CharacterBody2D) -> void:
 	if _is_jumping:
 		if enemy.is_on_floor():
 			_is_jumping = false
-		elif _has_environment_wall(enemy.velocity.x >= 0.0):
+		elif _wall_check(enemy.velocity.x >= 0.0):
 			_is_jumping = false
 			_flip_direction()
 
+	# Jump whenever a wall is blocking the current facing direction.
+	# Runs every tick so it fires from any state (IDLE, PATROL, CHASE, etc.)
+	if enemy.is_on_floor() and _jump_cooldown <= 0.0:
+		var facing_right: bool = patrol_direction > 0
+		if _wall_check(facing_right):
+			_do_wall_jump(enemy)
+
 func patrol_tick(enemy: CharacterBody2D, facing_right: bool) -> float:
-	# Stay still until grounded — prevents spawn tweak
 	if not _grounded_once:
 		return 0.0
 
-	if _has_environment_wall(facing_right) and enemy.is_on_floor() and _jump_cooldown <= 0.0:
-		_do_wall_jump(enemy)
-		return enemy.velocity.x
-
 	if _direction_lock <= 0.0:
-		var at_edge  = not _has_ground_ahead(facing_right) and enemy.is_on_floor()
-		var at_limit = abs(enemy.global_position.x - home_position.x) >= patrol_range
-		var hit_enemy := _has_enemy_ahead(facing_right)
+		var at_edge   = not _ground_check(facing_right) and enemy.is_on_floor()
+		var at_limit  = abs(enemy.global_position.x - home_position.x) >= patrol_range
+		var hit_enemy = _enemy_check(facing_right)
 
 		if at_edge or at_limit or hit_enemy:
 			_flip_direction()
-			return 0.0  # one dead frame to let the lock settle before moving
+			return 0.0
 
 	return patrol_direction * get_parent().move_speed
 
@@ -94,13 +98,9 @@ func return_tick(enemy: CharacterBody2D, facing_right: bool) -> float:
 
 	var dir = sign(home_position.x - enemy.global_position.x)
 
-	if _has_environment_wall(facing_right) and enemy.is_on_floor() and _jump_cooldown <= 0.0:
-		_do_wall_jump(enemy)
-		return enemy.velocity.x
-
 	if _direction_lock <= 0.0:
-		var hit_enemy := _has_enemy_ahead(facing_right)
-		var at_cliff  := not _has_ground_ahead(facing_right) and enemy.is_on_floor()
+		var hit_enemy := _enemy_check(facing_right)
+		var at_cliff  := not _ground_check(facing_right) and enemy.is_on_floor()
 
 		if hit_enemy or at_cliff:
 			_flip_direction()
@@ -114,39 +114,56 @@ func get_patrol_direction() -> int:
 
 # ─────────────────────────────────────────
 # INTERNAL
+# Each check sets its own target_position before calling force_raycast_update()
+# so the three checks never overwrite each other's results mid-frame.
 # ─────────────────────────────────────────
 
 func _flip_direction() -> void:
 	patrol_direction *= -1
 	_direction_lock = 0.4
 
-func _has_environment_wall(facing_right: bool) -> bool:
-	var rc  := raycast_right if facing_right else raycast_left
+## Purely horizontal ray — detects environment walls only.
+func _wall_check(facing_right: bool) -> bool:
+	var rc  := raycast_left if facing_right else raycast_right
 	var dir := 1.0 if facing_right else -1.0
-	rc.target_position = Vector2(24.0 * dir, 0.0)
+	rc.target_position = Vector2(WALL_RAY_DIST * dir, 0.0)
 	rc.force_raycast_update()
 	if not rc.is_colliding():
 		return false
 	var collider := rc.get_collider()
+	var hit_env := false
 	if collider is CollisionObject2D:
-		return (collider.collision_layer & ENVIRONMENT_LAYER) != 0
-	return true
+		hit_env = (collider.collision_layer & ENVIRONMENT_LAYER) != 0
+	else:
+		hit_env = true
+	print("[EnemyPatrol] wall_check dir=%s | collider=%s | hit_env=%s" % [
+		"RIGHT" if facing_right else "LEFT", collider, hit_env
+	])
+	return hit_env
 
-func _has_enemy_ahead(facing_right: bool) -> bool:
-	var rc  := raycast_right if facing_right else raycast_left
+## Diagonal-down ray — checks for ground ahead of the enemy's foot.
+## Validates the hit normal points upward so wall sides don't count as ground.
+func _ground_check(facing_right: bool) -> bool:
+	var rc  := raycast_left if facing_right else raycast_right
 	var dir := 1.0 if facing_right else -1.0
-	rc.target_position = Vector2(24.0 * dir, 0.0)
+	rc.target_position = Vector2(GROUND_RAY_DIST * dir, GROUND_RAY_DROP)
+	rc.force_raycast_update()
+	if not rc.is_colliding():
+		return false
+	# Floor normals point up (y < 0 in Godot). Wall normals point sideways (y ≈ 0).
+	# Reject wall-side hits so the enemy correctly treats them as edges/cliffs.
+	var normal := rc.get_collision_normal()
+	return normal.y < -0.5
+
+## Horizontal ray — detects another Enemy in the way (for collision avoidance).
+func _enemy_check(facing_right: bool) -> bool:
+	var rc  := raycast_left if facing_right else raycast_right
+	var dir := 1.0 if facing_right else -1.0
+	rc.target_position = Vector2(WALL_RAY_DIST * dir, 0.0)
 	rc.force_raycast_update()
 	if not rc.is_colliding():
 		return false
 	return rc.get_collider() is Enemy
-
-func _has_ground_ahead(facing_right: bool) -> bool:
-	var rc  := raycast_right if facing_right else raycast_left
-	var dir := 1.0 if facing_right else -1.0
-	rc.target_position = Vector2(24.0 * dir, 30.0)
-	rc.force_raycast_update()
-	return rc.is_colliding()
 
 func _do_wall_jump(enemy: CharacterBody2D) -> void:
 	enemy.velocity.y = wall_jump_velocity

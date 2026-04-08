@@ -17,9 +17,6 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 text = "press \"E\" to interact"
 
-[node name="DetectionComponent" parent="." index="4" unique_id=443193764]
-unique_name_in_owner = true
-
 [node name="DialogicComponent" type="Node" parent="." index="5" unique_id=1155691304]
 unique_name_in_owner = true
 script = ExtResource("3_xeawn")

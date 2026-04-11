@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://26coxr1n5ylb"]
+
+[ext_resource type="PackedScene" uid="uid://r01cm8px6xbo" path="res://components/NPCs/quest-npcs/flac/quest-npc.tscn" id="1_ymuwp"]
+[ext_resource type="Resource" uid="uid://dwnasrhchwftu" path="res://dialogue/quest/QuestDialogue-FLAC.dtl" id="2_3wmkp"]
+
+[node name="QuestNPC" unique_id=1277948925 instance=ExtResource("1_ymuwp")]
+
+[node name="Sprite2D" parent="." index="0" unique_id=819925731]
+modulate = Color(0, 0.537429, 0.113452874, 1)
+
+[node name="DialogicComponent" parent="." index="5" unique_id=1155691304]
+npc_timeline = ExtResource("2_3wmkp")
+QUEST_TIMELINE_PATH = "res://dialogue/quest/QuestDialogue-FLAC.dtl"
+
+[node name="QuestNPCComponent" parent="." index="6" unique_id=1216659226]
+faculty = 2
+npc_id = "flac_sarah_npc"
+dialogue_offer = "I'm building a custom rig but I'm short on Tech Scrap. I can trade you some Ringgit for any spare components. You want or not?
+"
+dialogue_incomplete = "No scrap, no trade. That’s the protocol. Come back when you actually have the hardware.
+"
+dialogue_complete = "Solid hardware! This will fit the socket nicely. Here is your payment—transaction closed ah.
+"

@@ -1,1 +1,5 @@
+if {CurrentPortrait} == "flac_sarah_npc":
+	join sara left
+else:
+	no one joined
 {QuestText}

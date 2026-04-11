@@ -1,0 +1,10 @@
+{CurrentPortrait}
+if {CurrentPortrait} == "flac_sarah_npc":
+	join sara left
+elif {CurrentPortrait} == "flac_ariff_npc":
+	join ariff right
+elif {CurrentPortrait} == "flac_hasan_npc":
+	join hasan right
+else:
+	no one joined
+{QuestText}

@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://dl2wa6wofs753"]
+
+[ext_resource type="PackedScene" uid="uid://r01cm8px6xbo" path="res://components/NPCs/quest-npcs/flac/quest-npc.tscn" id="1_73v3s"]
+[ext_resource type="Resource" uid="uid://dwnasrhchwftu" path="res://dialogue/quest/QuestDialogue-FLAC.dtl" id="2_jn42o"]
+
+[node name="QuestNPC" unique_id=1277948925 instance=ExtResource("1_73v3s")]
+
+[node name="Sprite2D" parent="." index="0" unique_id=819925731]
+self_modulate = Color(0.8429339, 0.23645982, 0.2707581, 1)
+
+[node name="DialogicComponent" parent="." index="5" unique_id=1155691304]
+npc_timeline = ExtResource("2_jn42o")
+QUEST_TIMELINE_PATH = "res://dialogue/quest/QuestDialogue-FLAC.dtl"
+
+[node name="QuestNPCComponent" parent="." index="6" unique_id=1216659226]
+faculty = 2
+npc_id = "flac_ariff_npc"
+dialogue_offer = "My drones keep losing signal, I think refraction problem lah. If I have some Dragonfly parts, I can boost the antenna. Help a bit can?
+"
+dialogue_incomplete = "I'm still getting 404 from my drones. You found the parts yet? No pressure, but I'm rushing...
+"
+dialogue_complete = "Nice! Signal strength 100% already. These wings are the best repeaters. Mantap, thank you!
+"

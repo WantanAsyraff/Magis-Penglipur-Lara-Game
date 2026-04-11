@@ -3,9 +3,9 @@
 [ext_resource type="PackedScene" uid="uid://t3o4osbl3bct" path="res://scenes/worlds/world-template.tscn" id="1_k0orj"]
 [ext_resource type="PackedScene" uid="uid://c5a41lx0gq8be" path="res://scenes/transitioners/zone-portal/zone-portal.tscn" id="2_ajjxr"]
 [ext_resource type="Script" uid="uid://cojl8pys274v4" path="res://components/NPCs/enemies/spawner/npc-quest-spawner.gd" id="2_kynhq"]
-[ext_resource type="PackedScene" uid="uid://dl2wa6wofs753" path="res://components/NPCs/quest-npcs/farhan-npc.tscn" id="3_3l4sp"]
-[ext_resource type="PackedScene" uid="uid://dcspfctpja23s" path="res://components/NPCs/quest-npcs/leon-npc.tscn" id="4_t5sc7"]
-[ext_resource type="PackedScene" uid="uid://26coxr1n5ylb" path="res://components/NPCs/quest-npcs/sarah-npc.tscn" id="5_80l00"]
+[ext_resource type="PackedScene" uid="uid://dl2wa6wofs753" path="res://components/NPCs/quest-npcs/flac/ariff-npc.tscn" id="3_3l4sp"]
+[ext_resource type="PackedScene" uid="uid://dcspfctpja23s" path="res://components/NPCs/quest-npcs/flac/hasan-npc.tscn" id="4_t5sc7"]
+[ext_resource type="PackedScene" uid="uid://26coxr1n5ylb" path="res://components/NPCs/quest-npcs/flac/sara-npc.tscn" id="5_80l00"]
 
 [node name="WorldTemplate" unique_id=426960778 instance=ExtResource("1_k0orj")]
 
@@ -38,15 +38,14 @@ position = Vector2(3862, 672)
 [node name="FromCentralHubMarker" type="Marker2D" parent="World/GameComponents/SpawnPoints" parent_id_path=PackedInt32Array(1598029619) index="1" unique_id=992362776]
 position = Vector2(-2043, 688)
 
-[node name="NpcQuestSpawner" type="Node2D" parent="World/GameComponents" parent_id_path=PackedInt32Array(692489383) index="7" unique_id=116093861]
+[node name="NpcQuestSpawner" type="Node2D" parent="." index="1" unique_id=901635521]
 position = Vector2(1811, 741)
 script = ExtResource("2_kynhq")
 room_id = "flac_f2_h3"
-max_npcs = 2
 room_faculty = 2
-npcs_to_spawn = 1
+npcs_to_spawn = 2
 npc_directory = Dictionary[String, PackedScene]({
-"flac_farhan_npc": ExtResource("3_3l4sp"),
-"flac_leon_npc": ExtResource("4_t5sc7"),
-"flac_sarah_npc": ExtResource("5_80l00")
+"flac_ariff_npc": ExtResource("3_3l4sp"),
+"flac_hasan_npc": ExtResource("4_t5sc7"),
+"flac_sara_npc": ExtResource("5_80l00")
 })

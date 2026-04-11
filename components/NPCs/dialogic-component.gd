@@ -7,31 +7,28 @@ signal dialogue_ended
 @export var use_dialogic: bool = true
 @export var npc_timeline: DialogicTimeline
 
-const QUEST_TIMELINE_PATH = "res://dialogue/quest/QuestDialogue.dtl"
+@export var QUEST_TIMELINE_PATH = "res://dialogue/quest/QuestDialogue.dtl"
 
 var _open: bool = false
 
 # -------------------------
 # DIRECT TEXT (quest dialogue)
 # -------------------------
-func start_direct_text(text: String) -> void:
-	# GUARD: Ignore if already in a dialogue or text is empty
-	if _open:
-		print("[Dialogic] Blocked: Dialogue already open.")
+func start_direct_text(text: String, npc_id: String = "") -> void:
+	if _open or text.is_empty(): 
 		return
-		
-	if text.is_empty():
-		print("[Dialogic] Blocked: Text is empty.")
-		return
-
-	print("[Dialogic] start_direct_text | text='%s'" % text)
+	
 	_open = true
 	Player_Global_Data.p_moveable = false
 	dialogue_started.emit()
 	
-	Dialogic.VAR.QuestText = text
+	# Set quest text
+	Dialogic.VAR.set_variable("QuestText", text)
 	
-	# Force load the style/layout manually
+	# ✅ FIXED HERE
+	if not npc_id.is_empty():
+		Dialogic.VAR.set_variable("CurrentPortrait", npc_id)
+	
 	var style = load("res://dialogue/styles/main-style.tres")
 	Dialogic.start(QUEST_TIMELINE_PATH, style)
 	
@@ -41,19 +38,17 @@ func start_direct_text(text: String) -> void:
 # -------------------------
 # STANDARD TIMELINE
 # -------------------------
-func start() -> bool:
-	# GUARD: Prevent spamming the interact button
-	if _open:
-		print("[Dialogic] Blocked: Dialogue already open.")
+func start(npc_id: String = "") -> bool:
+	if _open or not use_dialogic or npc_timeline == null: 
 		return false
-		
-	if not use_dialogic or npc_timeline == null:
-		return false
-
-	print("[Dialogic] start() | npc_timeline=%s" % npc_timeline)
+	
 	_open = true
 	Player_Global_Data.p_moveable = false
 	dialogue_started.emit()
+	
+	# ✅ FIXED HERE
+	if not npc_id.is_empty():
+		Dialogic.VAR.set_variable("CurrentPortrait", npc_id)
 	
 	Dialogic.start(npc_timeline)
 	
@@ -62,21 +57,20 @@ func start() -> bool:
 	return true
 
 # -------------------------
-# CLOSE
+# HELPERS
 # -------------------------
 func close() -> void:
-	if not _open:
-		return
+	if not _open: return
 	Dialogic.end_timeline()
 
-# -------------------------
-# INTERNAL
-# -------------------------
 func _finish_dialogue() -> void:
 	_open = false
+	
+	# FIXED HERE
+	Dialogic.VAR.set_variable("CurrentPortrait", "")
+	
 	Player_Global_Data.p_moveable = true
 	dialogue_ended.emit()
-	print("[Dialogic] dialogue finished and closed.")
 
 func is_open() -> bool:
 	return _open

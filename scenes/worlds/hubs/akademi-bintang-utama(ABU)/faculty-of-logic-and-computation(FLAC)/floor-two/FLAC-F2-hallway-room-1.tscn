@@ -3,9 +3,9 @@
 [ext_resource type="PackedScene" uid="uid://t3o4osbl3bct" path="res://scenes/worlds/world-template.tscn" id="1_anwcr"]
 [ext_resource type="Script" uid="uid://cojl8pys274v4" path="res://components/NPCs/enemies/spawner/npc-quest-spawner.gd" id="2_ggtpo"]
 [ext_resource type="PackedScene" uid="uid://c5a41lx0gq8be" path="res://scenes/transitioners/zone-portal/zone-portal.tscn" id="2_qg7tj"]
-[ext_resource type="PackedScene" uid="uid://dl2wa6wofs753" path="res://components/NPCs/quest-npcs/farhan-npc.tscn" id="3_0v8om"]
-[ext_resource type="PackedScene" uid="uid://dcspfctpja23s" path="res://components/NPCs/quest-npcs/leon-npc.tscn" id="4_gh1b8"]
-[ext_resource type="PackedScene" uid="uid://26coxr1n5ylb" path="res://components/NPCs/quest-npcs/sarah-npc.tscn" id="5_gh1b8"]
+[ext_resource type="PackedScene" uid="uid://dl2wa6wofs753" path="res://components/NPCs/quest-npcs/flac/ariff-npc.tscn" id="3_0v8om"]
+[ext_resource type="PackedScene" uid="uid://dcspfctpja23s" path="res://components/NPCs/quest-npcs/flac/hasan-npc.tscn" id="4_gh1b8"]
+[ext_resource type="PackedScene" uid="uid://26coxr1n5ylb" path="res://components/NPCs/quest-npcs/flac/sara-npc.tscn" id="5_gh1b8"]
 
 [node name="WorldTemplate" unique_id=426960778 instance=ExtResource("1_anwcr")]
 
@@ -44,9 +44,9 @@ position = Vector2(1811, 741)
 script = ExtResource("2_ggtpo")
 room_id = "flac_f2_h1"
 room_faculty = 2
-npcs_to_spawn = 1
+npcs_to_spawn = 2
 npc_directory = Dictionary[String, PackedScene]({
-"flac_farhan_npc": ExtResource("3_0v8om"),
-"flac_leon_npc": ExtResource("4_gh1b8"),
+"flac_ariff_npc": ExtResource("3_0v8om"),
+"flac_hasan_npc": ExtResource("4_gh1b8"),
 "flac_sarah_npc": ExtResource("5_gh1b8")
 })

@@ -40,23 +40,19 @@ Inventory_Manager="*uid://kj7y3b562h7j"
 [dialogic]
 
 directories/dch_directory={
-"amal-fakhri": "res://dialogue/characters/amal-fakhri.dch",
-"duelist-winner": "res://dialogue/characters/duelist-winner.dch",
-"madam-lara": "res://dialogue/characters/madam-lara.dch",
-"narrator": "res://dialogue/characters/narrator.dch",
-"norman-hili": "res://dialogue/characters/norman-hili.dch",
+"ariff": "res://dialogue/characters/ariff.dch",
+"hasan": "res://dialogue/characters/hasan.dch",
 "player": "res://dialogue/characters/player.dch",
-"random-student": "res://dialogue/characters/random-student.dch",
-"uknown": "res://dialogue/characters/uknown.dch",
+"sara": "res://dialogue/characters/sara.dch",
 "yan": "res://dialogue/glossaries/yan.dch",
 "yunira": "res://dialogue/characters/yunira.dch"
 }
 directories/dtl_directory={
 "QuestDialogue": "res://dialogue/quest/QuestDialogue.dtl",
+"QuestDialogue-FLAC": "res://dialogue/quest/QuestDialogue-FLAC.dtl",
 "chapter-1/scene-1": "res://dialogue/story-mode/akademi-bintang-utama/chapter-1/scene-1.dtl",
 "scene-1": "res://dialogue/story-mode/akademi-bintang-utama/prologue/scene-1.dtl",
 "scene-2": "res://dialogue/story-mode/akademi-bintang-utama/prologue/scene-2.dtl",
-"scene-2-a": "res://dialogue/characters/scene-2-a.dtl",
 "scene-3": "res://dialogue/story-mode/akademi-bintang-utama/prologue/scene-3.dtl",
 "scene-4": "res://dialogue/story-mode/akademi-bintang-utama/prologue/scene-4.dtl",
 "story-select-npc": "res://dialogue/overworld/story-select-npc.dtl",
@@ -68,6 +64,7 @@ layout/style_directory={
 }
 glossary/default_case_sensitive=true
 variables={
+"CurrentPortrait": "Ur not supposed to see this",
 "QuestText": "Ur not supposed to see this"
 }
 extensions_folder="res://addons/dialogic_additions"

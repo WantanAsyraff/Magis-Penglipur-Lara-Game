@@ -1,12 +1,8 @@
 [gd_scene format=4 uid="uid://bws2d0i1muby2"]
 
 [ext_resource type="PackedScene" uid="uid://t3o4osbl3bct" path="res://scenes/worlds/world-template.tscn" id="1_0e4vo"]
-[ext_resource type="Script" uid="uid://cojl8pys274v4" path="res://components/NPCs/enemies/spawner/npc-quest-spawner.gd" id="2_ew2h5"]
 [ext_resource type="PackedScene" uid="uid://cvr4657rrr2mc" path="res://components/tilemaps/palleteTemp.tscn" id="2_qcdse"]
 [ext_resource type="PackedScene" uid="uid://c5a41lx0gq8be" path="res://scenes/transitioners/zone-portal/zone-portal.tscn" id="2_w0qvc"]
-[ext_resource type="PackedScene" uid="uid://dl2wa6wofs753" path="res://components/NPCs/quest-npcs/farhan-npc.tscn" id="3_qcdse"]
-[ext_resource type="PackedScene" uid="uid://dcspfctpja23s" path="res://components/NPCs/quest-npcs/leon-npc.tscn" id="4_iylp5"]
-[ext_resource type="PackedScene" uid="uid://26coxr1n5ylb" path="res://components/NPCs/quest-npcs/sarah-npc.tscn" id="5_a8hth"]
 
 [node name="WorldTemplate" unique_id=426960778 instance=ExtResource("1_0e4vo")]
 
@@ -33,16 +29,3 @@ spawn_marker_override = "FromHallwayFourMarker"
 
 [node name="FromHallwayThreeMarker" type="Marker2D" parent="World/GameComponents/SpawnPoints" parent_id_path=PackedInt32Array(1598029619) index="0" unique_id=1642262557]
 position = Vector2(-2006, 660)
-
-[node name="NpcQuestSpawner" type="Node2D" parent="World/GameComponents" parent_id_path=PackedInt32Array(692489383) index="7" unique_id=1786431509]
-position = Vector2(1811, 741)
-script = ExtResource("2_ew2h5")
-room_id = "flac_f2_h4"
-max_npcs = 4
-room_faculty = 2
-npcs_to_spawn = 0
-npc_directory = Dictionary[String, PackedScene]({
-"flac_farhan_npc": ExtResource("3_qcdse"),
-"flac_leon_npc": ExtResource("4_iylp5"),
-"flac_sarah_npc": ExtResource("5_a8hth")
-})

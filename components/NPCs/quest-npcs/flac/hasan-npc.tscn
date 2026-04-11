@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://dcspfctpja23s"]
+
+[ext_resource type="PackedScene" uid="uid://r01cm8px6xbo" path="res://components/NPCs/quest-npcs/flac/quest-npc.tscn" id="1_mgj0n"]
+[ext_resource type="Resource" uid="uid://dwnasrhchwftu" path="res://dialogue/quest/QuestDialogue-FLAC.dtl" id="2_cefi6"]
+
+[node name="QuestNPC" unique_id=1277948925 instance=ExtResource("1_mgj0n")]
+
+[node name="Sprite2D" parent="." index="0" unique_id=819925731]
+self_modulate = Color(0.5921569, 0.16862746, 1, 1)
+
+[node name="DialogicComponent" parent="." index="5" unique_id=1155691304]
+npc_timeline = ExtResource("2_cefi6")
+QUEST_TIMELINE_PATH = "res://dialogue/quest/QuestDialogue-FLAC.dtl"
+
+[node name="QuestNPCComponent" parent="." index="6" unique_id=1216659226]
+faculty = 2
+npc_id = "flac_hasan_npc"
+dialogue_offer = "Wey bro, I'm trying to code this algorithm to detect mana disruptions, but the data is all haywire. Can help me scan the area or not?
+"
+dialogue_incomplete = "Adui(Oh no), still no data? My code is idling jer. Faster sikit lah, the deadline is tonight!
+"
+dialogue_complete = "Output looks steady! This 'Haruan'(Snakefish) pattern is exactly what I was looking for. Steady, thanks bro.
+"

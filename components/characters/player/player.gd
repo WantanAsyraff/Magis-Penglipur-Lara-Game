@@ -40,9 +40,9 @@ var SPEED : float = Player_Global_Data.p_speed
 var JUMP_VELOCITY : float = Player_Global_Data.p_jump_height
 
 # Dash — charge based
-var DASH_SPEED : float = 3200.0
-var DASH_TIME : float = 0.12
-var DASH_COOLDOWN : float = 1.4
+var DASH_SPEED : float = 3400.0
+var DASH_TIME : float = 0.18
+var DASH_COOLDOWN : float = 1.2
 var max_dashes = Player_Global_Data.MAX_DASH_CHARGES
 
 var dash_timer : float = 0.0

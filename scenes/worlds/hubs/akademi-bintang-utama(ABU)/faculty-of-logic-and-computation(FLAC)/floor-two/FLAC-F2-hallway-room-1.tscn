@@ -6,8 +6,13 @@
 [ext_resource type="PackedScene" uid="uid://dl2wa6wofs753" path="res://components/NPCs/quest-npcs/flac/ariff-npc.tscn" id="3_0v8om"]
 [ext_resource type="PackedScene" uid="uid://dcspfctpja23s" path="res://components/NPCs/quest-npcs/flac/hasan-npc.tscn" id="4_gh1b8"]
 [ext_resource type="PackedScene" uid="uid://26coxr1n5ylb" path="res://components/NPCs/quest-npcs/flac/sara-npc.tscn" id="5_gh1b8"]
+[ext_resource type="Script" uid="uid://cydbgraiijs02" path="res://system/audio-stream-player.gd" id="7_740sv"]
 
 [node name="WorldTemplate" unique_id=426960778 instance=ExtResource("1_anwcr")]
+
+[node name="AudioStreamPlayer" parent="." index="0" unique_id=1832510335]
+unique_name_in_owner = true
+script = ExtResource("7_740sv")
 
 [node name="ColorRect" parent="World/GameComponents/Skybox" parent_id_path=PackedInt32Array(2122455167) index="0" unique_id=871121015]
 visible = true

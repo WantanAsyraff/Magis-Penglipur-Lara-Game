@@ -7,6 +7,8 @@
 [node name="WorldTemplate" type="Node" unique_id=426960778]
 script = ExtResource("1_bl7fl")
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1832510335]
+
 [node name="World" type="Node2D" parent="." unique_id=442689472]
 
 [node name="GameComponents" type="Node2D" parent="World" unique_id=692489383]
@@ -30,12 +32,12 @@ color = Color(0.023204857, 0.014493301, 0.22202641, 1)
 
 [node name="Platforms" type="Node2D" parent="World/GameComponents" unique_id=478651781]
 
-[node name="PalleteTemp" parent="World/GameComponents/Platforms" unique_id=1440192550 instance=ExtResource("5_a7o4s")]
+[node name="Temptilemap" parent="World/GameComponents/Platforms" unique_id=396398656 instance=ExtResource("7_ddlod")]
+modulate = Color(0.46885282, 0.40293953, 0.2854013, 1)
 light_mask = 16
 visibility_layer = 16
 
-[node name="Temptilemap" parent="World/GameComponents/Platforms" unique_id=396398656 instance=ExtResource("7_ddlod")]
-modulate = Color(0.46885282, 0.40293953, 0.2854013, 1)
+[node name="PalleteTemp" parent="World/GameComponents/Platforms" unique_id=1440192550 instance=ExtResource("5_a7o4s")]
 light_mask = 16
 visibility_layer = 16
 

@@ -1,0 +1,31 @@
+"Pak Guard": Ayoyo, Yan. Late again?
+join yan left
+yan (default): Pak! Please please please just this once, you know what day it is.
+
+"Pak Guard": Sijil Pelajaran Magis, the entrance exam for every student. The exam that either makes or breaks your future on becoming a spellcaster.
+"Pak Guard": And you are late.
+"Pak Guard": On your final paper no less.
+
+yan (default): Please, please please lah.
+yan (default): I was studying all night, but I passed out without setting my alarm.
+
+"Pak Guard": Funny.. The last student said the same thing just now…
+
+"Pak Guard": Yan begs on to the floor.
+
+yan (default): Please…
+
+"Pak Guard": sigh okay…
+leave yan
+Pak Guard opens the gate and Yan rushes immediately in
+join yan left
+yan (default): THANK YOU SO MUCH!! I’LL REMEMBER THIS!
+
+"Pak Guard": smirks alright kiddo.
+leave yan
+Transitions to Yan and other students sitting in the exam hall. It’s now or never
+
+Timekeeper: Sijil Pelajaran Magis, Subject: The Essential Spellcaster’s Comprehensions. Final Paper One from 9:00am-11:00am.
+Timekeeper: You may begin now.
+join yan center 
+yan (default): (It’s now or never.)

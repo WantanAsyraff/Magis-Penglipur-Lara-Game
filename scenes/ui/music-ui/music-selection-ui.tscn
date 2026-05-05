@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://cl0ptq1mla0g8" path="res://scenes/ui/music-ui/music-selection-ui.gd" id="1_0tv62"]
 [ext_resource type="LabelSettings" uid="uid://dk40du64xk8k7" path="res://assets/custom-labels/ui-stats-label.tres" id="1_noy2w"]
+[ext_resource type="Theme" uid="uid://cv8bqu76ln7kj" path="res://assets/styles/generic-theme.tres" id="3_58y2w"]
+[ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="3_bf8ip"]
 
 [node name="MusicSelectionUi" type="Control" unique_id=1260557064]
 layout_mode = 3
@@ -48,11 +50,106 @@ text = "SONG DESCSONG DESCSONG DESCSONG DESCSONG DESCSONG DESCSONG DESCSONG DESC
 label_settings = ExtResource("1_noy2w")
 autowrap_mode = 3
 
+[node name="SongCoverTexture" type="TextureRect" parent="Panel" unique_id=1700866425]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.18400002
+anchor_top = 0.071
+anchor_right = 0.54800004
+anchor_bottom = 0.5
+offset_left = 0.6079712
+offset_top = 0.3199997
+offset_right = -0.12408447
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_bf8ip")
+
+[node name="Label" type="Label" parent="Panel" unique_id=381536530]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -294.5
+offset_top = 37.0
+offset_right = -119.5
+offset_bottom = 124.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "SONG NAME"
+label_settings = ExtResource("1_noy2w")
+
+[node name="PrevButton" type="Button" parent="Panel" unique_id=1253229606]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.07
+anchor_top = 0.64000005
+anchor_right = 0.15900001
+anchor_bottom = 0.731
+offset_left = 0.08999634
+offset_top = -0.20007324
+offset_right = -11.567017
+offset_bottom = -0.47998047
+grow_vertical = 2
+theme = ExtResource("3_58y2w")
+text = "PREVIOUS"
+
+[node name="PauseButton" type="Button" parent="Panel" unique_id=732395630]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.319
+anchor_top = 0.64000005
+anchor_right = 0.4
+anchor_bottom = 0.731
+offset_left = -0.6470032
+offset_top = -0.20007324
+offset_right = -0.2000122
+offset_bottom = -0.47998047
+grow_vertical = 2
+theme = ExtResource("3_58y2w")
+text = "PAUSE"
+
+[node name="NextButton" type="Button" parent="Panel" unique_id=908267941]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.546
+anchor_top = 0.64000005
+anchor_right = 0.62700003
+anchor_bottom = 0.731
+offset_left = -0.09802246
+offset_top = -0.20007324
+offset_right = 0.348938
+offset_bottom = -0.47998047
+grow_vertical = 2
+theme = ExtResource("3_58y2w")
+text = "NEXT"
+
 [node name="BackButton" type="Button" parent="." unique_id=514768716]
-layout_mode = 0
-offset_left = 57.0
-offset_top = 18.0
-offset_right = 291.0
-offset_bottom = 84.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.030000001
+anchor_top = 0.017
+anchor_right = 0.15200001
+anchor_bottom = 0.078
+offset_left = -0.6000023
+offset_top = -0.3600006
+offset_right = -0.84002686
+offset_bottom = -0.2400055
+theme = ExtResource("3_58y2w")
+text = "BACK"
+
+[node name="MusicSelectio Panel" type="Panel" parent="." unique_id=1552015256]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.024
+anchor_top = 0.12200001
+anchor_right = 0.20400001
+anchor_bottom = 0.93900007
+offset_left = 0.91999817
+offset_top = 0.23999023
+offset_right = -0.6800232
+offset_bottom = -0.12005615
+grow_vertical = 2
 
 [connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]

@@ -13,6 +13,8 @@
 [ext_resource type="PackedScene" uid="uid://dmjknvld3tlat" path="res://scenes/ui/player-stats-ui/player-stats-ui.tscn" id="11_g58nx"]
 [ext_resource type="Texture2D" uid="uid://cu6j36h4d1f3g" path="res://assets/temp/cratebox.png" id="12_a83gt"]
 [ext_resource type="PackedScene" uid="uid://c3mxwwdb1je2e" path="res://scenes/ui/inventory/inventory-ui.tscn" id="12_g58nx"]
+[ext_resource type="Texture2D" uid="uid://vro0klifwduy" path="res://assets/loot/leaf-drop.png" id="14_pv8gh"]
+[ext_resource type="PackedScene" uid="uid://du1k8tmf804l3" path="res://scenes/ui/music-ui/music-selection-ui.tscn" id="15_v8ayx"]
 
 [node name="PhoneUI" type="Control" unique_id=993725934]
 clip_children = 2
@@ -126,4 +128,19 @@ offset_right = -0.15200806
 offset_bottom = 0.17999268
 icon = ExtResource("12_a83gt")
 newApp = ExtResource("12_g58nx")
+fullscreen = true
+
+[node name="Inventory2" parent="AppList" unique_id=173491142 instance=ExtResource("1_qb4dd")]
+clip_contents = true
+layout_mode = 1
+anchor_left = 0.31
+anchor_top = 0.48700002
+anchor_right = 0.574
+anchor_bottom = 0.66400003
+offset_left = 123.119995
+offset_top = -4.5400085
+offset_right = 122.84799
+offset_bottom = 0.17999268
+icon = ExtResource("14_pv8gh")
+newApp = ExtResource("15_v8ayx")
 fullscreen = true

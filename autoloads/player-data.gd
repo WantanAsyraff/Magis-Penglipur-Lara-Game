@@ -92,7 +92,7 @@ var current_world: String = "":
 # DASHES
 # -------------------------
 var is_dashing: bool = false
-var MAX_DASH_CHARGES := 4
+var MAX_DASH_CHARGES := 3
 var current_dash_charges := MAX_DASH_CHARGES :
 	set(value):
 		current_dash_charges = value
@@ -125,7 +125,7 @@ var combat_mode: bool:
 # MOVEMENT
 # -------------------------
 var p_position: Vector2
-var p_speed: float = 1200.0
+var p_speed: float = 900.0
 var p_jump_height: float = -2500.0
 var p_size: float = 1.0
 # -------------------------

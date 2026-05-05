@@ -1,0 +1,90 @@
+join yunira right
+yunira (default): So, how was it?
+join yan left
+yan (default): Ehhhhh, so-so lah (fifty-fifty)
+Yunira karate chops his head
+yan (default): Adui!
+yunira (default): Don’t you play with your sister like that.
+yan (default): It went well, I think.
+She smiles
+yunira (default): That’s more like it. Come, we’re eating at your favourite place.
+yan (default): SERIOUS?!
+yunira (default): Seriouslah, let’s go!!
+leave yunira right
+leave yan left
+Then they went to Kawpee Tiam
+join yan left
+join yunira right 
+yan (default): Wahhh, this is so nice of you Sis!
+yunira (default): You deserve it, I remembered my first time sitting for SPM.
+yan (default): Oh really? How was it?
+yunira (default): I passed, most of my subjects were alright.
+Well, apart from my magis comprehension subject. Your elder sister is just average (biase-biase jer)
+yan (default): You think.. I’ll pass..?
+yunira (default): Of course. I have faith.
+yan (default): Why do you say that?
+yunira (default): Because I knew you were practising magis on your own last night. Yan, yan…
+yan (default): Alamak, busted. Hehe sorry sis.
+She lightly sighs
+yunira (default): It’s okay, I know you’ve been studying in secret. I noticed the effort when I saw one.
+yan (default): Sis…
+yunira (default): Say Yan, where do you plan on studying then?
+yan (default): … Promise me you’ll be okay with it?
+yunira (default): I’m all ears.
+yan (default): ..ABU…
+Yunira flinches a bit
+yunira (default): Akademi Bintang Utama? (First Star Academy?)
+Yan nods
+yunira (default): I see…
+yan (default): I know, I know it’s in the capital and we’re kilometers away…
+And I know it might be a lot at our expense…
+And…
+You won’t be able to visit me often…
+She smiles
+yunira (default): It’s okay, I don’t mind.
+If anything, I want you to explore the world. See places you’ve never seen.
+It’s what I think our parents would be proud of!
+yan (default): Yunira….
+yunira (default): Ah don’t think about it too much. Come, come, let’s eat.
+leave yunira right
+leave yan left
+Transitions to black screen
+Months later Yan was playing in the front yard of their house. Practising mana manipulation with tin bottles
+Mailman: Postman from the Akhbar’s Times. Letter.
+join yunira right
+yunira (default): Yaann, can you pick that up? I’m hanging our clothes.
+….
+yunira (default): This kid….
+yunira (default): Yannnnn! A mail for-
+yunira (default): OH Yan, it's your admission’s letter.
+leave yunira
+join yan center 
+yan (default): OHHHHH!!
+leave yan center
+Yan immediately runs into Yunira
+join yunira right 
+yunira (default): Ouch, hey! Careful!!
+leave yunira
+join yan center 
+yan (default): please, please, please, please, please….
+yan (default): Please…
+leave yan center
+Yan tears the letter.
+....We are proud to announce that you have been accepted into Akademi Bintang Utama…”
+join yan left
+yan (default): Oh my god… Sis… I did it… I got accepted!!
+join yunira right
+Yunira 's ears perked and she hugged Yan tightly.
+yunira (default): Oh my goodness Yan I’m so, so so proud of you. You worked so hard to pass with flying colours and I know just how much this meant to you.
+yan (default): YUNIII- WAAAAAAAA!!
+yan (default): I’M SO- I DON’T KNOW WHAT TO SAY ANYMORE!
+yan (default): I’M HEADING TO THE CAPITAL! NILLAYAH CITY!
+leave yan 
+leave yunira 
+Crossfade Night time Yan in his bed still reading his admission letter*
+join yan center
+yan (default): (I’ll be the first spellcaster in the family. But I’ll have to leave Yunira here…)
+(... Is this the right choice?...)
+(... I’m gonna miss everyone…)
+leave yan 
+End of Prologue.

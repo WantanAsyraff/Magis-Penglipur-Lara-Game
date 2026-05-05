@@ -15,6 +15,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="Magis Penglipur Lara"
+config/tags=PackedStringArray("flagship", "rpg")
 run/main_scene="uid://5h52stxd7o1g"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
@@ -36,10 +37,13 @@ PacketHandshake="*uid://tt3j25a05n7c"
 World_Manifest="*uid://di6f8axk1wxke"
 QuestManager="*uid://c2imtb0eppc6"
 Inventory_Manager="*uid://kj7y3b562h7j"
+LyricsManager="*uid://cur6vvsa8gy2x"
+LyricsOverlay="*uid://c45wkhuvjprtu"
 
 [dialogic]
 
 directories/dch_directory={
+"Pak Guard": "res://dialogue/characters/Pak Guard.dch",
 "ariff": "res://dialogue/characters/ariff.dch",
 "hasan": "res://dialogue/characters/hasan.dch",
 "player": "res://dialogue/characters/player.dch",
@@ -50,11 +54,10 @@ directories/dch_directory={
 directories/dtl_directory={
 "QuestDialogue": "res://dialogue/quest/QuestDialogue.dtl",
 "QuestDialogue-FLAC": "res://dialogue/quest/QuestDialogue-FLAC.dtl",
+"after-final-paper": "res://dialogue/story-mode/prologue/after-final-paper.dtl",
 "chapter-1/scene-1": "res://dialogue/story-mode/akademi-bintang-utama/chapter-1/scene-1.dtl",
-"scene-1": "res://dialogue/story-mode/akademi-bintang-utama/prologue/scene-1.dtl",
-"scene-2": "res://dialogue/story-mode/akademi-bintang-utama/prologue/scene-2.dtl",
-"scene-3": "res://dialogue/story-mode/akademi-bintang-utama/prologue/scene-3.dtl",
-"scene-4": "res://dialogue/story-mode/akademi-bintang-utama/prologue/scene-4.dtl",
+"kampung-scene": "res://dialogue/story-mode/prologue/kampung-scene.dtl",
+"spm-school-entrance": "res://dialogue/story-mode/prologue/spm-school-entrance.dtl",
 "story-select-npc": "res://dialogue/overworld/story-select-npc.dtl",
 "students-and-errands": "res://dialogue/tutorials/students-and-errands.dtl"
 }
@@ -131,6 +134,7 @@ enabled=PackedStringArray("res://addons/dialogic/plugin.cfg", "res://addons/netf
 
 folder_colors={
 "res://assets/": "pink",
+"res://assets/audio/": "orange",
 "res://autoloads/": "red",
 "res://components/": "yellow",
 "res://data/": "teal",
@@ -138,6 +142,7 @@ folder_colors={
 "res://scenes/": "orange",
 "res://scenes/ui/": "blue",
 "res://scenes/worlds/": "red",
+"res://system/": "green",
 "res://tools/": "pink"
 }
 

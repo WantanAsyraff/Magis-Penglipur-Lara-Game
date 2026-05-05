@@ -16,6 +16,7 @@
 script = ExtResource("2_mvkwq")
 scene = ExtResource("1_wqt28")
 overrides = {
+"global_bg_color": "Color(0.068805695, 0.059661865, 0.1328125, 0.14901961)",
 "global_font": "\"res://assets/font/Bitter/static/Bitter-Medium.ttf\""
 }
 
@@ -35,6 +36,8 @@ scene = ExtResource("5_qqjlc")
 script = ExtResource("2_mvkwq")
 scene = ExtResource("6_jcks7")
 overrides = {
+"box_color_custom": "Color(0.14509805, 0.09019608, 0.23529412, 0.93333334)",
+"box_color_use_global": "false",
 "box_size": "Vector2(1500, 300)",
 "name_label_box_offset": "Vector2(0, -20)",
 "name_label_custom_font_size": "34.0",
@@ -75,4 +78,4 @@ layer_info = {
 "16": SubResource("Resource_phfk3"),
 "17": SubResource("Resource_t6dtv")
 }
-metadata/_latest_layer = "17"
+metadata/_latest_layer = "13"

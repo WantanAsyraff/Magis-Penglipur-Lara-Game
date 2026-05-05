@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://c45wkhuvjprtu"]
+
+[ext_resource type="Script" uid="uid://bcywqkeol7j4h" path="res://system/lyrics/lyric-overlay.gd" id="1_owkug"]
+[ext_resource type="Theme" uid="uid://cv8bqu76ln7kj" path="res://assets/styles/generic-theme.tres" id="2_ma7qk"]
+
+[node name="LyricsOverlay" type="CanvasLayer" unique_id=803487956]
+layer = -1
+script = ExtResource("1_owkug")
+
+[node name="Anchor" type="Control" parent="." unique_id=987133859]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="LyricLabel" type="RichTextLabel" parent="Anchor" unique_id=1825434070]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0640625
+anchor_top = 0.8527778
+anchor_right = 0.9359375
+anchor_bottom = 0.91851854
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("2_ma7qk")
+bbcode_enabled = true
+text = "LYRCIS HERE"
+fit_content = true
+autowrap_mode = 2
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true

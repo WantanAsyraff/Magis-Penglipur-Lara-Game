@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" uid="uid://bmkjmv4jmjtsw" path="res://scenes/ui/menus/intro-menus/main-menu.gd" id="1_ienob"]
 [ext_resource type="Theme" uid="uid://cv8bqu76ln7kj" path="res://assets/styles/generic-theme.tres" id="1_q56r3"]
-[ext_resource type="Texture2D" uid="uid://dfwmmvec2g6kh" path="res://assets/ui/panels/mpl-title-card.png" id="2_2hhve"]
-[ext_resource type="FontFile" uid="uid://c6jc6tkq8afp2" path="res://assets/font/Bitter/static/Bitter-Black.ttf" id="2_db2sj"]
-[ext_resource type="FontFile" uid="uid://bid56dcwfjc8v" path="res://assets/font/Bitter/static/Bitter-Bold.ttf" id="3_y1sqq"]
+[ext_resource type="Texture2D" uid="uid://c2jphh64komco" path="res://assets/ui/panels/mpl-title-card.png" id="2_2hhve"]
+[ext_resource type="FontFile" uid="uid://b5icbtcjk4646" path="res://assets/font/Bitter/static/Bitter-Black.ttf" id="2_db2sj"]
+[ext_resource type="FontFile" uid="uid://bk4pyfyvg33i3" path="res://assets/font/Bitter/static/Bitter-Bold.ttf" id="3_y1sqq"]
 [ext_resource type="StyleBox" uid="uid://bs4dt5ctqw4hq" path="res://assets/styles/generic-button.tres" id="4_e5tib"]
 [ext_resource type="Script" uid="uid://di6f8axk1wxke" path="res://autoloads/world-manifest.gd" id="4_s2gwe"]
 

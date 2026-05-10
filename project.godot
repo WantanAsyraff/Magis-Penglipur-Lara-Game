@@ -55,8 +55,8 @@ directories/dtl_directory={
 "QuestDialogue": "res://dialogue/quest/QuestDialogue.dtl",
 "QuestDialogue-FLAC": "res://dialogue/quest/QuestDialogue-FLAC.dtl",
 "after-final-paper": "res://dialogue/story-mode/prologue/after-final-paper.dtl",
-"chapter-1/scene-1": "res://dialogue/story-mode/akademi-bintang-utama/chapter-1/scene-1.dtl",
 "kampung-scene": "res://dialogue/story-mode/prologue/kampung-scene.dtl",
+"scene-1": "res://dialogue/story-mode/akademi-bintang-utama/chapter-1/scene-1.dtl",
 "spm-school-entrance": "res://dialogue/story-mode/prologue/spm-school-entrance.dtl",
 "story-select-npc": "res://dialogue/overworld/story-select-npc.dtl",
 "students-and-errands": "res://dialogue/tutorials/students-and-errands.dtl"

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SceneData" format=3 uid="uid://d3mdsv68qw20h"]
+
+[ext_resource type="PackedScene" uid="uid://nwe6mff2mb4b" path="res://scenes/worlds/hubs/story/prologue/yan-exam-tutorial.tscn" id="1_sirxi"]
+[ext_resource type="Script" uid="uid://bxc44phagq28x" path="res://data/Resources/worlds/scene-data.gd" id="2_ggec4"]
+
+[resource]
+script = ExtResource("2_ggec4")
+scene_id = "yan_exam_tutorial"
+scene = ExtResource("1_sirxi")
+scene_name = "Yan Exam Tutorial"
+metadata/_custom_type_script = "uid://bxc44phagq28x"

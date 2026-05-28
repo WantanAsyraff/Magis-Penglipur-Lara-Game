@@ -17,7 +17,7 @@ tile_map_data = PackedByteArray("AAD//w4AAQACAA0AAAD//w8AAQACAA4AAAD//xAAAQACAA8
 [node name="ZonePortal(SchoolEntrance)" parent="World/GameComponents/Doors" parent_id_path=PackedInt32Array(764980959) index="0" unique_id=362818532 instance=ExtResource("4_6g4xo")]
 position = Vector2(5689, 733)
 is_door = true
-next_scene_id = "yan-exam-tutorial"
+next_scene_id = "yan_exam_tutorial"
 
 [node name="NoteToSelfLabel" type="Label" parent="World/GameComponents/Dungeon" parent_id_path=PackedInt32Array(268330895) index="0" unique_id=1088558356]
 offset_left = 109.0

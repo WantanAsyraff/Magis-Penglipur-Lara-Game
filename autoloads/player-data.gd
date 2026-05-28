@@ -11,6 +11,11 @@ signal spells_updated()
 signal dash_charges_changed(current: int)
 
 # -------------------------
+# PHONE
+# -------------------------
+var phone_visible: bool = true
+
+# -------------------------
 # NPC REGISTRY
 # -------------------------
 var active_npc_ids: Array[String] = []

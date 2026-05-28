@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://dh6nb06qe2j5y" path="res://scenes/ui/quest-ui/quest-ui.tscn" id="9_chuhu"]
 [ext_resource type="Texture2D" uid="uid://kf008rfndaic" path="res://assets/ui/phone/profile-icon.png" id="10_6ol8v"]
 [ext_resource type="PackedScene" uid="uid://dmjknvld3tlat" path="res://scenes/ui/player-stats-ui/player-stats-ui.tscn" id="11_g58nx"]
-[ext_resource type="Texture2D" uid="uid://cu6j36h4d1f3g" path="res://assets/temp/cratebox.png" id="12_a83gt"]
+[ext_resource type="Texture2D" uid="uid://noyqsgrke63i" path="res://assets/temp/cratebox.png" id="12_a83gt"]
 [ext_resource type="PackedScene" uid="uid://c3mxwwdb1je2e" path="res://scenes/ui/inventory/inventory-ui.tscn" id="12_g58nx"]
 [ext_resource type="Texture2D" uid="uid://vro0klifwduy" path="res://assets/loot/leaf-drop.png" id="14_pv8gh"]
 [ext_resource type="PackedScene" uid="uid://du1k8tmf804l3" path="res://scenes/ui/music-ui/music-selection-ui.tscn" id="15_v8ayx"]

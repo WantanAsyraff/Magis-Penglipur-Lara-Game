@@ -2,10 +2,10 @@
 
 [ext_resource type="PackedScene" uid="uid://dh675vcu2br3h" path="res://scenes/ui/phone-ui/phone-ui.tscn" id="1_awj58"]
 [ext_resource type="Script" uid="uid://rf4x2k7qsc14" path="res://scenes/ui/interface/user-interface-overworld.gd" id="1_tvpvp"]
-[ext_resource type="Texture2D" uid="uid://oftfr7qfand2" path="res://assets/ui/panels/character-panel.png" id="2_tvpvp"]
+[ext_resource type="Texture2D" uid="uid://dcqaf6xqbiyn6" path="res://assets/ui/panels/character-panel.png" id="2_tvpvp"]
 [ext_resource type="LabelSettings" uid="uid://dk40du64xk8k7" path="res://assets/custom-labels/ui-stats-label.tres" id="3_0k00g"]
 [ext_resource type="Texture2D" uid="uid://b4hw02ctw4xo4" path="res://assets/ui/panels/location-panel.png" id="5_c1ax3"]
-[ext_resource type="FontFile" uid="uid://bid56dcwfjc8v" path="res://assets/font/Bitter/static/Bitter-Bold.ttf" id="6_m0o5q"]
+[ext_resource type="FontFile" uid="uid://bk4pyfyvg33i3" path="res://assets/font/Bitter/static/Bitter-Bold.ttf" id="6_m0o5q"]
 
 [sub_resource type="Theme" id="Theme_0k00g"]
 
@@ -42,6 +42,7 @@ grow_vertical = 2
 script = ExtResource("1_tvpvp")
 
 [node name="PhoneUI" parent="." unique_id=842712817 instance=ExtResource("1_awj58")]
+unique_name_in_owner = true
 layout_mode = 1
 offset_left = 0.0
 offset_top = 0.0

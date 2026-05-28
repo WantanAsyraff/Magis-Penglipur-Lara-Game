@@ -10,11 +10,11 @@ She smiles
 yunira (default): That’s more like it. Come, we’re eating at your favourite place.
 yan (default): SERIOUS?!
 yunira (default): Seriouslah, let’s go!!
-leave yunira right
-leave yan left
+leave yunira
+leave yan
 Then they went to Kawpee Tiam
 join yan left
-join yunira right 
+join yunira right
 yan (default): Wahhh, this is so nice of you Sis!
 yunira (default): You deserve it, I remembered my first time sitting for SPM.
 yan (default): Oh really? How was it?
@@ -46,8 +46,8 @@ If anything, I want you to explore the world. See places you’ve never seen.
 It’s what I think our parents would be proud of!
 yan (default): Yunira….
 yunira (default): Ah don’t think about it too much. Come, come, let’s eat.
-leave yunira right
-leave yan left
+leave yunira
+leave yan
 Transitions to black screen
 Months later Yan was playing in the front yard of their house. Practising mana manipulation with tin bottles
 Mailman: Postman from the Akhbar’s Times. Letter.
@@ -58,17 +58,17 @@ yunira (default): This kid….
 yunira (default): Yannnnn! A mail for-
 yunira (default): OH Yan, it's your admission’s letter.
 leave yunira
-join yan center 
+join yan center
 yan (default): OHHHHH!!
-leave yan center
+leave yan
 Yan immediately runs into Yunira
-join yunira right 
+join yunira right
 yunira (default): Ouch, hey! Careful!!
 leave yunira
-join yan center 
+join yan center
 yan (default): please, please, please, please, please….
 yan (default): Please…
-leave yan center
+leave yan
 Yan tears the letter.
 ....We are proud to announce that you have been accepted into Akademi Bintang Utama…”
 join yan left
@@ -79,12 +79,12 @@ yunira (default): Oh my goodness Yan I’m so, so so proud of you. You worked so
 yan (default): YUNIII- WAAAAAAAA!!
 yan (default): I’M SO- I DON’T KNOW WHAT TO SAY ANYMORE!
 yan (default): I’M HEADING TO THE CAPITAL! NILLAYAH CITY!
-leave yan 
-leave yunira 
+leave yan
+leave yunira
 Crossfade Night time Yan in his bed still reading his admission letter*
 join yan center
 yan (default): (I’ll be the first spellcaster in the family. But I’ll have to leave Yunira here…)
 (... Is this the right choice?...)
 (... I’m gonna miss everyone…)
-leave yan 
+leave yan
 End of Prologue.

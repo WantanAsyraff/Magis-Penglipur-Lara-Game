@@ -1,6 +1,13 @@
 [gd_scene format=3 uid="uid://dj1ema4jym6u7"]
 
 [ext_resource type="Theme" uid="uid://cv8bqu76ln7kj" path="res://assets/styles/generic-theme.tres" id="1_oh8uu"]
+[ext_resource type="Script" uid="uid://d0q7cowfhixp2" path="res://scenes/crafting-room/crafting-room.gd" id="1_wmq61"]
+[ext_resource type="PackedScene" uid="uid://dtwmwcat1xjln" path="res://scenes/crafting-room/crafting-ui.tscn" id="2_2l4mn"]
+[ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="2_dghw8"]
+[ext_resource type="Script" uid="uid://dwparggceebhq" path="res://data/items/item-data.gd" id="2_q46kn"]
+[ext_resource type="Resource" uid="uid://dq3xudxn0iw36" path="res://data/items/components/mana-vile-low-grade.tres" id="3_dghw8"]
+[ext_resource type="Resource" uid="uid://b3kcydgqj85os" path="res://data/items/components/mana-vile-medium-grade.tres" id="4_idqv0"]
+[ext_resource type="Resource" uid="uid://cuxsreynyesej" path="res://data/items/components/mana-vile-high-grade.tres" id="5_oxx8k"]
 
 [node name="CraftingRoom" type="Control" unique_id=511127234]
 layout_mode = 3
@@ -9,15 +16,36 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_wmq61")
+npc_name = "w"
+npc_portrait = ExtResource("2_dghw8")
+available_recipes = Array[ExtResource("2_q46kn")]([ExtResource("3_dghw8"), ExtResource("4_idqv0"), ExtResource("5_oxx8k")])
 
-[node name="Panel" type="Panel" parent="." unique_id=1244225251]
+[node name="CraftingUI" parent="." unique_id=1963687105 instance=ExtResource("2_2l4mn")]
+unique_name_in_owner = true
+visible = false
 layout_mode = 1
-anchors_preset = 9
+
+[node name="CraftingRoomPanel" type="Panel" parent="." unique_id=1244225251]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.4
 anchor_bottom = 1.0
-offset_right = 768.0
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=256500385]
+[node name="TextureRect" type="TextureRect" parent="CraftingRoomPanel" unique_id=214547274]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 2.5
+anchor_bottom = 1.0
+offset_left = 86.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CraftingRoomPanel" unique_id=256500385]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -26,17 +54,24 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="CraftingButton" type="Button" parent="Panel/VBoxContainer" unique_id=366999957]
+[node name="CraftingButton" type="Button" parent="CraftingRoomPanel/VBoxContainer" unique_id=366999957]
+unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("1_oh8uu")
 text = "CRAFT"
 
-[node name="ComponentCompendiumButton" type="Button" parent="Panel/VBoxContainer" unique_id=1505054787]
+[node name="CompendiumComponentButton" type="Button" parent="CraftingRoomPanel/VBoxContainer" unique_id=1505054787]
+unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("1_oh8uu")
 text = "COMPONENT COMPENDIUM"
 
-[node name="LeaveCompendiumButton2" type="Button" parent="Panel/VBoxContainer" unique_id=1236957528]
+[node name="LeaveButton" type="Button" parent="CraftingRoomPanel/VBoxContainer" unique_id=1236957528]
+unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("1_oh8uu")
 text = "LEAVE"
+
+[connection signal="pressed" from="CraftingRoomPanel/VBoxContainer/CraftingButton" to="." method="_on_crafting_button_pressed"]
+[connection signal="pressed" from="CraftingRoomPanel/VBoxContainer/CompendiumComponentButton" to="." method="_on_compendium_component_button_pressed"]
+[connection signal="pressed" from="CraftingRoomPanel/VBoxContainer/LeaveButton" to="." method="_on_leave_button_pressed"]

@@ -39,6 +39,7 @@ QuestManager="*uid://c2imtb0eppc6"
 Inventory_Manager="*uid://kj7y3b562h7j"
 LyricsManager="*uid://cur6vvsa8gy2x"
 LyricsOverlay="*uid://c45wkhuvjprtu"
+Crafting_Context="*uid://c2fhvdxlwtxc4"
 
 [dialogic]
 
@@ -48,7 +49,7 @@ directories/dch_directory={
 "hasan": "res://dialogue/characters/hasan.dch",
 "player": "res://dialogue/characters/player.dch",
 "sara": "res://dialogue/characters/sara.dch",
-"yan": "res://dialogue/glossaries/yan.dch",
+"yan": "res://dialogue/characters/yan.dch",
 "yunira": "res://dialogue/characters/yunira.dch"
 }
 directories/dtl_directory={
@@ -65,7 +66,7 @@ layout/style_directory={
 "": "res://dialogue/styles/main-style.tres",
 "main-style": "res://dialogue/styles/main-style.tres"
 }
-glossary/default_case_sensitive=true
+glossary/default_case_sensitive=false
 variables={
 "CurrentPortrait": "Ur not supposed to see this",
 "QuestText": "Ur not supposed to see this"
@@ -118,6 +119,7 @@ translation/add_separator=false
 history/simple_history_enabled=false
 history/full_history_enabled=true
 text/autocolor_names=true
+glossary/default_color=Color(0.921875, 0.86008054, 0.47246093, 1)
 
 [display]
 
@@ -138,6 +140,7 @@ folder_colors={
 "res://autoloads/": "red",
 "res://components/": "yellow",
 "res://data/": "teal",
+"res://data/Resources/": "green",
 "res://dialogue/": "purple",
 "res://scenes/": "orange",
 "res://scenes/ui/": "blue",

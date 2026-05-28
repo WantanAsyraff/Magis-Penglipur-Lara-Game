@@ -5,21 +5,33 @@
 [resource]
 script = ExtResource("1_g6pfq")
 entries = {
+"Al-Nur": {
+"alternatives": ["Nur"],
+"case_sensitive": true,
+"color": Color(0.9, 0.8096087, 0.25031248, 1),
+"enabled": true,
+"name": "Al-Nur",
+"text": "Al-Nur paved the way for the foundations of today's magis comprehension. Originated from the Penglipur Laras(Sootherer of Sorrows), Al-Nur is known for its versatility and just nature.",
+"title": "Foundation of Modern Day Magis"
+},
 "Al-Zalam": {
 "alternatives": ["Zalam"],
 "case_sensitive": true,
-"color": Color(0.38476968, 0.20588684, 0.51171875, 1),
+"color": Color(0.34114742, 0.17226563, 0.39375, 1),
 "enabled": true,
 "name": "Al-Zalam",
-"text": "Derived from the word \"Dark\", Al-Zalam feeds on strong emotions, creating manifestations of the mind of the caster.",
-"title": "The Dark Magic"
+"text": "Derived from the word \"Dark\", Al-Zalam feeds on strong emotions, creating unstable & uncontrollable manifestations of the spellcaster's imagination.",
+"title": "Magic of the \"Sihirs\" (Witchcrafts)"
 },
+"Magic": "Magis",
 "Magis": {
+"alternatives": ["Magic"],
 "case_sensitive": true,
-"color": Color(0.48742676, 0.9453125, 0.9238491, 1),
+"color": Color(0.775, 0.89031243, 1, 1),
 "name": "Magis",
-"text": "Magis, the core foundation of all mythical and beyond.",
-"title": "This world's magic."
+"text": "The power that defnes the world of Dunya. Magis represents the power that was taught by the Penglipur Laras, a group that once spread their wisdom and knowledge throughout dunya.",
+"title": "The power of the modern day spellcaster."
 },
+"Nur": "Al-Nur",
 "Zalam": "Al-Zalam"
 }

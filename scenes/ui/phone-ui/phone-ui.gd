@@ -1,5 +1,6 @@
 extends Control
 
+
 @onready var app_list = %AppList   
 @onready var screen = %PhoneBG
 
@@ -10,12 +11,18 @@ extends Control
 var current_app_node: Control = null
 
 func _ready():
-	print("AppList node: ", app_list)
-	print("Screen node: ", screen)
-	position = down_pos
-	for child in app_list.get_children():
-		if child is App:
-			child.app_pressed.connect(_on_app_opened)
+	if Player_Global_Data.phone_visible:
+		$".".visible = true
+		print("Phone enabled")
+		print("AppList node: ", app_list)
+		print("Screen node: ", screen)
+		position = down_pos
+		for child in app_list.get_children():
+			if child is App:
+				child.app_pressed.connect(_on_app_opened)
+	else:
+		$".".visible = false
+		print("Phone disabled")
 
 func _input(event):
 	if event.is_action_pressed("open_phone"):

@@ -1,4 +1,4 @@
-# inventory_manager.gd
+# inventory-manager.gd Global uses "Inventory_Manager"
 extends Node
 
 # -------------------------

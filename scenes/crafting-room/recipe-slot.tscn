@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://emknw3lnv7o6"]
+
+[ext_resource type="Script" uid="uid://b1ref6bf8h650" path="res://scenes/crafting-room/recipe-slot.gd" id="1_cn61w"]
+[ext_resource type="LabelSettings" uid="uid://dk40du64xk8k7" path="res://assets/custom-labels/ui-stats-label.tres" id="2_igncd"]
+[ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="2_ud2bt"]
+
+[node name="RecipeSlot" type="Panel" unique_id=297027817]
+custom_minimum_size = Vector2(0, 200)
+anchors_preset = -1
+anchor_right = 0.30600002
+anchor_bottom = 0.18200001
+offset_right = -0.52001953
+offset_bottom = 0.43998718
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_cn61w")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1369755606]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.31
+anchor_bottom = 0.99300003
+offset_right = 0.02999878
+offset_bottom = 0.0289917
+texture = ExtResource("2_ud2bt")
+
+[node name="ItemLabel" type="Label" parent="." unique_id=799448524]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.01
+offset_left = 182.0
+offset_top = 4.0
+offset_right = -1.0
+offset_bottom = 0.02999878
+text = "TESTS"
+label_settings = ExtResource("2_igncd")
+horizontal_alignment = 1
+vertical_alignment = 1

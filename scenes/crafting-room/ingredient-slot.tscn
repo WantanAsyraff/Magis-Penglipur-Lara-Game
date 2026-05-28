@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://di7xnjhsy72dk"]
+
+[ext_resource type="FontFile" uid="uid://bk4pyfyvg33i3" path="res://assets/font/Bitter/static/Bitter-Bold.ttf" id="1_0tney"]
+[ext_resource type="Script" uid="uid://d28twhec2pjei" path="res://scenes/crafting-room/ingredient-slot.gd" id="1_vjsh6"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_vjsh6"]
+font = ExtResource("1_0tney")
+font_size = 100
+
+[node name="IngredientSlot" type="Panel" unique_id=539844888]
+anchors_preset = -1
+anchor_right = 0.117000006
+anchor_bottom = 0.28100002
+offset_right = 656.65515
+offset_bottom = 370.22116
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.25530607, 0.25530607)
+script = ExtResource("1_vjsh6")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=852670879]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 258.51324
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer" unique_id=820188220]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 700)
+layout_mode = 2
+
+[node name="ItemLabel" type="Label" parent="VBoxContainer" unique_id=609989947]
+unique_name_in_owner = true
+layout_mode = 2
+text = "RECIPE HERE"
+label_settings = SubResource("LabelSettings_vjsh6")

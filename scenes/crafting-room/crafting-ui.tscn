@@ -1,0 +1,127 @@
+[gd_scene format=3 uid="uid://dtwmwcat1xjln"]
+
+[ext_resource type="PackedScene" uid="uid://di7xnjhsy72dk" path="res://scenes/crafting-room/ingredient-slot.tscn" id="1_111cp"]
+[ext_resource type="Script" uid="uid://dpbugtrqhxgyn" path="res://scenes/crafting-room/crafting-ui.gd" id="1_bm2l0"]
+
+[node name="CraftingUi" type="Control" unique_id=1963687105]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_bm2l0")
+
+[node name="Background" type="TextureRect" parent="." unique_id=84892096]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="CraftingPanel" type="Panel" parent="." unique_id=1091324115]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 453.0
+offset_top = 55.0
+offset_right = -55.0
+offset_bottom = -49.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="IngredientSlot" parent="CraftingPanel" unique_id=539844888 instance=ExtResource("1_111cp")]
+unique_name_in_owner = true
+layout_mode = 1
+anchor_left = 0.187
+anchor_top = 0.57500005
+anchor_right = 0.33600003
+anchor_bottom = 0.76400006
+offset_left = -0.044006348
+offset_top = -0.2000122
+offset_right = 611.4271
+offset_bottom = 538.1504
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="IngredientSlot2" parent="CraftingPanel" unique_id=1025768073 instance=ExtResource("1_111cp")]
+unique_name_in_owner = true
+layout_mode = 1
+anchor_left = 0.193
+anchor_top = 0.20500001
+anchor_right = 0.34100002
+anchor_bottom = 0.39400002
+offset_left = -0.5159912
+offset_top = -0.07992554
+offset_right = 612.36707
+offset_bottom = 538.2704
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="IngredientSlot3" parent="CraftingPanel" unique_id=2070531616 instance=ExtResource("1_111cp")]
+unique_name_in_owner = true
+layout_mode = 1
+anchor_left = 0.55
+anchor_top = 0.32200003
+anchor_right = 0.69900006
+anchor_bottom = 0.51100004
+offset_left = 0.39990234
+offset_top = -0.2720337
+offset_right = 611.87103
+offset_bottom = 538.0783
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="RecipePanel" type="Panel" parent="." unique_id=1559440580]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.036000002
+anchor_top = 0.048
+anchor_right = 0.21800001
+anchor_bottom = 0.96000004
+offset_left = -24.120003
+offset_top = 0.15999985
+offset_right = 0.43997192
+offset_bottom = 0.19995117
+grow_vertical = 2
+
+[node name="RecipesListVBoxContainer" type="VBoxContainer" parent="RecipePanel" unique_id=1373395084]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 135.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BackButton" type="Button" parent="RecipePanel" unique_id=1166374608]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.045
+anchor_top = 0.016
+anchor_right = 0.87700003
+anchor_bottom = 0.101
+offset_left = 0.17000008
+offset_top = 0.23999882
+offset_right = 0.0019836426
+offset_bottom = 0.44000244
+text = "BACK"
+
+[node name="CraftingButton" type="Button" parent="RecipePanel" unique_id=364749548]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 2.615
+anchor_top = 0.623
+anchor_right = 3.9870002
+anchor_bottom = 0.74600005
+offset_left = -0.010009766
+offset_top = 0.3449707
+offset_right = -0.13806152
+offset_bottom = 0.29699707
+text = "CRAFT"
+
+[connection signal="pressed" from="RecipePanel/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="RecipePanel/CraftingButton" to="." method="_on_crafting_button_pressed"]

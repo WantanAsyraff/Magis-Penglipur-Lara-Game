@@ -4,7 +4,7 @@
 [ext_resource type="Theme" uid="uid://cv8bqu76ln7kj" path="res://assets/styles/generic-theme.tres" id="1_kdu3k"]
 [ext_resource type="Script" uid="uid://djmhaik4lik3s" path="res://scenes/ui/spell-equipment/spell-archives-menu.gd" id="1_xls6h"]
 [ext_resource type="LabelSettings" uid="uid://dk40du64xk8k7" path="res://assets/custom-labels/ui-stats-label.tres" id="2_o4i4s"]
-[ext_resource type="FontFile" uid="uid://bid56dcwfjc8v" path="res://assets/font/Bitter/static/Bitter-Bold.ttf" id="4_hklik"]
+[ext_resource type="FontFile" uid="uid://bk4pyfyvg33i3" path="res://assets/font/Bitter/static/Bitter-Bold.ttf" id="4_hklik"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_xls6h"]
 font = ExtResource("4_hklik")
@@ -70,10 +70,10 @@ layout_mode = 2
 text = "SPELL DESCRIPTION"
 label_settings = ExtResource("2_o4i4s")
 
-[node name="BackButton" type="Button" parent="SpellDescPanel/VBoxContainer/SpellHeader" unique_id=132002026]
+[node name="NextPageButton" type="Button" parent="SpellDescPanel/VBoxContainer/SpellHeader" unique_id=132002026]
 layout_mode = 2
 theme = ExtResource("1_kdu3k")
-text = "BACK"
+text = "Next Page"
 
 [node name="SpellDescription" type="HBoxContainer" parent="SpellDescPanel/VBoxContainer" unique_id=1749817349]
 layout_mode = 2

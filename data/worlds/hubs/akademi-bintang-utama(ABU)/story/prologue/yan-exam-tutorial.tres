@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="SceneData" format=3 uid="uid://d0isyeud7m30h"]
+
+[ext_resource type="Script" uid="uid://bxc44phagq28x" path="res://data/Resources/worlds/scene-data.gd" id="1_68upw"]
+[ext_resource type="PackedScene" uid="uid://nwe6mff2mb4b" path="res://scenes/worlds/hubs/story/prologue/yan-exam-tutorial.tscn" id="1_kegn3"]
+
+[resource]
+script = ExtResource("1_68upw")
+scene_id = "yan-exam-tutorial"
+scene = ExtResource("1_kegn3")
+scene_name = "Exam Tutorial"
+description = "Tutorial world. The pressure is real"
+metadata/_custom_type_script = "uid://bxc44phagq28x"

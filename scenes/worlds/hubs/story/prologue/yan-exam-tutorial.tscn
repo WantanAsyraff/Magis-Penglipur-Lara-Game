@@ -18,4 +18,4 @@ is_door = true
 next_scene_id = "subway_scene"
 
 [node name="PlayerSpawn" type="Marker2D" parent="World/GameComponents/SpawnPoints" parent_id_path=PackedInt32Array(1598029619) index="0" unique_id=1736311650]
-position = Vector2(694, 421)
+position = Vector2(23, 440)

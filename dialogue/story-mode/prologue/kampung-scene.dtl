@@ -1,4 +1,4 @@
-[background arg="res://assets/temp/forest-bg.jpg" fade="0.0"]
+[background arg="res://assets/temp/temp-bgs/prologue-art-scene-1.jpg" fade="0.0"]
 "Knowledge without action is wastefulness, action without knowledge is foolishness." — Imam Al-Ghazali
 
 Magis.
@@ -10,6 +10,7 @@ The beam pierced through the heavens.
 A youthful Kocheen was about to declare something.
 
 join yan center
+[background arg="res://assets/temp/temp-bgs/prologue-art-scene-2.jpg" fade="0.0"]
 yan (default): PEOPLE OF DUNYA, FROM THE STEEPEST HILLS AND THE DEEPEST OF TRENCHES. HEAR MY PROMISE.
 yan (default): I, Yan will become a Bril-
 
@@ -29,6 +30,7 @@ join yan left
 yan (default): ADUHH-
 
 join yunira right
+[background arg="res://assets/temp/temp-bgs/prologue-art-scene-4.jpg" fade="0.0"]
 yunira (default): WEI, WAKE UP LAH. LOOK AT THE CLOCK.
 
 yan (default): Huh, what’s the time-?

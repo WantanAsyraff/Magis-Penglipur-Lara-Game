@@ -1,5 +1,27 @@
 class_name SpellData extends Resource
+# ─────────────────────────────────────────
+# CATEGORY  (top-level intent dispatcher)
+# ─────────────────────────────────────────
+@export_group("Category")
 
+enum SpellCategory {
+	PROJECTILE,   # existing behaviour
+	AOE,          # existing behaviour
+	HEALING,      # restores HP / applies HoT
+	BUFF,         # modifies stats on self or ally
+	DECAST        # nullifies active spells / effects
+}
+
+@export_group("Archetype Resonance")
+## Bonus magnitude (0.0–1.0) when caster's active archetype matches this spell.
+@export var resonance_bonus: float = 0.0
+## Penalty applied when casting outside your dominant archetype.
+@export var off_archetype_penalty: float = 0.0
+## If true, this spell cannot be cast at all unless caster's dominant archetype matches.
+@export var requires_archetype_match: bool = false
+
+
+@export var spell_category: SpellCategory = SpellCategory.PROJECTILE
 # ─────────────────────────────────────────
 # IDENTITY
 # ─────────────────────────────────────────
@@ -91,6 +113,58 @@ var magis_comprehension: String = "Novice"
 @export var aoe_spell_radius: float = 0.0
 @export var explosive: float = 0.0
 @export var knockback_force: float = 0.0
+
+# ─────────────────────────────────────────
+# HEALING
+# ─────────────────────────────────────────
+@export_group("Healing")
+## Flat HP restored on cast.
+@export var heal_amount: float = 0.0
+## If true, healing is spread over time instead of instant.
+@export var heal_over_time: bool = false
+## HP restored per tick during HoT.
+@export var hot_tick_heal: float = 0.0
+@export var hot_tick_interval: float = 1.0
+@export var hot_duration: float = 0.0
+
+# ─────────────────────────────────────────
+# BUFF
+# ─────────────────────────────────────────
+@export_group("Buff")
+
+enum BuffType {
+	SPEED,
+	DAMAGE,
+	MANA_REGEN,
+	DEFENSE,
+	CAST_SPEED,
+	DASH_CHARGES
+}
+@export var buff_type: BuffType = BuffType.SPEED
+## Multiplier or flat value depending on buff_type.
+@export var buff_magnitude: float = 0.0
+@export var buff_duration: float = 0.0
+@export var is_stackable: bool = false
+@export var max_stacks: int = 1
+
+# ─────────────────────────────────────────
+# DECAST
+# ─────────────────────────────────────────
+@export_group("Decast")
+
+enum DecastMode {
+	TARGETED,      # single projectile, nullifies on contact
+	AOE_PULSE,     # radius burst from caster, strips all in range
+	DISPEL_SELF    # strips debuffs from caster instantly
+}
+@export var decast_mode: DecastMode = DecastMode.TARGETED
+@export var decast_radius: float = 0.0
+## If true, strips all buffs from the target hit.
+@export var purge_enemy_buffs: bool = false
+## If true, strips all debuffs from self/ally hit.
+@export var purge_debuffs: bool = false
+## A TARGETED decast that misses silences the caster briefly.
+@export var misfire_silence_duration: float = 0.0
 
 # ─────────────────────────────────────────
 # STATUS EFFECTS

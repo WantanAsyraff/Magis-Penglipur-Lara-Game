@@ -477,6 +477,18 @@ func _find_spell_match() -> SpellData:
 	return null
 
 func _execute_spell_instantiation(spell: SpellData) -> void:
+	match spell.spell_category:
+		SpellData.SpellCategory.HEALING:
+			_execute_healing(spell)
+		SpellData.SpellCategory.BUFF:
+			_execute_buff(spell)
+		SpellData.SpellCategory.DECAST:
+			_execute_decast(spell)
+		_:
+			# PROJECTILE and AOE use the existing instantiation path
+			_execute_projectile(spell)
+
+func _execute_projectile(spell: SpellData) -> void:
 	var scene_to_use = spell.spell_scene if spell.spell_scene else PROJECTILE_SCENE
 	var base_dir = castMarker.position.normalized()
 	var count = max(1, spell.projectile_count)
@@ -489,7 +501,7 @@ func _execute_spell_instantiation(spell: SpellData) -> void:
 
 		if spell.is_self_cast:
 			inst.position = global_position
-		elif spell.spell_type != SpellData.SpellType.AOE:
+		elif spell.spell_category != SpellData.SpellCategory.AOE:
 			if count == 1:
 				inst.direction = base_dir
 			else:
@@ -499,6 +511,105 @@ func _execute_spell_instantiation(spell: SpellData) -> void:
 
 		get_parent().add_child(inst)
 
+func _execute_healing(spell: SpellData) -> void:
+	if spell.heal_over_time:
+		# Kick off a repeating timer on the tree
+		var elapsed := 0.0
+		var ticks := int(spell.hot_duration / spell.hot_tick_interval)
+		for i in ticks:
+			get_tree().create_timer(spell.hot_tick_interval * i).timeout.connect(func():
+				Player_Global_Data.p_curr_health = minf(
+					Player_Global_Data.p_curr_health + spell.hot_tick_heal,
+					Player_Global_Data.p_max_health
+				)
+				_spawn_indicator("+%.0f" % spell.hot_tick_heal, "#4ADE80")
+			, CONNECT_ONE_SHOT)
+	else:
+		Player_Global_Data.p_curr_health = minf(
+			Player_Global_Data.p_curr_health + spell.heal_amount,
+			Player_Global_Data.p_max_health
+		)
+		_spawn_indicator("+%.0f" % spell.heal_amount, "#4ADE80")
+
+func _execute_buff(spell: SpellData) -> void:
+	# Stacking guard
+	var stack_key := "buff_%s" % SpellData.BuffType.keys()[spell.buff_type]
+	if not spell.is_stackable and hitbox.get_active_effects().has(stack_key):
+		_spawn_indicator("Already buffed!", "#A78BFA")
+		return
+
+	match spell.buff_type:
+		SpellData.BuffType.SPEED:
+			var base := Player_Global_Data.p_speed
+			Player_Global_Data.p_speed += spell.buff_magnitude
+			SPEED = Player_Global_Data.p_speed
+			get_tree().create_timer(spell.buff_duration).timeout.connect(func():
+				Player_Global_Data.p_speed = base
+				SPEED = base
+			, CONNECT_ONE_SHOT)
+		SpellData.BuffType.MANA_REGEN:
+			mana_regen_rate += spell.buff_magnitude
+			get_tree().create_timer(spell.buff_duration).timeout.connect(func():
+				mana_regen_rate -= spell.buff_magnitude
+			, CONNECT_ONE_SHOT)
+		SpellData.BuffType.DASH_CHARGES:
+			max_dashes += int(spell.buff_magnitude)
+			dash_charges += int(spell.buff_magnitude)
+			get_tree().create_timer(spell.buff_duration).timeout.connect(func():
+				max_dashes -= int(spell.buff_magnitude)
+				dash_charges = clampi(dash_charges, 0, max_dashes)
+			, CONNECT_ONE_SHOT)
+		SpellData.BuffType.CAST_SPEED:
+			# Hook this into your channelled cast time when you implement it
+			pass
+		SpellData.BuffType.DAMAGE, SpellData.BuffType.DEFENSE:
+			# These are read by the projectile/hitbox at damage calculation time.
+			# Store them in Player_Global_Data so projectiles can pick them up.
+			Player_Global_Data.active_buffs[stack_key] = {
+				"magnitude": spell.buff_magnitude,
+				"expires": Time.get_ticks_msec() + int(spell.buff_duration * 1000)
+			}
+			get_tree().create_timer(spell.buff_duration).timeout.connect(func():
+				Player_Global_Data.active_buffs.erase(stack_key)
+			, CONNECT_ONE_SHOT)
+
+	_spawn_indicator("Buffed!", "#A78BFA")
+
+func _execute_decast(spell: SpellData) -> void:
+	match spell.decast_mode:
+		SpellData.DecastMode.DISPEL_SELF:
+			# Strip all debuffs from the player immediately
+			for effect in ["stun", "silence", "slow", "dot", "mana_drain"]:
+				if hitbox.get_active_effects().has(effect):
+					hitbox.remove_effect(effect)
+			_spawn_indicator("Dispelled!", "#60A5FA")
+
+		SpellData.DecastMode.AOE_PULSE:
+			# Hits everything in radius -- enemies lose buffs, allies lose debuffs
+			var targets := get_tree().get_nodes_in_group("hitbox")
+			for t in targets:
+				if t == hitbox:
+					continue
+				var dist: float = t.global_position.distance_to(global_position)
+				if dist <= spell.decast_radius:
+					if spell.purge_enemy_buffs and t.is_in_group("enemy_hitbox"):
+						t.clear_all_buffs()  # implement on HitboxComponent
+					if spell.purge_debuffs and t.is_in_group("ally_hitbox"):
+						t.clear_all_debuffs()
+			_spawn_indicator("Pulse!", "#60A5FA")
+
+		SpellData.DecastMode.TARGETED:
+			# Fire a projectile that carries a decast payload
+			var scene_to_use = spell.spell_scene if spell.spell_scene else PROJECTILE_SCENE
+			var inst = scene_to_use.instantiate()
+			inst.spell_data = spell
+			inst.source = self
+			inst.position = castMarker.global_position
+			inst.direction = castMarker.position.normalized()
+			get_parent().add_child(inst)
+			# The decast projectile's on_hit handler reads spell.purge_enemy_buffs
+			# and spell.purge_debuffs to decide what to strip on contact.
+		
 func _fail_cast(message: String) -> void:
 	_clear_spell_icons()
 	spell_string.clear()

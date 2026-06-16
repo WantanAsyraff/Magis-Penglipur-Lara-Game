@@ -141,6 +141,7 @@ enum BuffType {
 	DASH_CHARGES
 }
 @export var buff_type: BuffType = BuffType.SPEED
+@export var on_hit_proc_id: String = ""
 ## Multiplier or flat value depending on buff_type.
 @export var buff_magnitude: float = 0.0
 @export var buff_duration: float = 0.0
@@ -165,6 +166,19 @@ enum DecastMode {
 @export var purge_debuffs: bool = false
 ## A TARGETED decast that misses silences the caster briefly.
 @export var misfire_silence_duration: float = 0.0
+
+# ─────────────────────────────────────────
+# TETHER / CHAIN
+# ─────────────────────────────────────────
+@export_group("Tether")
+## Search radius for chain-jump (Conduction Lash) or second-enemy tether (Zeroth Tether).
+@export var chain_range: float = 0.0
+## Max additional targets a chain spell can jump to.
+@export var chain_max_targets: int = 1
+## Damage reduction per chain jump (0.0–1.0).
+@export var chain_damage_falloff: float = 0.0
+## Zeroth Tether only: 0.5 = equal drain split, 1.0 = all drain to higher-HP target.
+@export var equilibrium_bias: float = 0.5
 
 # ─────────────────────────────────────────
 # STATUS EFFECTS

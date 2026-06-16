@@ -28,7 +28,7 @@
 },
 "default": {
 "export_overrides": {
-"image": "\"res://assets/temp/yunira.jpg\""
+"image": "\"res://assets/temp/Yunira-idle.png\""
 },
 "mirror": false,
 "offset": Vector2(0, 120),

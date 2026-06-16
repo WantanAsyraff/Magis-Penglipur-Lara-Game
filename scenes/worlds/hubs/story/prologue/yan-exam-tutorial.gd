@@ -11,3 +11,5 @@ func _ready() -> void:
 	
 	Player_Global_Data.p_moveable = true
 	Player_Global_Data.combat_mode = true
+	Player_Global_Data.add_spell(preload("res://data/magis/spells/thermal-kinetic.tres"))
+	Player_Global_Data.equip_spell(preload("res://data/magis/spells/thermal-kinetic.tres"))

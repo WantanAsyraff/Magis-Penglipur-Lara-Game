@@ -17,7 +17,7 @@ signal interacted
 # NODES
 # -------------------------
 @onready var _area: Area2D = %Area2D
-var _label: Label
+@onready var _label: Label = %InteractLabel
 
 # -------------------------
 # STATE

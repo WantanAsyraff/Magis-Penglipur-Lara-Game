@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://cxebmkwknrc1e"]
+
+[ext_resource type="PackedScene" path="res://components/effects/trails/resonance-wave-trail.tscn" id="1_upbwk"]
+[ext_resource type="Texture2D" uid="uid://bunu70fnhqow" path="res://assets/temp/temp-mana.png" id="2_3pk5u"]
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="3_rkqpt"]
+[ext_resource type="PackedScene" uid="uid://bv7k8xal2arhv" path="res://components/projectiles/magis-projectile.tscn" id="4_r4hds"]
+
+[resource]
+script = ExtResource("3_rkqpt")
+spell_name = "Kinetic Chill"
+spell_id = "thermal_01"
+spell_icon = ExtResource("2_3pk5u")
+theory_desc = "Temperature is the average kinetic energy of particles. Reducing this 'jiggling' induces stasis."
+spell_manifest = 1
+magis_archetype = "Ilmiah"
+spell_incantation = Array[String](["up", "up", "up", "up"])
+upfront_cost = 12
+spell_scene = ExtResource("4_r4hds")
+projectile_texture = ExtResource("2_3pk5u")
+projectile_particles = ExtResource("1_upbwk")
+projectile_range = 2000.0
+projectile_size = 1.0
+projectile_damage = 15.0
+projectile_speed = 700.0
+metadata/_custom_type_script = "uid://ddmcw1l0ht73f"

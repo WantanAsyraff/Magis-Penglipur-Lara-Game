@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://brgc2ij1gycly"]
+
+[ext_resource type="Script" uid="uid://q5n6nmppwds" path="res://components/spell-effect/spell-effect.gd" id="1_ifl7a"]
+
+[node name="SpellEffect" type="Area2D" unique_id=1796395542]
+script = ExtResource("1_ifl7a")

@@ -493,6 +493,11 @@ func _execute_projectile(spell: SpellData) -> void:
 	var base_dir = castMarker.position.normalized()
 	var count = max(1, spell.projectile_count)
 
+	# Spells that don't rely on movement/collision to find their target:
+	# AOE (detonates at cast position) and self-cast (applies to source directly).
+	var is_immediate := spell.spell_category == SpellData.SpellCategory.AOE \
+		or spell.is_self_cast
+
 	for i in count:
 		var inst = scene_to_use.instantiate()
 		inst.spell_data = spell
@@ -510,6 +515,10 @@ func _execute_projectile(spell: SpellData) -> void:
 				inst.direction = base_dir.rotated(angle_offset)
 
 		get_parent().add_child(inst)
+		inst.start()
+
+		if is_immediate and inst.has_method("trigger_immediate"):
+			inst.trigger_immediate()
 
 func _execute_healing(spell: SpellData) -> void:
 	if spell.heal_over_time:
@@ -569,6 +578,11 @@ func _execute_buff(spell: SpellData) -> void:
 				"magnitude": spell.buff_magnitude,
 				"expires": Time.get_ticks_msec() + int(spell.buff_duration * 1000)
 			}
+			# Spells with an on-hit proc (e.g. Triple-Point Buffer) register it
+			# here so HitboxComponent.receive_hit can roll the proc on the
+			# player's outgoing hits while this buff is active.
+			if spell.on_hit_proc_id != "":
+				Player_Global_Data.active_buffs[stack_key]["on_hit_proc"] = spell.on_hit_proc_id
 			get_tree().create_timer(spell.buff_duration).timeout.connect(func():
 				Player_Global_Data.active_buffs.erase(stack_key)
 			, CONNECT_ONE_SHOT)
@@ -607,9 +621,10 @@ func _execute_decast(spell: SpellData) -> void:
 			inst.position = castMarker.global_position
 			inst.direction = castMarker.position.normalized()
 			get_parent().add_child(inst)
+			inst.start()
 			# The decast projectile's on_hit handler reads spell.purge_enemy_buffs
 			# and spell.purge_debuffs to decide what to strip on contact.
-		
+
 func _fail_cast(message: String) -> void:
 	_clear_spell_icons()
 	spell_string.clear()

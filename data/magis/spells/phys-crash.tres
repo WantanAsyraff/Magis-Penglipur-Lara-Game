@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="1_5buo8"]
 [ext_resource type="PackedScene" uid="uid://5847o4yjb45a" path="res://components/effects/impact/ground-slam-impact.tscn" id="1_7ec3r"]
 [ext_resource type="PackedScene" uid="uid://h0msm0ixfq2n" path="res://components/effects/trails/root-snare-particle.tscn" id="2_jw5uy"]
-[ext_resource type="Texture2D" uid="uid://cnnad3qojgc2y" path="res://assets/temp/temp-mana.png" id="2_xgaay"]
+[ext_resource type="Texture2D" uid="uid://bunu70fnhqow" path="res://assets/temp/temp-mana.png" id="2_xgaay"]
 [ext_resource type="PackedScene" uid="uid://b2fvlmdplgevi" path="res://components/projectiles/player-magis-projectile.tscn" id="5_jw5uy"]
 
 [resource]

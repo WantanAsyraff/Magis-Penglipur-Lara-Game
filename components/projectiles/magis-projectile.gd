@@ -1,18 +1,16 @@
-class_name MagicProjectile extends Area2D
+class_name MagicProjectile extends SpellEffect
 # ─────────────────────────────────────────
 # STATE
 # ─────────────────────────────────────────
-var spell_data: SpellData = null
-var direction: Vector2 = Vector2.RIGHT
 var lifetime: float = 5.0
-var source: Node = null
 var _hit_bodies: Array = []
 var _particle_instance: GPUParticles2D
+
 # ─────────────────────────────────────────
-# READY
+# START
 # ─────────────────────────────────────────
-func _ready() -> void:
-	print("[MagicProjectile] _ready() called. source=%s | spell_data=%s" % [source, spell_data])
+func start() -> void:
+	print("[MagicProjectile] start() called. source=%s | spell_data=%s" % [source, spell_data])
 	if not spell_data:
 		push_warning("MagicProjectile: no spell_data assigned.")
 		queue_free()
@@ -38,6 +36,16 @@ func _apply_visuals() -> void:
 		_particle_instance = spell_data.projectile_particles.instantiate()
 		add_child(_particle_instance)
 		_particle_instance.emitting = true
+
+func trigger_immediate() -> void:
+	# For AOE/self-cast spells that don't rely on body_entered.
+	_apply_aoe()
+	if spell_data.is_self_cast:
+		var hitbox := source.get_node_or_null("HitboxComponent") as HitboxComponent
+		if hitbox:
+			hitbox.receive_hit(spell_data, direction)
+	_spawn_impact_particles()
+	queue_free()
 
 func _apply_lifetime() -> void:
 	if spell_data.projectile_speed > 0:

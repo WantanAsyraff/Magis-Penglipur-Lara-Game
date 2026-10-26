@@ -20,9 +20,7 @@ var xp_cost: int = 0
 # READY
 # -------------------------
 func _ready() -> void:
-	refresh_ui()
-
-func _process(_delta: float) -> void:
+	Player_Global_Data.progression_changed.connect(refresh_ui)
 	refresh_ui()
 
 # -------------------------
@@ -68,11 +66,7 @@ func _get_missing_prerequisites() -> Array[String]:
 	return missing
 
 func _player_has_completed_subject(subject_id: String) -> bool:
-	for spell_data in Player_Global_Data.learned_spells:
-		for course_spell in _get_spells_for_subject(subject_id):
-			if spell_data == course_spell:
-				return true
-	return false
+	return Player_Global_Data.has_completed_subject(subject_id)
 
 func _get_spells_for_subject(subject_id: String) -> Array[SpellData]:
 	var tree_view = get_tree().get_first_node_in_group("spell_tree_view")
@@ -89,7 +83,7 @@ func _update_prereq_state() -> void:
 	var cant_afford := Player_Global_Data.player_exp < xp_cost
 
 	if learn_button:
-		learn_button.disabled = prereqs_locked or cant_afford
+		learn_button.disabled = prereqs_locked or cant_afford or Player_Global_Data.has_completed_subject(subject_data.subject_id)
 
 	if prereq_label:
 		if prereqs_locked:
@@ -102,12 +96,8 @@ func _update_prereq_state() -> void:
 # BUTTONS
 # -------------------------
 func _on_learn_button_pressed() -> void:
-	if not _get_missing_prerequisites().is_empty():
+	if not Player_Global_Data.purchase_subject(subject_data):
 		return
-	if Player_Global_Data.player_exp < xp_cost:
-		return
-	Player_Global_Data.player_exp -= xp_cost
-	Player_Global_Data.add_spells(subject_data.contained_spells)
 	emit_signal("spells_learned", subject_data.contained_spells)
 	queue_free()
 

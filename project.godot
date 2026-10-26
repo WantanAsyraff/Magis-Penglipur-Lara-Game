@@ -19,27 +19,24 @@ config/tags=PackedStringArray("flagship", "rpg")
 run/main_scene="uid://5h52stxd7o1g"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
-scenes/loading_scene_path="res://addons/yet_another_scene_manager/Scenes/Loading.tscn"
-scenes/error_scene_path="res://addons/yet_another_scene_manager/Scenes/Error.tscn"
 
 [autoload]
 
 Player_Global_Data="*res://autoloads/player-data.gd"
 Spell_Library="*res://autoloads/spell-library.gd"
-Scene_Transition="*res://autoloads/scene-transition.gd"
 Player_Manager="*res://autoloads/player-manager.gd"
 Network_Manager="*res://autoloads/network-manager.gd"
-SceneManager="*uid://j20v4cg7v8m1"
+SceneManager="*res://addons/scene_manager/SceneManager.tscn"
 Scene_Registry="*res://autoloads/scene-registry.gd"
 Dialogic="*uid://ds2q0uclmolvu"
-Noray="*uid://gu4bv4tgms3x"
-PacketHandshake="*uid://tt3j25a05n7c"
-World_Manifest="*uid://di6f8axk1wxke"
-QuestManager="*uid://c2imtb0eppc6"
-Inventory_Manager="*uid://kj7y3b562h7j"
-LyricsManager="*uid://cur6vvsa8gy2x"
-LyricsOverlay="*uid://c45wkhuvjprtu"
-Crafting_Context="*uid://c2fhvdxlwtxc4"
+Noray="*res://addons/netfox.noray/noray.gd"
+PacketHandshake="*res://addons/netfox.noray/packet-handshake.gd"
+World_Manifest="*res://autoloads/world-manifest.gd"
+QuestManager="*res://autoloads/quest-manager.gd"
+Inventory_Manager="*res://autoloads/inventory-manager.gd"
+LyricsManager="*res://system/lyrics/lyrics-manager.gd"
+LyricsOverlay="*res://system/lyrics/lyrics-overlay-ui.tscn"
+Crafting_Context="*res://autoloads/crafting-context.gd"
 
 [dialogic]
 

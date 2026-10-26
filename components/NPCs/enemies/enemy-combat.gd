@@ -151,9 +151,11 @@ func _do_ranged(enemy: CharacterBody2D, player: Node) -> void:
 	var inst = scene_to_use.instantiate()
 	inst.spell_data = ranged_spell
 	inst.source = enemy
-	inst.position = enemy.global_position + dir * 40.0
+	
 	inst.direction = dir
 	enemy.get_parent().add_child(inst)
+	inst.global_position = enemy.global_position + dir * 40.0
+	inst.start()
 
 ## Aims RayCast2D(Aim) at the player and checks for an unobstructed path.
 func _has_ranged_los(enemy: CharacterBody2D, player: Node) -> bool:

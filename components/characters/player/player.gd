@@ -502,10 +502,10 @@ func _execute_projectile(spell: SpellData) -> void:
 		var inst = scene_to_use.instantiate()
 		inst.spell_data = spell
 		inst.source = self
-		inst.position = castMarker.global_position
+		inst.position = get_parent().to_local(castMarker.global_position)
 
 		if spell.is_self_cast:
-			inst.position = global_position
+			inst.position = get_parent().to_local(global_position)
 		elif spell.spell_category != SpellData.SpellCategory.AOE:
 			if count == 1:
 				inst.direction = base_dir
@@ -618,7 +618,7 @@ func _execute_decast(spell: SpellData) -> void:
 			var inst = scene_to_use.instantiate()
 			inst.spell_data = spell
 			inst.source = self
-			inst.position = castMarker.global_position
+			inst.position = get_parent().to_local(castMarker.global_position)
 			inst.direction = castMarker.position.normalized()
 			get_parent().add_child(inst)
 			inst.start()

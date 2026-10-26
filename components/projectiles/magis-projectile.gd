@@ -78,6 +78,7 @@ func _on_body_entered(body: Node2D) -> void:
 		return
 
 	if body is TileMapLayer or body.is_in_group("world"):
+		_apply_aoe()
 		print("[MagicProjectile]   → HIT WORLD/TILE: %s. Spawning impact and freeing." % body.name)
 		_spawn_impact_particles()
 		queue_free()

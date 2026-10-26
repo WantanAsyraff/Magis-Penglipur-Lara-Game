@@ -51,6 +51,8 @@ var _character_body: CharacterBody2D = null
 # ─────────────────────────────────────────
 func _ready() -> void:
 	_parent = get_parent()
+	add_to_group("hitbox")
+	add_to_group("ally_hitbox" if _parent is Player else "enemy_hitbox")
 	if _parent is CharacterBody2D:
 		_character_body = _parent
 
@@ -224,3 +226,16 @@ func clear_all_effects() -> void:
 
 func get_active_effects() -> Dictionary:
 	return _active_effects.duplicate()
+
+func remove_effect(effect_name: String) -> void:
+	if _active_effects.has(effect_name):
+		_expire_effect(effect_name)
+
+func clear_all_debuffs() -> void:
+	for key in ["stun", "slow", "silence", "dot", "mana_drain"]:
+		remove_effect(key)
+
+func clear_all_buffs() -> void:
+	for key in _active_effects.keys():
+		if key.begins_with("buff_"):
+			remove_effect(key)

@@ -3,6 +3,8 @@ class_name MagicProjectile extends SpellEffect
 # STATE
 # ─────────────────────────────────────────
 var lifetime: float = 5.0
+var _started: bool = false
+var _finished: bool = false
 var _hit_bodies: Array = []
 var _particle_instance: GPUParticles2D
 
@@ -10,23 +12,20 @@ var _particle_instance: GPUParticles2D
 # START
 # ─────────────────────────────────────────
 func start() -> void:
-	print("[MagicProjectile] start() called. source=%s | spell_data=%s" % [source, spell_data])
+	if _started:
+		return
+	_started = true
+	if cast_context == null:
+		cast_context = SpellCastContext.new(source as Node2D, spell_data)
 	if not spell_data:
 		push_warning("MagicProjectile: no spell_data assigned.")
 		queue_free()
 		return
-	print("[MagicProjectile] spell_data OK: %s | speed=%.1f | range=%.1f | piercing=%s | aoe=%.1f" % [
-		spell_data.resource_name, spell_data.projectile_speed,
-		spell_data.projectile_range, spell_data.piercing, spell_data.aoe_spell_radius
-	])
-	print("[MagicProjectile] collision_layer=%d | collision_mask=%d" % [collision_layer, collision_mask])
-	print("[MagicProjectile] monitoring=%s | monitorable=%s" % [monitoring, monitorable])
 	_apply_visuals()
 	_apply_lifetime()
 	_apply_colour()
 	body_entered.connect(_on_body_entered)
 	$VisibleOnScreenNotifier2D.screen_exited.connect(queue_free)
-	print("[MagicProjectile] Signals connected. lifetime=%.2f | direction=%s" % [lifetime, direction])
 
 func _apply_visuals() -> void:
 	if spell_data.projectile_texture:
@@ -43,7 +42,7 @@ func trigger_immediate() -> void:
 	if spell_data.is_self_cast:
 		var hitbox := source.get_node_or_null("HitboxComponent") as HitboxComponent
 		if hitbox:
-			hitbox.receive_hit(spell_data, direction)
+			_deliver(source as Node2D)
 	_spawn_impact_particles()
 	queue_free()
 
@@ -59,68 +58,59 @@ func _apply_colour() -> void:
 # PHYSICS
 # ─────────────────────────────────────────
 func _physics_process(delta: float) -> void:
+	if not _started or _finished or spell_data == null:
+		return
+	if not cast_context.can_execute():
+		queue_free()
+		return
 	if spell_data.projectile_speed > 0:
 		position += direction * spell_data.projectile_speed * delta
 	lifetime -= delta
 	if lifetime <= 0:
-		print("[MagicProjectile] Lifetime expired at position=%s. Freeing." % global_position)
 		queue_free()
 # ─────────────────────────────────────────
 # HIT
 # ─────────────────────────────────────────
 func _on_body_entered(body: Node2D) -> void:
-	print("[MagicProjectile] body_entered: %s | class=%s | groups=%s" % [
-		body.name, body.get_class(), body.get_groups()
-	])
+	if _finished or not _started or not cast_context.can_execute():
+		return
 
 	if body == source:
-		print("[MagicProjectile]   → SKIPPED: body is source (%s)" % source.name)
 		return
 
 	if body is TileMapLayer or body.is_in_group("world"):
 		_apply_aoe()
-		print("[MagicProjectile]   → HIT WORLD/TILE: %s. Spawning impact and freeing." % body.name)
 		_spawn_impact_particles()
+		_finished = true
 		queue_free()
 		return
 
-	print("[MagicProjectile]   → Non-world body hit: %s" % body.name)
+	if not SpellDelivery.can_target(cast_context, body):
+		return
 
-	if spell_data.piercing and body in _hit_bodies:
-		print("[MagicProjectile]   → SKIPPED: piercing and already hit this body.")
+	if body in _hit_bodies:
 		return
 
 	_hit_bodies.append(body)
-	print("[MagicProjectile]   → Added to _hit_bodies. Total hit: %d" % _hit_bodies.size())
 
 	var hitbox := body.get_node_or_null("HitboxComponent") as HitboxComponent
 	if hitbox:
-		print("[MagicProjectile]   → HitboxComponent FOUND on %s. Calling receive_hit()." % body.name)
-		hitbox.receive_hit(spell_data, direction)
-	else:
-		print("[MagicProjectile]   → WARNING: No HitboxComponent on %s! Children: %s" % [
-			body.name, _get_child_names(body)
-		])
+		_deliver(body)
 
 	_apply_aoe()
 
 	if not spell_data.piercing:
-		print("[MagicProjectile]   → Non-piercing: freeing after hit.")
+		_finished = true
 		_spawn_impact_particles()
 		queue_free()
 	else:
-		print("[MagicProjectile]   → Piercing: continuing through %s." % body.name)
 		_spawn_impact_particles()
 # ─────────────────────────────────────────
 # AOE
 # ─────────────────────────────────────────
 func _apply_aoe() -> void:
 	if spell_data.aoe_spell_radius <= 0.0:
-		print("[MagicProjectile] AOE skipped: radius=0.")
 		return
-	print("[MagicProjectile] AOE triggered at %s with radius=%.1f | mask=%d" % [
-		global_position, spell_data.aoe_spell_radius, collision_mask
-	])
 	var space := get_world_2d().direct_space_state
 	var query := PhysicsShapeQueryParameters2D.new()
 	var shape := CircleShape2D.new()
@@ -129,22 +119,15 @@ func _apply_aoe() -> void:
 	query.transform = Transform2D(0, global_position)
 	query.collision_mask = collision_mask
 	var results := space.intersect_shape(query)
-	print("[MagicProjectile] AOE shape query returned %d result(s)." % results.size())
 	for result in results:
 		var body := result.collider as Node2D
-		if body == null or body == self or body == source or body in _hit_bodies:
-			print("[MagicProjectile]   AOE SKIPPED: %s" % (body.name if body else "null"))
+		if body == null or body == self or body == source or body in _hit_bodies or not SpellDelivery.can_target(cast_context, body):
 			continue
-		print("[MagicProjectile]   AOE HIT: %s | groups=%s" % [body.name, body.get_groups()])
 		_hit_bodies.append(body)
 		var hitbox := body.get_node_or_null("HitboxComponent") as HitboxComponent
 		if hitbox:
-			print("[MagicProjectile]   AOE → HitboxComponent found, calling receive_hit().")
-			hitbox.receive_hit(spell_data, direction)
-		else:
-			print("[MagicProjectile]   AOE → WARNING: No HitboxComponent on %s. Children: %s" % [
-				body.name, _get_child_names(body)
-			])
+			_deliver(body)
+
 # ─────────────────────────────────────────
 # IMPACT PARTICLES
 # ─────────────────────────────────────────
@@ -165,3 +148,7 @@ func _get_child_names(node: Node) -> String:
 	for child in node.get_children():
 		names.append(child.name)
 	return ", ".join(names) if names.size() > 0 else "(none)"
+
+func _deliver(body: Node2D) -> void:
+	cast_context.direction = direction
+	SpellExecutor.new().execute(cast_context, body)

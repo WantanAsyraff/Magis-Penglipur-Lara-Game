@@ -36,6 +36,11 @@ signal attack_finished   # fired when cooldown ends — Enemy uses this to retur
 # STATE
 # ─────────────────────────────────────────
 var can_attack: bool = true
+var casting: SpellCastingComponent
+
+func _ready() -> void:
+	casting = SpellCastingComponent.new()
+	get_parent().add_child.call_deferred(casting)
 var _cooldown_timer: float = 0.0
 
 # ─────────────────────────────────────────
@@ -71,7 +76,7 @@ func should_attack(dist: float, player: Node) -> bool:
 
 ## Fire the attack. Call once from Enemy when entering ATTACK state.
 func execute_attack(enemy: CharacterBody2D, player: Node) -> void:
-	if player == null:
+	if player == null or not SpellExecutor.is_authoritative(enemy):
 		return
 	can_attack = false
 	_cooldown_timer = attack_cooldown
@@ -145,17 +150,9 @@ func _do_ranged(enemy: CharacterBody2D, player: Node) -> void:
 		print("[EnemyCombat] Ranged blocked — no LoS to player")
 		return
 
-	var dir = (player.global_position - enemy.global_position).normalized()
-	var scene_to_use: PackedScene = ranged_spell.spell_scene if ranged_spell.spell_scene \
-		else preload("res://components/projectiles/enemy-magis-projectile.tscn")
-	var inst = scene_to_use.instantiate()
-	inst.spell_data = ranged_spell
-	inst.source = enemy
-	
-	inst.direction = dir
-	enemy.get_parent().add_child(inst)
-	inst.global_position = enemy.global_position + dir * 40.0
-	inst.start()
+	var dir: Vector2 = (player.global_position - enemy.global_position).normalized()
+	if casting and casting.is_inside_tree():
+		casting.request_cast(ranged_spell, enemy.global_position + dir * 40, dir)
 
 ## Aims RayCast2D(Aim) at the player and checks for an unobstructed path.
 func _has_ranged_los(enemy: CharacterBody2D, player: Node) -> bool:

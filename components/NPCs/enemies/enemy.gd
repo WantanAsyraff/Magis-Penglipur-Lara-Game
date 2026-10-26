@@ -65,6 +65,7 @@ enum AttackType { MELEE, RANGED, BOTH }
 # ─────────────────────────────────────────
 var current_state: State = State.IDLE
 var current_health: float = 0.0
+@export var spell_mana: float = 400.0
 var _facing_right: bool = true
 
 # ─────────────────────────────────────────
@@ -78,6 +79,7 @@ func _ready() -> void:
 	hitbox.damage_reduction = damage_reduction
 	hitbox.damage_multiplier = damage_multiplier
 	hitbox.damage_taken.connect(_on_damage_taken)
+	hitbox.healed.connect(func(amount): current_health = minf(current_health + amount, max_health))
 	hitbox.died.connect(_on_died)
 
 	hurt_timer.wait_time = hurt_duration
@@ -90,6 +92,8 @@ func _ready() -> void:
 	_set_state(State.IDLE)
 
 func _physics_process(delta: float) -> void:
+	if not SpellExecutor.is_authoritative(self):
+		return
 	_apply_gravity(delta)
 	detection.tick(delta)
 	patrol.tick(delta, self)
@@ -234,3 +238,11 @@ func get_health_ratio() -> float:
 
 func apply_spell_hit(spell: SpellData, direction: Vector2) -> void:
 	hitbox.receive_hit(spell, direction)
+
+func consume_spell_mana(amount: float) -> bool:
+	if not is_finite(amount) or amount < 0 or spell_mana < amount:
+		return false
+	spell_mana -= amount
+	return true
+func restore_spell_mana(amount: float) -> void:
+	spell_mana += amount

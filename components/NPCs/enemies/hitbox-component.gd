@@ -34,10 +34,7 @@ signal knocked_back(force: Vector2)
 # ─────────────────────────────────────────
 # INTERNAL STATE
 # ─────────────────────────────────────────
-var _active_effects: Dictionary = {}
-var _is_stunned: bool = false
-var _is_silenced: bool = false
-var _slow_factor: float = 0.0
+var effects := ActiveEffectManager.new()
 var _invincible: bool = false
 
 # ─────────────────────────────────────────
@@ -53,58 +50,44 @@ func _ready() -> void:
 	_parent = get_parent()
 	add_to_group("hitbox")
 	add_to_group("ally_hitbox" if _parent is Player else "enemy_hitbox")
+	effects.changed.connect(func(key):
+		if effects.has(key):
+			status_applied.emit(key))
+	effects.expired.connect(status_expired.emit)
+	effects.periodic.connect(_on_periodic)
 	if _parent is CharacterBody2D:
 		_character_body = _parent
 
 func _physics_process(delta: float) -> void:
-	_tick_effects(delta)
+	if SpellExecutor.is_authoritative(self):
+		effects.tick(delta)
 
 # ─────────────────────────────────────────
 # PRIMARY ENTRY POINT
 # ─────────────────────────────────────────
 func receive_hit(spell: SpellData, hit_direction: Vector2 = Vector2.ZERO) -> void:
-	if spell == null:
+	if spell == null or _invincible or not SpellExecutor.is_authoritative(self):
 		return
-
-	# Invincible — block everything
-	if _invincible:
-		return
-
-	if spell.projectile_damage > 0.0:
-		_apply_damage(spell.projectile_damage)
-
-	if receives_knockback and spell.knockback_force > 0.0:
-		_apply_knockback(hit_direction, spell.knockback_force)
-
-	if not receives_status_effects:
-		return
-
-	if spell.stunnable and spell.stun_dur > 0.0:
-		_apply_stun(spell.stun_dur)
-
-	if spell.applies_slow and spell.slow_factor > 0.0:
-		_apply_slow(spell.slow_factor, spell.slow_duration)
-
-	if spell.dot and spell.dot_duration > 0.0:
-		_apply_dot(spell.dot_damage, spell.dot_interval, spell.dot_duration)
-
-	if has_mana and spell.applies_mana_drain and spell.mana_drain_amount > 0.0:
-		_apply_mana_drain(spell.mana_drain_amount, spell.mana_drain_duration)
-
-	if spell.applies_silence and spell.silence_duration > 0.0:
-		_apply_silence(spell.silence_duration)
+	# Public legacy API: direct callers still receive the same adapter payload.
+	var context := SpellCastContext.new(_parent as Node2D, spell)
+	context.direction = hit_direction
+	SpellExecutor.new().execute(context, _parent as Node2D)
 
 # ─────────────────────────────────────────
 # STATUS QUERIES
 # ─────────────────────────────────────────
 func is_stunned() -> bool:
-	return _is_stunned
+	return effects.has("stun")
 
 func is_silenced() -> bool:
-	return _is_silenced
+	return effects.has("silence")
 
 func get_slow_factor() -> float:
-	return _slow_factor
+	var factor := 0.0
+	for entry in effects.entries:
+		if entry.key == "slow":
+			factor = maxf(factor, entry.data.get("factor", 0.0))
+	return clampf(factor, 0.0, 1.0)
 
 func is_invincible() -> bool:
 	return _invincible
@@ -120,13 +103,13 @@ func set_invincible(value: bool) -> void:
 # EFFECT APPLICATORS
 # ─────────────────────────────────────────
 func _apply_damage(raw_damage: float) -> void:
-	if _invincible:
+	if _invincible or not SpellExecutor.is_authoritative(self):
 		return
-	var final_damage := maxf((raw_damage - damage_reduction) * damage_multiplier, 0.0)
+	var final_damage := maxf((raw_damage - damage_reduction - effects.magnitude("buff_defense")) * damage_multiplier, 0.0)
 	damage_taken.emit(final_damage)
 
 func _apply_knockback(direction: Vector2, force: float) -> void:
-	if _invincible:
+	if _invincible or not SpellExecutor.is_authoritative(self):
 		return
 	if _character_body == null or direction == Vector2.ZERO:
 		return
@@ -135,107 +118,28 @@ func _apply_knockback(direction: Vector2, force: float) -> void:
 	knocked_back.emit(kb)
 
 func _apply_stun(duration: float) -> void:
-	_active_effects["stun"] = { "timer": duration, "data": {} }
-	_is_stunned = true
-	status_applied.emit("stun")
-
+	effects.apply("stun", duration, {})
 func _apply_slow(factor: float, duration: float) -> void:
-	var existing_factor := 0.0
-	if _active_effects.has("slow"):
-		existing_factor = _active_effects["slow"]["data"]["factor"]
-	_active_effects["slow"] = {
-		"timer": duration,
-		"data": { "factor": maxf(factor, existing_factor) }
-	}
-	_slow_factor = _active_effects["slow"]["data"]["factor"]
-	status_applied.emit("slow")
-
+	effects.apply("slow", duration, {"factor": clampf(maxf(factor, get_slow_factor()), 0.0, 1.0)})
 func _apply_dot(damage: float, interval: float, duration: float) -> void:
-	_active_effects["dot"] = {
-		"timer": duration,
-		"tick_timer": interval,
-		"data": { "damage": damage, "interval": interval }
-	}
-	status_applied.emit("dot")
-
+	effects.apply("dot", duration, {"amount": damage, "interval": interval})
 func _apply_mana_drain(amount: float, duration: float) -> void:
-	if not has_mana:
-		return
-	_active_effects["mana_drain"] = {
-		"timer": duration,
-		"tick_timer": 1.0,
-		"data": { "amount": amount }
-	}
-	status_applied.emit("mana_drain")
-
+	if has_mana:
+		effects.apply("mana_drain", duration, {"amount": amount})
 func _apply_silence(duration: float) -> void:
-	_active_effects["silence"] = { "timer": duration, "data": {} }
-	_is_silenced = true
-	status_applied.emit("silence")
-
-# ─────────────────────────────────────────
-# EFFECT TICK
-# ─────────────────────────────────────────
-func _tick_effects(delta: float) -> void:
-	var expired: Array[String] = []
-
-	for effect_name in _active_effects.keys():
-		var effect: Dictionary = _active_effects[effect_name]
-		effect["timer"] -= delta
-
-		match effect_name:
-			"dot":
-				effect["tick_timer"] -= delta
-				if effect["tick_timer"] <= 0.0:
-					_apply_damage(effect["data"]["damage"])
-					effect["tick_timer"] = effect["data"]["interval"]
-			"mana_drain":
-				effect["tick_timer"] -= delta
-				if effect["tick_timer"] <= 0.0:
-					_drain_mana(effect["data"]["amount"])
-					effect["tick_timer"] = 1.0
-
-		if effect["timer"] <= 0.0:
-			expired.append(effect_name)
-
-	for effect_name in expired:
-		_expire_effect(effect_name)
-
-func _expire_effect(effect_name: String) -> void:
-	_active_effects.erase(effect_name)
-	match effect_name:
-		"stun":
-			_is_stunned = false
-		"slow":
-			_slow_factor = 0.0
-		"silence":
-			_is_silenced = false
-	status_expired.emit(effect_name)
-
-func _drain_mana(amount: float) -> void:
-	mana_drained.emit(amount)
-
-# ─────────────────────────────────────────
-# UTILITY
-# ─────────────────────────────────────────
+	effects.apply("silence", duration, {})
+func _on_periodic(key: String, data: Dictionary) -> void:
+	match key:
+		"dot": _apply_damage(data.get("amount", 0.0))
+		"mana_drain": mana_drained.emit(data.get("amount", 0.0))
+		"hot": healed.emit(data.get("amount", 0.0))
 func clear_all_effects() -> void:
-	_active_effects.clear()
-	_is_stunned = false
-	_is_silenced = false
-	_slow_factor = 0.0
-
+	effects.clear()
 func get_active_effects() -> Dictionary:
-	return _active_effects.duplicate()
-
+	return effects.snapshot()
 func remove_effect(effect_name: String) -> void:
-	if _active_effects.has(effect_name):
-		_expire_effect(effect_name)
-
+	effects.remove(effect_name)
 func clear_all_debuffs() -> void:
-	for key in ["stun", "slow", "silence", "dot", "mana_drain"]:
-		remove_effect(key)
-
+	effects.clear(0)
 func clear_all_buffs() -> void:
-	for key in _active_effects.keys():
-		if key.begins_with("buff_"):
-			remove_effect(key)
+	effects.clear(1)

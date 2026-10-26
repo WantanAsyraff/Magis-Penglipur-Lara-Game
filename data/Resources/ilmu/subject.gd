@@ -22,3 +22,5 @@ var magis_comprehension = "Novice"
 
 @export var prerequisites: Array[String] = [] # e.g., ["basic_biology"]
 @export var contained_spells: Array[SpellData] = []
+
+@export var academic_fields: Array[FieldData] = []

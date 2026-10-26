@@ -206,3 +206,17 @@ enum DecastMode {
 
 # Future-proofing hook — leave empty until StatusEffectManager is built
 @export var status_effects: Array[Resource] = []
+
+
+@export_group("Pipeline V2")
+enum Delivery { LEGACY, PROJECTILE, SELF, DIRECT_TARGET, AREA_BURST, PERSISTENT_AREA, BEAM, TRAP, SUMMON }
+@export var delivery: Delivery = Delivery.LEGACY
+@export var effects: Array[SpellEffectDefinition] = []
+@export var academic_fields: Array[FieldData] = []
+@export var cooldown: float = 0.0
+@export var recovery_time: float = 0.0
+@export var target_range: float = 1000.0
+@export var area_duration: float = 3.0
+@export var area_tick_interval: float = 1.0
+@export var beam_width: float = 32.0
+@export var summon_scene: PackedScene

@@ -78,7 +78,7 @@ func _on_body_entered(body: Node2D) -> void:
 	if body == source:
 		return
 
-	if body is TileMapLayer or body.is_in_group("world"):
+	if body is TileMapLayer or body.is_in_group("world") or (body is CollisionObject2D and body.collision_layer & 16 and not body.has_method("take_damage")):
 		_apply_aoe()
 		_spawn_impact_particles()
 		_finished = true
@@ -93,9 +93,7 @@ func _on_body_entered(body: Node2D) -> void:
 
 	_hit_bodies.append(body)
 
-	var hitbox := body.get_node_or_null("HitboxComponent") as HitboxComponent
-	if hitbox:
-		_deliver(body)
+	_deliver(body)
 
 	_apply_aoe()
 
@@ -124,9 +122,7 @@ func _apply_aoe() -> void:
 		if body == null or body == self or body == source or body in _hit_bodies or not SpellDelivery.can_target(cast_context, body):
 			continue
 		_hit_bodies.append(body)
-		var hitbox := body.get_node_or_null("HitboxComponent") as HitboxComponent
-		if hitbox:
-			_deliver(body)
+		_deliver(body)
 
 # ─────────────────────────────────────────
 # IMPACT PARTICLES

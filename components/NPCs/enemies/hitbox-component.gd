@@ -50,9 +50,7 @@ func _ready() -> void:
 	_parent = get_parent()
 	add_to_group("hitbox")
 	add_to_group("ally_hitbox" if _parent is Player else "enemy_hitbox")
-	effects.changed.connect(func(key):
-		if effects.has(key):
-			status_applied.emit(key))
+	effects.applied.connect(status_applied.emit)
 	effects.expired.connect(status_expired.emit)
 	effects.periodic.connect(_on_periodic)
 	if _parent is CharacterBody2D:
@@ -129,6 +127,8 @@ func _apply_mana_drain(amount: float, duration: float) -> void:
 func _apply_silence(duration: float) -> void:
 	effects.apply("silence", duration, {})
 func _on_periodic(key: String, data: Dictionary) -> void:
+	if not is_instance_valid(_parent) or _parent.is_queued_for_deletion():
+		return
 	match key:
 		"dot": _apply_damage(data.get("amount", 0.0))
 		"mana_drain": mana_drained.emit(data.get("amount", 0.0))

@@ -76,7 +76,7 @@ func should_attack(dist: float, player: Node) -> bool:
 
 ## Fire the attack. Call once from Enemy when entering ATTACK state.
 func execute_attack(enemy: CharacterBody2D, player: Node) -> void:
-	if player == null or not SpellExecutor.is_authoritative(enemy):
+	if player == null or not SpellExecutor.is_authoritative(enemy) or enemy.hitbox.is_stunned():
 		return
 	can_attack = false
 	_cooldown_timer = attack_cooldown

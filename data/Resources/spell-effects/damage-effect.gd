@@ -4,8 +4,14 @@ class_name DamageEffect extends SpellEffectDefinition
 func validate() -> PackedStringArray:
 	return PackedStringArray(["Damage must be finite and nonnegative"]) if not is_finite(amount) or amount < 0.0 else PackedStringArray()
 
+func accepts(target: Node2D) -> bool:
+	return super.accepts(target) or (is_instance_valid(target) and target.has_method("take_damage"))
+
 func execute(context: SpellCastContext, target: Node2D) -> bool:
-	var hitbox: HitboxComponent = target.get_node("HitboxComponent")
+	var hitbox := target.get_node_or_null("HitboxComponent") as HitboxComponent
 	var bonus: float = context.modifiers.get("damage", 0.0)
-	hitbox._apply_damage(maxf(amount + bonus, 0.0))
+	if hitbox:
+		hitbox._apply_damage(maxf(amount + bonus, 0.0))
+	else:
+		target.take_damage(int(maxf(amount + bonus, 0.0)))
 	return true

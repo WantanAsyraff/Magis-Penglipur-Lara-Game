@@ -74,7 +74,8 @@ var _facing_right: bool = true
 func _ready() -> void:
 	current_health = max_health
 	hitbox.receives_status_effects = receives_status_effects
-	hitbox.has_mana = false
+	hitbox.has_mana = true
+	hitbox.mana_drained.connect(func(amount): spell_mana = maxf(spell_mana - amount, 0))
 	hitbox.receives_knockback = true
 	hitbox.damage_reduction = damage_reduction
 	hitbox.damage_multiplier = damage_multiplier
@@ -99,6 +100,7 @@ func _physics_process(delta: float) -> void:
 	patrol.tick(delta, self)
 	combat.tick(delta)
 	_run_state(delta)
+	velocity.x *= 1.0 - hitbox.get_slow_factor()
 	move_and_slide()
 
 # ─────────────────────────────────────────
@@ -124,6 +126,7 @@ func _on_state_entered(state: State) -> void:
 			_play_animation("hurt")
 			hurt_timer.start()
 		State.DEATH:
+			combat.casting.cancel("Caster died")
 			enemy_died.emit()
 			hitbox.clear_all_effects()
 			set_physics_process(false)
@@ -198,6 +201,7 @@ func _on_attack_finished() -> void:
 		_set_state(State.CHASE if detection.player != null else State.RETURN)
 
 func _on_damage_taken(amount: float) -> void:
+	combat.casting.cancel("Interrupted by damage")
 	current_health = maxf(current_health - amount, 0.0)
 	enemy_hurt.emit(amount)
 	if current_state == State.DEATH:

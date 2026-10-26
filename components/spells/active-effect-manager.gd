@@ -2,6 +2,7 @@ class_name ActiveEffectManager extends RefCounted
 # Owned and ticked by a HitboxComponent; no free-standing timer callbacks.
 enum StackPolicy { REFRESH, REPLACE, STACK, IGNORE }
 signal changed(key: String)
+signal applied(key: String)
 signal expired(key: String)
 signal periodic(key: String, data: Dictionary)
 var entries: Array[Dictionary] = []
@@ -22,6 +23,7 @@ func apply(key: String, duration: float, data: Dictionary, source_id: String = "
 				matching[0].data = data.duplicate(true)
 				matching[0].source = source_id
 				changed.emit(key)
+				applied.emit(key)
 				return true
 			StackPolicy.REPLACE:
 				remove(key)
@@ -34,6 +36,7 @@ func apply(key: String, duration: float, data: Dictionary, source_id: String = "
 	interval = clampf(interval, 0.05, 3600.0)
 	entries.append({"key": key, "remaining": duration, "data": data.duplicate(true), "source": source_id, "beneficial": beneficial, "tick": interval, "interval": interval})
 	changed.emit(key)
+	applied.emit(key)
 	return true
 
 func tick(delta: float) -> void:

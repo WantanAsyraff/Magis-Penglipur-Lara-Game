@@ -9,11 +9,15 @@ static func dispatch(context: SpellCastContext) -> bool:
 	var actor := context.caster
 	match LegacySpellAdapter.delivery_for(spell):
 		SpellData.Delivery.SELF:
-			return SpellExecutor.new().execute(context, actor)
+			var applied := SpellExecutor.new().execute(context, actor)
+			if spell.aoe_spell_radius > 0:
+				applied = apply_area(context, actor.global_position) or applied
+			return applied
 		SpellData.Delivery.DIRECT_TARGET:
 			return not context.targets.is_empty() and can_target(context, context.targets[0]) and SpellExecutor.new().execute(context, context.targets[0])
 		SpellData.Delivery.AREA_BURST:
-			return apply_area(context, context.source_position)
+			apply_area(context, context.source_position)
+			return true
 		SpellData.Delivery.PERSISTENT_AREA, SpellData.Delivery.BEAM, SpellData.Delivery.TRAP:
 			var area := SpellAreaDelivery.new()
 			area.context = context

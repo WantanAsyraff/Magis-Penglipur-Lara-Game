@@ -293,3 +293,9 @@ func purchase_subject(data: subjectData, course: CourseData = null) -> bool:
 	add_spells(data.contained_spells)
 	progression_changed.emit()
 	return true
+
+func set_comprehension(field_id: StringName, rank: int) -> void:
+	if field_id == &"":
+		return
+	academic_comprehension[field_id] = maxi(rank, 0)
+	progression_changed.emit()

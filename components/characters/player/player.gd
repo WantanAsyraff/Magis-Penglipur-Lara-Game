@@ -114,6 +114,8 @@ func _ready() -> void:
 			dash_charges = get_max_dash_charges())
 	if multiplayer.has_multiplayer_peer() and not is_multiplayer_authority():
 		set_process_unhandled_input(false)
+		hitbox.has_mana = true
+		hitbox.died.connect(_on_died)
 		hitbox.damage_taken.connect(_on_damage_taken)
 		hitbox.healed.connect(restore_spell_health)
 		hitbox.mana_drained.connect(_on_mana_drained)
@@ -540,6 +542,8 @@ func _on_damage_taken(amount: float) -> void:
 		return
 	if multiplayer.has_multiplayer_peer() and not is_multiplayer_authority():
 		_remote_health = maxf(_remote_health - amount, 0)
+		if _remote_health <= 0:
+			hitbox.died.emit()
 		return
 	# ---- PARRY: full negation ----
 	if _parry_active:

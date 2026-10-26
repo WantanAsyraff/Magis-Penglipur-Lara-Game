@@ -16,7 +16,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 config/name="Magis Penglipur Lara"
 config/tags=PackedStringArray("flagship", "rpg")
-run/main_scene="uid://5h52stxd7o1g"
+run/main_scene="res://scenes/ui/menus/intro-menus/main-menu.tscn"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 

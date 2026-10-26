@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://yu4qfawb5trg" path="res://scenes/ui/mission-selection/story-selection.gd" id="1_gbkoh"]
 [ext_resource type="PackedScene" uid="uid://1hc7ytvu02en" path="res://scenes/ui/mission-selection/chapter/chapter.tscn" id="3_6odkk"]
-[ext_resource type="PackedScene" uid="uid://c0fygmf1y1wu3" path="res://scenes/worlds/hubs/akademi-bintang-utama(ABU)/missions-hub/story/prologue/prologue.tscn" id="4_yfnlw"]
+[ext_resource type="PackedScene" uid="uid://c5ejuxenrvolq" path="res://scenes/worlds/hubs/story/prologue/rumah-yan-entrance.tscn" id="4_yfnlw"]
 [ext_resource type="PackedScene" uid="uid://t3o4osbl3bct" path="res://scenes/worlds/world-template.tscn" id="5_vh0tv"]
 
 [node name="StorySelection" type="Control" unique_id=133484749]

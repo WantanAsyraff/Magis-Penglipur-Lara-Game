@@ -27,9 +27,11 @@ static func dispatch(context: SpellCastContext) -> bool:
 		SpellData.Delivery.SUMMON:
 			if spell.summon_scene == null:
 				return false
-			var entity := spell.summon_scene.instantiate() as Node2D
-			if entity == null:
+			var spawned := spell.summon_scene.instantiate()
+			if not spawned is Node2D:
+				spawned.free()
 				return false
+			var entity := spawned as Node2D
 			actor.get_parent().add_child(entity)
 			entity.global_position = context.source_position
 			if not spell.effects.is_empty():
@@ -42,9 +44,11 @@ static func dispatch(context: SpellCastContext) -> bool:
 			if scene == null:
 				scene = load(PLAYER_PROJECTILE if context.source_team == &"player" else ENEMY_PROJECTILE) as PackedScene
 			for i in spell.projectile_count:
-				var inst := scene.instantiate() as SpellEffect
-				if inst == null:
+				var spawned := scene.instantiate()
+				if not spawned is SpellEffect:
+					spawned.free()
 					return false
+				var inst := spawned as SpellEffect
 				inst.spell_data = spell
 				inst.source = actor
 				inst.cast_context = context

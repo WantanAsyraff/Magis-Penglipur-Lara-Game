@@ -84,6 +84,8 @@ func build_spell_field() -> void:
 # LOCK STATE
 # -------------------------
 func _is_subject_locked(data: subjectData) -> bool:
+	if not AcademicValidator.validate_course(course_data).is_empty():
+		return true
 	for prereq_id in data.prerequisites:
 		if not _player_has_completed_subject(prereq_id):
 			return true
@@ -134,6 +136,7 @@ func _on_subject_selected(subject: subjectData) -> void:
 	var cost := get_subject_cost(subject)
 	var panel = SUBJECT_PANEL_SCENE.instantiate()
 	panel.subject_data = subject
+	panel.course_data = course_data
 	panel.xp_cost = cost
 	panel.spells_learned.connect(_on_spells_learned)
 	add_child(panel)

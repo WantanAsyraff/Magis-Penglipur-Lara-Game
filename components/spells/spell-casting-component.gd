@@ -9,6 +9,7 @@ var context: SpellCastContext
 var cooldowns: Dictionary = {}
 var remaining: float = 0.0
 var _paid_upfront: float = 0.0
+var _queue: Array[Dictionary] = []
 
 func _ready() -> void:
 	caster = get_parent() as Node2D
@@ -56,6 +57,9 @@ func _physics_process(delta: float) -> void:
 	for id in cooldowns.keys():
 		cooldowns[id] = maxf(cooldowns[id] - delta, 0)
 	if state == State.IDLE:
+		if not _queue.is_empty():
+			var next: Dictionary = _queue.pop_front()
+			request_cast(next.spell, next.origin, next.direction, next.targets)
 		return
 	if not is_instance_valid(caster) or caster.is_queued_for_deletion() or _restricted() or not SpellExecutor.is_authoritative(caster):
 		cancel("Cast interrupted")
@@ -101,6 +105,7 @@ func _execute() -> void:
 		_set_state(State.IDLE)
 
 func cancel(reason: String = "Cancelled") -> void:
+	_queue.clear()
 	if state == State.IDLE:
 		return
 	# Refund upfront cost only before successful dispatch; spent channel mana is never refunded.
@@ -119,3 +124,11 @@ func _restricted() -> bool:
 func _fail(reason: String) -> bool:
 	cast_failed.emit(reason)
 	return false
+
+func enqueue_cast(spell: SpellData, origin: Vector2, direction: Vector2, targets: Array[Node2D] = []) -> bool:
+	if state == State.IDLE:
+		return request_cast(spell, origin, direction, targets)
+	if _queue.size() >= 8:
+		return _fail("Cast queue is full")
+	_queue.append({"spell": spell, "origin": origin, "direction": direction, "targets": targets.duplicate()})
+	return true

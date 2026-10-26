@@ -22,6 +22,7 @@ static func effects_for(spell: SpellData) -> Array[SpellEffectDefinition]:
 			result.append(buff)
 		SpellData.SpellCategory.DECAST:
 			var dispel := RemoveStatusEffect.new()
+			dispel.respect_teams = true
 			dispel.remove_buffs = spell.purge_enemy_buffs
 			dispel.remove_debuffs = spell.purge_debuffs or spell.decast_mode == SpellData.DecastMode.DISPEL_SELF
 			result.append(dispel)

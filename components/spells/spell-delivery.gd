@@ -11,7 +11,7 @@ static func dispatch(context: SpellCastContext) -> bool:
 		SpellData.Delivery.SELF:
 			return SpellExecutor.new().execute(context, actor)
 		SpellData.Delivery.DIRECT_TARGET:
-			return not context.targets.is_empty() and SpellExecutor.new().execute(context, context.targets[0])
+			return not context.targets.is_empty() and can_target(context, context.targets[0]) and SpellExecutor.new().execute(context, context.targets[0])
 		SpellData.Delivery.AREA_BURST:
 			return apply_area(context, context.source_position)
 		SpellData.Delivery.PERSISTENT_AREA, SpellData.Delivery.BEAM, SpellData.Delivery.TRAP:
@@ -28,6 +28,8 @@ static func dispatch(context: SpellCastContext) -> bool:
 				return false
 			actor.get_parent().add_child(entity)
 			entity.global_position = context.source_position
+			if not spell.effects.is_empty():
+				SpellExecutor.new().execute(context, entity)
 			if entity.has_method("initialize_spell"):
 				entity.initialize_spell(context)
 			return true
@@ -69,7 +71,11 @@ static func apply_area(context: SpellCastContext, position: Vector2, beam: bool 
 static func can_target(context: SpellCastContext, target: Node2D) -> bool:
 	if not is_instance_valid(target):
 		return false
-	var ally := target.is_in_group("player") == (context.source_team == &"player")
+	var team: StringName = target.get_meta("spell_team", &"player" if target.is_in_group("player") else &"enemy")
+	var ally := team == context.source_team
 	if context.spell.spell_category == SpellData.SpellCategory.DECAST:
 		return (ally and context.spell.purge_debuffs) or (not ally and context.spell.purge_enemy_buffs)
+	match context.spell.targeting:
+		SpellData.Targeting.ALLIES: return ally
+		SpellData.Targeting.ANY: return true
 	return not ally

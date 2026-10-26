@@ -9,6 +9,7 @@ signal mana_changed(new_value: float)
 signal health_changed(new_value: int)
 signal spells_updated()
 signal progression_changed()
+var academic_comprehension: Dictionary[StringName, int] = {}
 var completed_subjects: Array[String] = []
 var active_buffs: Dictionary = {}
 signal dash_charges_changed(current: int)
@@ -217,7 +218,7 @@ func is_spell_equipped(spell: SpellData) -> bool:
 # MANA HELPERS
 # -------------------------
 func consume_mana(amount: float) -> bool:
-	if p_curr_mana < amount:
+	if not is_finite(amount) or amount < 0 or p_curr_mana < amount:
 		return false
 	p_curr_mana -= amount
 	return true
@@ -241,6 +242,7 @@ func is_alive() -> bool:
 # RESET
 # -------------------------
 func reset() -> void:
+	academic_comprehension.clear()
 	completed_subjects.clear()
 	active_buffs.clear()
 	progression_changed.emit()
@@ -262,9 +264,18 @@ func get_subject_cost(data: subjectData) -> int:
 func has_completed_subject(id: String) -> bool:
 	return completed_subjects.has(id)
 
-func can_purchase_subject(data: subjectData) -> bool:
+func can_purchase_subject(data: subjectData, course: CourseData = null) -> bool:
 	if data == null or data.subject_id.is_empty() or has_completed_subject(data.subject_id):
 		return false
+	if course != null:
+		if not course.subjects.has(data) or not AcademicValidator.validate_course(course).is_empty():
+			return false
+		for id in course.prerequisites:
+			if not has_completed_subject(id):
+				return false
+	for field_id in data.comprehension_requirements:
+		if academic_comprehension.get(field_id, 0) < data.comprehension_requirements[field_id]:
+			return false
 	for id in data.prerequisites:
 		if not has_completed_subject(id):
 			return false
@@ -273,8 +284,8 @@ func can_purchase_subject(data: subjectData) -> bool:
 			return false
 	return player_exp >= get_subject_cost(data)
 
-func purchase_subject(data: subjectData) -> bool:
-	if not can_purchase_subject(data):
+func purchase_subject(data: subjectData, course: CourseData = null) -> bool:
+	if not can_purchase_subject(data, course):
 		return false
 	# Commit completion before emitting signals, including the XP setter signal.
 	completed_subjects.append(data.subject_id)

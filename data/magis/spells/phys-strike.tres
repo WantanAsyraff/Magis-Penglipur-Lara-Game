@@ -6,7 +6,10 @@
 [ext_resource type="Texture2D" uid="uid://bunu70fnhqow" path="res://assets/temp/temp-mana.png" id="2_malc6"]
 [ext_resource type="PackedScene" uid="uid://b2fvlmdplgevi" path="res://components/projectiles/player-magis-projectile.tscn" id="3_w3vin"]
 
+[ext_resource type="Resource" path="res://data/magis/fields/physics.tres" id="field_physics"]
+
 [resource]
+academic_fields = [ExtResource("field_physics")]
 script = ExtResource("1_qxd21")
 spell_name = "strike"
 spell_id = "phys-strike"

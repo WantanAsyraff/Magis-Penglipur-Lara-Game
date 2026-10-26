@@ -8,7 +8,10 @@
 [ext_resource type="Resource" uid="uid://bta25qt617j2c" path="res://data/magis/spells/phys-shatterwave.tres" id="4_xy33h"]
 [ext_resource type="Resource" uid="uid://dpwxqn23j1ilq" path="res://data/magis/spells/phys-terminal.tres" id="5_8b71i"]
 
+[ext_resource type="Resource" path="res://data/magis/fields/physics.tres" id="field_physics"]
+
 [resource]
+academic_fields = [ExtResource("field_physics")]
 script = ExtResource("2_n52b2")
 subject_name = "Physics II"
 subject_icon = ExtResource("3_n52b2")

@@ -434,7 +434,12 @@ func _add_sequence(incantation: String) -> void:
 		_cast_resolved(matched_spell)
 
 func _cast_resolved(spell: SpellData) -> void:
-	if casting.request_cast(spell, castMarker.global_position, castMarker.position.normalized()):
+	var accepted: bool
+	if incantation_strategy == IncantationResolver.Strategy.CHAINED:
+		accepted = casting.enqueue_cast(spell, castMarker.global_position, castMarker.position.normalized())
+	else:
+		accepted = casting.request_cast(spell, castMarker.global_position, castMarker.position.normalized())
+	if accepted:
 		spell_label.text = spell.spell_name + " cast!"
 
 func _clear_sequence() -> void:

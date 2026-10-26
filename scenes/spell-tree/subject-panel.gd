@@ -15,6 +15,7 @@ signal spells_learned(spells: Array[SpellData])
 
 @export var subject_data: subjectData
 var xp_cost: int = 0
+var course_data: CourseData
 
 # -------------------------
 # READY
@@ -83,7 +84,7 @@ func _update_prereq_state() -> void:
 	var cant_afford := Player_Global_Data.player_exp < xp_cost
 
 	if learn_button:
-		learn_button.disabled = prereqs_locked or cant_afford or Player_Global_Data.has_completed_subject(subject_data.subject_id)
+		learn_button.disabled = not Player_Global_Data.can_purchase_subject(subject_data, course_data)
 
 	if prereq_label:
 		if prereqs_locked:
@@ -96,7 +97,7 @@ func _update_prereq_state() -> void:
 # BUTTONS
 # -------------------------
 func _on_learn_button_pressed() -> void:
-	if not Player_Global_Data.purchase_subject(subject_data):
+	if not Player_Global_Data.purchase_subject(subject_data, course_data):
 		return
 	emit_signal("spells_learned", subject_data.contained_spells)
 	queue_free()

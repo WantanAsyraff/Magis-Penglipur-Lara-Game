@@ -6,7 +6,10 @@
 [ext_resource type="PackedScene" uid="uid://h0msm0ixfq2n" path="res://components/effects/trails/root-snare-particle.tscn" id="2_d2r2p"]
 [ext_resource type="PackedScene" uid="uid://b2fvlmdplgevi" path="res://components/projectiles/player-magis-projectile.tscn" id="5_7jcdk"]
 
+[ext_resource type="Resource" path="res://data/magis/fields/physics.tres" id="field_physics"]
+
 [resource]
+academic_fields = [ExtResource("field_physics")]
 script = ExtResource("1_87xkn")
 spell_name = "Terminal"
 spell_id = "phys-terminal"

@@ -6,10 +6,18 @@ static func validate(spell: SpellData) -> PackedStringArray:
 		return PackedStringArray(["Missing spell resource"])
 	if spell.spell_id.strip_edges().is_empty():
 		errors.append("Empty spell ID")
-	for property in ["upfront_cost", "mana_per_second", "cast_time", "channel_duration", "cooldown", "recovery_time", "projectile_damage", "projectile_speed", "projectile_range", "projectile_size", "aoe_spell_radius", "target_range", "decast_radius", "area_duration", "beam_width"]:
+	for property in ["upfront_cost", "mana_per_second", "cast_time", "channel_duration", "cooldown", "recovery_time", "projectile_damage", "projectile_speed", "projectile_range", "projectile_size", "aoe_spell_radius", "target_range", "decast_radius", "area_duration", "beam_width", "heal_amount", "hot_tick_heal", "hot_duration", "buff_duration", "decast_radius", "misfire_silence_duration", "chain_range", "stun_dur", "dot_damage", "dot_duration", "slow_duration", "mana_drain_amount", "mana_drain_duration", "silence_duration", "knockback_force", "explosive"]:
 		var value := float(spell.get(property))
 		if not is_finite(value) or value < 0:
 			errors.append("Invalid nonnegative property: " + property)
+	if spell.targeting < SpellData.Targeting.ENEMIES or spell.targeting > SpellData.Targeting.ANY:
+		errors.append("Invalid targeting mode")
+	for field in ["resonance_bonus", "off_archetype_penalty", "chain_damage_falloff", "equilibrium_bias", "slow_factor"]:
+		var value := float(spell.get(field))
+		if not is_finite(value) or value < 0 or value > 1:
+			errors.append("Expected 0..1: " + field)
+	if not is_finite(spell.projectile_spread) or absf(spell.projectile_spread) > 360:
+		errors.append("Invalid projectile spread")
 	if spell.projectile_count < 1 or spell.projectile_count > 128:
 		errors.append("Projectile count must be 1..128")
 	if spell.is_channelled and spell.channel_duration <= 0:
@@ -58,5 +66,5 @@ static func _validate_effects(definitions: Array[SpellEffectDefinition], errors:
 			errors.append("Circular effect reference")
 			continue
 		errors.append_array(effect.validate())
-		if effect is ConditionalEffect:
+		if effect is ConditionalEffect or effect is SpawnEntityEffect:
 			_validate_effects(effect.children, errors, ancestors + [effect], depth + 1)

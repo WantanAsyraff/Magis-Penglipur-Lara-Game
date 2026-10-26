@@ -5,7 +5,10 @@
 [ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="3_rkqpt"]
 [ext_resource type="PackedScene" uid="uid://bv7k8xal2arhv" path="res://components/projectiles/magis-projectile.tscn" id="4_r4hds"]
 
+[ext_resource type="Resource" path="res://data/magis/fields/physics.tres" id="field_physics"]
+
 [resource]
+academic_fields = [ExtResource("field_physics")]
 script = ExtResource("3_rkqpt")
 spell_name = "Kinetic Chill"
 spell_id = "thermal_01"

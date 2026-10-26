@@ -7,7 +7,10 @@
 [ext_resource type="Texture2D" uid="uid://dxhgewyjajudr" path="res://assets/projectiles/small-pojectile-temp.png" id="3_61dai"]
 [ext_resource type="PackedScene" uid="uid://b2fvlmdplgevi" path="res://components/projectiles/player-magis-projectile.tscn" id="6_q8nui"]
 
+[ext_resource type="Resource" path="res://data/magis/fields/physics.tres" id="field_physics"]
+
 [resource]
+academic_fields = [ExtResource("field_physics")]
 script = ExtResource("1_ngfpw")
 spell_name = "Shatterwave"
 spell_id = "phys-shatterwave"

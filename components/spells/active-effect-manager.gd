@@ -84,3 +84,15 @@ func snapshot() -> Dictionary:
 	for e in entries:
 		result[e.key] = {"timer": e.remaining, "data": e.data.duplicate(true), "source": e.source}
 	return result
+
+func remove_source(source_id: String) -> void:
+	var keys: Array[String] = []
+	for entry in entries.duplicate():
+		if entry.source == source_id:
+			entries.erase(entry)
+			if not keys.has(entry.key):
+				keys.append(entry.key)
+	for key in keys:
+		changed.emit(key)
+		if not has(key):
+			expired.emit(key)

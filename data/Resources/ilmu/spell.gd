@@ -212,6 +212,8 @@ enum DecastMode {
 enum Delivery { LEGACY, PROJECTILE, SELF, DIRECT_TARGET, AREA_BURST, PERSISTENT_AREA, BEAM, TRAP, SUMMON }
 @export var delivery: Delivery = Delivery.LEGACY
 @export var effects: Array[SpellEffectDefinition] = []
+enum Targeting { ENEMIES, ALLIES, ANY }
+@export var targeting: Targeting = Targeting.ENEMIES
 @export var academic_fields: Array[FieldData] = []
 @export var cooldown: float = 0.0
 @export var recovery_time: float = 0.0

@@ -7,11 +7,15 @@
 [ext_resource type="Resource" uid="uid://bbjkobdqthylh" path="res://data/magis/spells/phys-strike.tres" id="3_uffm3"]
 [ext_resource type="Resource" uid="uid://81if5m4i36p7" path="res://data/magis/spells/phys-crash.tres" id="4_e4m48"]
 
+[ext_resource type="Resource" path="res://data/magis/fields/physics.tres" id="field_physics"]
+
 [resource]
+academic_fields = [ExtResource("field_physics")]
 script = ExtResource("2_74ogc")
 subject_name = "Physics I"
 subject_icon = ExtResource("3_74ogc")
 subject_id = "PHY-001"
+difficulty_level = 1
 subject_archetype = "Physical Sciences"
 field_of_study = "Introduction to the physical world: how objects move, interact, and transfer energy through force and momentum. The student learns to read cause and effect in physical systems."
 theoretical_foundation = "Newton's Laws of Motion establish that force equals mass times acceleration (F=ma). Every physical interaction has a measurable, predictable consequence. Mana directed with calculated intent multiplies impact — carelessly applied mana yields diminishing returns. Momentum transfer describes how kinetic energy moves between objects on contact. Vibration theory introduces the idea that all matter oscillates, applying an external frequency to a target destabilises its internal state."

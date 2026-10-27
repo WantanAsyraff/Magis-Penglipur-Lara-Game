@@ -13,6 +13,7 @@ root = Path(__file__).resolve().parents[1]
 cases = [
     ('import', ['--editor', '--import', '--quit'], None),
     ('regression', ['res://tests/spell-regression.tscn'], ('SPELL_REGRESSION', 71)),
+    ('my-spells', ['res://tests/my-spells.tscn'], ('MY_SPELLS', 148)),
     ('curriculum', ['res://tests/physics-curriculum.tscn'], ('PHYSICS_CURRICULUM', 272)),
     ('laboratory', ['res://scenes/spell-testing/physics-curriculum-lab.tscn', '--quit-after', '120'], None),
 ]

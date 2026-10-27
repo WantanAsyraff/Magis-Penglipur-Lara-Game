@@ -30,13 +30,17 @@ func _gui_input(event: InputEvent) -> void:
 func display_spell() -> void:
 	if not spell_data:
 		return
+	%SpellNameLabel.text = spell_data.spell_name
+	tooltip_text = spell_data.spell_flavour_text
 	for child in spellMove_box.get_children():
+		spellMove_box.remove_child(child)
 		child.queue_free()
 	var steps := spell_data.spell_incantation.filter(func(s): return s != "")
 	for direction in steps:
 		var key: String = direction.to_lower()
 		if key in DIRECTION_ICONS:
 			var icon := TextureRect.new()
+			icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			icon.texture = load(DIRECTION_ICONS[key])
 			icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 			icon.custom_minimum_size = Vector2(24, 24)

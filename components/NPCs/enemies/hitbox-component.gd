@@ -127,16 +127,16 @@ func _apply_knockback(direction: Vector2, force: float) -> void:
 	knocked_back.emit(kb)
 
 func _apply_stun(duration: float) -> void:
-	effects.apply("stun", duration, {})
+	apply_status("stun", duration, {}, "", ActiveEffectManager.StackPolicy.REFRESH, 1)
 func _apply_slow(factor: float, duration: float) -> void:
-	effects.apply("slow", duration, {"factor": clampf(maxf(factor, get_slow_factor()), 0.0, 1.0)})
+	apply_status("slow", duration, {"factor": clampf(maxf(factor, get_slow_factor()), 0.0, 1.0)}, "", ActiveEffectManager.StackPolicy.REFRESH, 1)
 func _apply_dot(damage: float, interval: float, duration: float) -> void:
-	effects.apply("dot", duration, {"amount": damage, "interval": interval})
+	apply_status("dot", duration, {"amount": damage, "interval": interval}, "", ActiveEffectManager.StackPolicy.REFRESH, 1)
 func _apply_mana_drain(amount: float, duration: float) -> void:
 	if has_mana:
-		effects.apply("mana_drain", duration, {"amount": amount})
+		apply_status("mana_drain", duration, {"amount": amount}, "", ActiveEffectManager.StackPolicy.REFRESH, 1)
 func _apply_silence(duration: float) -> void:
-	effects.apply("silence", duration, {})
+	apply_status("silence", duration, {}, "", ActiveEffectManager.StackPolicy.REFRESH, 1)
 func _on_periodic(key: String, data: Dictionary) -> void:
 	if not is_instance_valid(_parent) or _parent.is_queued_for_deletion():
 		return

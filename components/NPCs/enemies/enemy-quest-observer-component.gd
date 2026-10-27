@@ -21,5 +21,5 @@ func _notify_quest_manager() -> void:
 	for instance in QuestManager.get_all_active():
 		for objective in instance.quest_data.objectives:
 			if objective.type == QuestObjectiveData.ObjectiveType.DEFEAT_ENEMY:
-				if enemy_id in objective.target_id:
+				if enemy_id == objective.target_id:
 					QuestManager.update_objective(instance.instance_id, objective.objective_id, 1)

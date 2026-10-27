@@ -29,6 +29,12 @@ func _process_loot_entry(loot: LootData) -> void:
 	if loot == null or not is_finite(loot.drop_chance) or loot.min_quantity < 1 or loot.max_quantity < loot.min_quantity or randf() > loot.drop_chance:
 		return
 	_spawn_item(loot)
+	for extra in loot.extra_drops:
+		if extra == null or extra == loot.item: continue
+		var additional := loot.duplicate() as LootData
+		additional.item = extra
+		additional.extra_drops = []
+		_spawn_item(additional)
 
 func _spawn_item(loot: LootData) -> void:
 	if not loot.item:

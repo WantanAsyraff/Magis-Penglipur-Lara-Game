@@ -124,7 +124,7 @@ func _flip_direction() -> void:
 
 ## Purely horizontal ray — detects environment walls only.
 func _wall_check(facing_right: bool) -> bool:
-	var rc  := raycast_left if facing_right else raycast_right
+	var rc  := raycast_right if facing_right else raycast_left
 	var dir := 1.0 if facing_right else -1.0
 	rc.target_position = Vector2(WALL_RAY_DIST * dir, 0.0)
 	rc.force_raycast_update()
@@ -136,15 +136,13 @@ func _wall_check(facing_right: bool) -> bool:
 		hit_env = (collider.collision_layer & ENVIRONMENT_LAYER) != 0
 	else:
 		hit_env = true
-	print("[EnemyPatrol] wall_check dir=%s | collider=%s | hit_env=%s" % [
-		"RIGHT" if facing_right else "LEFT", collider, hit_env
-	])
+
 	return hit_env
 
 ## Diagonal-down ray — checks for ground ahead of the enemy's foot.
 ## Validates the hit normal points upward so wall sides don't count as ground.
 func _ground_check(facing_right: bool) -> bool:
-	var rc  := raycast_left if facing_right else raycast_right
+	var rc  := raycast_right if facing_right else raycast_left
 	var dir := 1.0 if facing_right else -1.0
 	rc.target_position = Vector2(GROUND_RAY_DIST * dir, GROUND_RAY_DROP)
 	rc.force_raycast_update()
@@ -157,7 +155,7 @@ func _ground_check(facing_right: bool) -> bool:
 
 ## Horizontal ray — detects another Enemy in the way (for collision avoidance).
 func _enemy_check(facing_right: bool) -> bool:
-	var rc  := raycast_left if facing_right else raycast_right
+	var rc  := raycast_right if facing_right else raycast_left
 	var dir := 1.0 if facing_right else -1.0
 	rc.target_position = Vector2(WALL_RAY_DIST * dir, 0.0)
 	rc.force_raycast_update()

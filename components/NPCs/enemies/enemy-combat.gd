@@ -1,161 +1,135 @@
-# EnemyCombat.gd
-# Attach as a child node of Enemy.
-# No Timer node needed — cooldown is tracked with a float, same pattern as EnemyPatrol.
-# Call tick(delta) from Enemy._physics_process every frame.
-#
-# Requires a RayCast2D named "RayCast2D(Aim)" marked unique (%) under Enemy.
-# It is temporarily aimed at the player before each ranged shot to confirm LoS.
-
-class_name EnemyCombat
-extends Node
-
-# ─────────────────────────────────────────
-# SIGNALS
-# ─────────────────────────────────────────
-signal attack_finished   # fired when cooldown ends — Enemy uses this to return to CHASE
-
-# ─────────────────────────────────────────
-# EXPORTS
-# ─────────────────────────────────────────
+class_name EnemyCombat extends Node
+signal attack_finished
+signal ability_started(ability: EnemyAbilityData)
+signal ability_completed(ability: EnemyAbilityData)
+# Legacy scene exports remain for EnemyDefinitionAdapter and existing inherited scenes.
 @export var attack_type: Enemy.AttackType = Enemy.AttackType.MELEE
-@export var melee_damage: float = 15.0
+@export var melee_damage: float = 15
 @export var attack_cooldown: float = 1.2
-@export var melee_range: float = 40.0
-@export var ranged_trigger_distance: float = 200.0
-@export var retreat_threshold: float = 80.0
-@export var ranged_spell: SpellData = null
-
-# ─────────────────────────────────────────
-# NODE REFS
-# ─────────────────────────────────────────
-## Sibling under Enemy — mark unique (%) in the scene tree.
-## Any target_position in the editor is fine; code overrides it at runtime.
-@onready var raycast_aim: RayCast2D = %"RayCast2D(Aim)"
-
-# ─────────────────────────────────────────
-# STATE
-# ─────────────────────────────────────────
-var can_attack: bool = true
+@export var melee_range: float = 40
+@export var ranged_trigger_distance: float = 200
+@export var retreat_threshold: float = 80
+@export var ranged_spell: SpellData
 var casting: SpellCastingComponent
-
-func _ready() -> void:
+var loadout: Array[EnemyAbilityData] = []
+var cooldowns: Dictionary = {}
+var can_attack: bool = true
+var pending: EnemyAbilityData
+var current: EnemyAbilityData
+var victim: Node2D
+var remaining: float = 0
+var recovery: float = 0
+var cooldown_multiplier: float = 1
+func configure(data: EnemyData) -> void:
+	loadout = data.abilities.duplicate()
+	cooldown_multiplier = data.cooldown_multiplier
 	casting = SpellCastingComponent.new()
-	get_parent().add_child.call_deferred(casting)
-var _cooldown_timer: float = 0.0
-
-# ─────────────────────────────────────────
-# LIFECYCLE
-# ─────────────────────────────────────────
-
-## Call from Enemy._physics_process every frame.
+	casting.name = "SpellCastingComponent"
+	get_parent().add_child(casting)
+	casting.cast_completed.connect(_spell_completed)
+	casting.cast_failed.connect(_spell_failed)
+func busy() -> bool:
+	return pending != null or recovery > 0 or (casting != null and casting.state != SpellCastingComponent.State.IDLE)
 func tick(delta: float) -> void:
-	if _cooldown_timer > 0.0:
-		_cooldown_timer -= delta
-		if _cooldown_timer <= 0.0:
-			can_attack = true
-			attack_finished.emit()
-
-# ─────────────────────────────────────────
-# PUBLIC API
-# ─────────────────────────────────────────
-
-## Returns true if the enemy should enter ATTACK state given current distance.
-func should_attack(dist: float, player: Node) -> bool:
-	if not can_attack or player == null:
-		return false
-	match attack_type:
-		Enemy.AttackType.MELEE:
-			return dist <= melee_range
-		Enemy.AttackType.RANGED:
-			return dist <= ranged_trigger_distance and dist > retreat_threshold
-		Enemy.AttackType.BOTH:
-			if dist <= melee_range:
-				return true
-			return ranged_spell != null and dist <= ranged_trigger_distance and dist > retreat_threshold
-	return false
-
-## Fire the attack. Call once from Enemy when entering ATTACK state.
-func execute_attack(enemy: CharacterBody2D, player: Node) -> void:
-	if player == null or not SpellExecutor.is_authoritative(enemy) or enemy.hitbox.is_stunned():
-		return
+	if not SpellExecutor.is_authoritative(self): return
+	for key in cooldowns.keys(): cooldowns[key] = maxf(0, float(cooldowns[key]) - delta)
+	var enemy := get_parent()
+	if enemy.hitbox.is_stunned() or (enemy.hitbox.is_silenced() and pending and pending.kind == EnemyAbilityData.Kind.SPELL):
+		cancel("Status interruption")
+	if recovery > 0:
+		recovery -= delta
+		if recovery <= 0: attack_finished.emit()
+	if pending:
+		remaining -= delta
+		if remaining <= 0: _release()
+	can_attack = not busy()
+func target_for(ability: EnemyAbilityData, hostile: Node2D) -> Node2D:
+	var enemy := get_parent() as Node2D
+	if ability.kind == EnemyAbilityData.Kind.MELEE: return hostile
+	if LegacySpellAdapter.delivery_for(ability.spell) == SpellData.Delivery.SELF: return enemy
+	if ability.spell.targeting == SpellData.Targeting.ALLIES:
+		var best: Node2D
+		var ratio := 1.0
+		for node in get_tree().get_nodes_in_group("combat_target"):
+			if node is Node2D and not node.get_meta("combat_dead", false) and CombatFactions.relation(enemy, node) > 0 and node.has_method("get_health_ratio") and node.get_health_ratio() < ratio and enemy.global_position.distance_to(node.global_position) <= ability.max_range:
+				best = node; ratio = node.get_health_ratio()
+		return best
+	return hostile
+func can_use(ability: EnemyAbilityData, target: Node2D, check_busy: bool = true) -> bool:
+	var enemy := get_parent() as Node2D
+	if not SpellExecutor.is_authoritative(enemy) or ability not in loadout or enemy.get_meta("combat_dead", false) or enemy.current_state == Enemy.State.HURT or enemy.hitbox.is_stunned() or (check_busy and busy()): return false
+	if cooldowns.get(ability.ability_id, 0.0) > 0 and check_busy: return false
+	if not is_instance_valid(target) or target.is_queued_for_deletion() or target.get_meta("combat_dead", false): return false
+	if target != enemy:
+		var distance := enemy.global_position.distance_to(target.global_position)
+		if distance < ability.min_range or distance > ability.max_range: return false
+		if ability.requires_los and not _has_ranged_los(enemy, target): return false
+	if ability.kind == EnemyAbilityData.Kind.SPELL:
+		if enemy.hitbox.is_silenced(): return false
+		var spell := ability.spell
+		if spell == null or (casting.cooldowns.get(spell.spell_id, 0.0) > 0 and check_busy): return false
+		if enemy.spell_mana < spell.upfront_cost + spell.mana_per_second * spell.channel_duration: return false
+		if target != enemy and not SpellDelivery.can_target(SpellCastContext.new(enemy, spell), target): return false
+	else:
+		if CombatFactions.relation(enemy, target) >= 0: return false
+	return true
+func start(ability: EnemyAbilityData, target: Node2D) -> bool:
+	if not can_use(ability, target): return false
+	pending = ability
+	current = ability
+	victim = target
+	remaining = ability.windup
+	cooldowns[ability.ability_id] = ability.cooldown * cooldown_multiplier
 	can_attack = false
-	_cooldown_timer = attack_cooldown
-
-	var dist := enemy.global_position.distance_to(player.global_position)
-	print("[EnemyCombat] Attack — type: %s | dist: %.1f" % [Enemy.AttackType.keys()[attack_type], dist])
-
-	match attack_type:
-		Enemy.AttackType.MELEE:
-			_do_melee(enemy, player)
-		Enemy.AttackType.RANGED:
-			_do_ranged(enemy, player)
-		Enemy.AttackType.BOTH:
-			if dist <= melee_range:
-				_do_melee(enemy, player)
-			elif ranged_spell != null and dist <= ranged_trigger_distance:
-				_do_ranged(enemy, player)
-
-## Desired velocity.x while holding the ATTACK state (no re-firing).
+	get_parent()._set_state(Enemy.State.ATTACK)
+	SpellFeedback.flash(get_parent(), Color(1, .6, .25))
+	ability_started.emit(ability)
+	if remaining <= 0: _release()
+	return true
+func _release() -> void:
+	var ability := pending
+	pending = null
+	if ability == null or not can_use(ability, victim, false): _finish(); return
+	var enemy := get_parent() as Node2D
+	var direction := (victim.global_position - enemy.global_position).normalized()
+	if direction == Vector2.ZERO: direction = Vector2.RIGHT if enemy._facing_right else Vector2.LEFT
+	if ability.kind == EnemyAbilityData.Kind.MELEE:
+		CombatRequest.apply(enemy, victim, ability.effects, direction)
+		ability_completed.emit(ability)
+		_finish()
+	else:
+		var targets: Array[Node2D] = [victim]
+		if not casting.request_cast(ability.spell, enemy.global_position + direction * 40, direction, targets): _finish()
+func _spell_completed(_context: SpellCastContext) -> void:
+	if current: ability_completed.emit(current)
+	_finish()
+func _spell_failed(_reason: String) -> void:
+	_finish()
+func _finish() -> void:
+	recovery = current.recovery if current else 0
+	current = null
+	victim = null
+	if recovery <= 0: attack_finished.emit()
+func cancel(reason: String = "Interrupted") -> void:
+	pending = null
+	current = null
+	victim = null
+	recovery = 0
+	if casting: casting.cancel(reason)
+func should_attack(_dist: float, target: Node) -> bool:
+	for ability in loadout:
+		if can_use(ability, target as Node2D): return true
+	return false
+func execute_attack(_enemy: CharacterBody2D, target: Node) -> void:
+	for ability in loadout:
+		if start(ability, target as Node2D): return
 func attack_hold_velocity(current_vx: float) -> float:
-	match attack_type:
-		Enemy.AttackType.RANGED, Enemy.AttackType.BOTH:
-			return move_toward(current_vx, 0.0, get_parent().chase_speed)
-		_:
-			return current_vx  # melee keeps momentum
-
-## Chase-state movement velocity given current distance and direction to player.
-func chase_velocity(dist: float, direction: Vector2, current_vx: float) -> float:
-	var spd: float = get_parent().chase_speed
-	match attack_type:
-		Enemy.AttackType.MELEE:
-			return direction.x * spd
-		Enemy.AttackType.RANGED, Enemy.AttackType.BOTH:
-			if dist < retreat_threshold:
-				return -direction.x * spd
-			elif dist > ranged_trigger_distance:
-				return direction.x * spd
-			else:
-				return move_toward(current_vx, 0.0, spd)
-	return 0.0
-
-## Facing direction to use during chase (-1/1). Handles retreat flip.
-func chase_facing(dist: float, direction_x: float) -> float:
-	match attack_type:
-		Enemy.AttackType.RANGED, Enemy.AttackType.BOTH:
-			if dist < retreat_threshold:
-				return -direction_x
+	return move_toward(current_vx, 0, get_parent().chase_speed)
+func chase_velocity(distance: float, direction: Vector2, _current_vx: float) -> float:
+	return direction.x * get_parent().chase_speed * (-1 if distance < retreat_threshold else 1)
+func chase_facing(_distance: float, direction_x: float) -> float:
 	return direction_x
-
-# ─────────────────────────────────────────
-# INTERNAL
-# ─────────────────────────────────────────
-func _do_melee(enemy: CharacterBody2D, player: Node) -> void:
-	var player_hitbox := player.get_node_or_null("HitboxComponent") as HitboxComponent
-	if player_hitbox == null:
-		push_warning("EnemyCombat: Player has no HitboxComponent!")
-		return
-	var dir = (player.global_position - enemy.global_position).normalized()
-	var fake_spell := SpellData.new()
-	fake_spell.projectile_damage = melee_damage
-	fake_spell.knockback_force = 120.0
-	player_hitbox.receive_hit(fake_spell, dir)
-	print("[EnemyCombat] Melee hit for: ", melee_damage)
-
-func _do_ranged(enemy: CharacterBody2D, player: Node) -> void:
-	if ranged_spell == null:
-		return
-
-	# Confirm clear LoS before firing — don't shoot into a wall
-	if not _has_ranged_los(enemy, player):
-		print("[EnemyCombat] Ranged blocked — no LoS to player")
-		return
-
-	var dir: Vector2 = (player.global_position - enemy.global_position).normalized()
-	if casting and casting.is_inside_tree():
-		casting.request_cast(ranged_spell, enemy.global_position + dir * 40, dir)
-
-## Aims RayCast2D(Aim) at the player and checks for an unobstructed path.
-func _has_ranged_los(enemy: CharacterBody2D, player: Node) -> bool:
-	raycast_aim.target_position = enemy.to_local(player.global_position)
-	raycast_aim.force_raycast_update()
-	return not raycast_aim.is_colliding() or raycast_aim.get_collider() == player
+func _has_ranged_los(enemy: CharacterBody2D, target: Node2D) -> bool:
+	if not is_instance_valid(target): return false
+	var query := PhysicsRayQueryParameters2D.create(enemy.global_position, target.global_position, 16, [enemy.get_rid()])
+	return enemy.get_world_2d().direct_space_state.intersect_ray(query).is_empty()

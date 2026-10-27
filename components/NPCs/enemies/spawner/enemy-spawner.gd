@@ -88,7 +88,7 @@ func _position_clear(enemy: Enemy, point: Vector2) -> bool:
 	if collision == null or collision.shape == null: return false
 	var query := PhysicsShapeQueryParameters2D.new()
 	query.shape = collision.shape
-	query.transform = Transform2D(enemy.rotation, enemy.scale, enemy.skew, point) * collision.transform
+	query.transform = get_parent().global_transform * Transform2D(enemy.rotation, enemy.scale, enemy.skew, get_parent().to_local(point)) * collision.transform
 	query.collision_mask = spawn_blocking_mask
 	return get_world_2d().direct_space_state.intersect_shape(query, 1).is_empty()
 func _get_spawn_position() -> Vector2:

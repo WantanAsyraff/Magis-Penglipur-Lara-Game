@@ -2,6 +2,8 @@ class_name MagicProjectile extends SpellEffect
 # ─────────────────────────────────────────
 # STATE
 # ─────────────────────────────────────────
+var local_speed_factor: float = 1.0
+var slow_remaining: float = 0.0
 var lifetime: float = 5.0
 var _started: bool = false
 var _finished: bool = false
@@ -15,6 +17,7 @@ func start() -> void:
 	if _started:
 		return
 	_started = true
+	add_to_group("spell_projectile")
 	if cast_context == null:
 		cast_context = SpellCastContext.new(source as Node2D, spell_data)
 	if not spell_data:
@@ -64,7 +67,9 @@ func _physics_process(delta: float) -> void:
 		queue_free()
 		return
 	if spell_data.projectile_speed > 0:
-		position += direction * spell_data.projectile_speed * delta
+		global_position += direction * spell_data.projectile_speed * local_speed_factor * delta
+	slow_remaining -= delta
+	if slow_remaining <= 0: local_speed_factor = 1.0
 	lifetime -= delta
 	if lifetime <= 0:
 		queue_free()
@@ -148,3 +153,14 @@ func _get_child_names(node: Node) -> String:
 func _deliver(body: Node2D) -> void:
 	cast_context.direction = direction
 	SpellExecutor.new().execute(cast_context, body)
+
+func redirect(controller: SpellCastContext, heading: Vector2) -> void:
+	# New per-projectile context avoids transferring sibling projectiles in a volley.
+	var replacement := SpellCastContext.new(controller.caster, spell_data)
+	replacement.source_team = controller.source_team
+	replacement.modifiers = cast_context.modifiers.duplicate()
+	cast_context = replacement
+	source = controller.caster
+	direction = heading.normalized()
+	_hit_bodies.clear()
+	collision_mask = 16 | (2 if controller.source_team == &"player" else 1)

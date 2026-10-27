@@ -62,7 +62,7 @@ var dash_charges: int = Player_Global_Data.MAX_DASH_CHARGES:
 var dash_regen_timer := 0.0
 
 # Spells
-@export var incantation_strategy: IncantationResolver.Strategy = IncantationResolver.Strategy.CHAINED
+@export var incantation_strategy: IncantationResolver.Strategy = IncantationResolver.Strategy.CONFIRMATION
 var casting: SpellCastingComponent
 var incantations := IncantationResolver.new()
 var _remote_health: float = 100.0
@@ -437,10 +437,17 @@ func _add_sequence(incantation: String) -> void:
 
 func _cast_resolved(spell: SpellData) -> void:
 	var accepted: bool
+	var aim := castMarker.position.normalized()
+	var targets: Array[Node2D] = []
+	if LegacySpellAdapter.delivery_for(spell) == SpellData.Delivery.DIRECT_TARGET:
+		var targeting_context := SpellCastContext.new(self, spell)
+		targeting_context.direction = aim
+		var target := SpellDelivery.pick_target(targeting_context)
+		if target: targets.append(target)
 	if incantation_strategy == IncantationResolver.Strategy.CHAINED:
-		accepted = casting.enqueue_cast(spell, castMarker.global_position, castMarker.position.normalized())
+		accepted = casting.enqueue_cast(spell, castMarker.global_position, aim, targets)
 	else:
-		accepted = casting.request_cast(spell, castMarker.global_position, castMarker.position.normalized())
+		accepted = casting.request_cast(spell, castMarker.global_position, aim, targets)
 	if accepted:
 		spell_label.text = spell.spell_name + " cast!"
 

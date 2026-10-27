@@ -7,8 +7,16 @@ static func dispatch(context: SpellCastContext) -> bool:
 		return false
 	var spell := context.spell
 	var actor := context.caster
+	# Per-caster cap bounds persistent nodes, even across different spell IDs.
+	if LegacySpellAdapter.delivery_for(spell) in [SpellData.Delivery.PERSISTENT_AREA, SpellData.Delivery.TRAP, SpellData.Delivery.BEAM, SpellData.Delivery.SUMMON]:
+		var active := 0
+		for child in actor.get_parent().get_children():
+			if (child is SpellAreaDelivery or child is SpellConstruct) and child.context.caster == actor and not child.is_queued_for_deletion(): active += 1
+		if active >= 12: return false
+
 	match LegacySpellAdapter.delivery_for(spell):
 		SpellData.Delivery.SELF:
+			SpellFeedback.flash(actor, spell.spell_colour)
 			var applied := SpellExecutor.new().execute(context, actor)
 			if spell.aoe_spell_radius > 0:
 				applied = apply_area(context, actor.global_position) or applied
@@ -63,6 +71,9 @@ static func dispatch(context: SpellCastContext) -> bool:
 static func apply_area(context: SpellCastContext, position: Vector2, beam: bool = false) -> bool:
 	var radius := context.spell.decast_radius if context.spell.spell_category == SpellData.SpellCategory.DECAST else context.spell.aoe_spell_radius
 	var found := false
+	if context.spell.affects_projectiles:
+		found = SpellExecutor.new().execute(context, context.caster) or found
+
 	for node in context.caster.get_tree().get_nodes_in_group("hitbox"):
 		var target := node.get_parent() as Node2D
 		if target == null or target == context.caster:
@@ -72,6 +83,7 @@ static func apply_area(context: SpellCastContext, position: Vector2, beam: bool 
 		if beam:
 			var projection := offset.dot(context.direction)
 			in_shape = projection >= 0 and projection <= context.spell.target_range and absf(offset.cross(context.direction)) <= context.spell.beam_width / 2
+		if context.spell.affects_projectiles: continue
 		if in_shape and can_target(context, target):
 			found = SpellExecutor.new().execute(context, target) or found
 	return found
@@ -87,3 +99,15 @@ static func can_target(context: SpellCastContext, target: Node2D) -> bool:
 		SpellData.Targeting.ALLIES: return ally
 		SpellData.Targeting.ANY: return true
 	return not ally
+
+static func pick_target(context: SpellCastContext) -> Node2D:
+	var best: Node2D
+	var score := INF
+	for h in context.caster.get_tree().get_nodes_in_group("hitbox"):
+		var target := h.get_parent() as Node2D
+		if target == null or target == context.caster or not can_target(context, target): continue
+		var offset := target.global_position - context.caster.global_position
+		if offset.length() > context.spell.target_range or offset.normalized().dot(context.direction) < 0.35: continue
+		var candidate := offset.length() + absf(offset.cross(context.direction)) * 2
+		if candidate < score: best = target; score = candidate
+	return best

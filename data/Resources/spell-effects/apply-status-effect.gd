@@ -1,5 +1,5 @@
 class_name ApplyStatusEffect extends SpellEffectDefinition
-@export_enum("stun", "slow", "dot", "mana_drain", "silence") var status: String = "stun"
+@export var status: String = "stun"
 @export var duration: float = 1.0
 @export var magnitude: float = 0.0
 @export var tick_interval: float = 1.0
@@ -7,7 +7,7 @@ class_name ApplyStatusEffect extends SpellEffectDefinition
 @export_range(1, 32) var max_stacks: int = 1
 
 func validate() -> PackedStringArray:
-	if status not in ["stun", "slow", "dot", "mana_drain", "silence"] or not is_finite(duration) or duration <= 0 or not is_finite(magnitude) or magnitude < 0 or not is_finite(tick_interval) or tick_interval < 0.05 or max_stacks < 1 or max_stacks > 32:
+	if status.is_empty() or not is_finite(duration) or duration <= 0 or not is_finite(magnitude) or magnitude < 0 or not is_finite(tick_interval) or tick_interval < 0.05 or max_stacks < 1 or max_stacks > 32:
 		return PackedStringArray(["Invalid status configuration"])
 	return PackedStringArray()
 

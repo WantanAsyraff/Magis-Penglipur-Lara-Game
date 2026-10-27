@@ -3,6 +3,9 @@ enum State { IDLE, PREPARING, CHANNELING, EXECUTING, RECOVERY }
 signal state_changed(state: State)
 signal cast_failed(reason: String)
 signal cast_completed(context: SpellCastContext)
+var previous_spell: SpellData
+var previous_targets: Array[Node2D] = []
+var live_delivery: SpellAreaDelivery
 var state: State = State.IDLE
 var caster: Node2D
 var context: SpellCastContext
@@ -39,11 +42,15 @@ func request_cast(spell: SpellData, origin: Vector2, direction: Vector2, targets
 			return _fail("Invalid target")
 	if not caster.has_method("consume_spell_mana") or not caster.consume_spell_mana(spell.upfront_cost):
 		return _fail("Not enough mana")
+	SpellFeedback.flash(caster, spell.spell_colour)
 	_paid_upfront = spell.upfront_cost
 	context = SpellCastContext.new(caster, spell)
 	context.source_position = origin
 	context.direction = direction.normalized()
 	context.targets = targets.duplicate()
+	if spell.aim_placement:
+		context.source_position = caster.global_position + context.direction * minf(spell.target_range, 220)
+
 	var h := caster.get_node_or_null("HitboxComponent") as HitboxComponent
 	if h:
 		context.modifiers.damage = h.effects.magnitude("buff_damage")
@@ -84,6 +91,10 @@ func _finish_preparation() -> void:
 	if context.spell.is_channelled and context.spell.channel_duration > 0:
 		remaining = context.spell.channel_duration
 		_set_state(State.CHANNELING)
+		if context.spell.live_channel:
+			if not (is_instance_valid(live_delivery) or SpellDelivery.dispatch(context)): cancel("Channel delivery failed"); return
+			live_delivery = caster.get_parent().get_children().back() as SpellAreaDelivery
+
 	else:
 		_execute()
 
@@ -93,9 +104,14 @@ func _execute() -> void:
 			cancel("Target lost during preparation")
 			return
 	_set_state(State.EXECUTING)
-	if not SpellDelivery.dispatch(context):
+	if not (is_instance_valid(live_delivery) or SpellDelivery.dispatch(context)):
 		cancel("Spell delivery failed")
 		return
+	if is_instance_valid(live_delivery): live_delivery.queue_free()
+	live_delivery = null
+	if echo_eligible(context.spell):
+		previous_spell = context.spell
+		previous_targets = context.targets.duplicate()
 	_paid_upfront = 0
 	cooldowns[context.spell.spell_id] = context.spell.cooldown
 	cast_completed.emit(context)
@@ -106,6 +122,8 @@ func _execute() -> void:
 
 func cancel(reason: String = "Cancelled") -> void:
 	_queue.clear()
+	if is_instance_valid(live_delivery): live_delivery.queue_free()
+	live_delivery = null
 	if state == State.IDLE:
 		return
 	# Refund upfront cost only before successful dispatch; spent channel mana is never refunded.
@@ -131,4 +149,10 @@ func enqueue_cast(spell: SpellData, origin: Vector2, direction: Vector2, targets
 	if _queue.size() >= 8:
 		return _fail("Cast queue is full")
 	_queue.append({"spell": spell, "origin": origin, "direction": direction, "targets": targets.duplicate()})
+	return true
+
+static func echo_eligible(spell: SpellData) -> bool:
+	if LegacySpellAdapter.delivery_for(spell) not in [SpellData.Delivery.PROJECTILE, SpellData.Delivery.SELF, SpellData.Delivery.DIRECT_TARGET, SpellData.Delivery.AREA_BURST]: return false
+	for effect in LegacySpellAdapter.effects_for(spell):
+		if not (effect is DamageEffect or effect is HealEffect or effect is KnockbackEffect or effect is ApplyStatusEffect): return false
 	return true

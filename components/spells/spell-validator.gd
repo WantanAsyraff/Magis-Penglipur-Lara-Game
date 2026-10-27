@@ -66,5 +66,5 @@ static func _validate_effects(definitions: Array[SpellEffectDefinition], errors:
 			errors.append("Circular effect reference")
 			continue
 		errors.append_array(effect.validate())
-		if effect is ConditionalEffect or effect is SpawnEntityEffect:
+		if effect is ConditionalEffect or effect is SpawnEntityEffect or effect is TriggerEffect:
 			_validate_effects(effect.children, errors, ancestors + [effect], depth + 1)

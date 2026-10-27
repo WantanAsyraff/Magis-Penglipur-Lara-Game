@@ -1,5 +1,5 @@
 class_name SpellSlot
-extends Control
+extends PanelContainer
 
 signal spell_selected(spell: SpellData)
 
@@ -19,10 +19,14 @@ const DIRECTION_ICONS := {
 func _ready() -> void:
 	mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	focus_mode = Control.FOCUS_ALL
 	if spell_data:
 		display_spell()
 
 func _gui_input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_accept"):
+		spell_selected.emit(spell_data)
+		accept_event()
 	if event is InputEventMouseButton and event.pressed:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			spell_selected.emit(spell_data)
@@ -42,10 +46,15 @@ func display_spell() -> void:
 			var icon := TextureRect.new()
 			icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			icon.texture = load(DIRECTION_ICONS[key])
+			icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 			icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 			icon.custom_minimum_size = Vector2(24, 24)
 			spellMove_box.add_child(icon)
-	spellCostLabel.text = str(spell_data.upfront_cost) + " MP"
+	spellCostLabel.text = str(spell_data.upfront_cost) + " MP" + ("  •  Equipped" if is_equipped else "")
+	var panel := get_theme_stylebox("panel").duplicate() as StyleBoxFlat
+	panel.border_color = Color("b89e63") if is_equipped else Color("38424f")
+	panel.bg_color = Color("242b32") if is_equipped else Color("1b222c")
+	add_theme_stylebox_override("panel", panel)
 
 func set_spell(data: SpellData, equipped: bool = false) -> void:
 	spell_data = data

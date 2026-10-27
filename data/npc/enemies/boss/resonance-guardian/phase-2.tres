@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="BossPhaseData" format=3]
+
+[ext_resource type="Script" path="res://data/npc/enemies/boss-phase.gd" id="phase"]
+[ext_resource type="Script" path="res://data/npc/enemies/boss-attack-data.gd" id="type"]
+[ext_resource type="Resource" path="res://data/npc/enemies/boss/resonance-guardian/melee-slam.tres" id="a0"]
+[ext_resource type="Resource" path="res://data/npc/enemies/boss/resonance-guardian/dash-attack.tres" id="a1"]
+[ext_resource type="Resource" path="res://data/npc/enemies/boss/resonance-guardian/ranged-double.tres" id="a2"]
+
+[resource]
+script = ExtResource("phase")
+phase_name = "Gema"
+enter_at_health_ratio = 0.65
+move_speed = 126.0
+chase_speed = 210.0
+attacks = Array[ExtResource("type")]([ExtResource("a0"), ExtResource("a1"), ExtResource("a2")])
+transition_invincible_duration = 1.0
+transition_duration = 1.0
+transition_animation = ""
+phase_colour = Color(0.4, 0.85, 0.95, 1)

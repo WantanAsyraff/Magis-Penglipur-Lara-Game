@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="BossAttackData" format=3]
+
+[ext_resource type="Script" path="res://data/npc/enemies/boss-attack-data.gd" id="attack"]
+[ext_resource type="Resource" path="res://data/npc/enemies/boss/resonance-guardian/resonant-bolt.tres" id="spell"]
+
+[resource]
+script = ExtResource("attack")
+attack_name = "Twin Echo"
+kind = 2
+windup = 0.7
+cooldown = 1.4
+burst_count = 2
+burst_interval = 0.18
+burst_spread = 14.0
+ranged_spell = ExtResource("spell")
+telegraph_colour = Color(1, 0.65, 0.3, 1)

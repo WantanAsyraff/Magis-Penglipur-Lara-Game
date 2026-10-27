@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="BossAttackData" format=3]
+
+[ext_resource type="Script" path="res://data/npc/enemies/boss-attack-data.gd" id="attack"]
+
+[resource]
+script = ExtResource("attack")
+attack_name = "AoE Shockwave"
+kind = 3
+weight = 2.0
+windup = 1.0
+cooldown = 1.6
+aoe_warning_duration = 1.0
+aoe_radius = 360.0
+aoe_damage = 34.0
+aoe_knockback = 500.0
+telegraph_colour = Color(1, 0.35, 0.3, 1)

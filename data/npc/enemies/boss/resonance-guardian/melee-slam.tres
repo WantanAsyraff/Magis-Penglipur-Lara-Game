@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="BossAttackData" format=3]
+
+[ext_resource type="Script" path="res://data/npc/enemies/boss-attack-data.gd" id="attack"]
+
+[resource]
+script = ExtResource("attack")
+attack_name = "Melee Slam"
+kind = 0
+weight = 2.0
+windup = 0.7
+cooldown = 1.2
+melee_damage = 24.0
+melee_range = 240.0
+melee_arc_degrees = 150.0
+telegraph_colour = Color(1, 0.65, 0.3, 1)

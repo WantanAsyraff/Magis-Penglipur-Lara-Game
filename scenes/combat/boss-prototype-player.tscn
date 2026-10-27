@@ -1,0 +1,5 @@
+[gd_scene load_steps=3 format=3]
+[ext_resource type="PackedScene" path="res://components/characters/player/player.tscn" id="base"]
+[ext_resource type="Script" path="res://scenes/combat/boss-prototype-player.gd" id="script"]
+[node name="PrototypePlayer" instance=ExtResource("base")]
+script = ExtResource("script")

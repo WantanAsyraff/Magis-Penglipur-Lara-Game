@@ -1,0 +1,31 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="PackedScene" path="res://components/NPCs/enemies/boss/boss.tscn" id="base"]
+[ext_resource type="Resource" path="res://data/npc/enemies/boss/resonance-guardian/phase-1.tres" id="p1"]
+[ext_resource type="Resource" path="res://data/npc/enemies/boss/resonance-guardian/phase-2.tres" id="p2"]
+[ext_resource type="Resource" path="res://data/npc/enemies/boss/resonance-guardian/phase-3.tres" id="p3"]
+[ext_resource type="Script" path="res://data/npc/enemies/boss-phase.gd" id="phase"]
+[ext_resource type="Script" path="res://components/NPCs/enemies/boss/resonance-guardian-visual.gd" id="visual"]
+
+[sub_resource type="RectangleShape2D" id="body"]
+size = Vector2(140, 200)
+
+[node name="PenjagaResonans" instance=ExtResource("base")]
+scale = Vector2(1, 1)
+collision_layer = 2
+collision_mask = 16
+boss_name = "Penjaga Resonans"
+max_health = 500.0
+detection_radius = 3000.0
+hurt_duration = 0.18
+phases = Array[ExtResource("phase")]([ExtResource("p1"), ExtResource("p2"), ExtResource("p3")])
+
+[node name="AnimatedSprite2D" parent="." index="1"]
+visible = false
+
+[node name="CollisionShape2D" parent="." index="2"]
+position = Vector2(0, 0)
+shape = SubResource("body")
+
+[node name="Presentation" type="Node2D" parent="." index="7"]
+script = ExtResource("visual")

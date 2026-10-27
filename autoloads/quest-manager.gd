@@ -131,10 +131,14 @@ func try_hand_off(id: String, npc_id: String = "") -> bool:
 	_claiming = true
 	var success := QuestRewardService.claim(self, instance, npc_id)
 	_claiming = false
-	if success and not instance.quest_data.next_quest_id.is_empty():
-		var next := offer_quest(instance.quest_data.next_quest_id, npc_id, instance.owner_id)
-		if next and instance.quest_data.auto_accept_next: accept_quest(next.instance_id, instance.owner_id)
+	if success: _continue_chain(instance)
 	return success
+func _continue_chain(instance: QuestInstance) -> void:
+	if instance.quest_data.next_quest_id.is_empty(): return
+	for other in _active_instances.values():
+		if other.owner_id == instance.owner_id and other.quest_data.quest_id == instance.quest_data.next_quest_id: return
+	var next := offer_quest(instance.quest_data.next_quest_id, instance.assigned_npc_id, instance.owner_id)
+	if next and instance.quest_data.auto_accept_next: accept_quest(next.instance_id, instance.owner_id)
 func cancel_quest(id: String) -> bool:
 	var instance := get_instance(id)
 	if not authoritative() or instance == null or instance.owner_id != active_owner_id or instance.status not in [QuestInstance.Status.AVAILABLE, QuestInstance.Status.ACTIVE, QuestInstance.Status.COMPLETE]: return false
@@ -249,6 +253,8 @@ func load_game(path: String = "") -> bool:
 		if instance.status in [QuestInstance.Status.ACTIVE, QuestInstance.Status.COMPLETE]: QuestObjectiveEvaluator.reconcile_inventory(instance, Inventory_Manager.inventory)
 	_restoring = false
 	drain_outbox()
+	for instance in _active_instances.values().duplicate():
+		if instance.status == QuestInstance.Status.HANDED_OFF: _continue_chain(instance)
 	changed()
 	Player_Global_Data.spells_updated.emit()
 	return true

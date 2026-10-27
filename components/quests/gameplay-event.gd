@@ -26,6 +26,12 @@ static func owner_for(actor: Variant) -> String:
 func to_dict() -> Dictionary:
 	return {"event_id": event_id, "type": type, "owner_id": owner_id, "actor_id": actor_id, "target_id": target_id, "source_instance_id": source_instance_id, "quantity": quantity, "tags": tags.duplicate(), "metadata": metadata.duplicate(true)}
 static func from_dict(row: Dictionary) -> GameplayEvent:
+	for key in ["event_id", "owner_id", "target_id"]:
+		if not row.get(key) is String or String(row[key]).is_empty(): return null
+	for key in ["type", "quantity"]:
+		if not (row.get(key) is int or row.get(key) is float): return null
+	for tag in row.get("tags", []) if row.get("tags", []) is Array else []:
+		if not (tag is String or tag is StringName): return null
 	var event := GameplayEvent.new(int(row.get("type", -1)), String(row.get("target_id", "")), int(row.get("quantity", 0)), String(row.get("owner_id", "")), String(row.get("event_id", "")))
 	event.actor_id = String(row.get("actor_id", ""))
 	event.source_instance_id = String(row.get("source_instance_id", ""))

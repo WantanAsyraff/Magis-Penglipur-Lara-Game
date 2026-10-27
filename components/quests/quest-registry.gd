@@ -12,7 +12,14 @@ func _init() -> void:
 		if loot.item: _register_item(loot.item)
 	var enemy_path: String = "res://data/npc/enemies/enemy-manifest.gd"
 	var enemy_manifest: Variant = load(enemy_path)
-	for enemy in enemy_manifest.ENEMIES: enemy_ids[String(enemy.enemy_id)] = true
+	for enemy in enemy_manifest.ENEMIES:
+		enemy_ids[String(enemy.enemy_id)] = true
+		# New drops attached to a registered EnemyData need only Resource edits.
+		for loot in enemy.loot:
+			if loot == null: continue
+			if loot.item: _register_item(loot.item)
+			for extra in loot.extra_drops:
+				if extra: _register_item(extra)
 	for path in ["res://data/quests/flac-database.tres", "res://data/quests/bakau-database.tres"]:
 		var database: QuestDatabase = load(path)
 		for quest in database.quests:

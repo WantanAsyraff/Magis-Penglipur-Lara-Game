@@ -69,6 +69,8 @@ written = run('restart-write', ['res://tests/quest-persistence.tscn'], ('QUEST_P
 if written:
     run('restart-read', ['res://tests/quest-persistence.tscn'], ('QUEST_PERSISTENCE', 7))
 run('accessibility', ['res://tests/quest-accessibility.tscn'], ('QUEST_ACCESSIBILITY', 90))
+for room in range(1, 4):
+    run(f'world-boot-{room}', [f'res://tests/npc-world-boot-{room}.tscn'], ('NPC_WORLD_BOOT', 4))
 run('arena', ['res://scenes/tests/bakau-quest-test.tscn', '--quit-after', '180'])
 if args.packed:
     # Schema changes can leave stale binary resource conversions in Godot's
@@ -80,6 +82,8 @@ if args.packed:
         if exported and pack.is_file():
             run('packed-integration', ['res://tests/quest-pipeline.tscn'], ('QUEST_PIPELINE', 172), pack)
             run('packed-accessibility', ['res://tests/quest-accessibility.tscn'], ('QUEST_ACCESSIBILITY', 90), pack)
+            for room in range(1, 4):
+                run(f'packed-world-boot-{room}', [f'res://tests/npc-world-boot-{room}.tscn'], ('NPC_WORLD_BOOT', 4), pack)
             written = run('packed-restart-write', ['res://tests/quest-persistence.tscn'], ('QUEST_PERSISTENCE', 4), pack)
             if written:
                 run('packed-restart-read', ['res://tests/quest-persistence.tscn'], ('QUEST_PERSISTENCE', 7), pack)

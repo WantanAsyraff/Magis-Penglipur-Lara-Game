@@ -1,0 +1,6 @@
+[gd_scene load_steps=3 format=3]
+[ext_resource type="PackedScene" path="res://scenes/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-two/FLAC-F2-hallway-room-2.tscn" id="1"]
+[ext_resource type="Script" path="res://tests/npc-world-boot.gd" id="2"]
+[node name="WorldTemplate" instance=ExtResource("1")]
+[node name="BootRegression" type="Node" parent="."]
+script = ExtResource("2")

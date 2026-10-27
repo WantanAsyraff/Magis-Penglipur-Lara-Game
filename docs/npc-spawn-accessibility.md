@@ -31,3 +31,11 @@ DetectionComponent chooses one focused candidate across all registered NPC/board
 5. Run the accessibility suite and render the actual room. Test approach from both sides, doors/gaps and a fully blocked layout. A collision-free body alone is insufficient; a clear interaction route is required.
 
 `tests/quest-accessibility.tscn` exercises synthetic solid furniture, invalid/clear fallback, ground/region/separation, real physics wandering, movement-step bounds, overlapping focus and wall blocking. It also loads all three actual FLAC room scenes and checks their configured NPC counts and clearance. Rendered evidence shows an approachable FLAC NPC, prompt and independent quest marker beside the existing room geometry.
+
+## Fresh scene startup regression
+
+A production-only failure was found after the initial tests: `physics_frame` fires before the physics step, so a spawner started with the main scene could query TileMapLayer before its initial collision shapes were synchronized. Every position was rejected and the spawner never populated. Earlier tests loaded room scenes into an already-running test world and did not catch this timing difference.
+
+Startup now waits for the physics frame and its following process frame before checking placement. Three inherited main-scene fixtures (`tests/npc-world-boot-1.tscn` through `-3.tscn`) retain normal ZoneRoot/player initialization and exercise the first physics frames. Before the fix room one failed two of four assertions and logged both skipped NPCs. After the fix all twelve assertions pass across the three rooms on Godot 4.6.1, in the exported PCK, and on the installed Flatpak Godot 4.7.2. Bodies, sprites, collision/approach clearance and normal player creation are checked. The source/PCK quest runner now includes these fixtures.
+
+A rendered normal-player-camera capture is available at `/tmp/magis-npc-startup/npc-world-boot-1.png`. It shows the player beside a freshly spawned NPC with the quest icon and E prompt. The capture moves the player near an NPC after verifying normal startup; it does not manually spawn or reposition NPCs. Restart an already running scene to execute its corrected initialization.

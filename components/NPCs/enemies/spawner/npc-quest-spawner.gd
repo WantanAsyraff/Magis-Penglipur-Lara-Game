@@ -38,7 +38,10 @@ func _ready() -> void:
 # SPAWN LOGIC
 # -------------------------
 func _spawn_after_physics() -> void:
+	# physics_frame is emitted BEFORE the physics step. Wait for its completion
+	# so TileMapLayer's initial collision updates have reached PhysicsServer2D.
 	await get_tree().physics_frame
+	await get_tree().process_frame
 	_spawn_random_npcs()
 func _spawn_random_npcs() -> void:
 	if npc_directory.is_empty():

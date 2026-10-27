@@ -31,3 +31,5 @@ func validate() -> PackedStringArray:
 		if ids.has(ability.ability_id): errors.append("Duplicate ability ID")
 		ids[ability.ability_id] = true
 	return errors
+
+@export var enemy_tags: Array[StringName] = []

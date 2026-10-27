@@ -1,0 +1,57 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3]
+
+[ext_resource type="Script" path="res://data/npc/enemies/enemy-data.gd" id="x0"]
+[ext_resource type="PackedScene" path="res://components/NPCs/enemies/visuals/stone-crab.tscn" id="x1"]
+[ext_resource type="Script" path="res://data/npc/enemies/enemy-stats-data.gd" id="x2"]
+[ext_resource type="Script" path="res://data/npc/enemies/enemy-perception-data.gd" id="x3"]
+[ext_resource type="Resource" path="res://data/npc/enemies/ai-profiles/heavy-guardian.tres" id="x4"]
+[ext_resource type="Script" path="res://data/npc/enemies/enemy-ability-data.gd" id="x5"]
+[ext_resource type="Script" path="res://data/Resources/spell-effects/damage-effect.gd" id="x6"]
+[ext_resource type="Script" path="res://data/Resources/spell-effects/knockback-effect.gd" id="x7"]
+[ext_resource type="Resource" path="res://data/loot/bakau/drop-007.tres" id="x8"]
+[ext_resource type="Resource" path="res://data/loot/bakau/drop-008.tres" id="x9"]
+[ext_resource type="Resource" path="res://data/loot/bakau/drop-009.tres" id="x10"]
+[ext_resource type="Resource" path="res://data/loot/bakau/drop-010.tres" id="x11"]
+
+[sub_resource type="Resource" id="r0"]
+script = ExtResource("x2")
+max_health = 140
+max_mana = 0
+mana_regen = 0
+move_speed = 55
+chase_speed = 100
+defense = 5
+knockback_resistance = 0.5
+
+[sub_resource type="Resource" id="r1"]
+script = ExtResource("x3")
+detection_range = 650
+
+[sub_resource type="Resource" id="r2"]
+script = ExtResource("x6")
+amount = 18
+
+[sub_resource type="Resource" id="r3"]
+script = ExtResource("x7")
+force = 140
+
+[sub_resource type="Resource" id="r4"]
+script = ExtResource("x5")
+ability_id = "enemy_mangroove_stone_crab_strike"
+kind = 0
+max_range = 100
+cooldown = 1.3
+windup = 0.3
+effects = [SubResource("r2"), SubResource("r3")]
+
+[resource]
+script = ExtResource("x0")
+enemy_id = "enemy_mangroove_stone_crab"
+enemy_name = "Stone Crab / Ketam Batu"
+visual_scene = ExtResource("x1")
+stats = SubResource("r0")
+perception = SubResource("r1")
+ai_profile = ExtResource("x4")
+abilities = [SubResource("r4")]
+quest_enemy_id = "enemy_mangroove_stone_crab"
+loot = [ExtResource("x8"), ExtResource("x9"), ExtResource("x10"), ExtResource("x11")]

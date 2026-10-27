@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://data/items/item-data.gd" id="x0"]
+[ext_resource type="Texture2D" path="res://assets/loot/branch.png" id="x1"]
+
+
+
+[resource]
+script = ExtResource("x0")
+item_id = "drop_012"
+item_name = "Crocodile Fangs"
+item_type = 7
+item_icon = ExtResource("x1")
+description = "Long fangs that hold onto prey."
+tags = ["monster_drop"]

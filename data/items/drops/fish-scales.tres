@@ -9,6 +9,5 @@ item_id = "drop_003"
 item_name = "Fish Scales"
 item_icon = ExtResource("1_w5oh5")
 item_type = 4
-description = "Slimy but shimmering scales.
-"
+description = "Slimy but shimmering scales."
 metadata/_custom_type_script = "uid://dwparggceebhq"

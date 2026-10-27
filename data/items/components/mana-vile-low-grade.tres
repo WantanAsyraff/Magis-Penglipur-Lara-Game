@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("2_q5wi5")
 item_id = "craft_cons_001"
-item_name = "Mana Vile (Low Grade)"
+item_name = "Mana Vial (Low Grade)"
 item_icon = ExtResource("1_svftq")
 item_type = 5
 description = "A vial of low grade mana, it's mixed impurities of its environment."

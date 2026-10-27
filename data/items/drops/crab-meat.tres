@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://data/items/item-data.gd" id="x0"]
+[ext_resource type="Texture2D" path="res://assets/loot/leaf-drop.png" id="x1"]
+
+
+
+[resource]
+script = ExtResource("x0")
+item_id = "drop_010"
+item_name = "Crab Meat"
+item_type = 6
+item_icon = ExtResource("x1")
+description = "Sweet, firm meat; a delicacy."
+tags = ["monster_drop"]

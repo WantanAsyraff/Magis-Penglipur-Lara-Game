@@ -93,7 +93,7 @@ func _update_indicator() -> void:
 func _offer_text() -> String:
 	if presentation and not presentation.offer_dialogue.is_empty(): return presentation.offer_dialogue
 	return _authored_text(_instance.quest_data.dialogue_offer, dialogue_offer, "Hello! I have a task for you.")
-func _authored_text(quest_text: String, npc_text: String, default_text: String) -> String:
-	if not npc_text.is_empty() and npc_text != default_text:
-		return npc_text + ("\n\n" + quest_text if not quest_text.is_empty() and quest_text != npc_text else "")
+func _authored_text(quest_text: String, npc_text: String, _default_text: String) -> String:
+	# A shared giver can offer unrelated quests. Resource narrative must describe
+	# the selected quest; original NPC strings remain an unmodified fallback.
 	return _text(quest_text, npc_text)

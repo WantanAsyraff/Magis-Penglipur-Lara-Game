@@ -15,14 +15,15 @@ func _ready() -> void:
 		Player_Global_Data.completed_quests.clear()
 		Player_Global_Data.player_exp = 0
 		var first := QuestManager.offer_quest("quest_bakau_001", "bakau_field_researcher")
-		check(first != null and QuestManager.accept_quest(first.instance_id), "Restart fixture accepts actual quest")
+		check(first != null and QuestManager.decide_offer(QuestManager.present_offer(first.instance_id, "bakau_field_researcher"), "accept"), "Restart fixture accepts actual quest")
 		QuestManager.publish(GameplayEvent.new(GameplayEvent.Type.ENEMY_DEFEATED, "enemy_mangroove_snakehead_murrel", 8))
 		QuestManager.persistence_enabled = true
 		check(QuestManager.try_hand_off(first.instance_id, "bakau_field_researcher"), "Restart fixture commits reward and claim")
 		var second := QuestManager.offer_quest("quest_bakau_002", "bakau_field_researcher")
-		check(second != null and QuestManager.accept_quest(second.instance_id), "Restart fixture unlocks dependent quest")
+		check(second != null and QuestManager.decide_offer(QuestManager.present_offer(second.instance_id, "bakau_field_researcher"), "accept"), "Restart fixture unlocks dependent quest")
 		Inventory_Manager.pickup(QuestManager.registry.items.drop_001, 2, "restart-pickup")
 		QuestManager.select_quest(second.instance_id)
+		QuestManager.mark_conversation_read("bakau_field_researcher")
 		check(QuestManager.save_game(), "Restart fixture saves active progress and inventory")
 	else:
 		check(QuestManager.load_game(), "Fresh process loads saved state")
@@ -34,6 +35,9 @@ func _ready() -> void:
 		for instance in QuestManager._active_instances.values():
 			if instance.quest_data.quest_id == "quest_bakau_001": claimed = instance
 		check(claimed != null and claimed.reward_claimed and not QuestManager.try_hand_off(claimed.instance_id, "bakau_field_researcher"), "Fresh process rejects repeated reward claim")
+		var contact: QuestConversation = QuestManager.conversations.contacts.get("bakau_field_researcher")
+		check(contact != null and contact.entries.filter(func(e): return e.event_type == "PLAYER_ACCEPTED").size() == 2, "Fresh process restores explicit decisions for both quests")
+		check(contact != null and not contact.unread(), "Fresh process restores conversation read state")
 		DirAccess.remove_absolute(ProjectSettings.globalize_path(SAVE))
 	QuestManager.persistence_enabled = false
 	QuestManager._save_timer.stop()

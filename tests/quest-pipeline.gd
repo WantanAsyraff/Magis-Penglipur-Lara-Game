@@ -24,6 +24,8 @@ func clear_world() -> void:
 	player.position = Vector2(10000, 0)
 func reset_state() -> void:
 	QuestManager.persistence_enabled = false
+	QuestManager.conversations = QuestConversationStore.new()
+	QuestManager.live_offers.clear()
 	QuestManager._save_timer.stop()
 	QuestManager._active_instances.clear()
 	QuestManager._npc_instance_map.clear()
@@ -137,12 +139,14 @@ func run() -> void:
 	# All ten quests are accepted, progressed and handed in through the production board.
 	var board := QuestBoard.new()
 	box.add_child(board)
+	board.dialogic.use_dialogic = false
 	for i in 10:
 		discard_drops()
 		var id := "quest_bakau_%03d" % (i + 1)
 		board.open()
 		board.panel._select(id)
 		board.panel._accept()
+		QuestOfferDialog.current.decide("accept")
 		board.close()
 		var instance: QuestInstance
 		for candidate in QuestManager.get_all_active():
@@ -181,7 +185,7 @@ func run() -> void:
 		component.setup_quest()
 		var instance: QuestInstance = component._instance
 		check(instance != null and instance.quest_data.quest_id == id, "FLAC identity restored through NPC: " + id)
-		component.confirm_offer_complete()
+		QuestManager.decide_offer(QuestManager.present_offer(instance.instance_id, component.npc_id), "accept")
 		for obj in instance.quest_data.objectives:
 			if obj.type == QuestObjectiveData.ObjectiveType.DEFEAT_ENEMY:
 				for n in obj.required_amount: kill(load("res://components/NPCs/enemies/zalam-manifestations/" + ("bunga/bunga" if obj.target_id == "bunga" else "pohon/pohon") + ".tscn"))
@@ -345,7 +349,7 @@ func run() -> void:
 	child.prerequisite_quest_ids = [parent.quest_id]
 	instance = active(parent.quest_id)
 	QuestManager.publish(GameplayEvent.new(GameplayEvent.Type.OBJECT_INTERACTED, "lever"))
-	check(QuestManager.try_hand_off(instance.instance_id, "bakau_field_researcher") and QuestManager.get_instance_for_npc("bakau_field_researcher").quest_data == child and QuestManager.get_instance_for_npc("bakau_field_researcher").status == QuestInstance.Status.ACTIVE, "Configured next-quest chain executes after hand-in")
+	check(QuestManager.try_hand_off(instance.instance_id, "bakau_field_researcher") and QuestManager.get_instance_for_npc("bakau_field_researcher").quest_data == child and QuestManager.get_instance_for_npc("bakau_field_researcher").status == QuestInstance.Status.AVAILABLE, "Configured next-quest chain offers explicit decision after hand-in")
 	# Recovery also repairs an interruption between the durable claim and chain offering.
 	var child_instance := QuestManager.get_instance_for_npc("bakau_field_researcher")
 	QuestManager._active_instances.erase(child_instance.instance_id)
@@ -492,7 +496,7 @@ func run() -> void:
 	finish_dialogue_later(dialogue_component, true)
 	await quest_component.interact()
 	check(instance.status == QuestInstance.Status.AVAILABLE and Player_Global_Data.p_moveable, "Cancelled real offer dialogue leaves quest unaccepted and movement restored")
-	quest_component.confirm_offer_complete()
+	QuestManager.decide_offer(QuestManager.present_offer(instance.instance_id, quest_component.npc_id), "accept")
 	QuestManager.publish(GameplayEvent.new(GameplayEvent.Type.ENEMY_DEFEATED, "bunga", 10))
 	xp = Player_Global_Data.player_exp
 	finish_dialogue_later(dialogue_component, true)
@@ -509,7 +513,7 @@ func run() -> void:
 		if String(id).begins_with("test_"): QuestManager.registry.quests.erase(id)
 	instance = active("quest_bakau_007")
 	QuestManager.publish(GameplayEvent.new(GameplayEvent.Type.ENEMY_DEFEATED, "enemy_mangroove_dragonfly", 2))
-	var ui: QuestUI = load("res://scenes/ui/quest-ui/quest-ui.tscn").instantiate()
+	var ui: QuestCatalogue = load("res://scenes/ui/quest-ui/quest-catalogue.tscn").instantiate()
 	box.add_child(ui)
 	ui._select("quest_bakau_007")
 	check(ui.get_node("%ObjectivesLabel").text.contains("Pepatung: 2 / 4") and ui._buttons.size() == 14, "Journal shows all quests and stable individual objective progress")

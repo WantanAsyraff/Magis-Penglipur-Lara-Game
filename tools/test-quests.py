@@ -5,6 +5,7 @@ from pathlib import Path
 import re
 import subprocess
 import sys
+import shutil
 import tempfile
 
 parser = argparse.ArgumentParser()
@@ -66,15 +67,20 @@ if not args.skip_shared:
 run('integration', ['res://tests/quest-pipeline.tscn'], ('QUEST_PIPELINE', 172))
 written = run('restart-write', ['res://tests/quest-persistence.tscn'], ('QUEST_PERSISTENCE', 4))
 if written:
-    run('restart-read', ['res://tests/quest-persistence.tscn'], ('QUEST_PERSISTENCE', 5))
+    run('restart-read', ['res://tests/quest-persistence.tscn'], ('QUEST_PERSISTENCE', 7))
+run('accessibility', ['res://tests/quest-accessibility.tscn'], ('QUEST_ACCESSIBILITY', 90))
 run('arena', ['res://scenes/tests/bakau-quest-test.tscn', '--quit-after', '180'])
 if args.packed:
+    # Schema changes can leave stale binary resource conversions in Godot's
+    # generated export cache. Verify a fresh pack, not an old cached conversion.
+    shutil.rmtree(root / '.godot/exported', ignore_errors=True)
     with tempfile.TemporaryDirectory(prefix='magis-quest-pack-') as directory:
         pack = Path(directory) / 'quests.pck'
         exported = run('export', ['--editor', '--export-pack', 'Web', str(pack)])
         if exported and pack.is_file():
             run('packed-integration', ['res://tests/quest-pipeline.tscn'], ('QUEST_PIPELINE', 172), pack)
+            run('packed-accessibility', ['res://tests/quest-accessibility.tscn'], ('QUEST_ACCESSIBILITY', 90), pack)
             written = run('packed-restart-write', ['res://tests/quest-persistence.tscn'], ('QUEST_PERSISTENCE', 4), pack)
             if written:
-                run('packed-restart-read', ['res://tests/quest-persistence.tscn'], ('QUEST_PERSISTENCE', 5), pack)
+                run('packed-restart-read', ['res://tests/quest-persistence.tscn'], ('QUEST_PERSISTENCE', 7), pack)
 raise SystemExit(1 if failed else 0)

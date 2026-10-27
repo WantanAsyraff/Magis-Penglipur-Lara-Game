@@ -57,7 +57,7 @@ func offer_quest(quest_id: String, npc_id: String = "", owner: String = "") -> Q
 	var data: QuestData = registry.quests[quest_id]
 	if not _prerequisites_met(data, owner) or (not data.repeatable and is_quest_complete(quest_id, owner)): return null
 	for instance in _active_instances.values():
-		if instance.owner_id == owner and instance.quest_data.quest_id == quest_id and instance.status in [QuestInstance.Status.AVAILABLE, QuestInstance.Status.ACTIVE, QuestInstance.Status.COMPLETE]: return instance
+		if instance.owner_id == owner and instance.quest_data.quest_id == quest_id and instance.status in [QuestInstance.Status.AVAILABLE, QuestInstance.Status.ACTIVE, QuestInstance.Status.COMPLETE]: return instance if instance.assigned_npc_id == npc_id else null
 	var instance := QuestInstance.new(data, npc_id, data.despawn_after_seconds, owner)
 	_active_instances[instance.instance_id] = instance
 	_npc_instance_map[owner + "|" + npc_id] = instance.instance_id

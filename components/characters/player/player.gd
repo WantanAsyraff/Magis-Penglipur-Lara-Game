@@ -62,7 +62,7 @@ var dash_charges: int = Player_Global_Data.MAX_DASH_CHARGES:
 var dash_regen_timer := 0.0
 
 # Spells
-@export var incantation_strategy: IncantationResolver.Strategy = IncantationResolver.Strategy.CONFIRMATION
+@export var incantation_strategy: IncantationResolver.Strategy = IncantationResolver.Strategy.CHAINED
 var casting: SpellCastingComponent
 var incantations := IncantationResolver.new()
 var _remote_health: float = 100.0
@@ -108,7 +108,7 @@ func _ready() -> void:
 	add_to_group("player")
 	casting = SpellCastingComponent.new()
 	add_child(casting)
-	casting.cast_failed.connect(_fail_cast)
+	casting.cast_failed.connect(_on_cast_failed)
 	hitbox.status_applied.connect(func(key):
 		if key == "buff_dash_charges":
 			dash_charges = get_max_dash_charges())
@@ -496,17 +496,21 @@ func _execute_buff(spell: SpellData) -> void:
 func _execute_decast(spell: SpellData) -> void:
 	_cast_resolved(spell)
 
-func _fail_cast(message: String) -> void:
-	incantations.clear()
-	_clear_spell_icons()
-	spell_string.clear()
-	spell_label.text = message
+func _on_cast_failed(message: String) -> void:
+	# A failed short prefix must not discard the path to a longer combo.
+	_fail_cast(message, incantation_strategy != IncantationResolver.Strategy.CHAINED)
 
-	var label_ref := spell_label
-	get_tree().create_timer(0.5).timeout.connect(func():
-		if _in_casting_stance and label_ref:
-			label_ref.text = ""
-	, CONNECT_ONE_SHOT)
+func _fail_cast(message: String, reset_input: bool = true) -> void:
+	if reset_input:
+		incantations.clear()
+		_clear_spell_icons()
+		spell_string.clear()
+	spell_label.text = message
+	get_tree().create_timer(0.5).timeout.connect(_clear_cast_message.bind(message), CONNECT_ONE_SHOT)
+
+func _clear_cast_message(message: String) -> void:
+	if _in_casting_stance and spell_label.text == message:
+		spell_label.text = ""
 
 # -------------------------
 # FLOATING INDICATOR

@@ -80,7 +80,7 @@ var p_mood: String
 # PROGRESSION
 # -------------------------
 var player_level: int = 1
-var player_exp: float = 500:
+var player_exp: float = 9999:
 	set(value):
 		player_exp = maxf(value, 0.0)
 		progression_changed.emit()
@@ -143,7 +143,7 @@ var p_size: float = 1.0
 # -------------------------
 # HEALTH
 # -------------------------
-var p_max_health: int = 100
+var p_max_health: int = 400
 var p_curr_health: int = p_max_health:
 	set(value):
 		p_curr_health = clamp(value, 0, p_max_health)

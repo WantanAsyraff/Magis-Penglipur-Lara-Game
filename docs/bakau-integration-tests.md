@@ -14,6 +14,7 @@ Omit `--skip-shared` for a single command that includes existing Magis/Enemy che
 | Suite | Checks | Failures |
 | --- | --- | --- |
 | SPELL_REGRESSION | 71 | 0 |
+| PLAYER_COMBO_CHAINS | 22 | 0 |
 | SPELL_EQUIPMENT_UI | 38 | 0 |
 | MY_SPELLS | 148 | 0 |
 | PHYSICS_CURRICULUM | 272 | 0 |
@@ -24,11 +25,12 @@ Omit `--skip-shared` for a single command that includes existing Magis/Enemy che
 | QUEST_ACCESSIBILITY | 90 | 0 |
 | NPC_WORLD_BOOT, three fresh main scenes | 12 | 0 |
 | Packed QUEST_PIPELINE repeat | 172 | 0 |
+| Packed PLAYER_COMBO_CHAINS repeat | 22 | 0 |
 | Packed persistence writer / fresh reader repeat | 4 / 7 | 0 / 0 |
 | Packed QUEST_ACCESSIBILITY repeat | 90 | 0 |
 | Packed NPC_WORLD_BOOT, three scenes | 12 | 0 |
 
-Source assertions total **952**; packed repetitions add **285** executed assertions. Editor import, resource-reference scan, Physics laboratory startup, Enemy arena startup, Bakau arena startup and PCK export also pass (exit 0, no script/runtime errors). Existing dummy/boss and spell behavior is covered by the unchanged shared suites.
+Source assertions total **974**; packed repetitions add **307** executed assertions. Editor import, resource-reference scan, Physics laboratory startup, Enemy arena startup, Bakau arena startup and PCK export also pass (exit 0, no script/runtime errors). Existing dummy/boss and spell behavior is covered by the unchanged shared suites.
 
 The project still emits its pre-existing ObjectDB leak warning and **25 resources still in use at exit**. Existing asset UID warnings fall back to text paths. Runners retain full logs and reject SCRIPT ERROR or other ERROR output; they explicitly report the known shutdown resource diagnostic. These diagnostics are not claimed fixed by this task.
 
@@ -109,3 +111,5 @@ The implementation is verified for the configured static platform rooms and the 
 ## Corrected first-frame NPC spawning
 
 The additional fresh-world fixtures reproduce a startup failure that the already-running-world tests missed. They launch each production FLAC room as the inherited main scene with ZoneRoot and the real player bootstrap enabled. Room one failed with zero NPCs before the timing fix; all three now pass four assertions each. Source and packed quest-only runs pass 285 assertions each, including the twelve new boot assertions. All three fresh-launch fixtures also pass on the user's installed Godot 4.7.2 Flatpak (12 assertions, zero failures). The normal-player-camera screenshot `/tmp/magis-npc-startup/npc-world-boot-1.png` was rendered and inspected. See the startup regression section in the accessibility guide.
+
+The chained-casting update adds 22 production-player checks in the Physics runner and repeats them in the PCK. The same 22 checks pass on installed Godot 4.7.2. Chained input is now the default, with 9999 starting XP and 400/400 starting health; existing preparation/channel/cooldown rules remain. See magis-pipeline.md for input and queue behavior.

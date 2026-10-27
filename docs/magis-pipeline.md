@@ -20,9 +20,9 @@ The Player inspector exposes `incantation_strategy`:
 
 | Strategy | Prefix behavior |
 | --- | --- |
-| CHAINED (opt-in) | Each exact prefix casts; longer continuations remain available. Up to eight pending casts wait for the current cast. Each is validated and charged when it starts. |
+| CHAINED (default) | Each completed incantation triggers immediately, including exact prefixes. Longer continuations remain available; if the next arrow cannot extend a completed combo, it can start another equipped combo. Up to eight pending casts wait for the current cast. Each is validated and charged when it starts. |
 | IMMEDIATE | First exact match casts and consumes the sequence. |
-| CONFIRMATION (default) | O confirms the current exact match when leaving the stance. |
+| CONFIRMATION (opt-in) | O confirms the current exact match when leaving the stance. |
 | DELAYED | An ambiguous exact prefix waits 0.35 seconds; continuation replaces it. |
 
 P clears the sequence, cancels preparation/channeling and clears pending casts. O closes the stance; already accepted casts continue. Silence, stun, damage and death interrupt active preparation/channeling. UI reports queued/accepted matches before execution; completion and failure signals are available for richer presentation.
@@ -52,3 +52,7 @@ Beams use bounded terrain raycasts, configured optical interfaces and up to five
 `live_channel` is opt-in for beam/area/trap deliveries: dispatch occurs at channel start, upfront mana becomes committed, per-second mana is charged for elapsed time, and cancellation/completion deletes the owned delivery. Ordinary channels retain their prior dispatch-on-completion policy. Effects already delivered never produce a refunded free channel cast. Persistent casts are limited to twelve active nodes per caster. Execution budgets remain per context, so very dense repeated areas may exhaust them before normal expiry.
 
 Echo records only compatible successful simple payloads, uses a fresh 64-effect context, scales damage/healing to half and excludes recursive replay/spawn/trigger payloads. Paid casts still follow learning, equipment, mana, cooldown and authority rules. This does not complete multiplayer client requests or replication; the V2 limitations remain.
+
+Chained input does not wait for a second O press. Existing SpellData preparation, channel, recovery, cooldown, mana and authority rules still apply. Up to eight completed combos queue during an active cast; queued spells validate and pay mana when they start. A rejected prefix does not erase the resolver's continuation, so a cooling-down or unaffordable short spell cannot prevent an eligible longer spell. Invalid partial input still clears normally. A valid longer continuation takes priority over restarting from the root when both could match.
+
+`tests/player-combo-chains.tscn` runs 22 checks through the production Player: automatic completion, prefix continuations, independent follow-ups, queue order/payment, cooldown/mana rejection, equipment revalidation, cancellation/refund, optional confirmation and the 9999 XP / 400 HP defaults. The Physics runner includes it; packed quest verification repeats it from the exported game.

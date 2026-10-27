@@ -14,7 +14,7 @@ Scientific principles describe the inspiration. Creature-scale force, healing, f
 - Delivery: Projectile.
 - Effects: `Legacy damage 17 + knockback 320`.
 - Mana: 12 upfront; 0 / channel second. Preparation: 0.1 s; channel: 0 s; cooldown: 1.0 s.
-- Incantation: up → down. Confirmation is the default; intentional legacy prefix chains are opt-in.
+- Incantation: up → down. Chained casting is the default; completed incantations trigger automatically and support prefix continuations.
 - Spatial / lifecycle bounds: range 800.0 px; area radius 0.0 px; persistent / construct lifetime 4.0 s; tick 0.5 s.
 - Verification: production cast passed in source and exported PCK. Reproducible manual case: select Force in the Physics lab, cast with F6, and verify the gameplay outcome above. Graphical appearance and game balance remain unverified by human playtesting.
 
@@ -28,7 +28,7 @@ Scientific principles describe the inspiration. Creature-scale force, healing, f
 - Delivery: Projectile.
 - Effects: `Legacy damage 8 + knockback 700 + slow 0.3 / 5 s`.
 - Mana: 15 upfront; 0 / channel second. Preparation: 0.2 s; channel: 0 s; cooldown: 1.0 s.
-- Incantation: down → left → down. Confirmation is the default; intentional legacy prefix chains are opt-in.
+- Incantation: down → left → down. Chained casting is the default; completed incantations trigger automatically and support prefix continuations.
 - Spatial / lifecycle bounds: range 950.0 px; area radius 0.0 px; persistent / construct lifetime 4.0 s; tick 0.5 s.
 - Verification: production cast passed in source and exported PCK. Reproducible manual case: select Strike in the Physics lab, cast with F6, and verify the gameplay outcome above. Graphical appearance and game balance remain unverified by human playtesting.
 
@@ -42,7 +42,7 @@ Scientific principles describe the inspiration. Creature-scale force, healing, f
 - Delivery: Projectile.
 - Effects: `[["conditional", {"required_status": "brittle", "children": [["damage", {"amount": 22}], ["apply-status", {"status": "stun", "duration": 0.6, "magnitude": 0}]], "consume": true, "capability": "structural"}], ["damage", {"amount": 28}], ["knockback", {"force": 480}]]`.
 - Mana: 35 upfront; 0 / channel second. Preparation: 0.25 s; channel: 0 s; cooldown: 1.0 s.
-- Incantation: up → down → up → down → up. Confirmation is the default; intentional legacy prefix chains are opt-in.
+- Incantation: up → down → up → down → up. Chained casting is the default; completed incantations trigger automatically and support prefix continuations.
 - Spatial / lifecycle bounds: range 1200.0 px; area radius 0.0 px; persistent / construct lifetime 4.0 s; tick 0.5 s.
 - Verification: production cast passed in source and exported PCK. Reproducible manual case: select Crash in the Physics lab, cast with F6, and verify the gameplay outcome above. Graphical appearance and game balance remain unverified by human playtesting.
 
@@ -56,7 +56,7 @@ Scientific principles describe the inspiration. Creature-scale force, healing, f
 - Delivery: Projectile.
 - Effects: `[["damage", {"amount": 10}], ["apply-status", {"status": "resonance", "duration": 5, "magnitude": 1, "stacking": 2, "max_stacks": 3}], ["apply-status", {"status": "dot", "duration": 3, "magnitude": 2}]]`.
 - Mana: 25 upfront; 0 / channel second. Preparation: 0.1 s; channel: 0 s; cooldown: 1.0 s.
-- Incantation: down → left → down → left. Confirmation is the default; intentional legacy prefix chains are opt-in.
+- Incantation: down → left → down → left. Chained casting is the default; completed incantations trigger automatically and support prefix continuations.
 - Spatial / lifecycle bounds: range 900.0 px; area radius 0.0 px; persistent / construct lifetime 4.0 s; tick 0.5 s.
 - Verification: production cast passed in source and exported PCK. Reproducible manual case: select Resonate in the Physics lab, cast with F6, and verify the gameplay outcome above. Graphical appearance and game balance remain unverified by human playtesting.
 
@@ -70,7 +70,7 @@ Scientific principles describe the inspiration. Creature-scale force, healing, f
 - Delivery: Area burst.
 - Effects: `[["damage", {"amount": 12}], ["conditional", {"required_status": "resonance", "children": [["damage", {"amount": 25}], ["knockback", {"force": 250}]], "consume": true}]]`.
 - Mana: 22 upfront; 0 / channel second. Preparation: 0.1 s; channel: 0 s; cooldown: 1.0 s.
-- Incantation: down → left → down → left → down. Confirmation is the default; intentional legacy prefix chains are opt-in.
+- Incantation: down → left → down → left → down. Chained casting is the default; completed incantations trigger automatically and support prefix continuations.
 - Spatial / lifecycle bounds: range 500.0 px; area radius 180 px; persistent / construct lifetime 4.0 s; tick 0.5 s.
 - Verification: production cast passed in source and exported PCK. Reproducible manual case: select Shatterwave in the Physics lab, cast with F6, and verify the gameplay outcome above. Graphical appearance and game balance remain unverified by human playtesting.
 
@@ -84,7 +84,7 @@ Scientific principles describe the inspiration. Creature-scale force, healing, f
 - Delivery: Persistent area.
 - Effects: `[["damage", {"amount": 8}], ["vector", {"mode": 1, "strength": 70}], ["conditional", {"required_status": "resonance", "children": [["damage", {"amount": 7}]]}]]`.
 - Mana: 40 upfront; 0 / channel second. Preparation: 0.1 s; channel: 0 s; cooldown: 1.0 s.
-- Incantation: down → left → down → right → down → left. Confirmation is the default; intentional legacy prefix chains are opt-in.
+- Incantation: down → left → down → right → down → left. Chained casting is the default; completed incantations trigger automatically and support prefix continuations.
 - Spatial / lifecycle bounds: range 500.0 px; area radius 130 px; persistent / construct lifetime 3 s; tick 0.5 s.
 - Verification: production cast passed in source and exported PCK. Reproducible manual case: select Collapse in the Physics lab, cast with F6, and verify the gameplay outcome above. Graphical appearance and game balance remain unverified by human playtesting.
 
@@ -98,7 +98,7 @@ Scientific principles describe the inspiration. Creature-scale force, healing, f
 - Delivery: Projectile.
 - Effects: `[["damage", {"amount": 85}], ["knockback", {"force": 750}], ["apply-status", {"status": "slow", "duration": 2, "magnitude": 0.25}]]`.
 - Mana: 55 upfront; 0 / channel second. Preparation: 0.35 s; channel: 0 s; cooldown: 6 s.
-- Incantation: up → right → down → left → up → right → down. Confirmation is the default; intentional legacy prefix chains are opt-in.
+- Incantation: up → right → down → left → up → right → down. Chained casting is the default; completed incantations trigger automatically and support prefix continuations.
 - Spatial / lifecycle bounds: range 2000.0 px; area radius 200.0 px; persistent / construct lifetime 4.0 s; tick 0.5 s.
 - Verification: production cast passed in source and exported PCK. Reproducible manual case: select Terminal in the Physics lab, cast with F6, and verify the gameplay outcome above. Graphical appearance and game balance remain unverified by human playtesting.
 
@@ -112,7 +112,7 @@ Scientific principles describe the inspiration. Creature-scale force, healing, f
 - Delivery: Area burst.
 - Effects: `[["projectile-field", {"mode": 0}]]`.
 - Mana: 20 upfront; 0 / channel second. Preparation: 0.2 s; channel: 0 s; cooldown: 1.5 s.
-- Incantation: right → right → up → up → down → right. Confirmation is the default; intentional legacy prefix chains are opt-in.
+- Incantation: right → right → up → up → down → right. Chained casting is the default; completed incantations trigger automatically and support prefix continuations.
 - Spatial / lifecycle bounds: range 500.0 px; area radius 150 px; persistent / construct lifetime 4.0 s; tick 0.5 s.
 - Verification: production cast passed in source and exported PCK. Reproducible manual case: select Vector Reversal in the Physics lab, cast with F6, and verify the gameplay outcome above. Graphical appearance and game balance remain unverified by human playtesting.
 
@@ -126,7 +126,7 @@ Scientific principles describe the inspiration. Creature-scale force, healing, f
 - Delivery: Self.
 - Effects: `[["vector", {"mode": 0, "strength": 650}]]`.
 - Mana: 20 upfront; 0 / channel second. Preparation: 0.2 s; channel: 0 s; cooldown: 1.5 s.
-- Incantation: right → right → up → up → left → up. Confirmation is the default; intentional legacy prefix chains are opt-in.
+- Incantation: right → right → up → up → left → up. Chained casting is the default; completed incantations trigger automatically and support prefix continuations.
 - Spatial / lifecycle bounds: range 500.0 px; area radius 0.0 px; persistent / construct lifetime 4.0 s; tick 0.5 s.
 - Verification: production cast passed in source and exported PCK. Reproducible manual case: select Inertia Vault in the Physics lab, cast with F6, and verify the gameplay outcome above. Graphical appearance and game balance remain unverified by human playtesting.
 
@@ -140,7 +140,7 @@ Scientific principles describe the inspiration. Creature-scale force, healing, f
 - Delivery: Self.
 - Effects: `[["modify-stat", {"stat": "defense", "amount": 8, "duration": 4}], ["trigger", {"hits": 1, "duration": 4, "children": [["modify-stat", {"stat": "damage", "amount": 12, "duration": 3}], ["vector", {"mode": 0, "strength": 220}]]}]]`.
 - Mana: 20 upfront; 0 / channel second. Preparation: 0.2 s; channel: 0 s; cooldown: 1.5 s.
-- Incantation: right → right → up → up → left → down. Confirmation is the default; intentional legacy prefix chains are opt-in.
+- Incantation: right → right → up → up → left → down. Chained casting is the default; completed incantations trigger automatically and support prefix continuations.
 - Spatial / lifecycle bounds: range 500.0 px; area radius 0.0 px; persistent / construct lifetime 4.0 s; tick 0.5 s.
 - Verification: production cast passed in source and exported PCK. Reproducible manual case: select Impact Prism in the Physics lab, cast with F6, and verify the gameplay outcome above. Graphical appearance and game balance remain unverified by human playtesting.
 
@@ -154,7 +154,7 @@ Scientific principles describe the inspiration. Creature-scale force, healing, f
 - Delivery: Direct target.
 - Effects: `[["vector", {"mode": 3, "strength": 0.8}], ["apply-status", {"status": "slow", "duration": 3, "magnitude": 0.75}]]`.
 - Mana: 20 upfront; 0 / channel second. Preparation: 0.2 s; channel: 0 s; cooldown: 1.5 s.
-- Incantation: right → right → up → up → left → left. Confirmation is the default; intentional legacy prefix chains are opt-in.
+- Incantation: right → right → up → up → left → left. Chained casting is the default; completed incantations trigger automatically and support prefix continuations.
 - Spatial / lifecycle bounds: range 500.0 px; area radius 0.0 px; persistent / construct lifetime 4.0 s; tick 0.5 s.
 - Verification: production cast passed in source and exported PCK. Reproducible manual case: select Momentum Anchor in the Physics lab, cast with F6, and verify the gameplay outcome above. Graphical appearance and game balance remain unverified by human playtesting.
 
@@ -168,7 +168,7 @@ Scientific principles describe the inspiration. Creature-scale force, healing, f
 - Delivery: Persistent area.
 - Effects: `[["vector", {"mode": 2, "strength": 90}], ["apply-status", {"status": "slow", "duration": 1, "magnitude": 0.2}]]`.
 - Mana: 20 upfront; 0 / channel second. Preparation: 0.2 s; channel: 0 s; cooldown: 1.5 s.
-- Incantation: right → right → up → up → left → right. Confirmation is the default; intentional legacy prefix chains are opt-in.
+- Incantation: right → right → up → up → left → right. Chained casting is the default; completed incantations trigger automatically and support prefix continuations.
 - Spatial / lifecycle bounds: range 500.0 px; area radius 150.0 px; persistent / construct lifetime 4.0 s; tick 0.5 s.
 - Verification: production cast passed in source and exported PCK. Reproducible manual case: select Angular Vortex in the Physics lab, cast with F6, and verify the gameplay outcome above. Graphical appearance and game balance remain unverified by human playtesting.
 
@@ -182,7 +182,7 @@ Scientific principles describe the inspiration. Creature-scale force, healing, f
 - Delivery: Direct target.
 - Effects: `[["apply-status", {"status": "slow", "duration": 2, "magnitude": 0.85}], ["apply-status", {"status": "silence", "duration": 1, "magnitude": 0}]]`.
 - Mana: 20 upfront; 0 / channel second. Preparation: 0.2 s; channel: 0 s; cooldown: 1.5 s.
-- Incantation: right → right → up → up → right → up. Confirmation is the default; intentional legacy prefix chains are opt-in.
+- Incantation: right → right → up → up → right → up. Chained casting is the default; completed incantations trigger automatically and support prefix continuations.
 - Spatial / lifecycle bounds: range 500.0 px; area radius 0.0 px; persistent / construct lifetime 4.0 s; tick 0.5 s.
 - Verification: production cast passed in source and exported PCK. Reproducible manual case: select Torque Lock in the Physics lab, cast with F6, and verify the gameplay outcome above. Graphical appearance and game balance remain unverified by human playtesting.
 
@@ -196,7 +196,7 @@ Scientific principles describe the inspiration. Creature-scale force, healing, f
 - Delivery: Summon / construct.
 - Effects: `Expiring physical construct; interception / reflection / solid geometry follow resource configuration`.
 - Mana: 20 upfront; 0 / channel second. Preparation: 0.2 s; channel: 0 s; cooldown: 1.5 s.
-- Incantation: right → right → up → up → right → down. Confirmation is the default; intentional legacy prefix chains are opt-in.
+- Incantation: right → right → up → up → right → down. Chained casting is the default; completed incantations trigger automatically and support prefix continuations.
 - Spatial / lifecycle bounds: range 500.0 px; area radius 65 px; persistent / construct lifetime 4.0 s; tick 0.5 s.
 - Verification: production cast passed in source and exported PCK. Reproducible manual case: select Gyroscopic Shield in the Physics lab, cast with F6, and verify the gameplay outcome above. Graphical appearance and game balance remain unverified by human playtesting.
 
@@ -210,7 +210,7 @@ Scientific principles describe the inspiration. Creature-scale force, healing, f
 - Delivery: Projectile.
 - Effects: `[["damage", {"amount": 15}], ["apply-status", {"status": "slow", "duration": 3, "magnitude": 0.4}], ["apply-status", {"status": "cooled", "duration": 4, "magnitude": 0}]]`.
 - Mana: 12 upfront; 0 / channel second. Preparation: 0.2 s; channel: 0 s; cooldown: 1.5 s.
-- Incantation: up → up → up → up. Confirmation is the default; intentional legacy prefix chains are opt-in.
+- Incantation: up → up → up → up. Chained casting is the default; completed incantations trigger automatically and support prefix continuations.
 - Spatial / lifecycle bounds: range 2000.0 px; area radius 0.0 px; persistent / construct lifetime 4.0 s; tick 0.5 s.
 - Verification: production cast passed in source and exported PCK. Reproducible manual case: select Kinetic Chill in the Physics lab, cast with F6, and verify the gameplay outcome above. Graphical appearance and game balance remain unverified by human playtesting.
 
@@ -224,7 +224,7 @@ Scientific principles describe the inspiration. Creature-scale force, healing, f
 - Delivery: Persistent area.
 - Effects: `[["damage", {"amount": 5}], ["conditional", {"required_status": "cooled", "children": [["damage", {"amount": 12}], ["remove-status", {"status": "slow", "remove_debuffs": false}]], "consume": true}], ["apply-status", {"status": "heated", "duration": 2, "magnitude": 0}]]`.
 - Mana: 20 upfront; 0 / channel second. Preparation: 0.2 s; channel: 0 s; cooldown: 1.5 s.
-- Incantation: right → right → up → up → right → right. Confirmation is the default; intentional legacy prefix chains are opt-in.
+- Incantation: right → right → up → up → right → right. Chained casting is the default; completed incantations trigger automatically and support prefix continuations.
 - Spatial / lifecycle bounds: range 500.0 px; area radius 150.0 px; persistent / construct lifetime 5 s; tick 1 s.
 - Verification: production cast passed in source and exported PCK. Reproducible manual case: select Thermal Bloom in the Physics lab, cast with F6, and verify the gameplay outcome above. Graphical appearance and game balance remain unverified by human playtesting.
 
@@ -238,7 +238,7 @@ Scientific principles describe the inspiration. Creature-scale force, healing, f
 - Delivery: Direct target.
 - Effects: `[["apply-status", {"status": "dot", "duration": 5, "magnitude": 3}], ["apply-status", {"status": "mana_drain", "duration": 4, "magnitude": 2}]]`.
 - Mana: 20 upfront; 0 / channel second. Preparation: 0.2 s; channel: 0 s; cooldown: 1.5 s.
-- Incantation: right → right → up → down → up → up. Confirmation is the default; intentional legacy prefix chains are opt-in.
+- Incantation: right → right → up → down → up → up. Chained casting is the default; completed incantations trigger automatically and support prefix continuations.
 - Spatial / lifecycle bounds: range 500.0 px; area radius 0.0 px; persistent / construct lifetime 4.0 s; tick 0.5 s.
 - Verification: production cast passed in source and exported PCK. Reproducible manual case: select Entropy Leak in the Physics lab, cast with F6, and verify the gameplay outcome above. Graphical appearance and game balance remain unverified by human playtesting.
 
@@ -252,7 +252,7 @@ Scientific principles describe the inspiration. Creature-scale force, healing, f
 - Delivery: Self.
 - Effects: `[["modify-stat", {"stat": "mana_regen", "amount": 4, "duration": 5}], ["modify-stat", {"stat": "cast_speed", "amount": 0.25, "duration": 5}]]`.
 - Mana: 20 upfront; 0 / channel second. Preparation: 0.2 s; channel: 0 s; cooldown: 1.5 s.
-- Incantation: right → right → up → down → up → down. Confirmation is the default; intentional legacy prefix chains are opt-in.
+- Incantation: right → right → up → down → up → down. Chained casting is the default; completed incantations trigger automatically and support prefix continuations.
 - Spatial / lifecycle bounds: range 500.0 px; area radius 0.0 px; persistent / construct lifetime 4.0 s; tick 0.5 s.
 - Verification: production cast passed in source and exported PCK. Reproducible manual case: select Heat Engine in the Physics lab, cast with F6, and verify the gameplay outcome above. Graphical appearance and game balance remain unverified by human playtesting.
 
@@ -266,7 +266,7 @@ Scientific principles describe the inspiration. Creature-scale force, healing, f
 - Delivery: Projectile.
 - Effects: `[["damage", {"amount": 14}], ["conditional", {"required_status": "charged", "children": [["damage", {"amount": 6}]]}], ["chain", {"hops": 3, "amount": 10, "preferred_status": "charged"}]]`.
 - Mana: 20 upfront; 0 / channel second. Preparation: 0.2 s; channel: 0 s; cooldown: 1.5 s.
-- Incantation: right → right → up → down → up → left. Confirmation is the default; intentional legacy prefix chains are opt-in.
+- Incantation: right → right → up → down → up → left. Chained casting is the default; completed incantations trigger automatically and support prefix continuations.
 - Spatial / lifecycle bounds: range 950.0 px; area radius 0.0 px; persistent / construct lifetime 4.0 s; tick 0.5 s.
 - Verification: production cast passed in source and exported PCK. Reproducible manual case: select Static Arc in the Physics lab, cast with F6, and verify the gameplay outcome above. Graphical appearance and game balance remain unverified by human playtesting.
 
@@ -280,7 +280,7 @@ Scientific principles describe the inspiration. Creature-scale force, healing, f
 - Delivery: Summon / construct.
 - Effects: `Expiring physical construct; interception / reflection / solid geometry follow resource configuration`.
 - Mana: 20 upfront; 0 / channel second. Preparation: 0.2 s; channel: 0 s; cooldown: 1.5 s.
-- Incantation: right → right → up → down → up → right. Confirmation is the default; intentional legacy prefix chains are opt-in.
+- Incantation: right → right → up → down → up → right. Chained casting is the default; completed incantations trigger automatically and support prefix continuations.
 - Spatial / lifecycle bounds: range 500.0 px; area radius 110 px; persistent / construct lifetime 4.0 s; tick 0.5 s.
 - Verification: production cast passed in source and exported PCK. Reproducible manual case: select Faraday Cage in the Physics lab, cast with F6, and verify the gameplay outcome above. Graphical appearance and game balance remain unverified by human playtesting.
 
@@ -294,7 +294,7 @@ Scientific principles describe the inspiration. Creature-scale force, healing, f
 - Delivery: Direct target.
 - Effects: `[["apply-status", {"status": "charged", "duration": 5, "magnitude": 0}], ["vector", {"mode": 1, "strength": 260, "capability": "magnetic"}]]`.
 - Mana: 20 upfront; 0 / channel second. Preparation: 0.2 s; channel: 0 s; cooldown: 1.5 s.
-- Incantation: right → right → up → down → down → up. Confirmation is the default; intentional legacy prefix chains are opt-in.
+- Incantation: right → right → up → down → down → up. Chained casting is the default; completed incantations trigger automatically and support prefix continuations.
 - Spatial / lifecycle bounds: range 500.0 px; area radius 0.0 px; persistent / construct lifetime 4.0 s; tick 0.5 s.
 - Verification: production cast passed in source and exported PCK. Reproducible manual case: select Magnetic Tether in the Physics lab, cast with F6, and verify the gameplay outcome above. Graphical appearance and game balance remain unverified by human playtesting.
 
@@ -308,7 +308,7 @@ Scientific principles describe the inspiration. Creature-scale force, healing, f
 - Delivery: Trap.
 - Effects: `[["damage", {"amount": 12}], ["apply-status", {"status": "charged", "duration": 5, "magnitude": 0}], ["apply-status", {"status": "stun", "duration": 0.7, "magnitude": 0}]]`.
 - Mana: 20 upfront; 0 / channel second. Preparation: 0.2 s; channel: 0 s; cooldown: 1.5 s.
-- Incantation: right → right → up → down → down → down. Confirmation is the default; intentional legacy prefix chains are opt-in.
+- Incantation: right → right → up → down → down → down. Chained casting is the default; completed incantations trigger automatically and support prefix continuations.
 - Spatial / lifecycle bounds: range 500.0 px; area radius 150.0 px; persistent / construct lifetime 8 s; tick 0.5 s.
 - Verification: production cast passed in source and exported PCK. Reproducible manual case: select Induction Grid in the Physics lab, cast with F6, and verify the gameplay outcome above. Graphical appearance and game balance remain unverified by human playtesting.
 
@@ -322,7 +322,7 @@ Scientific principles describe the inspiration. Creature-scale force, healing, f
 - Delivery: Beam.
 - Effects: `[["damage", {"amount": 12}]]`.
 - Mana: 25 upfront; 0 / channel second. Preparation: 0.30000000000000004 s; channel: 0 s; cooldown: 2.0 s.
-- Incantation: right → right → up → down → down → left. Confirmation is the default; intentional legacy prefix chains are opt-in.
+- Incantation: right → right → up → down → down → left. Chained casting is the default; completed incantations trigger automatically and support prefix continuations.
 - Spatial / lifecycle bounds: range 500.0 px; area radius 0.0 px; persistent / construct lifetime 1 s; tick 0.5 s.
 - Verification: production cast passed in source and exported PCK. Reproducible manual case: select Refraction Beam in the Physics lab, cast with F6, and verify the gameplay outcome above. Graphical appearance and game balance remain unverified by human playtesting.
 
@@ -336,7 +336,7 @@ Scientific principles describe the inspiration. Creature-scale force, healing, f
 - Delivery: Summon / construct.
 - Effects: `Expiring physical construct; interception / reflection / solid geometry follow resource configuration`.
 - Mana: 25 upfront; 0 / channel second. Preparation: 0.30000000000000004 s; channel: 0 s; cooldown: 2.0 s.
-- Incantation: right → right → up → down → down → right. Confirmation is the default; intentional legacy prefix chains are opt-in.
+- Incantation: right → right → up → down → down → right. Chained casting is the default; completed incantations trigger automatically and support prefix continuations.
 - Spatial / lifecycle bounds: range 500.0 px; area radius 65 px; persistent / construct lifetime 4.0 s; tick 0.5 s.
 - Verification: production cast passed in source and exported PCK. Reproducible manual case: select Total Internal Reflection in the Physics lab, cast with F6, and verify the gameplay outcome above. Graphical appearance and game balance remain unverified by human playtesting.
 
@@ -350,7 +350,7 @@ Scientific principles describe the inspiration. Creature-scale force, healing, f
 - Delivery: Beam.
 - Effects: `[["damage", {"amount": 7}]]`.
 - Mana: 25 upfront; 0 / channel second. Preparation: 0.30000000000000004 s; channel: 0 s; cooldown: 2.0 s.
-- Incantation: right → right → up → down → left → up. Confirmation is the default; intentional legacy prefix chains are opt-in.
+- Incantation: right → right → up → down → left → up. Chained casting is the default; completed incantations trigger automatically and support prefix continuations.
 - Spatial / lifecycle bounds: range 500.0 px; area radius 0.0 px; persistent / construct lifetime 1 s; tick 0.5 s.
 - Verification: production cast passed in source and exported PCK. Reproducible manual case: select Prism Split in the Physics lab, cast with F6, and verify the gameplay outcome above. Graphical appearance and game balance remain unverified by human playtesting.
 
@@ -364,7 +364,7 @@ Scientific principles describe the inspiration. Creature-scale force, healing, f
 - Delivery: Trap.
 - Effects: `[["apply-status", {"status": "stun", "duration": 1.5, "magnitude": 0}], ["apply-status", {"status": "slow", "duration": 3, "magnitude": 0.7}]]`.
 - Mana: 25 upfront; 0 / channel second. Preparation: 0.30000000000000004 s; channel: 0 s; cooldown: 2.0 s.
-- Incantation: right → right → up → down → left → down. Confirmation is the default; intentional legacy prefix chains are opt-in.
+- Incantation: right → right → up → down → left → down. Chained casting is the default; completed incantations trigger automatically and support prefix continuations.
 - Spatial / lifecycle bounds: range 500.0 px; area radius 150.0 px; persistent / construct lifetime 8 s; tick 0.5 s.
 - Verification: production cast passed in source and exported PCK. Reproducible manual case: select Optical Trap in the Physics lab, cast with F6, and verify the gameplay outcome above. Graphical appearance and game balance remain unverified by human playtesting.
 
@@ -378,7 +378,7 @@ Scientific principles describe the inspiration. Creature-scale force, healing, f
 - Delivery: Beam.
 - Effects: `[["vector", {"mode": 0, "strength": 110}], ["knockback", {"force": 80}]]`.
 - Mana: 20 upfront; 5 / channel second. Preparation: 0.2 s; channel: 2 s; cooldown: 1.5 s.
-- Incantation: right → right → up → down → left → left. Confirmation is the default; intentional legacy prefix chains are opt-in.
+- Incantation: right → right → up → down → left → left. Chained casting is the default; completed incantations trigger automatically and support prefix continuations.
 - Spatial / lifecycle bounds: range 500.0 px; area radius 0.0 px; persistent / construct lifetime 2.5 s; tick 0.2 s.
 - Verification: production cast passed in source and exported PCK. Reproducible manual case: select Pressure Jet in the Physics lab, cast with F6, and verify the gameplay outcome above. Graphical appearance and game balance remain unverified by human playtesting.
 
@@ -392,7 +392,7 @@ Scientific principles describe the inspiration. Creature-scale force, healing, f
 - Delivery: Persistent area.
 - Effects: `[["vector", {"mode": 4, "strength": 160}]]`.
 - Mana: 20 upfront; 0 / channel second. Preparation: 0.2 s; channel: 0 s; cooldown: 1.5 s.
-- Incantation: right → right → up → down → left → right. Confirmation is the default; intentional legacy prefix chains are opt-in.
+- Incantation: right → right → up → down → left → right. Chained casting is the default; completed incantations trigger automatically and support prefix continuations.
 - Spatial / lifecycle bounds: range 500.0 px; area radius 150.0 px; persistent / construct lifetime 4.0 s; tick 0.2 s.
 - Verification: production cast passed in source and exported PCK. Reproducible manual case: select Buoyancy Field in the Physics lab, cast with F6, and verify the gameplay outcome above. Graphical appearance and game balance remain unverified by human playtesting.
 
@@ -406,7 +406,7 @@ Scientific principles describe the inspiration. Creature-scale force, healing, f
 - Delivery: Persistent area.
 - Effects: `[["vector", {"mode": 1, "strength": 110}]]`.
 - Mana: 20 upfront; 0 / channel second. Preparation: 0.2 s; channel: 0 s; cooldown: 1.5 s.
-- Incantation: right → right → up → down → right → up. Confirmation is the default; intentional legacy prefix chains are opt-in.
+- Incantation: right → right → up → down → right → up. Chained casting is the default; completed incantations trigger automatically and support prefix continuations.
 - Spatial / lifecycle bounds: range 500.0 px; area radius 150.0 px; persistent / construct lifetime 4.0 s; tick 0.25 s.
 - Verification: production cast passed in source and exported PCK. Reproducible manual case: select Vortex Well in the Physics lab, cast with F6, and verify the gameplay outcome above. Graphical appearance and game balance remain unverified by human playtesting.
 
@@ -420,7 +420,7 @@ Scientific principles describe the inspiration. Creature-scale force, healing, f
 - Delivery: Summon / construct.
 - Effects: `Expiring physical construct; interception / reflection / solid geometry follow resource configuration`.
 - Mana: 25 upfront; 0 / channel second. Preparation: 0.30000000000000004 s; channel: 0 s; cooldown: 2.0 s.
-- Incantation: right → right → up → down → right → down. Confirmation is the default; intentional legacy prefix chains are opt-in.
+- Incantation: right → right → up → down → right → down. Chained casting is the default; completed incantations trigger automatically and support prefix continuations.
 - Spatial / lifecycle bounds: range 500.0 px; area radius 60 px; persistent / construct lifetime 4.0 s; tick 0.5 s.
 - Verification: production cast passed in source and exported PCK. Reproducible manual case: select Elastic Barrier in the Physics lab, cast with F6, and verify the gameplay outcome above. Graphical appearance and game balance remain unverified by human playtesting.
 
@@ -434,7 +434,7 @@ Scientific principles describe the inspiration. Creature-scale force, healing, f
 - Delivery: Direct target.
 - Effects: `[["apply-status", {"status": "brittle", "duration": 5, "magnitude": 0}]]`.
 - Mana: 25 upfront; 0 / channel second. Preparation: 0.30000000000000004 s; channel: 0 s; cooldown: 2.0 s.
-- Incantation: right → right → up → down → right → left. Confirmation is the default; intentional legacy prefix chains are opt-in.
+- Incantation: right → right → up → down → right → left. Chained casting is the default; completed incantations trigger automatically and support prefix continuations.
 - Spatial / lifecycle bounds: range 500.0 px; area radius 0.0 px; persistent / construct lifetime 4.0 s; tick 0.5 s.
 - Verification: production cast passed in source and exported PCK. Reproducible manual case: select Brittle Fracture in the Physics lab, cast with F6, and verify the gameplay outcome above. Graphical appearance and game balance remain unverified by human playtesting.
 
@@ -448,7 +448,7 @@ Scientific principles describe the inspiration. Creature-scale force, healing, f
 - Delivery: Summon / construct.
 - Effects: `Expiring physical construct; interception / reflection / solid geometry follow resource configuration`.
 - Mana: 25 upfront; 0 / channel second. Preparation: 0.30000000000000004 s; channel: 0 s; cooldown: 2.0 s.
-- Incantation: right → right → up → down → right → right. Confirmation is the default; intentional legacy prefix chains are opt-in.
+- Incantation: right → right → up → down → right → right. Chained casting is the default; completed incantations trigger automatically and support prefix continuations.
 - Spatial / lifecycle bounds: range 500.0 px; area radius 0 px; persistent / construct lifetime 8 s; tick 0.5 s.
 - Verification: production cast passed in source and exported PCK. Reproducible manual case: select Structural Fabrication in the Physics lab, cast with F6, and verify the gameplay outcome above. Graphical appearance and game balance remain unverified by human playtesting.
 
@@ -462,7 +462,7 @@ Scientific principles describe the inspiration. Creature-scale force, healing, f
 - Delivery: Direct target.
 - Effects: `[["trigger", {"hits": 3, "duration": 6, "children": [["conditional", {"required_status": "resonance", "children": [["damage", {"amount": 35}], ["apply-status", {"status": "stun", "duration": 1, "magnitude": 0}]], "consume": true, "capability": "structural"}]]}]]`.
 - Mana: 25 upfront; 0 / channel second. Preparation: 0.30000000000000004 s; channel: 0 s; cooldown: 2.0 s.
-- Incantation: right → right → up → left → up → up. Confirmation is the default; intentional legacy prefix chains are opt-in.
+- Incantation: right → right → up → left → up → up. Chained casting is the default; completed incantations trigger automatically and support prefix continuations.
 - Spatial / lifecycle bounds: range 500.0 px; area radius 0.0 px; persistent / construct lifetime 4.0 s; tick 0.5 s.
 - Verification: production cast passed in source and exported PCK. Reproducible manual case: select Resonance Threshold in the Physics lab, cast with F6, and verify the gameplay outcome above. Graphical appearance and game balance remain unverified by human playtesting.
 
@@ -476,7 +476,7 @@ Scientific principles describe the inspiration. Creature-scale force, healing, f
 - Delivery: Area burst.
 - Effects: `[["knockback", {"force": 350}], ["interrupt", {}], ["apply-status", {"status": "silence", "duration": 0.5, "magnitude": 0}]]`.
 - Mana: 25 upfront; 0 / channel second. Preparation: 0.30000000000000004 s; channel: 0 s; cooldown: 2.0 s.
-- Incantation: right → right → up → left → up → down. Confirmation is the default; intentional legacy prefix chains are opt-in.
+- Incantation: right → right → up → left → up → down. Chained casting is the default; completed incantations trigger automatically and support prefix continuations.
 - Spatial / lifecycle bounds: range 500.0 px; area radius 150.0 px; persistent / construct lifetime 4.0 s; tick 0.5 s.
 - Verification: production cast passed in source and exported PCK. Reproducible manual case: select Sonic Pulse in the Physics lab, cast with F6, and verify the gameplay outcome above. Graphical appearance and game balance remain unverified by human playtesting.
 
@@ -490,7 +490,7 @@ Scientific principles describe the inspiration. Creature-scale force, healing, f
 - Delivery: Self.
 - Effects: `[["heal", {"amount": 22}], ["remove-status", {"status": "resonance", "remove_debuffs": false}], ["remove-status", {"status": "slow", "remove_debuffs": false}], ["remove-status", {"status": "stun", "remove_debuffs": false}]]`.
 - Mana: 25 upfront; 0 / channel second. Preparation: 0.30000000000000004 s; channel: 0 s; cooldown: 2.0 s.
-- Incantation: right → right → up → left → up → left. Confirmation is the default; intentional legacy prefix chains are opt-in.
+- Incantation: right → right → up → left → up → left. Chained casting is the default; completed incantations trigger automatically and support prefix continuations.
 - Spatial / lifecycle bounds: range 500.0 px; area radius 0.0 px; persistent / construct lifetime 4.0 s; tick 0.5 s.
 - Verification: production cast passed in source and exported PCK. Reproducible manual case: select Harmonic Stabilization in the Physics lab, cast with F6, and verify the gameplay outcome above. Graphical appearance and game balance remain unverified by human playtesting.
 
@@ -504,7 +504,7 @@ Scientific principles describe the inspiration. Creature-scale force, healing, f
 - Delivery: Area burst.
 - Effects: `[["remove-status", {"status": "resonance", "remove_debuffs": false}], ["remove-status", {"status": "dot", "remove_debuffs": false}], ["projectile-field", {"mode": 3}]]`.
 - Mana: 25 upfront; 0 / channel second. Preparation: 0.30000000000000004 s; channel: 0 s; cooldown: 2.0 s.
-- Incantation: right → right → up → left → up → right. Confirmation is the default; intentional legacy prefix chains are opt-in.
+- Incantation: right → right → up → left → up → right. Chained casting is the default; completed incantations trigger automatically and support prefix continuations.
 - Spatial / lifecycle bounds: range 500.0 px; area radius 150.0 px; persistent / construct lifetime 4.0 s; tick 0.5 s.
 - Verification: production cast passed in source and exported PCK. Reproducible manual case: select Phase Cancellation in the Physics lab, cast with F6, and verify the gameplay outcome above. Graphical appearance and game balance remain unverified by human playtesting.
 
@@ -518,7 +518,7 @@ Scientific principles describe the inspiration. Creature-scale force, healing, f
 - Delivery: Self.
 - Effects: `[["teleport", {"distance": 160}]]`.
 - Mana: 30 upfront; 0 / channel second. Preparation: 0.4 s; channel: 0 s; cooldown: 2.5 s.
-- Incantation: right → right → up → left → down → up. Confirmation is the default; intentional legacy prefix chains are opt-in.
+- Incantation: right → right → up → left → down → up. Chained casting is the default; completed incantations trigger automatically and support prefix continuations.
 - Spatial / lifecycle bounds: range 500.0 px; area radius 0.0 px; persistent / construct lifetime 4.0 s; tick 0.5 s.
 - Verification: production cast passed in source and exported PCK. Reproducible manual case: select Tunneling Step in the Physics lab, cast with F6, and verify the gameplay outcome above. Graphical appearance and game balance remain unverified by human playtesting.
 
@@ -532,7 +532,7 @@ Scientific principles describe the inspiration. Creature-scale force, healing, f
 - Delivery: Self.
 - Effects: `[["replay", {}]]`.
 - Mana: 30 upfront; 0 / channel second. Preparation: 0.4 s; channel: 0 s; cooldown: 2.5 s.
-- Incantation: right → right → up → left → down → down. Confirmation is the default; intentional legacy prefix chains are opt-in.
+- Incantation: right → right → up → left → down → down. Chained casting is the default; completed incantations trigger automatically and support prefix continuations.
 - Spatial / lifecycle bounds: range 500.0 px; area radius 0.0 px; persistent / construct lifetime 4.0 s; tick 0.5 s.
 - Verification: production cast passed in source and exported PCK. Reproducible manual case: select Probabilistic Echo in the Physics lab, cast with F6, and verify the gameplay outcome above. Graphical appearance and game balance remain unverified by human playtesting.
 
@@ -546,7 +546,7 @@ Scientific principles describe the inspiration. Creature-scale force, healing, f
 - Delivery: Trap.
 - Effects: `[["damage", {"amount": 18}], ["apply-status", {"status": "silence", "duration": 2, "magnitude": 0}], ["apply-status", {"status": "slow", "duration": 2, "magnitude": 0.5}]]`.
 - Mana: 30 upfront; 0 / channel second. Preparation: 0.4 s; channel: 0 s; cooldown: 2.5 s.
-- Incantation: right → right → up → left → down → left. Confirmation is the default; intentional legacy prefix chains are opt-in.
+- Incantation: right → right → up → left → down → left. Chained casting is the default; completed incantations trigger automatically and support prefix continuations.
 - Spatial / lifecycle bounds: range 500.0 px; area radius 150.0 px; persistent / construct lifetime 10 s; tick 0.5 s.
 - Verification: production cast passed in source and exported PCK. Reproducible manual case: select Decoherence Trap in the Physics lab, cast with F6, and verify the gameplay outcome above. Graphical appearance and game balance remain unverified by human playtesting.
 
@@ -560,7 +560,7 @@ Scientific principles describe the inspiration. Creature-scale force, healing, f
 - Delivery: Persistent area.
 - Effects: `[["projectile-field", {"mode": 1, "radius": 180, "strength": 0.3}]]`.
 - Mana: 30 upfront; 0 / channel second. Preparation: 0.4 s; channel: 0 s; cooldown: 2.5 s.
-- Incantation: right → right → up → left → down → right. Confirmation is the default; intentional legacy prefix chains are opt-in.
+- Incantation: right → right → up → left → down → right. Chained casting is the default; completed incantations trigger automatically and support prefix continuations.
 - Spatial / lifecycle bounds: range 500.0 px; area radius 180 px; persistent / construct lifetime 4.0 s; tick 0.2 s.
 - Verification: production cast passed in source and exported PCK. Reproducible manual case: select Gravitational Lens in the Physics lab, cast with F6, and verify the gameplay outcome above. Graphical appearance and game balance remain unverified by human playtesting.
 
@@ -574,7 +574,7 @@ Scientific principles describe the inspiration. Creature-scale force, healing, f
 - Delivery: Persistent area.
 - Effects: `[["vector", {"mode": 1, "strength": 140}], ["apply-status", {"status": "compressed", "duration": 1, "magnitude": 0}], ["conditional", {"required_status": "heated", "children": [["damage", {"amount": 4}]]}]]`.
 - Mana: 30 upfront; 0 / channel second. Preparation: 0.4 s; channel: 0 s; cooldown: 2.5 s.
-- Incantation: right → right → up → left → left → up. Confirmation is the default; intentional legacy prefix chains are opt-in.
+- Incantation: right → right → up → left → left → up. Chained casting is the default; completed incantations trigger automatically and support prefix continuations.
 - Spatial / lifecycle bounds: range 500.0 px; area radius 200 px; persistent / construct lifetime 4.0 s; tick 0.4 s.
 - Verification: production cast passed in source and exported PCK. Reproducible manual case: select Gravitational Well in the Physics lab, cast with F6, and verify the gameplay outcome above. Graphical appearance and game balance remain unverified by human playtesting.
 
@@ -588,6 +588,6 @@ Scientific principles describe the inspiration. Creature-scale force, healing, f
 - Delivery: Persistent area.
 - Effects: `[["apply-status", {"status": "slow", "duration": 0.5, "magnitude": 0.6}], ["projectile-field", {"mode": 2, "radius": 180, "strength": 0.35}]]`.
 - Mana: 30 upfront; 0 / channel second. Preparation: 0.4 s; channel: 0 s; cooldown: 2.5 s.
-- Incantation: right → right → up → left → left → down. Confirmation is the default; intentional legacy prefix chains are opt-in.
+- Incantation: right → right → up → left → left → down. Chained casting is the default; completed incantations trigger automatically and support prefix continuations.
 - Spatial / lifecycle bounds: range 500.0 px; area radius 180 px; persistent / construct lifetime 4.0 s; tick 0.2 s.
 - Verification: production cast passed in source and exported PCK. Reproducible manual case: select Time Dilation Zone in the Physics lab, cast with F6, and verify the gameplay outcome above. Graphical appearance and game balance remain unverified by human playtesting.

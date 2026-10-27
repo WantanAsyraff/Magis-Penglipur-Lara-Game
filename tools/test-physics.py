@@ -13,6 +13,7 @@ root = Path(__file__).resolve().parents[1]
 cases = [
     ('import', ['--editor', '--import', '--quit'], None),
     ('regression', ['res://tests/spell-regression.tscn'], ('SPELL_REGRESSION', 71)),
+    ('player-combos', ['res://tests/player-combo-chains.tscn'], ('PLAYER_COMBO_CHAINS', 22)),
     ('equipment-ui', ['res://tests/spell-equipment-ui.tscn'], ('SPELL_EQUIPMENT_UI', 38)),
     ('my-spells', ['res://tests/my-spells.tscn'], ('MY_SPELLS', 148)),
     ('curriculum', ['res://tests/physics-curriculum.tscn'], ('PHYSICS_CURRICULUM', 272)),

@@ -29,7 +29,10 @@ func clear() -> void:
 	_elapsed = 0
 
 func accepts(key: String) -> bool:
-	return _node.has(key)
+	return _node.has(key) or _can_restart_chain(key)
+
+func _can_restart_chain(key: String) -> bool:
+	return strategy == Strategy.CHAINED and _node.has("spell") and _root.has(key)
 
 func has_extension() -> bool:
 	for key in _node:
@@ -38,6 +41,10 @@ func has_extension() -> bool:
 	return false
 
 func push(key: String) -> SpellData:
+	# Continue an equipped longer combo when possible; otherwise a completed
+	# combo may immediately start another without dropping its first arrow.
+	if not _node.has(key) and _can_restart_chain(key):
+		clear()
 	if not accepts(key):
 		clear()
 		return null

@@ -80,6 +80,7 @@ if args.packed:
         pack = Path(directory) / 'quests.pck'
         exported = run('export', ['--editor', '--export-pack', 'Web', str(pack)])
         if exported and pack.is_file():
+            run('packed-player-combos', ['res://tests/player-combo-chains.tscn'], ('PLAYER_COMBO_CHAINS', 22), pack)
             run('packed-integration', ['res://tests/quest-pipeline.tscn'], ('QUEST_PIPELINE', 172), pack)
             run('packed-accessibility', ['res://tests/quest-accessibility.tscn'], ('QUEST_ACCESSIBILITY', 90), pack)
             for room in range(1, 4):

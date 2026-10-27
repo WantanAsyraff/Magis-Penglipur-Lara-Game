@@ -1,0 +1,49 @@
+[gd_resource type="Resource" script_class="SpellData" format=3]
+
+[ext_resource type="Script" path="res://data/Resources/ilmu/spell.gd" id="spell"]
+[ext_resource type="Resource" path="res://data/magis/fields/physics.tres" id="field"]
+[ext_resource type="Texture2D" path="res://assets/temp/temp-mana.png" id="icon"]
+[ext_resource type="Script" path="res://data/Resources/spell-effects/remove-status-effect.gd" id="e0"]
+[ext_resource type="Script" path="res://data/Resources/spell-effects/projectile-field-effect.gd" id="e1"]
+
+[sub_resource type="Resource" id="Effect_0"]
+script = ExtResource("e0")
+status = "resonance"
+remove_debuffs = false
+
+[sub_resource type="Resource" id="Effect_1"]
+script = ExtResource("e0")
+status = "dot"
+remove_debuffs = false
+
+[sub_resource type="Resource" id="Effect_2"]
+script = ExtResource("e1")
+mode = 3
+
+[resource]
+script = ExtResource("spell")
+academic_fields = [ExtResource("field")]
+spell_icon = ExtResource("icon")
+projectile_texture = ExtResource("icon")
+spell_incantation = Array[String](["right", "right", "up", "left", "up", "right"])
+effects = [SubResource("Effect_0"), SubResource("Effect_1"), SubResource("Effect_2")]
+spell_colour = Color(0.844, 0.400, 1.000, 1)
+spell_name = "Phase Cancellation"
+spell_id = "phys-phase-cancellation"
+magis_archetype = "Ilmiah"
+magis_comprehension = "Advanced"
+theory_desc = "Opposite-phase coherent waves can cancel displacement locally, without erasing energy. Mana supplies the fictional energy and control. Purges eligible wave statuses and cancels hostile wave-tagged projectiles and areas."
+spell_flavour_text = "Purges eligible wave statuses and cancels hostile wave-tagged projectiles and areas."
+delivery = 4
+upfront_cost = 25
+cast_time = 0.30000000000000004
+cooldown = 2.0
+projectile_range = 950.0
+projectile_speed = 850.0
+projectile_size = 1.0
+aoe_spell_radius = 150.0
+area_duration = 4.0
+area_tick_interval = 0.5
+target_range = 500.0
+beam_width = 30.0
+targeting = 2

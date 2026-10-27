@@ -1,19 +1,27 @@
 [gd_resource type="Resource" script_class="CourseData" format=3 uid="uid://vi8s63paycd8"]
 
-[ext_resource type="Script" uid="uid://mj2k1sm83ebr" path="res://data/Resources/ilmu/course.gd" id="1_6m01t"]
-[ext_resource type="Script" uid="uid://b6vkafnios50y" path="res://data/Resources/ilmu/subject.gd" id="2_h3kd3"]
-[ext_resource type="Resource" uid="uid://b3vd4x36db6qf" path="res://data/magis/ilmiah/physics-field/core-subjects/physics-I.tres" id="3_h3kd3"]
-[ext_resource type="Resource" uid="uid://d0kr2oheo6tk7" path="res://data/magis/ilmiah/physics-field/core-subjects/physics-II.tres" id="4_tl2cy"]
-
-[ext_resource type="Resource" path="res://data/magis/fields/physics.tres" id="field_physics"]
+[ext_resource type="Script" path="res://data/Resources/ilmu/course.gd" id="course"]
+[ext_resource type="Resource" path="res://data/magis/fields/physics.tres" id="field"]
+[ext_resource type="Resource" path="res://data/magis/ilmiah/physics-field/core-subjects/physics-I.tres" id="s0"]
+[ext_resource type="Resource" path="res://data/magis/ilmiah/physics-field/core-subjects/physics-II.tres" id="s1"]
+[ext_resource type="Resource" path="res://data/magis/ilmiah/physics-field/core-subjects/physics-003.tres" id="s2"]
+[ext_resource type="Resource" path="res://data/magis/ilmiah/physics-field/core-subjects/physics-004.tres" id="s3"]
+[ext_resource type="Resource" path="res://data/magis/ilmiah/physics-field/core-subjects/physics-005.tres" id="s4"]
+[ext_resource type="Resource" path="res://data/magis/ilmiah/physics-field/core-subjects/physics-006.tres" id="s5"]
+[ext_resource type="Resource" path="res://data/magis/ilmiah/physics-field/core-subjects/physics-007.tres" id="s6"]
+[ext_resource type="Resource" path="res://data/magis/ilmiah/physics-field/core-subjects/physics-008.tres" id="s7"]
+[ext_resource type="Resource" path="res://data/magis/ilmiah/physics-field/core-subjects/physics-009.tres" id="s8"]
+[ext_resource type="Resource" path="res://data/magis/ilmiah/physics-field/core-subjects/physics-010.tres" id="s9"]
+[ext_resource type="Resource" path="res://data/magis/ilmiah/physics-field/core-subjects/physics-011.tres" id="s10"]
+[ext_resource type="Resource" path="res://data/magis/ilmiah/physics-field/core-subjects/physics-012.tres" id="s11"]
 
 [resource]
-academic_fields = [ExtResource("field_physics")]
-script = ExtResource("1_6m01t")
-course_name = "Study of Pure Science"
+script = ExtResource("course")
+course_name = "Physics: Principles into Practice"
 course_id = "sc-stem-0001"
 course_archetype = "Physical Science"
-course_description = "Nerds"
 magis_archetype = "Ilmiah"
-subjects = Array[ExtResource("2_h3kd3")]([ExtResource("3_h3kd3"), ExtResource("4_tl2cy")])
-metadata/_custom_type_script = "uid://mj2k1sm83ebr"
+difficulty_level = 1
+academic_fields = [ExtResource("field")]
+course_description = "Twelve connected subjects apply physical principles through mana-powered magic, from momentum to deliberately fictional quantum and relativistic fields."
+subjects = [ExtResource("s0"), ExtResource("s1"), ExtResource("s2"), ExtResource("s3"), ExtResource("s4"), ExtResource("s5"), ExtResource("s6"), ExtResource("s7"), ExtResource("s8"), ExtResource("s9"), ExtResource("s10"), ExtResource("s11")]

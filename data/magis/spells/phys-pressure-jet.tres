@@ -1,0 +1,47 @@
+[gd_resource type="Resource" script_class="SpellData" format=3]
+
+[ext_resource type="Script" path="res://data/Resources/ilmu/spell.gd" id="spell"]
+[ext_resource type="Resource" path="res://data/magis/fields/physics.tres" id="field"]
+[ext_resource type="Texture2D" path="res://assets/temp/temp-mana.png" id="icon"]
+[ext_resource type="Script" path="res://data/Resources/spell-effects/vector-effect.gd" id="e0"]
+[ext_resource type="Script" path="res://data/Resources/spell-effects/knockback-effect.gd" id="e1"]
+
+[sub_resource type="Resource" id="Effect_0"]
+script = ExtResource("e0")
+mode = 0
+strength = 110
+
+[sub_resource type="Resource" id="Effect_1"]
+script = ExtResource("e1")
+force = 80
+
+[resource]
+script = ExtResource("spell")
+academic_fields = [ExtResource("field")]
+spell_icon = ExtResource("icon")
+projectile_texture = ExtResource("icon")
+spell_incantation = Array[String](["right", "right", "up", "down", "left", "left"])
+effects = [SubResource("Effect_0"), SubResource("Effect_1")]
+spell_colour = Color(0.400, 0.525, 1.000, 1)
+spell_name = "Pressure Jet"
+spell_id = "phys-pressure-jet"
+magis_archetype = "Ilmiah"
+magis_comprehension = "Intermediate"
+theory_desc = "Pressure gradients drive fluid acceleration. Mana supplies the fictional energy and control. Continuous directional displacement during a mana-charged interruptible channel."
+spell_flavour_text = "Continuous directional displacement during a mana-charged interruptible channel."
+delivery = 6
+upfront_cost = 20
+cast_time = 0.2
+cooldown = 1.5
+projectile_range = 950.0
+projectile_speed = 850.0
+projectile_size = 1.0
+aoe_spell_radius = 0.0
+area_duration = 2.5
+area_tick_interval = 0.2
+target_range = 500.0
+beam_width = 45
+is_channelled = true
+live_channel = true
+channel_duration = 2
+mana_per_second = 5

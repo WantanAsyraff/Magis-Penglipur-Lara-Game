@@ -1,0 +1,57 @@
+[gd_resource type="Resource" script_class="SpellData" format=3]
+
+[ext_resource type="Script" path="res://data/Resources/ilmu/spell.gd" id="spell"]
+[ext_resource type="Resource" path="res://data/magis/fields/physics.tres" id="field"]
+[ext_resource type="Texture2D" path="res://assets/temp/temp-mana.png" id="icon"]
+[ext_resource type="Script" path="res://data/Resources/spell-effects/vector-effect.gd" id="e0"]
+[ext_resource type="Script" path="res://data/Resources/spell-effects/apply-status-effect.gd" id="e1"]
+[ext_resource type="Script" path="res://data/Resources/spell-effects/conditional-effect.gd" id="e2"]
+[ext_resource type="Script" path="res://data/Resources/spell-effects/damage-effect.gd" id="e3"]
+
+[sub_resource type="Resource" id="Effect_0"]
+script = ExtResource("e0")
+mode = 1
+strength = 140
+
+[sub_resource type="Resource" id="Effect_1"]
+script = ExtResource("e1")
+status = "compressed"
+duration = 1
+magnitude = 0
+
+[sub_resource type="Resource" id="Effect_2"]
+script = ExtResource("e3")
+amount = 4
+
+[sub_resource type="Resource" id="Effect_3"]
+script = ExtResource("e2")
+required_status = "heated"
+children = [SubResource("Effect_2")]
+
+[resource]
+script = ExtResource("spell")
+academic_fields = [ExtResource("field")]
+spell_icon = ExtResource("icon")
+projectile_texture = ExtResource("icon")
+spell_incantation = Array[String](["right", "right", "up", "left", "left", "up"])
+effects = [SubResource("Effect_0"), SubResource("Effect_1"), SubResource("Effect_3")]
+spell_colour = Color(1.000, 0.400, 0.587, 1)
+spell_name = "Gravitational Well"
+spell_id = "phys-gravitational-well"
+magis_archetype = "Ilmiah"
+magis_comprehension = "Expert"
+theory_desc = "Gravity accelerates matter toward concentrations of mass-energy. Mana supplies the fictional energy and control. Strong grouping field; heated targets receive additional compression damage."
+spell_flavour_text = "Strong grouping field; heated targets receive additional compression damage."
+delivery = 5
+upfront_cost = 30
+cast_time = 0.4
+cooldown = 2.5
+projectile_range = 950.0
+projectile_speed = 850.0
+projectile_size = 1.0
+aoe_spell_radius = 200
+area_duration = 4.0
+area_tick_interval = 0.4
+target_range = 500.0
+beam_width = 30.0
+aim_placement = true

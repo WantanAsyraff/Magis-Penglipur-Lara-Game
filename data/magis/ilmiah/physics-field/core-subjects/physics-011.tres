@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="subjectData" format=3]
+
+[ext_resource type="Script" path="res://data/Resources/ilmu/subject.gd" id="subject"]
+[ext_resource type="Texture2D" path="res://assets/temp/temp-mana.png" id="icon"]
+[ext_resource type="Resource" path="res://data/magis/fields/physics.tres" id="field"]
+[ext_resource type="Resource" path="res://data/magis/spells/phys-tunneling-step.tres" id="s0"]
+[ext_resource type="Resource" path="res://data/magis/spells/phys-probabilistic-echo.tres" id="s1"]
+[ext_resource type="Resource" path="res://data/magis/spells/phys-decoherence-trap.tres" id="s2"]
+
+[resource]
+script = ExtResource("subject")
+academic_fields = [ExtResource("field")]
+subject_icon = ExtResource("icon")
+subject_name = "Quantum-Inspired Mechanics"
+subject_id = "PHY-011"
+subject_archetype = "Physical Sciences"
+magis_archetype = "Ilmiah"
+magis_comprehension = "Expert"
+difficulty_level = 4
+prerequisites = Array[String](["PHY-005", "PHY-007"])
+contained_spells = [ExtResource("s0"), ExtResource("s1"), ExtResource("s2")]
+theoretical_foundation = "Quantum tunneling concerns barrier transmission amplitudes, not human teleportation. Quantum probabilities do not permit copying arbitrary states; this echo is fictional. Decoherence suppresses observable interference through environmental entanglement."
+field_of_study = "Quantum-Inspired Mechanics"
+casters_notes = "Learn: Tunneling Step, Probabilistic Echo, Decoherence Trap. Mana supplies fictional effects; capability tags restrict environmental manipulation."

@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="subjectData" format=3]
+
+[ext_resource type="Script" path="res://data/Resources/ilmu/subject.gd" id="subject"]
+[ext_resource type="Texture2D" path="res://assets/temp/temp-mana.png" id="icon"]
+[ext_resource type="Resource" path="res://data/magis/fields/physics.tres" id="field"]
+[ext_resource type="Resource" path="res://data/magis/spells/phys-gravitational-lens.tres" id="s0"]
+[ext_resource type="Resource" path="res://data/magis/spells/phys-gravitational-well.tres" id="s1"]
+[ext_resource type="Resource" path="res://data/magis/spells/phys-time-dilation-zone.tres" id="s2"]
+
+[resource]
+script = ExtResource("subject")
+academic_fields = [ExtResource("field")]
+subject_icon = ExtResource("icon")
+subject_name = "Relativity and Advanced Field Theory"
+subject_id = "PHY-012"
+subject_archetype = "Physical Sciences"
+magis_archetype = "Ilmiah"
+magis_comprehension = "Expert"
+difficulty_level = 4
+prerequisites = Array[String](["PHY-006", "PHY-011"])
+contained_spells = [ExtResource("s0"), ExtResource("s1"), ExtResource("s2")]
+theoretical_foundation = "Gravity can bend light trajectories; magical fields also bend these projectiles. Gravity accelerates matter toward concentrations of mass-energy. Relativistic proper-time differences are physical; this zone uses fictional selective local modifiers."
+field_of_study = "Relativity and Advanced Field Theory"
+casters_notes = "Learn: Gravitational Lens, Gravitational Well, Time Dilation Zone. Mana supplies fictional effects; capability tags restrict environmental manipulation."

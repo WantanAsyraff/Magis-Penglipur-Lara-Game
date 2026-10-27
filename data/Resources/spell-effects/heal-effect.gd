@@ -9,7 +9,7 @@ func validate() -> PackedStringArray:
 func execute(context: SpellCastContext, target: Node2D) -> bool:
 	var hitbox: HitboxComponent = target.get_node("HitboxComponent")
 	if duration > 0:
-		hitbox.effects.apply("hot", duration, {"amount": amount, "interval": tick_interval}, str(context.cast_id), ActiveEffectManager.StackPolicy.STACK, 32)
+		hitbox.effects.apply("hot", duration, {"amount": amount * float(context.modifiers.get("scale", 1.0)), "interval": tick_interval}, str(context.cast_id), ActiveEffectManager.StackPolicy.STACK, 32)
 	else:
-		hitbox.healed.emit(amount)
+		hitbox.healed.emit(amount * float(context.modifiers.get("scale", 1.0)))
 	return true

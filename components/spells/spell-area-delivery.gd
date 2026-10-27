@@ -3,6 +3,9 @@ var context: SpellCastContext
 var elapsed: float = 0.0
 var until_tick: float = 0.0
 var beam_segments: Array[Vector2] = []
+func _ready() -> void:
+	add_to_group("spell_area")
+
 func _physics_process(delta: float) -> void:
 	if context == null or not context.can_execute() or not SpellExecutor.is_authoritative(context.caster):
 		queue_free(); return
@@ -26,6 +29,7 @@ func cast_beams() -> bool:
 	var visited: Array[Node2D] = []
 	var applied := false
 	for angle in context.spell.beam_angles.slice(0, 5):
+		var beam_context := context
 		var origin := global_position
 		var heading := context.direction.rotated(deg_to_rad(angle))
 		var distance := context.spell.target_range
@@ -38,14 +42,20 @@ func cast_beams() -> bool:
 			beam_segments.append_array([origin - global_position, end - global_position])
 			for h in get_tree().get_nodes_in_group("hitbox"):
 				var target := h.get_parent() as Node2D
-				if target == null or target in visited or not SpellDelivery.can_target(context, target): continue
+				if target == null or target in visited or not SpellDelivery.can_target(beam_context, target): continue
 				var closest := Geometry2D.get_closest_point_to_segment(target.global_position, origin, end)
 				if closest.distance_to(target.global_position) <= context.spell.beam_width / 2:
 					visited.append(target)
-					applied = SpellExecutor.new().execute(context, target) or applied
+					beam_context.remaining_effect_budget = context.remaining_effect_budget
+					applied = SpellExecutor.new().execute(beam_context, target) or applied
+					context.remaining_effect_budget = beam_context.remaining_effect_budget
 			if collision.is_empty() or not collision.collider.has_meta("optical_interface"): break
 			distance -= origin.distance_to(end)
 			if distance <= 0: break
+			if collision.collider is SpellConstruct:
+				var surface := collision.collider as SpellConstruct
+				beam_context = SpellCastContext.new(surface.context.caster, context.spell)
+				beam_context.modifiers = context.modifiers.duplicate()
 			var turn := float(collision.collider.get_meta("optical_interface"))
 			heading = heading.bounce(collision.normal) if is_zero_approx(turn) else heading.rotated(deg_to_rad(turn))
 			exclusions.append(collision.rid)

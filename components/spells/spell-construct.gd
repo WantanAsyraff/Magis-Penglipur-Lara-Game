@@ -14,7 +14,7 @@ func initialize_spell(value: SpellCastContext) -> void:
 		add_child(shape)
 	add_to_group("spell_construct")
 func _physics_process(delta: float) -> void:
-	if context == null or not context.can_execute(): queue_free(); return
+	if context == null or not context.can_execute() or not SpellExecutor.is_authoritative(context.caster): queue_free(); return
 	elapsed += delta
 	if elapsed >= context.spell.area_duration: queue_free(); return
 	if context.spell.construct_follow: global_position = context.caster.global_position

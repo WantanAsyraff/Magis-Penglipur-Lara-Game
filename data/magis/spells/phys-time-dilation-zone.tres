@@ -45,3 +45,5 @@ area_tick_interval = 0.2
 target_range = 500.0
 beam_width = 30.0
 aim_placement = true
+
+affects_projectiles = true

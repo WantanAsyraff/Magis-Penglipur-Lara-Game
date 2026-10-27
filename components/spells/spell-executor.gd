@@ -26,6 +26,8 @@ func execute(context: SpellCastContext, target: Node2D) -> bool:
 	if context == null or context.spell == null:
 		return false
 	var definitions := LegacySpellAdapter.effects_for(context.spell)
+	if context.spell.affects_projectiles:
+		definitions = definitions.filter(func(e): return not e is ProjectileFieldEffect)
 	var result := execute_effects(context, target, definitions, effect_executed.emit)
 	if not result:
 		execution_failed.emit(context.cast_id, "No compatible effects or execution budget exhausted")

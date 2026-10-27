@@ -48,6 +48,7 @@ var _character_body: CharacterBody2D = null
 # ─────────────────────────────────────────
 func _ready() -> void:
 	_parent = get_parent()
+	_create_feedback.call_deferred()
 	add_to_group("hitbox")
 	add_to_group("ally_hitbox" if _parent is Player else "enemy_hitbox")
 	effects.applied.connect(status_applied.emit)
@@ -143,3 +144,9 @@ func clear_all_debuffs() -> void:
 	effects.clear(0)
 func clear_all_buffs() -> void:
 	effects.clear(1)
+
+func _create_feedback() -> void:
+	if not is_inside_tree() or is_queued_for_deletion() or not is_instance_valid(_parent) or _parent.is_queued_for_deletion(): return
+	var feedback := SpellStatusFeedback.new()
+	feedback.hitbox = self
+	_parent.add_child(feedback)

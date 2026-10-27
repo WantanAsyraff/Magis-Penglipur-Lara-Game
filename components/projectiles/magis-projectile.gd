@@ -67,7 +67,17 @@ func _physics_process(delta: float) -> void:
 		queue_free()
 		return
 	if spell_data.projectile_speed > 0:
-		global_position += direction * spell_data.projectile_speed * local_speed_factor * delta
+		var destination := global_position + direction * spell_data.projectile_speed * local_speed_factor * delta
+		var exclusions: Array[RID] = []
+		if source is CollisionObject2D: exclusions.append(source.get_rid())
+		for body in _hit_bodies:
+			if is_instance_valid(body) and body is CollisionObject2D: exclusions.append(body.get_rid())
+		var query := PhysicsRayQueryParameters2D.create(global_position, destination, collision_mask, exclusions)
+		var collision := get_world_2d().direct_space_state.intersect_ray(query)
+		if not collision.is_empty():
+			global_position = collision.position
+			_on_body_entered(collision.collider)
+		if not _finished: global_position = destination
 	slow_remaining -= delta
 	if slow_remaining <= 0: local_speed_factor = 1.0
 	lifetime -= delta

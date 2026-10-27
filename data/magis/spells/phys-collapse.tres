@@ -7,10 +7,10 @@
 [ext_resource type="Script" path="res://data/Resources/spell-effects/vector-effect.gd" id="e1"]
 [ext_resource type="Script" path="res://data/Resources/spell-effects/conditional-effect.gd" id="e2"]
 [ext_resource type="PackedScene" path="res://components/effects/impact/resonance-crack-impact.tscn" id="legacy_1_igu00"]
-[ext_resource type="Texture2D" uid="legacy_uid://cnnad3qojgc2y" path="res://assets/temp/temp-mana.png" id="legacy_2_0otjm"]
-[ext_resource type="PackedScene" uid="legacy_uid://5847o4yjb45a" path="res://components/effects/impact/ground-slam-impact.tscn" id="legacy_2_ityix"]
-[ext_resource type="Texture2D" uid="legacy_uid://dxhgewyjajudr" path="res://assets/projectiles/small-pojectile-temp.png" id="legacy_3_igu00"]
-[ext_resource type="PackedScene" uid="legacy_uid://b2fvlmdplgevi" path="res://components/projectiles/player-magis-projectile.tscn" id="legacy_3_u6wap"]
+[ext_resource type="Texture2D" uid="uid://cnnad3qojgc2y" path="res://assets/temp/temp-mana.png" id="legacy_2_0otjm"]
+[ext_resource type="PackedScene" uid="uid://5847o4yjb45a" path="res://components/effects/impact/ground-slam-impact.tscn" id="legacy_2_ityix"]
+[ext_resource type="Texture2D" uid="uid://dxhgewyjajudr" path="res://assets/projectiles/small-pojectile-temp.png" id="legacy_3_igu00"]
+[ext_resource type="PackedScene" uid="uid://b2fvlmdplgevi" path="res://components/projectiles/player-magis-projectile.tscn" id="legacy_3_u6wap"]
 
 [sub_resource type="Resource" id="Effect_0"]
 script = ExtResource("e0")

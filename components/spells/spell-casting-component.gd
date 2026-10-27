@@ -48,6 +48,7 @@ func request_cast(spell: SpellData, origin: Vector2, direction: Vector2, targets
 	context.source_position = origin
 	context.direction = direction.normalized()
 	context.targets = targets.duplicate()
+	if spell.delivery == SpellData.Delivery.AREA_BURST: context.source_position = caster.global_position
 	if spell.aim_placement:
 		context.source_position = caster.global_position + context.direction * minf(spell.target_range, 220)
 
@@ -94,6 +95,8 @@ func _finish_preparation() -> void:
 		if context.spell.live_channel:
 			if not (is_instance_valid(live_delivery) or SpellDelivery.dispatch(context)): cancel("Channel delivery failed"); return
 			live_delivery = caster.get_parent().get_children().back() as SpellAreaDelivery
+			_paid_upfront = 0
+			cooldowns[context.spell.spell_id] = context.spell.cooldown
 
 	else:
 		_execute()

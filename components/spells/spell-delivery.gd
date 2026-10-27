@@ -35,6 +35,14 @@ static func dispatch(context: SpellCastContext) -> bool:
 		SpellData.Delivery.SUMMON:
 			if spell.summon_scene == null:
 				return false
+			if spell.construct_solid:
+				var query := PhysicsShapeQueryParameters2D.new()
+				var rect := RectangleShape2D.new()
+				rect.size = Vector2(150, 16)
+				query.shape = rect
+				query.transform = Transform2D(0, context.source_position)
+				query.collision_mask = 16
+				if not actor.get_world_2d().direct_space_state.intersect_shape(query, 1).is_empty(): return false
 			var spawned := spell.summon_scene.instantiate()
 			if not spawned is Node2D:
 				spawned.free()
@@ -72,7 +80,9 @@ static func apply_area(context: SpellCastContext, position: Vector2, beam: bool 
 	var radius := context.spell.decast_radius if context.spell.spell_category == SpellData.SpellCategory.DECAST else context.spell.aoe_spell_radius
 	var found := false
 	if context.spell.affects_projectiles:
-		found = SpellExecutor.new().execute(context, context.caster) or found
+		for effect in context.spell.effects:
+			if effect is ProjectileFieldEffect:
+				found = SpellExecutor.execute_effects(context, context.caster, [effect]) or found
 
 	for node in context.caster.get_tree().get_nodes_in_group("hitbox"):
 		var target := node.get_parent() as Node2D
@@ -83,9 +93,12 @@ static func apply_area(context: SpellCastContext, position: Vector2, beam: bool 
 		if beam:
 			var projection := offset.dot(context.direction)
 			in_shape = projection >= 0 and projection <= context.spell.target_range and absf(offset.cross(context.direction)) <= context.spell.beam_width / 2
-		if context.spell.affects_projectiles: continue
+
 		if in_shape and can_target(context, target):
+			var previous_direction := context.direction
+			if context.spell.delivery == SpellData.Delivery.AREA_BURST and offset != Vector2.ZERO: context.direction = offset.normalized()
 			found = SpellExecutor.new().execute(context, target) or found
+			context.direction = previous_direction
 	return found
 
 static func can_target(context: SpellCastContext, target: Node2D) -> bool:

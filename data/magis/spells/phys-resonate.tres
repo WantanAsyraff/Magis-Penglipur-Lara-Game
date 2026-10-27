@@ -5,10 +5,10 @@
 [ext_resource type="Texture2D" path="res://assets/temp/temp-mana.png" id="icon"]
 [ext_resource type="Script" path="res://data/Resources/spell-effects/damage-effect.gd" id="e0"]
 [ext_resource type="Script" path="res://data/Resources/spell-effects/apply-status-effect.gd" id="e1"]
-[ext_resource type="PackedScene" uid="legacy_uid://h0msm0ixfq2n" path="res://components/effects/trails/root-snare-particle.tscn" id="legacy_1_d0enj"]
-[ext_resource type="PackedScene" uid="legacy_uid://5847o4yjb45a" path="res://components/effects/impact/ground-slam-impact.tscn" id="legacy_2_dh5an"]
-[ext_resource type="Texture2D" uid="legacy_uid://cnnad3qojgc2y" path="res://assets/temp/temp-mana.png" id="legacy_3_kwkkj"]
-[ext_resource type="PackedScene" uid="legacy_uid://b2fvlmdplgevi" path="res://components/projectiles/player-magis-projectile.tscn" id="legacy_5_d7efd"]
+[ext_resource type="PackedScene" uid="uid://h0msm0ixfq2n" path="res://components/effects/trails/root-snare-particle.tscn" id="legacy_1_d0enj"]
+[ext_resource type="PackedScene" uid="uid://5847o4yjb45a" path="res://components/effects/impact/ground-slam-impact.tscn" id="legacy_2_dh5an"]
+[ext_resource type="Texture2D" uid="uid://cnnad3qojgc2y" path="res://assets/temp/temp-mana.png" id="legacy_3_kwkkj"]
+[ext_resource type="PackedScene" uid="uid://b2fvlmdplgevi" path="res://components/projectiles/player-magis-projectile.tscn" id="legacy_5_d7efd"]
 
 [sub_resource type="Resource" id="Effect_0"]
 script = ExtResource("e0")

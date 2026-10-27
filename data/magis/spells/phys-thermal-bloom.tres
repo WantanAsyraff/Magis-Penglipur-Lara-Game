@@ -1,0 +1,62 @@
+[gd_resource type="Resource" script_class="SpellData" format=3]
+
+[ext_resource type="Script" path="res://data/Resources/ilmu/spell.gd" id="spell"]
+[ext_resource type="Resource" path="res://data/magis/fields/physics.tres" id="field"]
+[ext_resource type="Texture2D" path="res://assets/temp/temp-mana.png" id="icon"]
+[ext_resource type="Script" path="res://data/Resources/spell-effects/damage-effect.gd" id="e0"]
+[ext_resource type="Script" path="res://data/Resources/spell-effects/conditional-effect.gd" id="e1"]
+[ext_resource type="Script" path="res://data/Resources/spell-effects/remove-status-effect.gd" id="e2"]
+[ext_resource type="Script" path="res://data/Resources/spell-effects/apply-status-effect.gd" id="e3"]
+
+[sub_resource type="Resource" id="Effect_0"]
+script = ExtResource("e0")
+amount = 5
+
+[sub_resource type="Resource" id="Effect_1"]
+script = ExtResource("e0")
+amount = 12
+
+[sub_resource type="Resource" id="Effect_2"]
+script = ExtResource("e2")
+status = "slow"
+remove_debuffs = false
+
+[sub_resource type="Resource" id="Effect_3"]
+script = ExtResource("e1")
+required_status = "cooled"
+children = [SubResource("Effect_1"), SubResource("Effect_2")]
+consume = true
+
+[sub_resource type="Resource" id="Effect_4"]
+script = ExtResource("e3")
+status = "heated"
+duration = 2
+magnitude = 0
+
+[resource]
+script = ExtResource("spell")
+academic_fields = [ExtResource("field")]
+spell_icon = ExtResource("icon")
+projectile_texture = ExtResource("icon")
+spell_incantation = Array[String](["right", "right", "up", "up", "right", "right"])
+effects = [SubResource("Effect_0"), SubResource("Effect_3"), SubResource("Effect_4")]
+spell_colour = Color(0.400, 1.000, 0.622, 1)
+spell_name = "Thermal Bloom"
+spell_id = "phys-thermal-bloom"
+magis_archetype = "Ilmiah"
+magis_comprehension = "Intermediate"
+theory_desc = "Heat flows because of temperature differences; mana supplies heating energy. Mana supplies the fictional energy and control. Visible damaging heat zone consumes cooling for one extra shock and removes the slow."
+spell_flavour_text = "Visible damaging heat zone consumes cooling for one extra shock and removes the slow."
+delivery = 5
+upfront_cost = 20
+cast_time = 0.2
+cooldown = 1.5
+projectile_range = 950.0
+projectile_speed = 850.0
+projectile_size = 1.0
+aoe_spell_radius = 150.0
+area_duration = 5
+area_tick_interval = 1
+target_range = 500.0
+beam_width = 30.0
+aim_placement = true

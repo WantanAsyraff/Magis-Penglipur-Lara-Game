@@ -1,34 +1,64 @@
 [gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://bta25qt617j2c"]
 
-[ext_resource type="PackedScene" path="res://components/effects/impact/harmonic-bloom-impact.tscn" id="1_ibdfr"]
-[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="1_ngfpw"]
-[ext_resource type="PackedScene" path="res://components/effects/trails/ground-slam-charge-particle.tscn" id="2_ptxig"]
-[ext_resource type="Texture2D" uid="uid://cnnad3qojgc2y" path="res://assets/temp/temp-mana.png" id="2_s8jmb"]
-[ext_resource type="Texture2D" uid="uid://dxhgewyjajudr" path="res://assets/projectiles/small-pojectile-temp.png" id="3_61dai"]
-[ext_resource type="PackedScene" uid="uid://b2fvlmdplgevi" path="res://components/projectiles/player-magis-projectile.tscn" id="6_q8nui"]
+[ext_resource type="Script" path="res://data/Resources/ilmu/spell.gd" id="spell"]
+[ext_resource type="Resource" path="res://data/magis/fields/physics.tres" id="field"]
+[ext_resource type="Texture2D" path="res://assets/temp/temp-mana.png" id="icon"]
+[ext_resource type="Script" path="res://data/Resources/spell-effects/damage-effect.gd" id="e0"]
+[ext_resource type="Script" path="res://data/Resources/spell-effects/conditional-effect.gd" id="e1"]
+[ext_resource type="Script" path="res://data/Resources/spell-effects/knockback-effect.gd" id="e2"]
+[ext_resource type="PackedScene" path="res://components/effects/impact/harmonic-bloom-impact.tscn" id="legacy_1_ibdfr"]
+[ext_resource type="PackedScene" path="res://components/effects/trails/ground-slam-charge-particle.tscn" id="legacy_2_ptxig"]
+[ext_resource type="Texture2D" uid="legacy_uid://cnnad3qojgc2y" path="res://assets/temp/temp-mana.png" id="legacy_2_s8jmb"]
+[ext_resource type="Texture2D" uid="legacy_uid://dxhgewyjajudr" path="res://assets/projectiles/small-pojectile-temp.png" id="legacy_3_61dai"]
+[ext_resource type="PackedScene" uid="legacy_uid://b2fvlmdplgevi" path="res://components/projectiles/player-magis-projectile.tscn" id="legacy_6_q8nui"]
 
-[ext_resource type="Resource" path="res://data/magis/fields/physics.tres" id="field_physics"]
+[sub_resource type="Resource" id="Effect_0"]
+script = ExtResource("e0")
+amount = 12
+
+[sub_resource type="Resource" id="Effect_1"]
+script = ExtResource("e0")
+amount = 25
+
+[sub_resource type="Resource" id="Effect_2"]
+script = ExtResource("e2")
+force = 250
+
+[sub_resource type="Resource" id="Effect_3"]
+script = ExtResource("e1")
+required_status = "resonance"
+children = [SubResource("Effect_1"), SubResource("Effect_2")]
+consume = true
 
 [resource]
-academic_fields = [ExtResource("field_physics")]
-script = ExtResource("1_ngfpw")
+script = ExtResource("spell")
+academic_fields = [ExtResource("field")]
+spell_icon = ExtResource("icon")
+
+spell_incantation = Array[String](["down", "left", "down", "left", "down"])
+effects = [SubResource("Effect_0"), SubResource("Effect_3")]
+spell_colour = Color(1.000, 0.969, 0.400, 1)
 spell_name = "Shatterwave"
 spell_id = "phys-shatterwave"
-spell_icon = ExtResource("2_s8jmb")
-spell_flavour_text = "shakey shakey"
-theory_desc = "Superposition can amplify or cancel displacement; destructive interference does not destroy energy. Mana supplies the fictional fracture impulse against a resonating target."
-spell_manifest = 1
 magis_archetype = "Ilmiah"
-magis_comprehension = "Intermediate"
-spell_incantation = Array[String](["down", "left", "down", "left", "down"])
-spell_scene = ExtResource("6_q8nui")
-projectile_texture = ExtResource("3_61dai")
-projectile_particles = ExtResource("2_ptxig")
-impact_particles = ExtResource("1_ibdfr")
-projectile_range = 950.0
-projectile_size = 0.8
-projectile_damage = 8.0
-projectile_speed = 1000.0
-metadata/_custom_type_script = "uid://ddmcw1l0ht73f"
-
+magis_comprehension = "Novice"
+theory_desc = "Superposition changes displacement; destructive interference does not destroy energy. Mana supplies the fictional energy and control. Radial wave finisher consumes resonance for a mana-powered impulse."
+spell_flavour_text = "Radial wave finisher consumes resonance for a mana-powered impulse."
+delivery = 4
 upfront_cost = 22
+cast_time = 0.1
+cooldown = 1.0
+projectile_range = 950.0
+projectile_speed = 1000.0
+projectile_size = 0.8
+aoe_spell_radius = 180
+area_duration = 4.0
+area_tick_interval = 0.5
+target_range = 500.0
+beam_width = 30.0
+projectile_damage = 8.0
+has_wave_tag = true
+spell_scene = ExtResource("legacy_6_q8nui")
+projectile_texture = ExtResource("legacy_3_61dai")
+projectile_particles = ExtResource("legacy_2_ptxig")
+impact_particles = ExtResource("legacy_1_ibdfr")

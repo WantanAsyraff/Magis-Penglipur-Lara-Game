@@ -1,25 +1,24 @@
 [gd_resource type="Resource" script_class="subjectData" format=3 uid="uid://b3vd4x36db6qf"]
 
-[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="1_4mgb3"]
-[ext_resource type="Resource" uid="uid://b61fwo8gl06ag" path="res://data/magis/spells/phys-force.tres" id="2_62rvh"]
-[ext_resource type="Script" uid="uid://b6vkafnios50y" path="res://data/Resources/ilmu/subject.gd" id="2_74ogc"]
-[ext_resource type="Texture2D" uid="uid://cnnad3qojgc2y" path="res://assets/temp/temp-mana.png" id="3_74ogc"]
-[ext_resource type="Resource" uid="uid://bbjkobdqthylh" path="res://data/magis/spells/phys-strike.tres" id="3_uffm3"]
-[ext_resource type="Resource" uid="uid://81if5m4i36p7" path="res://data/magis/spells/phys-crash.tres" id="4_e4m48"]
-
-[ext_resource type="Resource" path="res://data/magis/fields/physics.tres" id="field_physics"]
+[ext_resource type="Script" path="res://data/Resources/ilmu/subject.gd" id="subject"]
+[ext_resource type="Texture2D" path="res://assets/temp/temp-mana.png" id="icon"]
+[ext_resource type="Resource" path="res://data/magis/fields/physics.tres" id="field"]
+[ext_resource type="Resource" path="res://data/magis/spells/phys-force.tres" id="s0"]
+[ext_resource type="Resource" path="res://data/magis/spells/phys-strike.tres" id="s1"]
+[ext_resource type="Resource" path="res://data/magis/spells/phys-crash.tres" id="s2"]
 
 [resource]
-academic_fields = [ExtResource("field_physics")]
-script = ExtResource("2_74ogc")
-subject_name = "Physics I"
-subject_icon = ExtResource("3_74ogc")
+script = ExtResource("subject")
+academic_fields = [ExtResource("field")]
+subject_icon = ExtResource("icon")
+subject_name = "Classical Mechanics I"
 subject_id = "PHY-001"
-difficulty_level = 1
 subject_archetype = "Physical Sciences"
-field_of_study = "Introduction to the physical world: how objects move, interact, and transfer energy through force and momentum. The student learns to read cause and effect in physical systems."
-theoretical_foundation = "Newton's Laws of Motion establish that force equals mass times acceleration (F=ma). Every physical interaction has a measurable, predictable consequence. Mana directed with calculated intent multiplies impact — carelessly applied mana yields diminishing returns. Momentum transfer describes how kinetic energy moves between objects on contact. Vibration theory introduces the idea that all matter oscillates, applying an external frequency to a target destabilises its internal state."
-casters_notes = "Your first spells are blunt by design. Force asks you to calculate acceleration at the point of contact. Strike asks you to sustain that momentum across a distance. Tremor asks you to introduce instability into a target rather than destroy it outright. Learn to feel the difference between hitting and transferring."
 magis_archetype = "Ilmiah"
-contained_spells = Array[ExtResource("1_4mgb3")]([ExtResource("2_62rvh"), ExtResource("3_uffm3"), ExtResource("4_e4m48")])
-metadata/_custom_type_script = "uid://b6vkafnios50y"
+magis_comprehension = "Novice"
+difficulty_level = 1
+prerequisites = Array[String]([])
+contained_spells = [ExtResource("s0"), ExtResource("s1"), ExtResource("s2")]
+theoretical_foundation = "Force changes momentum; F = ma for constant mass. Momentum is mass times velocity; impulse transfers momentum. Impulse is the time integral of force."
+field_of_study = "Classical Mechanics I"
+casters_notes = "Learn: Force, Strike, Crash. Mana supplies fictional effects; capability tags restrict environmental manipulation."

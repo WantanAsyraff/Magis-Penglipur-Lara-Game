@@ -1,0 +1,54 @@
+[gd_resource type="Resource" script_class="SpellData" format=3]
+
+[ext_resource type="Script" path="res://data/Resources/ilmu/spell.gd" id="spell"]
+[ext_resource type="Resource" path="res://data/magis/fields/physics.tres" id="field"]
+[ext_resource type="Texture2D" path="res://assets/temp/temp-mana.png" id="icon"]
+[ext_resource type="Script" path="res://data/Resources/spell-effects/damage-effect.gd" id="e0"]
+[ext_resource type="Script" path="res://data/Resources/spell-effects/conditional-effect.gd" id="e1"]
+[ext_resource type="Script" path="res://data/Resources/spell-effects/chain-effect.gd" id="e2"]
+
+[sub_resource type="Resource" id="Effect_0"]
+script = ExtResource("e0")
+amount = 14
+
+[sub_resource type="Resource" id="Effect_1"]
+script = ExtResource("e0")
+amount = 6
+
+[sub_resource type="Resource" id="Effect_2"]
+script = ExtResource("e1")
+required_status = "charged"
+children = [SubResource("Effect_1")]
+
+[sub_resource type="Resource" id="Effect_3"]
+script = ExtResource("e2")
+hops = 3
+amount = 10
+preferred_status = "charged"
+
+[resource]
+script = ExtResource("spell")
+academic_fields = [ExtResource("field")]
+spell_icon = ExtResource("icon")
+projectile_texture = ExtResource("icon")
+spell_incantation = Array[String](["right", "right", "up", "down", "up", "left"])
+effects = [SubResource("Effect_0"), SubResource("Effect_2"), SubResource("Effect_3")]
+spell_colour = Color(0.400, 1.000, 0.906, 1)
+spell_name = "Static Arc"
+spell_id = "phys-static-arc"
+magis_archetype = "Ilmiah"
+magis_comprehension = "Intermediate"
+theory_desc = "Electric fields exert forces on charge; discharges follow available conductive paths. Mana supplies the fictional energy and control. Bounded nearest-target chain prioritizes magically charged targets."
+spell_flavour_text = "Bounded nearest-target chain prioritizes magically charged targets."
+delivery = 1
+upfront_cost = 20
+cast_time = 0.2
+cooldown = 1.5
+projectile_range = 950.0
+projectile_speed = 850.0
+projectile_size = 1.0
+aoe_spell_radius = 0.0
+area_duration = 4.0
+area_tick_interval = 0.5
+target_range = 500.0
+beam_width = 30.0

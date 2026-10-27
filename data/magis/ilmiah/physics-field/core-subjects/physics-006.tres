@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="subjectData" format=3]
+
+[ext_resource type="Script" path="res://data/Resources/ilmu/subject.gd" id="subject"]
+[ext_resource type="Texture2D" path="res://assets/temp/temp-mana.png" id="icon"]
+[ext_resource type="Resource" path="res://data/magis/fields/physics.tres" id="field"]
+[ext_resource type="Resource" path="res://data/magis/spells/phys-static-arc.tres" id="s0"]
+[ext_resource type="Resource" path="res://data/magis/spells/phys-faraday-cage.tres" id="s1"]
+[ext_resource type="Resource" path="res://data/magis/spells/phys-magnetic-tether.tres" id="s2"]
+[ext_resource type="Resource" path="res://data/magis/spells/phys-induction-grid.tres" id="s3"]
+
+[resource]
+script = ExtResource("subject")
+academic_fields = [ExtResource("field")]
+subject_icon = ExtResource("icon")
+subject_name = "Electromagnetism"
+subject_id = "PHY-006"
+subject_archetype = "Physical Sciences"
+magis_archetype = "Ilmiah"
+magis_comprehension = "Intermediate"
+difficulty_level = 2
+prerequisites = Array[String](["PHY-003"])
+contained_spells = [ExtResource("s0"), ExtResource("s1"), ExtResource("s2"), ExtResource("s3")]
+theoretical_foundation = "Electric fields exert forces on charge; discharges follow available conductive paths. Conducting enclosures redistribute charge; shielding depends on geometry and frequency. Magnetic response depends on material and charge motion. Changing magnetic flux induces an electromotive force."
+field_of_study = "Electromagnetism"
+casters_notes = "Learn: Static Arc, Faraday Cage, Magnetic Tether, Induction Grid. Mana supplies fictional effects; capability tags restrict environmental manipulation."

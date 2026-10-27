@@ -1,32 +1,60 @@
 [gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://cxebmkwknrc1e"]
 
-[ext_resource type="PackedScene" path="res://components/effects/trails/resonance-wave-trail.tscn" id="1_upbwk"]
-[ext_resource type="Texture2D" uid="uid://bunu70fnhqow" path="res://assets/temp/temp-mana.png" id="2_3pk5u"]
-[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="3_rkqpt"]
-[ext_resource type="PackedScene" uid="uid://bv7k8xal2arhv" path="res://components/projectiles/magis-projectile.tscn" id="4_r4hds"]
+[ext_resource type="Script" path="res://data/Resources/ilmu/spell.gd" id="spell"]
+[ext_resource type="Resource" path="res://data/magis/fields/physics.tres" id="field"]
+[ext_resource type="Texture2D" path="res://assets/temp/temp-mana.png" id="icon"]
+[ext_resource type="Script" path="res://data/Resources/spell-effects/damage-effect.gd" id="e0"]
+[ext_resource type="Script" path="res://data/Resources/spell-effects/apply-status-effect.gd" id="e1"]
+[ext_resource type="PackedScene" path="res://components/effects/trails/resonance-wave-trail.tscn" id="legacy_1_upbwk"]
+[ext_resource type="Texture2D" uid="legacy_uid://bunu70fnhqow" path="res://assets/temp/temp-mana.png" id="legacy_2_3pk5u"]
+[ext_resource type="PackedScene" uid="legacy_uid://bv7k8xal2arhv" path="res://components/projectiles/magis-projectile.tscn" id="legacy_4_r4hds"]
 
-[ext_resource type="Resource" path="res://data/magis/fields/physics.tres" id="field_physics"]
+[sub_resource type="Resource" id="Effect_0"]
+script = ExtResource("e0")
+amount = 15
+
+[sub_resource type="Resource" id="Effect_1"]
+script = ExtResource("e1")
+status = "slow"
+duration = 3
+magnitude = 0.4
+
+[sub_resource type="Resource" id="Effect_2"]
+script = ExtResource("e1")
+status = "cooled"
+duration = 4
+magnitude = 0
 
 [resource]
-academic_fields = [ExtResource("field_physics")]
-script = ExtResource("3_rkqpt")
+script = ExtResource("spell")
+academic_fields = [ExtResource("field")]
+spell_icon = ExtResource("icon")
+
+spell_incantation = Array[String](["up", "up", "up", "up"])
+effects = [SubResource("Effect_0"), SubResource("Effect_1"), SubResource("Effect_2")]
+spell_colour = Color(0.400, 1.000, 0.622, 1)
 spell_name = "Kinetic Chill"
 spell_id = "thermal_01"
-spell_icon = ExtResource("2_3pk5u")
-theory_desc = "Temperature relates to particle energy distributions; it is not identical to bulk speed. Mana-driven cooling fictionally slows the target."
-spell_manifest = 1
 magis_archetype = "Ilmiah"
-spell_incantation = Array[String](["up", "up", "up", "up"])
+magis_comprehension = "Intermediate"
+theory_desc = "Temperature relates to microscopic energy distributions, not bulk movement. Mana supplies the fictional energy and control. Cooling-themed slow marks a target for thermal shock."
+spell_flavour_text = "Cooling-themed slow marks a target for thermal shock."
+delivery = 1
 upfront_cost = 12
-spell_scene = ExtResource("4_r4hds")
-projectile_texture = ExtResource("2_3pk5u")
-projectile_particles = ExtResource("1_upbwk")
+cast_time = 0.2
+cooldown = 1.5
 projectile_range = 2000.0
-projectile_size = 1.0
-projectile_damage = 15.0
 projectile_speed = 700.0
-metadata/_custom_type_script = "uid://ddmcw1l0ht73f"
-
+projectile_size = 1.0
+aoe_spell_radius = 0.0
+area_duration = 4.0
+area_tick_interval = 0.5
+target_range = 500.0
+beam_width = 30.0
+projectile_damage = 15.0
 applies_slow = true
 slow_factor = 0.4
 slow_duration = 3.0
+spell_scene = ExtResource("legacy_4_r4hds")
+projectile_texture = ExtResource("legacy_2_3pk5u")
+projectile_particles = ExtResource("legacy_1_upbwk")

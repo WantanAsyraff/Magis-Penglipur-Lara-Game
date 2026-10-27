@@ -55,6 +55,7 @@ func request_cast(spell: SpellData, origin: Vector2, direction: Vector2, targets
 	var h := caster.get_node_or_null("HitboxComponent") as HitboxComponent
 	if h:
 		context.modifiers.damage = h.effects.magnitude("buff_damage")
+	context.modifiers.scale = float(caster.get_meta("outgoing_damage_multiplier", 1.0))
 	remaining = spell.cast_time / maxf(0.1, 1.0 + (h.effects.magnitude("buff_cast_speed") if h else 0.0))
 	_set_state(State.PREPARING)
 	if remaining <= 0:

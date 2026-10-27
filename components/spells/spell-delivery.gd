@@ -29,6 +29,7 @@ static func dispatch(context: SpellCastContext) -> bool:
 		SpellData.Delivery.PERSISTENT_AREA, SpellData.Delivery.BEAM, SpellData.Delivery.TRAP:
 			var area := SpellAreaDelivery.new()
 			area.context = context
+			CombatLifecycle.own(area, actor)
 			actor.get_parent().add_child(area)
 			area.global_position = context.source_position
 			return true
@@ -48,6 +49,7 @@ static func dispatch(context: SpellCastContext) -> bool:
 				spawned.free()
 				return false
 			var entity := spawned as Node2D
+			CombatLifecycle.own(entity, actor)
 			actor.get_parent().add_child(entity)
 			entity.global_position = context.source_position
 			if not spell.effects.is_empty():
@@ -70,9 +72,10 @@ static func dispatch(context: SpellCastContext) -> bool:
 				inst.cast_context = context
 				var angle := 0.0 if spell.projectile_count == 1 else deg_to_rad(-spell.projectile_spread / 2 + spell.projectile_spread * i / (spell.projectile_count - 1))
 				inst.direction = context.direction.rotated(angle)
+				CombatLifecycle.own(inst, actor)
 				actor.get_parent().add_child(inst)
 				inst.global_position = context.source_position
-				inst.collision_mask = 16 | (2 if context.source_team == &"player" else 1)
+				inst.collision_mask = CombatFactions.projectile_mask(context.source_team)
 				inst.start()
 			return true
 	return false

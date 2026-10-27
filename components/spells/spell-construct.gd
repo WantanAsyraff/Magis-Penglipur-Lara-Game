@@ -20,7 +20,7 @@ func _physics_process(delta: float) -> void:
 	if context.spell.construct_follow: global_position = context.caster.global_position
 	for node in get_tree().get_nodes_in_group("spell_projectile"):
 		var p := node as MagicProjectile
-		if p._finished or p.is_queued_for_deletion() or p.cast_context.source_team == context.source_team: continue
+		if p._finished or p.is_queued_for_deletion() or CombatFactions.relation(context.caster, p.cast_context.caster) >= 0: continue
 		if global_position.distance_to(p.global_position) < context.spell.aoe_spell_radius:
 			if context.spell.construct_reflect: p.redirect(context, -p.direction)
 			else: p._finished = true; p.queue_free()

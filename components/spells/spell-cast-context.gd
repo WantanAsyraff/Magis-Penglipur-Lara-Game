@@ -23,7 +23,7 @@ func _init(actor: Node2D = null, definition: SpellData = null) -> void:
 	timestamp_msec = Time.get_ticks_msec()
 	if is_instance_valid(actor):
 		source_position = actor.global_position
-		source_team = actor.get_meta("spell_team", &"player" if actor.is_in_group("player") else &"enemy")
+		source_team = CombatFactions.faction(actor)
 
 func can_execute() -> bool:
 	return not cancelled and is_instance_valid(caster) and not caster.is_queued_for_deletion() and not caster.get_meta("combat_dead", false) and remaining_effect_budget > 0 and chain_depth <= 8

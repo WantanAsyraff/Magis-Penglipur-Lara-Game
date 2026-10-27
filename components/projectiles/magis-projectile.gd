@@ -178,4 +178,5 @@ func redirect(controller: SpellCastContext, heading: Vector2) -> void:
 	source = controller.caster
 	direction = heading.normalized()
 	_hit_bodies.clear()
-	collision_mask = 16 | (2 if controller.source_team == &"player" else 1)
+	collision_mask = CombatFactions.projectile_mask(controller.source_team)
+	CombatLifecycle.own(self, controller.caster)

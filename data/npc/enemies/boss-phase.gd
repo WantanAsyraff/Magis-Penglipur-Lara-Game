@@ -27,6 +27,8 @@ extends Resource
 ## How long the invincibility lasts during transition.
 @export var transition_invincible_duration: float = 1.5
 ## Animation to play on phase transition. Leave empty to skip.
+@export var transition_duration: float = 1.0
+@export var phase_colour: Color = Color(0.9, 0.75, 0.45)
 @export var transition_animation: String = "phase_transition"
 
 ## Negative values preserve the boss's base mitigation.

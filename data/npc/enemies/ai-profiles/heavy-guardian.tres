@@ -1,123 +1,64 @@
-[gd_resource type="Resource" script_class="EnemyAIProfile" format=3]
+[gd_resource type="Resource" script_class="EnemyAIProfile" format=3 uid="uid://dkh51asv3ocyl"]
 
-[ext_resource type="Script" path="res://data/npc/enemies/enemy-ai-profile.gd" id="x0"]
-[ext_resource type="Script" path="res://data/npc/enemies/enemy-ai-action.gd" id="x1"]
+[ext_resource type="Script" uid="uid://juwjwsksh06b" path="res://data/npc/enemies/enemy-ai-profile.gd" id="x0"]
+[ext_resource type="Script" uid="uid://dg8dosrgxvkxn" path="res://data/npc/enemies/enemy-ai-action.gd" id="x1"]
 
 [sub_resource type="Resource" id="r0"]
 script = ExtResource("x1")
-action_id = "idle"
-kind = 0
 utility = 0.1
-low_health_weight = 0
-low_mana_weight = 0
 
 [sub_resource type="Resource" id="r1"]
 script = ExtResource("x1")
-action_id = "patrol"
 kind = 1
-utility = 1
-low_health_weight = 0
-low_mana_weight = 0
 
 [sub_resource type="Resource" id="r2"]
 script = ExtResource("x1")
-action_id = "investigate"
 kind = 2
-utility = 4
-low_health_weight = 0
-low_mana_weight = 0
 
 [sub_resource type="Resource" id="r3"]
 script = ExtResource("x1")
-action_id = "chase"
 kind = 3
-utility = 7
-low_health_weight = 0
-low_mana_weight = 0
 
 [sub_resource type="Resource" id="r4"]
 script = ExtResource("x1")
-action_id = "retreat"
 kind = 4
-utility = 2
-low_health_weight = 0
-low_mana_weight = 0
 
 [sub_resource type="Resource" id="r5"]
 script = ExtResource("x1")
-action_id = "maintain_range"
 kind = 5
-utility = 2
-low_health_weight = 0
-low_mana_weight = 0
 
 [sub_resource type="Resource" id="r6"]
 script = ExtResource("x1")
-action_id = "melee"
 kind = 6
-utility = 16
-low_health_weight = 0
-low_mana_weight = 0
 
 [sub_resource type="Resource" id="r7"]
 script = ExtResource("x1")
-action_id = "ranged"
 kind = 7
-utility = 5
-low_health_weight = 0
-low_mana_weight = 0
 
 [sub_resource type="Resource" id="r8"]
 script = ExtResource("x1")
-action_id = "cast"
 kind = 8
-utility = 4
-low_health_weight = 0
-low_mana_weight = 0
 
 [sub_resource type="Resource" id="r9"]
 script = ExtResource("x1")
-action_id = "defend"
 kind = 9
-utility = 10
-low_health_weight = 2
-low_mana_weight = 0
 
 [sub_resource type="Resource" id="r10"]
 script = ExtResource("x1")
-action_id = "reposition"
 kind = 10
-utility = 3
-low_health_weight = 0
-low_mana_weight = 0
 
 [sub_resource type="Resource" id="r11"]
 script = ExtResource("x1")
-action_id = "recover"
 kind = 11
-utility = 5
-low_health_weight = 2
-low_mana_weight = 2
 
 [sub_resource type="Resource" id="r12"]
 script = ExtResource("x1")
-action_id = "flee"
 kind = 12
-utility = 10
-low_health_weight = 2
-low_mana_weight = 0
 
 [sub_resource type="Resource" id="r13"]
 script = ExtResource("x1")
-action_id = "summon"
 kind = 13
-utility = 3
-low_health_weight = 0
-low_mana_weight = 0
 
 [resource]
 script = ExtResource("x0")
-profile_id = "heavy-guardian"
-actions = [SubResource("r0"), SubResource("r1"), SubResource("r2"), SubResource("r3"), SubResource("r4"), SubResource("r5"), SubResource("r6"), SubResource("r7"), SubResource("r8"), SubResource("r9"), SubResource("r10"), SubResource("r11"), SubResource("r12"), SubResource("r13")]
-preferred_range = 80
-retreat_range = 20
+actions = Array[ExtResource("x1")]([SubResource("r0"), SubResource("r1"), SubResource("r2"), SubResource("r3"), SubResource("r4"), SubResource("r5"), SubResource("r6"), SubResource("r7"), SubResource("r8"), SubResource("r9"), SubResource("r10"), SubResource("r11"), SubResource("r12"), SubResource("r13")])

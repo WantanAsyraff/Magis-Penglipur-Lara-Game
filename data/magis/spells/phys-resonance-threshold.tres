@@ -1,12 +1,14 @@
-[gd_resource type="Resource" script_class="SpellData" format=3]
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://bcp34vy7kysnv"]
 
-[ext_resource type="Script" path="res://data/Resources/ilmu/spell.gd" id="spell"]
+[ext_resource type="Script" uid="uid://s7pe5qibmbcl" path="res://data/Resources/ilmu/field.gd" id="1_ipv0a"]
+[ext_resource type="Script" uid="uid://cefhbim2wny71" path="res://data/Resources/spell-effects/spell-effect-definition.gd" id="3_oev24"]
+[ext_resource type="Script" uid="uid://d042trawl7plp" path="res://data/Resources/spell-effects/trigger-effect.gd" id="e0"]
+[ext_resource type="Script" uid="uid://b7nncn118gd8j" path="res://data/Resources/spell-effects/conditional-effect.gd" id="e1"]
+[ext_resource type="Script" uid="uid://crs2l0ayghg1p" path="res://data/Resources/spell-effects/damage-effect.gd" id="e2"]
+[ext_resource type="Script" uid="uid://bbxxh60du46xv" path="res://data/Resources/spell-effects/apply-status-effect.gd" id="e3"]
 [ext_resource type="Resource" path="res://data/magis/fields/physics.tres" id="field"]
-[ext_resource type="Texture2D" path="res://assets/temp/temp-mana.png" id="icon"]
-[ext_resource type="Script" path="res://data/Resources/spell-effects/trigger-effect.gd" id="e0"]
-[ext_resource type="Script" path="res://data/Resources/spell-effects/conditional-effect.gd" id="e1"]
-[ext_resource type="Script" path="res://data/Resources/spell-effects/damage-effect.gd" id="e2"]
-[ext_resource type="Script" path="res://data/Resources/spell-effects/apply-status-effect.gd" id="e3"]
+[ext_resource type="Texture2D" uid="uid://bunu70fnhqow" path="res://assets/temp/temp-mana.png" id="icon"]
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="spell"]
 
 [sub_resource type="Resource" id="Effect_0"]
 script = ExtResource("e2")
@@ -14,46 +16,41 @@ amount = 35
 
 [sub_resource type="Resource" id="Effect_1"]
 script = ExtResource("e3")
-status = "stun"
-duration = 1
-magnitude = 0
 
 [sub_resource type="Resource" id="Effect_2"]
 script = ExtResource("e1")
 required_status = "resonance"
-children = [SubResource("Effect_0"), SubResource("Effect_1")]
+children = Array[ExtResource("3_oev24")]([SubResource("Effect_0"), SubResource("Effect_1")])
 consume = true
 capability = "structural"
 
 [sub_resource type="Resource" id="Effect_3"]
 script = ExtResource("e0")
-hits = 3
 duration = 6
-children = [SubResource("Effect_2")]
+children = Array[ExtResource("3_oev24")]([SubResource("Effect_2")])
 
 [resource]
 script = ExtResource("spell")
-academic_fields = [ExtResource("field")]
-spell_icon = ExtResource("icon")
-projectile_texture = ExtResource("icon")
-spell_incantation = Array[String](["right", "right", "up", "left", "up", "up"])
-effects = [SubResource("Effect_3")]
-spell_colour = Color(0.560, 0.400, 1.000, 1)
 spell_name = "Resonance Threshold"
 spell_id = "phys-resonance-threshold"
+spell_icon = ExtResource("icon")
+spell_colour = Color(0.56, 0.4, 1, 1)
+spell_flavour_text = "On the third damaging impact, consumes resonance for structural damage and stagger."
+theory_desc = "Repeated driving can accumulate response when losses are sufficiently small. Mana supplies the fictional energy and control. On the third damaging impact, consumes resonance for structural damage and stagger."
 magis_archetype = "Ilmiah"
 magis_comprehension = "Advanced"
-theory_desc = "Repeated driving can accumulate response when losses are sufficiently small. Mana supplies the fictional energy and control. On the third damaging impact, consumes resonance for structural damage and stagger."
-spell_flavour_text = "On the third damaging impact, consumes resonance for structural damage and stagger."
-delivery = 3
+spell_incantation = Array[String](["right", "right", "up", "left", "up", "up"])
 upfront_cost = 25
 cast_time = 0.30000000000000004
-cooldown = 2.0
+projectile_texture = ExtResource("icon")
 projectile_range = 950.0
-projectile_speed = 850.0
 projectile_size = 1.0
-aoe_spell_radius = 0.0
+projectile_speed = 850.0
+delivery = 3
+effects = Array[ExtResource("3_oev24")]([SubResource("Effect_3")])
+academic_fields = Array[ExtResource("1_ipv0a")]([ExtResource("field")])
+cooldown = 2.0
+target_range = 500.0
 area_duration = 4.0
 area_tick_interval = 0.5
-target_range = 500.0
 beam_width = 30.0

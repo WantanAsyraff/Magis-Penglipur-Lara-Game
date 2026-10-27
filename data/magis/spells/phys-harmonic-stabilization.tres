@@ -1,10 +1,12 @@
-[gd_resource type="Resource" script_class="SpellData" format=3]
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://bp10dtiuwjtqs"]
 
-[ext_resource type="Script" path="res://data/Resources/ilmu/spell.gd" id="spell"]
+[ext_resource type="Script" uid="uid://s7pe5qibmbcl" path="res://data/Resources/ilmu/field.gd" id="1_dabbe"]
+[ext_resource type="Script" uid="uid://cefhbim2wny71" path="res://data/Resources/spell-effects/spell-effect-definition.gd" id="3_g3kcc"]
+[ext_resource type="Script" uid="uid://b6poq5g481s4v" path="res://data/Resources/spell-effects/heal-effect.gd" id="e0"]
+[ext_resource type="Script" uid="uid://dnl0jhciqa6ok" path="res://data/Resources/spell-effects/remove-status-effect.gd" id="e1"]
 [ext_resource type="Resource" path="res://data/magis/fields/physics.tres" id="field"]
-[ext_resource type="Texture2D" path="res://assets/temp/temp-mana.png" id="icon"]
-[ext_resource type="Script" path="res://data/Resources/spell-effects/heal-effect.gd" id="e0"]
-[ext_resource type="Script" path="res://data/Resources/spell-effects/remove-status-effect.gd" id="e1"]
+[ext_resource type="Texture2D" uid="uid://bunu70fnhqow" path="res://assets/temp/temp-mana.png" id="icon"]
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="spell"]
 
 [sub_resource type="Resource" id="Effect_0"]
 script = ExtResource("e0")
@@ -27,28 +29,27 @@ remove_debuffs = false
 
 [resource]
 script = ExtResource("spell")
-academic_fields = [ExtResource("field")]
-spell_icon = ExtResource("icon")
-projectile_texture = ExtResource("icon")
-spell_incantation = Array[String](["right", "right", "up", "left", "up", "left"])
-effects = [SubResource("Effect_0"), SubResource("Effect_1"), SubResource("Effect_2"), SubResource("Effect_3")]
-spell_colour = Color(0.844, 0.400, 1.000, 1)
 spell_name = "Harmonic Stabilization"
 spell_id = "phys-harmonic-stabilization"
+spell_icon = ExtResource("icon")
+spell_colour = Color(0.844, 0.4, 1, 1)
+spell_flavour_text = "Self-heal and targeted removal of destabilizing statuses."
+theory_desc = "Oscillations can be controlled by feedback; biological healing here is entirely magical. Mana supplies the fictional energy and control. Self-heal and targeted removal of destabilizing statuses."
 magis_archetype = "Ilmiah"
 magis_comprehension = "Advanced"
-theory_desc = "Oscillations can be controlled by feedback; biological healing here is entirely magical. Mana supplies the fictional energy and control. Self-heal and targeted removal of destabilizing statuses."
-spell_flavour_text = "Self-heal and targeted removal of destabilizing statuses."
-delivery = 2
+spell_incantation = Array[String](["right", "right", "up", "left", "up", "left"])
 upfront_cost = 25
 cast_time = 0.30000000000000004
-cooldown = 2.0
+projectile_texture = ExtResource("icon")
 projectile_range = 950.0
-projectile_speed = 850.0
 projectile_size = 1.0
-aoe_spell_radius = 0.0
+projectile_speed = 850.0
+delivery = 2
+effects = Array[ExtResource("3_g3kcc")]([SubResource("Effect_0"), SubResource("Effect_1"), SubResource("Effect_2"), SubResource("Effect_3")])
+targeting = 1
+academic_fields = Array[ExtResource("1_dabbe")]([ExtResource("field")])
+cooldown = 2.0
+target_range = 500.0
 area_duration = 4.0
 area_tick_interval = 0.5
-target_range = 500.0
 beam_width = 30.0
-targeting = 1

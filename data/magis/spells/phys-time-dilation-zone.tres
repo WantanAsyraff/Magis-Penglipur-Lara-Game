@@ -1,10 +1,12 @@
-[gd_resource type="Resource" script_class="SpellData" format=3]
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://b1usv76hynexj"]
 
-[ext_resource type="Script" path="res://data/Resources/ilmu/spell.gd" id="spell"]
+[ext_resource type="Script" uid="uid://s7pe5qibmbcl" path="res://data/Resources/ilmu/field.gd" id="1_qi7o5"]
+[ext_resource type="Script" uid="uid://cefhbim2wny71" path="res://data/Resources/spell-effects/spell-effect-definition.gd" id="3_haaqk"]
+[ext_resource type="Script" uid="uid://bbxxh60du46xv" path="res://data/Resources/spell-effects/apply-status-effect.gd" id="e0"]
+[ext_resource type="Script" uid="uid://da4fnpspwxtvb" path="res://data/Resources/spell-effects/projectile-field-effect.gd" id="e1"]
 [ext_resource type="Resource" path="res://data/magis/fields/physics.tres" id="field"]
-[ext_resource type="Texture2D" path="res://assets/temp/temp-mana.png" id="icon"]
-[ext_resource type="Script" path="res://data/Resources/spell-effects/apply-status-effect.gd" id="e0"]
-[ext_resource type="Script" path="res://data/Resources/spell-effects/projectile-field-effect.gd" id="e1"]
+[ext_resource type="Texture2D" uid="uid://bunu70fnhqow" path="res://assets/temp/temp-mana.png" id="icon"]
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="spell"]
 
 [sub_resource type="Resource" id="Effect_0"]
 script = ExtResource("e0")
@@ -20,30 +22,29 @@ strength = 0.35
 
 [resource]
 script = ExtResource("spell")
-academic_fields = [ExtResource("field")]
-spell_icon = ExtResource("icon")
-projectile_texture = ExtResource("icon")
-spell_incantation = Array[String](["right", "right", "up", "left", "left", "down"])
-effects = [SubResource("Effect_0"), SubResource("Effect_1")]
-spell_colour = Color(1.000, 0.400, 0.587, 1)
 spell_name = "Time Dilation Zone"
 spell_id = "phys-time-dilation-zone"
+spell_icon = ExtResource("icon")
+spell_colour = Color(1, 0.4, 0.587, 1)
+spell_flavour_text = "Locally slows hostile movement and projectile speed without changing Engine time scale."
+theory_desc = "Relativistic proper-time differences are physical; this zone uses fictional selective local modifiers. Mana supplies the fictional energy and control. Locally slows hostile movement and projectile speed without changing Engine time scale."
 magis_archetype = "Ilmiah"
 magis_comprehension = "Expert"
-theory_desc = "Relativistic proper-time differences are physical; this zone uses fictional selective local modifiers. Mana supplies the fictional energy and control. Locally slows hostile movement and projectile speed without changing Engine time scale."
-spell_flavour_text = "Locally slows hostile movement and projectile speed without changing Engine time scale."
-delivery = 5
+spell_incantation = Array[String](["right", "right", "up", "left", "left", "down"])
 upfront_cost = 30
 cast_time = 0.4
-cooldown = 2.5
+projectile_texture = ExtResource("icon")
 projectile_range = 950.0
-projectile_speed = 850.0
 projectile_size = 1.0
+projectile_speed = 850.0
 aoe_spell_radius = 180
+delivery = 5
+effects = Array[ExtResource("3_haaqk")]([SubResource("Effect_0"), SubResource("Effect_1")])
+academic_fields = Array[ExtResource("1_qi7o5")]([ExtResource("field")])
+cooldown = 2.5
+target_range = 500.0
 area_duration = 4.0
 area_tick_interval = 0.2
-target_range = 500.0
 beam_width = 30.0
 aim_placement = true
-
 affects_projectiles = true

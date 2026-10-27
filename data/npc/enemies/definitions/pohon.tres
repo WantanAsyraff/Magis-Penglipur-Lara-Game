@@ -1,34 +1,33 @@
-[gd_resource type="Resource" script_class="EnemyData" format=3]
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://ck2lcbxu470p6"]
 
-[ext_resource type="Script" path="res://data/npc/enemies/enemy-data.gd" id="x0"]
-[ext_resource type="Script" path="res://data/npc/enemies/enemy-stats-data.gd" id="x1"]
-[ext_resource type="Script" path="res://data/npc/enemies/enemy-perception-data.gd" id="x2"]
-[ext_resource type="Resource" path="res://data/npc/enemies/ai-profiles/pohon.tres" id="x3"]
-[ext_resource type="Resource" path="res://data/npc/enemies/abilities/pohon-melee.tres" id="x4"]
+[ext_resource type="Script" uid="uid://col4innb47rry" path="res://data/npc/enemies/enemy-ability-data.gd" id="1_wa4sl"]
+[ext_resource type="Script" uid="uid://doxgmvpmyr7hx" path="res://data/loot/loot-data.gd" id="5_1awn2"]
+[ext_resource type="Script" uid="uid://hql7i0k33mm8" path="res://data/npc/enemies/enemy-data.gd" id="x0"]
+[ext_resource type="Script" uid="uid://nehir4xnq5u1" path="res://data/npc/enemies/enemy-stats-data.gd" id="x1"]
+[ext_resource type="Script" uid="uid://b0j8jb57v35wo" path="res://data/npc/enemies/enemy-perception-data.gd" id="x2"]
+[ext_resource type="Resource" uid="uid://dv0v7upvii7vh" path="res://data/npc/enemies/ai-profiles/pohon.tres" id="x3"]
+[ext_resource type="Resource" uid="uid://cfaj803kxh43y" path="res://data/npc/enemies/abilities/pohon-melee.tres" id="x4"]
 [ext_resource type="Resource" path="res://data/npc/enemies/abilities/pohon-branch.tres" id="x5"]
-[ext_resource type="Resource" path="res://data/loot/enemy-drops/test-loot1.tres" id="x6"]
-[ext_resource type="Resource" path="res://data/loot/enemy-drops/pohon-bark-sample.tres" id="x7"]
-
-[sub_resource type="Resource" id="r0"]
-script = ExtResource("x1")
-max_health = 50
-max_mana = 400
-mana_regen = 0
-move_speed = 500
-chase_speed = 800
+[ext_resource type="Resource" uid="uid://c7hnhpvtmkbkr" path="res://data/loot/enemy-drops/test-loot1.tres" id="x6"]
+[ext_resource type="Resource" uid="uid://div5wmyiwnd0o" path="res://data/loot/enemy-drops/pohon-bark-sample.tres" id="x7"]
 
 [sub_resource type="Resource" id="r1"]
 script = ExtResource("x2")
 detection_range = 1242
 
+[sub_resource type="Resource" id="r0"]
+script = ExtResource("x1")
+max_health = 50
+move_speed = 500
+chase_speed = 800
+
 [resource]
 script = ExtResource("x0")
-enemy_id = "pohon"
 enemy_name = "Pohon"
 description = "Preserved scene identity with explicit reusable loadout."
 stats = SubResource("r0")
 perception = SubResource("r1")
 ai_profile = ExtResource("x3")
-abilities = [ExtResource("x4"), ExtResource("x5")]
+abilities = Array[ExtResource("1_wa4sl")]([ExtResource("x4"), ExtResource("x5")])
+loot = Array[ExtResource("5_1awn2")]([ExtResource("x6"), ExtResource("x7")])
 quest_enemy_id = "pohon"
-loot = [ExtResource("x6"), ExtResource("x7")]

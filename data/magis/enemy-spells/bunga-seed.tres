@@ -1,8 +1,10 @@
-[gd_resource type="Resource" script_class="SpellData" format=3]
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://cnrhq7o43qym8"]
 
-[ext_resource type="Script" path="res://data/Resources/ilmu/spell.gd" id="x0"]
-[ext_resource type="Script" path="res://data/Resources/spell-effects/damage-effect.gd" id="x1"]
-[ext_resource type="PackedScene" path="res://components/projectiles/enemy-magis-projectile.tscn" id="x2"]
+[ext_resource type="Script" uid="uid://s7pe5qibmbcl" path="res://data/Resources/ilmu/field.gd" id="1_4u4aw"]
+[ext_resource type="Script" uid="uid://cefhbim2wny71" path="res://data/Resources/spell-effects/spell-effect-definition.gd" id="2_028i5"]
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="x0"]
+[ext_resource type="Script" uid="uid://crs2l0ayghg1p" path="res://data/Resources/spell-effects/damage-effect.gd" id="x1"]
+[ext_resource type="PackedScene" uid="uid://b3d8ecoaccbfq" path="res://components/projectiles/enemy-magis-projectile.tscn" id="x2"]
 
 [sub_resource type="Resource" id="r0"]
 script = ExtResource("x1")
@@ -12,12 +14,12 @@ amount = 8
 script = ExtResource("x0")
 spell_name = "Seed Shot"
 spell_id = "bunga_seed"
-delivery = 1
-effects = [SubResource("r0")]
 spell_colour = Color(0.7, 0.9, 0.4, 1)
 upfront_cost = 4
 cast_time = 0.25
-projectile_speed = 650
+spell_scene = ExtResource("x2")
 projectile_range = 700
 projectile_size = 1
-spell_scene = ExtResource("x2")
+projectile_speed = 650
+delivery = 1
+effects = Array[ExtResource("2_028i5")]([SubResource("r0")])

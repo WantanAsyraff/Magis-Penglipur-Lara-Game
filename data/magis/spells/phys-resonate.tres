@@ -1,14 +1,15 @@
 [gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://kom4ljp2308k"]
 
-[ext_resource type="Script" path="res://data/Resources/ilmu/spell.gd" id="spell"]
+[ext_resource type="Script" uid="uid://s7pe5qibmbcl" path="res://data/Resources/ilmu/field.gd" id="1_jptuh"]
+[ext_resource type="Script" uid="uid://cefhbim2wny71" path="res://data/Resources/spell-effects/spell-effect-definition.gd" id="3_wdmm2"]
+[ext_resource type="Script" uid="uid://crs2l0ayghg1p" path="res://data/Resources/spell-effects/damage-effect.gd" id="e0"]
+[ext_resource type="Script" uid="uid://bbxxh60du46xv" path="res://data/Resources/spell-effects/apply-status-effect.gd" id="e1"]
 [ext_resource type="Resource" path="res://data/magis/fields/physics.tres" id="field"]
-[ext_resource type="Texture2D" path="res://assets/temp/temp-mana.png" id="icon"]
-[ext_resource type="Script" path="res://data/Resources/spell-effects/damage-effect.gd" id="e0"]
-[ext_resource type="Script" path="res://data/Resources/spell-effects/apply-status-effect.gd" id="e1"]
 [ext_resource type="PackedScene" uid="uid://h0msm0ixfq2n" path="res://components/effects/trails/root-snare-particle.tscn" id="legacy_1_d0enj"]
 [ext_resource type="PackedScene" uid="uid://5847o4yjb45a" path="res://components/effects/impact/ground-slam-impact.tscn" id="legacy_2_dh5an"]
-[ext_resource type="Texture2D" uid="uid://cnnad3qojgc2y" path="res://assets/temp/temp-mana.png" id="legacy_3_kwkkj"]
+[ext_resource type="Texture2D" uid="uid://bunu70fnhqow" path="res://assets/temp/temp-mana.png" id="legacy_3_kwkkj"]
 [ext_resource type="PackedScene" uid="uid://b2fvlmdplgevi" path="res://components/projectiles/player-magis-projectile.tscn" id="legacy_5_d7efd"]
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="spell"]
 
 [sub_resource type="Resource" id="Effect_0"]
 script = ExtResource("e0")
@@ -30,33 +31,30 @@ magnitude = 2
 
 [resource]
 script = ExtResource("spell")
-academic_fields = [ExtResource("field")]
-spell_icon = ExtResource("icon")
-
-spell_incantation = Array[String](["down", "left", "down", "left"])
-effects = [SubResource("Effect_0"), SubResource("Effect_1"), SubResource("Effect_2")]
-spell_colour = Color(1.000, 0.969, 0.400, 1)
 spell_name = "Resonate"
 spell_id = "phys_resonate"
-magis_archetype = "Ilmiah"
-magis_comprehension = "Novice"
-theory_desc = "Driven oscillations near a natural frequency can grow when damping is small. Mana supplies the fictional energy and control. Stacks resonance up to three times and deals bounded periodic damage."
+spell_icon = ExtResource("legacy_3_kwkkj")
+spell_colour = Color(1, 0.969, 0.4, 1)
 spell_flavour_text = "Stacks resonance up to three times and deals bounded periodic damage."
-delivery = 1
+theory_desc = "Driven oscillations near a natural frequency can grow when damping is small. Mana supplies the fictional energy and control. Stacks resonance up to three times and deals bounded periodic damage."
+magis_archetype = "Ilmiah"
+spell_incantation = Array[String](["down", "left", "down", "left"])
 upfront_cost = 25
 cast_time = 0.1
-cooldown = 1.0
-projectile_range = 900.0
-projectile_speed = 990.0
-projectile_size = 0.9
-aoe_spell_radius = 0.0
-area_duration = 4.0
-area_tick_interval = 0.5
-target_range = 500.0
-beam_width = 30.0
-projectile_damage = 14.0
-has_wave_tag = true
 spell_scene = ExtResource("legacy_5_d7efd")
 projectile_texture = ExtResource("legacy_3_kwkkj")
 projectile_particles = ExtResource("legacy_2_dh5an")
 impact_particles = ExtResource("legacy_1_d0enj")
+projectile_range = 900.0
+projectile_size = 0.9
+projectile_damage = 14.0
+projectile_speed = 990.0
+delivery = 1
+effects = Array[ExtResource("3_wdmm2")]([SubResource("Effect_0"), SubResource("Effect_1"), SubResource("Effect_2")])
+academic_fields = Array[ExtResource("1_jptuh")]([ExtResource("field")])
+cooldown = 1.0
+target_range = 500.0
+area_duration = 4.0
+area_tick_interval = 0.5
+beam_width = 30.0
+has_wave_tag = true

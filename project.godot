@@ -17,7 +17,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 config/name="Magis Penglipur Lara"
 config/tags=PackedStringArray("flagship", "rpg")
 run/main_scene="res://scenes/ui/menus/intro-menus/main-menu.tscn"
-config/features=PackedStringArray("4.6", "GL Compatibility")
+config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
@@ -26,11 +26,11 @@ Player_Global_Data="*res://autoloads/player-data.gd"
 Spell_Library="*res://autoloads/spell-library.gd"
 Player_Manager="*res://autoloads/player-manager.gd"
 Network_Manager="*res://autoloads/network-manager.gd"
-SceneManager="*res://addons/scene_manager/SceneManager.tscn"
+SceneManager="*uid://j20v4cg7v8m1"
 Scene_Registry="*res://autoloads/scene-registry.gd"
 Dialogic="*uid://ds2q0uclmolvu"
-Noray="*res://addons/netfox.noray/noray.gd"
-PacketHandshake="*res://addons/netfox.noray/packet-handshake.gd"
+Noray="*uid://gu4bv4tgms3x"
+PacketHandshake="*uid://tt3j25a05n7c"
 World_Manifest="*res://autoloads/world-manifest.gd"
 QuestManager="*res://autoloads/quest-manager.gd"
 Inventory_Manager="*res://autoloads/inventory-manager.gd"

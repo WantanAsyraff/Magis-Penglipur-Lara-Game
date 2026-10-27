@@ -1,30 +1,18 @@
-[gd_resource type="Resource" script_class="EnemyData" format=3]
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://f8hbxswbot4w"]
 
-[ext_resource type="Script" path="res://data/npc/enemies/enemy-data.gd" id="x0"]
+[ext_resource type="Script" uid="uid://cefhbim2wny71" path="res://data/Resources/spell-effects/spell-effect-definition.gd" id="2_0j4hu"]
+[ext_resource type="Script" uid="uid://doxgmvpmyr7hx" path="res://data/loot/loot-data.gd" id="6_ctksd"]
+[ext_resource type="Script" uid="uid://hql7i0k33mm8" path="res://data/npc/enemies/enemy-data.gd" id="x0"]
 [ext_resource type="PackedScene" path="res://components/NPCs/enemies/visuals/crocodile.tscn" id="x1"]
-[ext_resource type="Script" path="res://data/npc/enemies/enemy-stats-data.gd" id="x2"]
-[ext_resource type="Script" path="res://data/npc/enemies/enemy-perception-data.gd" id="x3"]
-[ext_resource type="Resource" path="res://data/npc/enemies/ai-profiles/heavy-guardian.tres" id="x4"]
-[ext_resource type="Script" path="res://data/npc/enemies/enemy-ability-data.gd" id="x5"]
-[ext_resource type="Script" path="res://data/Resources/spell-effects/damage-effect.gd" id="x6"]
-[ext_resource type="Script" path="res://data/Resources/spell-effects/knockback-effect.gd" id="x7"]
+[ext_resource type="Script" uid="uid://nehir4xnq5u1" path="res://data/npc/enemies/enemy-stats-data.gd" id="x2"]
+[ext_resource type="Script" uid="uid://b0j8jb57v35wo" path="res://data/npc/enemies/enemy-perception-data.gd" id="x3"]
+[ext_resource type="Resource" uid="uid://dkh51asv3ocyl" path="res://data/npc/enemies/ai-profiles/heavy-guardian.tres" id="x4"]
+[ext_resource type="Script" uid="uid://col4innb47rry" path="res://data/npc/enemies/enemy-ability-data.gd" id="x5"]
+[ext_resource type="Script" uid="uid://crs2l0ayghg1p" path="res://data/Resources/spell-effects/damage-effect.gd" id="x6"]
+[ext_resource type="Script" uid="uid://c0pnvjkbrcl16" path="res://data/Resources/spell-effects/knockback-effect.gd" id="x7"]
 [ext_resource type="Resource" path="res://data/loot/bakau/drop-011.tres" id="x8"]
 [ext_resource type="Resource" path="res://data/loot/bakau/drop-012.tres" id="x9"]
 [ext_resource type="Resource" path="res://data/loot/bakau/drop-013.tres" id="x10"]
-
-[sub_resource type="Resource" id="r0"]
-script = ExtResource("x2")
-max_health = 180
-max_mana = 0
-mana_regen = 0
-move_speed = 85
-chase_speed = 170
-defense = 3
-knockback_resistance = 0
-
-[sub_resource type="Resource" id="r1"]
-script = ExtResource("x3")
-detection_range = 650
 
 [sub_resource type="Resource" id="r2"]
 script = ExtResource("x6")
@@ -38,19 +26,30 @@ force = 140
 script = ExtResource("x5")
 ability_id = "enemy_mangroove_crocodile_strike"
 kind = 0
+effects = Array[ExtResource("2_0j4hu")]([SubResource("r2"), SubResource("r3")])
 max_range = 150
-cooldown = 1.3
 windup = 0.3
-effects = [SubResource("r2"), SubResource("r3")]
+cooldown = 1.3
+
+[sub_resource type="Resource" id="r1"]
+script = ExtResource("x3")
+detection_range = 650
+
+[sub_resource type="Resource" id="r0"]
+script = ExtResource("x2")
+max_health = 180
+max_mana = 0
+move_speed = 85
+chase_speed = 170
+defense = 3
 
 [resource]
 script = ExtResource("x0")
-enemy_id = "enemy_mangroove_crocodile"
 enemy_name = "Crocodile"
 visual_scene = ExtResource("x1")
 stats = SubResource("r0")
 perception = SubResource("r1")
 ai_profile = ExtResource("x4")
-abilities = [SubResource("r4")]
+abilities = Array[ExtResource("x5")]([SubResource("r4")])
+loot = Array[ExtResource("6_ctksd")]([ExtResource("x8"), ExtResource("x9"), ExtResource("x10")])
 quest_enemy_id = "enemy_mangroove_crocodile"
-loot = [ExtResource("x8"), ExtResource("x9"), ExtResource("x10")]

@@ -1,10 +1,12 @@
-[gd_resource type="Resource" script_class="SpellData" format=3]
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://dqpax6md3fuk8"]
 
-[ext_resource type="Script" path="res://data/Resources/ilmu/spell.gd" id="spell"]
+[ext_resource type="Script" uid="uid://s7pe5qibmbcl" path="res://data/Resources/ilmu/field.gd" id="1_8kcye"]
+[ext_resource type="Script" uid="uid://cefhbim2wny71" path="res://data/Resources/spell-effects/spell-effect-definition.gd" id="3_38kdv"]
+[ext_resource type="Script" uid="uid://crs2l0ayghg1p" path="res://data/Resources/spell-effects/damage-effect.gd" id="e0"]
+[ext_resource type="Script" uid="uid://bbxxh60du46xv" path="res://data/Resources/spell-effects/apply-status-effect.gd" id="e1"]
 [ext_resource type="Resource" path="res://data/magis/fields/physics.tres" id="field"]
-[ext_resource type="Texture2D" path="res://assets/temp/temp-mana.png" id="icon"]
-[ext_resource type="Script" path="res://data/Resources/spell-effects/damage-effect.gd" id="e0"]
-[ext_resource type="Script" path="res://data/Resources/spell-effects/apply-status-effect.gd" id="e1"]
+[ext_resource type="Texture2D" uid="uid://bunu70fnhqow" path="res://assets/temp/temp-mana.png" id="icon"]
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="spell"]
 
 [sub_resource type="Resource" id="Effect_0"]
 script = ExtResource("e0")
@@ -14,38 +16,35 @@ amount = 12
 script = ExtResource("e1")
 status = "charged"
 duration = 5
-magnitude = 0
 
 [sub_resource type="Resource" id="Effect_2"]
 script = ExtResource("e1")
-status = "stun"
 duration = 0.7
-magnitude = 0
 
 [resource]
 script = ExtResource("spell")
-academic_fields = [ExtResource("field")]
-spell_icon = ExtResource("icon")
-projectile_texture = ExtResource("icon")
-spell_incantation = Array[String](["right", "right", "up", "down", "down", "down"])
-effects = [SubResource("Effect_0"), SubResource("Effect_1"), SubResource("Effect_2")]
-spell_colour = Color(0.400, 1.000, 0.906, 1)
 spell_name = "Induction Grid"
 spell_id = "phys-induction-grid"
+spell_icon = ExtResource("icon")
+spell_colour = Color(0.4, 1, 0.906, 1)
+spell_flavour_text = "Single-use charged entry trap with brief stun."
+theory_desc = "Changing magnetic flux induces an electromotive force. Mana supplies the fictional energy and control. Single-use charged entry trap with brief stun."
 magis_archetype = "Ilmiah"
 magis_comprehension = "Intermediate"
-theory_desc = "Changing magnetic flux induces an electromotive force. Mana supplies the fictional energy and control. Single-use charged entry trap with brief stun."
-spell_flavour_text = "Single-use charged entry trap with brief stun."
-delivery = 7
+spell_incantation = Array[String](["right", "right", "up", "down", "down", "down"])
 upfront_cost = 20
 cast_time = 0.2
-cooldown = 1.5
+projectile_texture = ExtResource("icon")
 projectile_range = 950.0
-projectile_speed = 850.0
 projectile_size = 1.0
+projectile_speed = 850.0
 aoe_spell_radius = 150.0
+delivery = 7
+effects = Array[ExtResource("3_38kdv")]([SubResource("Effect_0"), SubResource("Effect_1"), SubResource("Effect_2")])
+academic_fields = Array[ExtResource("1_8kcye")]([ExtResource("field")])
+cooldown = 1.5
+target_range = 500.0
 area_duration = 8
 area_tick_interval = 0.5
-target_range = 500.0
 beam_width = 30.0
 aim_placement = true

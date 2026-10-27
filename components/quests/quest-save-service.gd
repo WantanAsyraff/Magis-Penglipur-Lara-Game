@@ -25,6 +25,14 @@ static func stage(manager: Node, data: Dictionary) -> Dictionary:
 		if not data.get(key) is Dictionary: return {}
 	for key in ["player_xp", "currency"]:
 		if not (data.get(key) is float or data.get(key) is int) or not is_finite(float(data[key])) or float(data[key]) < 0: return {}
+	for id in data.completed_quests:
+		if not id is String or not manager.registry.quests.has(id): return {}
+	for id in data.learned_spells:
+		if not id is String: return {}
+	for claim in data.claims.values():
+		if not claim is Dictionary or not claim.get("quest_id") is String or not claim.get("owner_id") is String: return {}
+	for receipt in data.acquisition_receipts.values():
+		if not (receipt is int or receipt is float) or not is_finite(float(receipt)) or float(receipt) < 0: return {}
 	var staged_inventory := {}
 	var max_slots := int(data.get("max_slots", 64))
 	if max_slots < 1 or max_slots > 10000: return {}
@@ -43,6 +51,9 @@ static func stage(manager: Node, data: Dictionary) -> Dictionary:
 	var instances := {}
 	for row in data.instances:
 		if not row is Dictionary: return {}
+		if not row.get("accepted_prerequisites", []) is Array: return {}
+		for prerequisite in row.get("accepted_prerequisites", []):
+			if not prerequisite is String or not manager.registry.quests.has(prerequisite): return {}
 		var quest_id := String(row.get("quest_id", ""))
 		if not manager.registry.quests.has(quest_id) or row.get("owner_id", "") != manager.active_owner_id: return {}
 		var quest: QuestData = manager.registry.quests[quest_id]
@@ -53,12 +64,17 @@ static func stage(manager: Node, data: Dictionary) -> Dictionary:
 		if state < 0 or state >= QuestInstance.Status.size() or not row.get("objective_progress") is Dictionary: return {}
 		instance.status = state as QuestInstance.Status
 		for obj in quest.objectives:
-			var progress := int(row.objective_progress.get(obj.objective_id, 0))
+			var raw: Variant = row.objective_progress.get(obj.objective_id, 0)
+			if not (raw is int or raw is float) or not is_finite(float(raw)): return {}
+			var progress := int(raw)
 			if progress < 0 or progress > obj.required_amount: return {}
 			instance.objective_progress[obj.objective_id] = progress
 		instance.reward_claimed = bool(row.get("reward_claimed", false))
 		if (state == QuestInstance.Status.HANDED_OFF) != instance.reward_claimed: return {}
-		if instance.reward_claimed and not data.claims.has(instance.instance_id): return {}
+		if instance.reward_claimed:
+			if not data.claims.has(instance.instance_id) or quest_id not in data.completed_quests: return {}
+			var claim: Variant = data.claims[instance.instance_id]
+			if not claim is Dictionary or claim.get("owner_id") != manager.active_owner_id or claim.get("quest_id") != quest_id: return {}
 		instance.accepted_at = float(row.get("accepted_at", 0))
 		instance.completed_at = float(row.get("completed_at", 0))
 		instance.pending_claim = String(row.get("pending_claim", ""))

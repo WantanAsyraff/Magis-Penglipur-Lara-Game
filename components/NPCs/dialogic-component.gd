@@ -10,14 +10,18 @@ signal dialogue_ended
 @export var QUEST_TIMELINE_PATH = "res://dialogue/quest/QuestDialogue.dtl"
 
 var _open: bool = false
+var _cancelled: bool = false
+var _quest_npc: String = ""
 
 # -------------------------
 # DIRECT TEXT (quest dialogue)
 # -------------------------
-func start_direct_text(text: String, npc_id: String = "") -> void:
-	if _open or text.is_empty(): 
-		return
+func start_direct_text(text: String, npc_id: String = "") -> bool:
+	if _open or Dialogic.current_timeline != null or text.is_empty() or not use_dialogic: 
+		return false
 	
+	_cancelled = false
+	_quest_npc = npc_id
 	_open = true
 	Player_Global_Data.p_moveable = false
 	dialogue_started.emit()
@@ -34,14 +38,17 @@ func start_direct_text(text: String, npc_id: String = "") -> void:
 	
 	await Dialogic.timeline_ended
 	_finish_dialogue()
+	return not _cancelled
 
 # -------------------------
 # STANDARD TIMELINE
 # -------------------------
 func start(npc_id: String = "") -> bool:
-	if _open or not use_dialogic or npc_timeline == null: 
+	if _open or Dialogic.current_timeline != null or not use_dialogic or npc_timeline == null: 
 		return false
 	
+	_cancelled = false
+	_quest_npc = npc_id
 	_open = true
 	Player_Global_Data.p_moveable = false
 	dialogue_started.emit()
@@ -54,13 +61,14 @@ func start(npc_id: String = "") -> bool:
 	
 	await Dialogic.timeline_ended
 	_finish_dialogue()
-	return true
+	return not _cancelled
 
 # -------------------------
 # HELPERS
 # -------------------------
 func close() -> void:
 	if not _open: return
+	_cancelled = true
 	Dialogic.end_timeline()
 
 func _finish_dialogue() -> void:
@@ -70,7 +78,14 @@ func _finish_dialogue() -> void:
 	Dialogic.VAR.set_variable("CurrentPortrait", "")
 	
 	Player_Global_Data.p_moveable = true
+	if not _cancelled and not _quest_npc.is_empty(): QuestManager.publish(GameplayEvent.new(GameplayEvent.Type.DIALOGUE_COMPLETED, _quest_npc))
 	dialogue_ended.emit()
 
 func is_open() -> bool:
 	return _open
+
+func _exit_tree() -> void:
+	if _open:
+		_cancelled = true
+		Dialogic.end_timeline()
+		Player_Global_Data.p_moveable = true

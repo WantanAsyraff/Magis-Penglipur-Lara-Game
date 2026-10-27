@@ -7,7 +7,7 @@
 [ext_resource type="Resource" path="res://data/npc/enemies/abilities/bunga-melee.tres" id="x4"]
 [ext_resource type="Resource" path="res://data/npc/enemies/abilities/bunga-seed.tres" id="x5"]
 [ext_resource type="Resource" path="res://data/npc/enemies/abilities/bunga-repulse.tres" id="x6"]
-[ext_resource type="Resource" path="res://data/loot/enemy-drops/fish-loot.tres" id="x7"]
+[ext_resource type="Resource" path="res://data/loot/enemy-drops/daun-residue.tres" id="x7"]
 
 [sub_resource type="Resource" id="r0"]
 script = ExtResource("x1")

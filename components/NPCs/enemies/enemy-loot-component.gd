@@ -26,7 +26,7 @@ func _process_all_loot() -> void:
 		_process_loot_entry(loot)
 
 func _process_loot_entry(loot: LootData) -> void:
-	if loot == null or not loot.validate().is_empty() or randf() >= loot.drop_chance:
+	if loot == null or not loot.validate().is_empty() or loot.drop_chance <= 0 or (loot.drop_chance < 1 and randf() >= loot.drop_chance):
 		return
 	_spawn_item(loot)
 	for extra in loot.extra_drops:

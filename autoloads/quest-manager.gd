@@ -193,6 +193,8 @@ func changed(instance: QuestInstance = null) -> void:
 func _update_goals_from_instance(_instance: QuestInstance) -> void:
 	_update_goals()
 func _update_goals() -> void:
+	var selected := get_instance(selected_instance_id)
+	if selected and selected.status not in [QuestInstance.Status.ACTIVE, QuestInstance.Status.COMPLETE]: selected_instance_id = ""
 	var keep: Array[String] = []
 	for line in Player_Global_Data.active_goals:
 		if line not in _quest_goal_lines: keep.append(line)

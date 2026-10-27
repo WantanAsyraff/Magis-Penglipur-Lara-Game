@@ -1,6 +1,10 @@
 class_name QuestRewardService extends RefCounted
 static func claim(manager: Node, instance: QuestInstance, npc_id: String) -> bool:
 	if instance.owner_id != manager.active_owner_id or instance.status != QuestInstance.Status.COMPLETE or instance.reward_claimed or manager.reward_claims.has(instance.instance_id): return false
+	if not instance.quest_data.repeatable:
+		if instance.quest_data.quest_id in Player_Global_Data.completed_quests: return false
+		for claim in manager.reward_claims.values():
+			if claim.get("owner_id") == instance.owner_id and claim.get("quest_id") == instance.quest_data.quest_id: return false
 	var required_npc := instance.quest_data.hand_in_npc_id if not instance.quest_data.hand_in_npc_id.is_empty() else instance.assigned_npc_id
 	if not required_npc.is_empty() and npc_id != required_npc: return false
 	QuestObjectiveEvaluator.reconcile_inventory(instance, Inventory_Manager.inventory)
@@ -38,6 +42,8 @@ static func claim(manager: Node, instance: QuestInstance, npc_id: String) -> boo
 		var delta := Inventory_Manager.get_item_quantity(id) - int(before_inventory.get(id, {}).get("quantity", 0))
 		if delta == 0: continue
 		var event := GameplayEvent.new(GameplayEvent.Type.ITEM_COLLECTED if delta > 0 else GameplayEvent.Type.ITEM_REMOVED, id, absi(delta), instance.owner_id, "reward:" + instance.instance_id + ":" + id)
+		var item: ItemData = Inventory_Manager.inventory.get(id, before_inventory.get(id, {})).data
+		event.tags = item.tags.duplicate()
 		manager.pending_events.append(event.to_dict())
 		if delta > 0: Inventory_Manager.acquisition_receipts[event.event_id] = delta
 	manager.pending_events.append(GameplayEvent.new(GameplayEvent.Type.QUEST_COMPLETED, instance.quest_data.quest_id, 1, instance.owner_id, "quest:" + instance.instance_id).to_dict())
@@ -68,8 +74,19 @@ static func claim(manager: Node, instance: QuestInstance, npc_id: String) -> boo
 	return true
 static func delivery_plan(instance: QuestInstance) -> Dictionary:
 	var objectives: Array[QuestObjectiveData] = []
+	var selected_groups := {}
+	for group in instance.quest_data.objective_groups:
+		var chosen: Array[String] = []
+		if not group.is_optional:
+			for member in instance.quest_data.objectives:
+				if member.group_id != group.group_id or member.is_optional or not instance.done(member.objective_id): continue
+				chosen.append(member.objective_id)
+				if group.policy == QuestObjectiveGroup.Policy.ANY and chosen.size() >= group.minimum_completed: break
+		selected_groups[group.group_id] = chosen
 	for obj in instance.quest_data.objectives:
-		if obj.type == QuestObjectiveData.ObjectiveType.COLLECT_ITEM and obj.collection_mode == QuestObjectiveData.CollectionMode.DELIVERY and not obj.is_optional: objectives.append(obj)
+		if obj.type != QuestObjectiveData.ObjectiveType.COLLECT_ITEM or obj.collection_mode != QuestObjectiveData.CollectionMode.DELIVERY or obj.is_optional: continue
+		if obj.group_id != &"" and obj.objective_id not in selected_groups.get(obj.group_id, []): continue
+		objectives.append(obj)
 	objectives.sort_custom(func(a, b): return a.targets().size() < b.targets().size())
 	var available := {}
 	for id in Inventory_Manager.inventory: available[id] = Inventory_Manager.get_item_quantity(id)

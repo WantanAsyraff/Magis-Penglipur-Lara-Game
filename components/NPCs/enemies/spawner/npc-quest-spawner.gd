@@ -70,6 +70,11 @@ func spawn_npc(npc_id_to_spawn: String) -> void:
 	var npc_scene: PackedScene = npc_directory[npc_id_to_spawn]
 	var npc_instance: Node2D = npc_scene.instantiate()
 	
+	var prepared := npc_instance.find_child("QuestNPCComponent") as QuestNPCComponent
+	if prepared:
+		prepared.faculty = room_faculty
+		prepared.npc_id = npc_id_to_spawn
+	npc_instance.position = Vector2(randf_range(-100, 100), randf_range(-50, 50))
 	add_child(npc_instance)
 	active_npcs.append(npc_instance)
 	
@@ -115,7 +120,7 @@ func _clear_and_reset_room() -> void:
 		
 		var q_comp := npc.find_child("QuestNPCComponent") as QuestNPCComponent
 		if q_comp:
-			if q_comp._instance and q_comp._instance.status == QuestInstance.Status.ACTIVE:
+			if q_comp._instance and q_comp._instance.status in [QuestInstance.Status.ACTIVE, QuestInstance.Status.COMPLETE]:
 				continue
 			to_remove.append(npc)
 

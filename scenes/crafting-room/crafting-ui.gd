@@ -107,11 +107,13 @@ func _can_craft(recipe: ItemData) -> bool:
 	var inv := _get_inv()
 	if inv == null:
 		return false
-	var ok1: bool = recipe.ingredient_1 == null or inv.has_item(recipe.ingredient_1.item_id, recipe.qty_1)
-	var ok2: bool = recipe.ingredient_2 == null or inv.has_item(recipe.ingredient_2.item_id, recipe.qty_2)
-	var ok3: bool = recipe.ingredient_3 == null or inv.has_item(recipe.ingredient_3.item_id, recipe.qty_3)
-	print("[CraftingUI] _can_craft: ok1=", ok1, " ok2=", ok2, " ok3=", ok3)
-	return ok1 and ok2 and ok3
+	return bool(_craft_plan(recipe).get("ok", false))
+
+func _craft_plan(recipe: ItemData) -> Dictionary:
+	var removals := {}
+	for pair in [[recipe.ingredient_1, recipe.qty_1], [recipe.ingredient_2, recipe.qty_2], [recipe.ingredient_3, recipe.qty_3]]:
+		if pair[0]: removals[pair[0].item_id] = int(removals.get(pair[0].item_id, 0)) + int(pair[1])
+	return Inventory_Manager.plan_transaction(removals, [{"item": recipe, "quantity": 1}])
 
 func _refresh_craft_button() -> void:
 	var can: bool = _can_craft(selected_recipe)
@@ -126,15 +128,9 @@ func _on_crafting_button_pressed() -> void:
 	var inv := _get_inv()
 	if inv == null:
 		return
-	if selected_recipe.ingredient_1:
-		print("[CraftingUI] removing: ", selected_recipe.ingredient_1.item_name, " x", selected_recipe.qty_1)
-		inv.remove_item(selected_recipe.ingredient_1, selected_recipe.qty_1)
-	if selected_recipe.ingredient_2:
-		print("[CraftingUI] removing: ", selected_recipe.ingredient_2.item_name, " x", selected_recipe.qty_2)
-		inv.remove_item(selected_recipe.ingredient_2, selected_recipe.qty_2)
-	if selected_recipe.ingredient_3:
-		print("[CraftingUI] removing: ", selected_recipe.ingredient_3.item_name, " x", selected_recipe.qty_3)
-		inv.remove_item(selected_recipe.ingredient_3, selected_recipe.qty_3)
-	print("[CraftingUI] adding crafted item: ", selected_recipe.item_name)
-	inv.add_item(selected_recipe, 1)
+	var plan := _craft_plan(selected_recipe)
+	if not plan.ok: return
+	var before := Inventory_Manager.snapshot()
+	Inventory_Manager.inventory = plan.inventory
+	Inventory_Manager.emit_changes(before)
 	_on_recipe_selected(selected_recipe)

@@ -4,6 +4,15 @@ var checks := 0
 var failures := 0
 var events: Array[Dictionary] = []
 
+func completed_count(chain: int = -1) -> int:
+	return events.filter(func(event): return event.status == SpellCastingComponent.RequestStatus.COMPLETED and (chain == -1 or event.chain == chain)).size()
+
+func visible_keys(ui: IncantationAssistant) -> Array[String]:
+	var result: Array[String] = []
+	for direction in ui.direction_icons:
+		if ui.direction_icons[direction].visible: result.append(direction)
+	return result
+
 func check(ok: bool, label: String) -> void:
 	checks += 1
 	if not ok: failures += 1
@@ -84,36 +93,36 @@ func _ready() -> void:
 	player.casting.request_status.connect(func(id, chain, spell, status, reason): events.append({"id": id, "chain": chain, "spell": spell, "status": status, "reason": reason}))
 	check(not ui.visible, "Assistant hidden outside stance")
 	player._enter_casting_stance()
-	check(ui.visible and ui.guided.visible, "Guided assistant appears in stance")
+	check(ui.visible and visible_keys(ui) == ["up", "down"], "Guided assistant appears in stance")
 	player._add_sequence("down")
-	check(ui.sequence_row.get_child_count() == 1 and ui.sequence_row.get_child(0).texture == ui.ICONS.down, "Direction icon reflects actual input")
+	check(visible_keys(ui) == ["left"] and ui.direction_icons.left.texture == ui.ICONS.left, "Only the actual next direction is shown")
 	player._add_sequence("left")
-	check(ui.predictions.get_child_count() == 3 and ui.more_label.visible, "Predictions cap at three plus additional-count indicator")
+	check(visible_keys(ui) == ["down", "right"], "Branching prefix displays only eligible next icons")
 	check(player.incantations.get_reachable_chain_spells()[0] == a, "Nearest prediction deterministically ordered")
 	a.cast_time = 0.5
 	player._add_sequence("down")
 	var first_id: int = events.back().id
 	var first_chain: int = events.back().chain
-	check(ui.result.text.contains("Preparing") and ui.counts.is_empty(), "Preparation never displays false Cast or chain success")
+	check(player.spell_label.text.contains("Preparing") and completed_count() == 0, "Preparation never displays false Cast or chain success")
 	player._add_sequence("left")
-	check(ui.result.text.contains("Queued") and Player_Global_Data.p_curr_mana == 98, "Queued result is distinct and unpaid")
+	check(player.spell_label.text.contains("Queued") and Player_Global_Data.p_curr_mana == 98, "Queued result is distinct and unpaid")
 	player._add_sequence("down")
-	check(player.casting._queue.size() == 2 and ui.counts.is_empty(), "Terminal chain clears input while two accepted requests remain queued")
-	check(ui.last_sequence.is_empty(), "Terminal resolver reset clears displayed sequence")
+	check(player.casting._queue.size() == 2 and completed_count() == 0, "Terminal chain clears input while two accepted requests remain queued")
+	check(visible_keys(ui) == ["up", "down"], "Terminal resolver reset displays valid starting icons")
 	player._clear_sequence()
 	check(player.casting.state == SpellCastingComponent.State.PREPARING and player.casting._queue.size() == 2, "Clear input leaves preparation and queue intact")
 	player._add_sequence("up")
-	check(ui.chain_label.text == "Chain ×0" and ui.success_row.get_child_count() == 0, "New incomplete incantation has its own chain indicator")
+	check(visible_keys(ui) == ["right"], "New incomplete incantation displays its own next key")
 	player._add_sequence("right")
 	check(events.back().chain != first_chain, "Independent incantation gets a new chain identity")
 	player.casting._physics_process(0.5)
-	check(ui.counts.get(first_chain) == 1 and ui.result.text.contains("Cast!"), "Successful execution increments original chain after input reset")
+	check(completed_count(first_chain) == 1 and player.spell_label.text.contains("Cast!"), "Successful execution increments original chain after input reset")
 	check(player.casting.context.request_id == first_id, "Cast context correlates to the original preparation request")
 	player.casting._physics_process(0)
 	player.casting._physics_process(0)
-	check(ui.counts.get(first_chain) == 3 and Player_Global_Data.p_curr_mana == 94, "Three successful chain spells pay independently and count three")
+	check(completed_count(first_chain) == 3 and Player_Global_Data.p_curr_mana == 94, "Three successful chain spells pay independently and count three")
 	player.casting._physics_process(0)
-	check(ui.counts.get(first_chain) == 3 and ui.counts.get(events.back().chain) == 1, "Later chain completion preserves both chain identities")
+	check(completed_count(first_chain) == 3 and completed_count(events.back().chain) == 1, "Later chain completion preserves both chain identities")
 	player._clear_sequence()
 	for key in ["down", "left", "down", "left"]: player._add_sequence(key)
 	var queued_id: int = events.back().id
@@ -121,12 +130,12 @@ func _ready() -> void:
 	player.casting._physics_process(0.5)
 	player.casting._physics_process(0)
 	check(events.back().id == queued_id and events.back().status == SpellCastingComponent.RequestStatus.FAILED and events.back().reason == "Not enough mana", "Deferred mana failure updates the correct queued request")
-	check(ui.result.text.contains("Failed: Not enough mana"), "UI displays actual execution failure")
+	check(player.spell_label.text.contains("Not enough mana"), "UI displays actual execution failure")
 	Player_Global_Data.p_curr_mana = 100
 	player.casting.cooldowns[a.spell_id] = 3
 	player._clear_sequence()
 	for key in a.spell_incantation: player._add_sequence(key)
-	check(events.back().status == SpellCastingComponent.RequestStatus.FAILED and ui.result.text.contains("cooling down"), "Cooldown rejection never shows successful cast")
+	check(events.back().status == SpellCastingComponent.RequestStatus.FAILED and player.spell_label.text.contains("cooling down"), "Cooldown rejection never shows successful cast")
 	check(player.casting.preview_restriction(a, 100).contains("Ready in"), "Cooldown forecast reads real casting cooldown")
 	player.casting.cooldowns.clear()
 	player.casting.enqueue_cast(a, Vector2.ZERO, Vector2.RIGHT, [], 300)
@@ -148,11 +157,11 @@ func _ready() -> void:
 	a.channel_duration = 1
 	a.mana_per_second = 3
 	player.casting.enqueue_cast(a, Vector2.ZERO, Vector2.RIGHT, [], 500)
-	check(events.back().status == SpellCastingComponent.RequestStatus.CHANNELING and ui.result.text.contains("Channeling"), "Channel request has correlated channeling feedback")
+	check(events.back().status == SpellCastingComponent.RequestStatus.CHANNELING and player.spell_label.text.contains("Channeling"), "Channel request has correlated channeling feedback")
 	player.casting._physics_process(0.2)
 	check(is_equal_approx(Player_Global_Data.p_curr_mana, 97.4), "Channel forecast uses the actual per-second payment model")
 	player.cancel_active_casting()
-	check(not ui.counts.has(500) and is_equal_approx(Player_Global_Data.p_curr_mana, 99.4), "Explicit channel cancellation refunds preparation but never spent channel mana or shows false completion")
+	check(completed_count(500) == 0 and is_equal_approx(Player_Global_Data.p_curr_mana, 99.4), "Explicit channel cancellation refunds preparation but never spent channel mana or shows false completion")
 	a.is_channelled = false
 	a.cast_time = 0.5
 	player.casting.enqueue_cast(a, Vector2.ZERO, Vector2.RIGHT, [], 501)
@@ -166,7 +175,7 @@ func _ready() -> void:
 	player._enter_casting_stance()
 	Player_Global_Data.assistance_mode = 1
 	Player_Global_Data.assistance_changed.emit(1)
-	check(ui.visible and not ui.guided.visible, "Minimal mode keeps feedback and hides prediction")
+	check(not ui.visible, "Minimal mode hides optional next-key guidance")
 	Player_Global_Data.assistance_mode = 2
 	Player_Global_Data.assistance_changed.emit(2)
 	check(not ui.visible, "Off hides optional assistant")
@@ -176,8 +185,8 @@ func _ready() -> void:
 		player._clear_sequence()
 		player._add_sequence("down")
 	await get_tree().process_frame
-	check(ui.sequence_row.get_child_count() == 1 and ui.predictions.get_child_count() <= 4, "Rapid input does not accumulate stale UI children")
-	check(ui.predictions.get_child(0).get_child(0).get_child(0).texture == a.spell_icon and IncantationAssistant.cost_text(a) == "2 MP", "Prediction icon and mana cost use actual SpellData")
+	check(ui.next_row.get_child_count() == 4 and visible_keys(ui) == ["left"], "Rapid input does not accumulate stale UI children")
+	check(ui.get_child_count() == 1 and ui.direction_icons.left.custom_minimum_size == Vector2(64, 64), "Assistant contains only enlarged key icons without a panel or text")
 	Dialogic.timeline_started.emit()
 	check(not ui.visible, "Dialogue suspends assistant")
 	Dialogic.timeline_ended.emit()

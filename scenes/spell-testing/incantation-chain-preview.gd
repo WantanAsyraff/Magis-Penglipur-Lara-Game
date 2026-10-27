@@ -32,7 +32,7 @@ func _ready() -> void:
 	await capture("01-empty", "Guided • equipped chain in the Physics laboratory")
 	player._add_sequence("down")
 	player._add_sequence("left")
-	await capture("02-prefix", "DOWN → LEFT • valid next input and remaining spell directions")
+	await capture("02-prefix", "DOWN → LEFT • only the next valid key icons")
 	player._add_sequence("down")
 	await get_tree().create_timer(0.35).timeout
 	await capture("03-strike", "Strike executed • continue LEFT for Resonate")
@@ -48,11 +48,11 @@ func _ready() -> void:
 	await capture("06-mana-failure", "Valid syntax • failed execution: Not enough mana")
 	player._clear_sequence()
 	player.incantation_rejected.emit()
-	await capture("07-invalid", "Invalid directional input has separate feedback")
+	await capture("07-invalid", "Incantation cleared • valid starting keys")
 	Player_Global_Data.assistance_mode = 1
 	Player_Global_Data.assistance_changed.emit(1)
 	player._add_sequence("down")
-	await capture("08-minimal", "Minimal • sequence and result without prediction")
+	await capture("08-minimal", "Minimal • optional key guidance hidden")
 	Player_Global_Data.assistance_mode = 2
 	Player_Global_Data.assistance_changed.emit(2)
 	await capture("09-off", "Off • core HUD and repertoire remain available")

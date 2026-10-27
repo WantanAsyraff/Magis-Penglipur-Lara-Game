@@ -63,21 +63,15 @@ Request IDs increase within each casting component and remain unchanged when a r
 
 A request started immediately skips QUEUED. A queued request is revalidated through the same start path when dequeued. Later enqueues cannot jump ahead of an existing queue during an idle frame. Saturation reports a distinct failed request. Cancellation reports every affected queued request as well as the active request, and component exit performs cancellation cleanup. Delivery failures and lost prepared targets follow the existing interruption path, retaining their specific reason.
 
-The assistant counts COMPLETED events only. Live channel effects retain their existing dispatch/payment behavior; the assistant counts the spell once on successful channel completion, not per live effect tick. It never reverses already dispatched effects or charges projected mana. Existing refund rules remain: reserved upfront mana is refunded before successful delivery, spent channel mana is not.
+The casting lifecycle still reports successful completion separately from recognition, queue acceptance, and preparation. The core player feedback label retains these results. Live channel payment, refunds, and authoritative execution are unchanged.
 
-Each player assigns an independent chain identity at a new input sequence or permitted restart. Queued requests keep that identity after clear, equipment rebuild, or terminal reset. The visible counter/trail follows the current input chain; results for a different pending chain explicitly identify an earlier chain. Historical counts are bounded, and only the last five completed spell icons per retained chain are stored.
+Each player assigns an independent chain identity at a new input sequence or permitted restart. Queued requests keep that identity after clear, equipment rebuild, or terminal reset. The optional assistant no longer displays a chain counter or stores completed spell icons.
 
-## HUD and forecasts
+## Minimalist HUD
 
-The reusable native Control scene is `scenes/ui/spell-combat-ui/incantation-assistant.tscn`. The local production Player creates it on a CanvasLayer after the remote-player early return. The UI subscribes to its player's resolver and request events, current mana, assistance settings, death, pause notifications, and Dialogic timelines. It has no gameplay execution methods.
+The reusable native Control scene is `scenes/ui/spell-combat-ui/incantation-assistant.tscn`. Following visual review, the large panel and its title, sequence, spell predictions, cost/readiness labels, result cards, and chain display were removed. Guided mode now shows **only valid next-direction icons**, enlarged from 26 to 64 viewport pixels in a transparent lower-center row. All eligible next inputs come from `get_valid_next_keys()`, including permitted restarts. There is no panel, background, border, text, or dynamically calculated panel height.
 
-Guided mode displays entered project direction icons, actual continuations/restarts, at most three prediction cards, additional possibility count, real spell icons/names/costs, advisory readiness, current mana, latest request result, and completed chain icons/count. Minimal keeps sequence, short results, warnings, and chain feedback. Off hides this optional Control; the original player result label and core combat HUD still receive feedback.
-
-The lower-center panel fits its contents. Predictions use three columns; long entered/remaining sequences scroll horizontally rather than enlarging the panel across the viewport. The existing RepetoirePanel stays available in a bounded scrollable right column. SpellSlot preserves its class and scene references, adds the authored spell icon, and shares cached direction textures with the assistant. The full repertoire/archive remains the place for the entire spell list.
-
-Candidate resources come only from the equipped trie. No Physics spell ID is hardcoded in the production assistant. Forecasts read current Player_Global_Data mana and the casting component's cooldown/restriction state. They show upfront costs and MP/s for channelled spells, marking duration-dependent costs as estimates. “Ready (preview)” is advisory: target validity and future mana/cooldown/authority can still change.
-
-Input/resolver/lifecycle updates are signal driven. A visible-only 0.2-second timer refreshes cooldown advisories; a signature avoids rebuilding unchanged forecasts. Direction resources are cached. Replaced children are detached immediately and freed; only one feedback tween is active, and retained completion icons/counts are bounded. Input sounds are quiet short generated tones; successful feedback uses `SpellData.cast_sound` when authored, with a restrained fallback tone. The UI uses the existing dark card/gold-border style and direction/spell assets.
+The local production Player owns the assistant on a CanvasLayer after the remote-player early return. Four cached TextureRects are toggled by resolver signals; there is no forecast timer or recurring layout rebuild. The row ignores mouse input and hides outside casting stance, during dialogue/pause/death, and in Minimal/Off modes. Core combat feedback and the existing repertoire remain available separately. The casting system, prediction query APIs, mana validation, and request lifecycle are unchanged by the visual simplification.
 
 ## Clear, cancellation, settings, and authority
 
@@ -89,7 +83,11 @@ Dialogue and pause hide/suspend the assistant. Exit stance and death hide it; tr
 
 To make a new spell discoverable: author/validate SpellData, register it in the existing library/export manifest, learn it, and equip it through the existing equipment pipeline. The equipment signal rebuilds the trie and clears stale input displays while accepted requests retain their original association. No assistant-specific spell list is maintained.
 
-## Verification — 27 October 2026
+## Minimalist revision verification
+
+After removing the panel, the updated assistant suite passed **60 checks, zero failures**, and all ten real-renderer previews were regenerated and inspected. The larger next-key-only row was verified at a 1280×720 window with the project's 1920×1080 stretched viewport. The broad source/PCK counts below describe the earlier V1 delivery; those broad suites were not rerun for this presentation-only revision.
+
+## Original V1 verification — 27 October 2026
 
 Most recent successful run per suite, counted once (repeated development runs excluded):
 

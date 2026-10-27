@@ -1,7 +1,10 @@
 class_name EnemyAbilityData extends Resource
 enum Kind { MELEE, SPELL }
 enum Role { OFFENSE, DEFENSE, HEAL, SUMMON }
-@export var ability_id: StringName = &""
+@export var ability_id: StringName = &"":
+	get:
+		if ability_id != &"": return ability_id
+		return StringName(resource_path.get_file().get_basename().replace("-", "_"))
 @export var kind: Kind = Kind.SPELL
 @export var role: Role = Role.OFFENSE
 @export var spell: SpellData

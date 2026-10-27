@@ -1,6 +1,9 @@
 class_name EnemyAIAction extends Resource
 enum Kind { IDLE, PATROL, INVESTIGATE, CHASE, RETREAT, MAINTAIN_RANGE, MELEE, RANGED, CAST, DEFEND, REPOSITION, RECOVER, FLEE, SUMMON }
-@export var action_id: StringName = &""
+@export var action_id: StringName = &"":
+	get:
+		if action_id != &"": return action_id
+		return StringName(Kind.keys()[kind].to_lower()) if kind >= 0 and kind < Kind.size() else &""
 @export var kind: Kind = Kind.IDLE
 @export var utility: float = 1
 @export var max_health_ratio: float = 1

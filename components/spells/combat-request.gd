@@ -5,7 +5,6 @@ static func apply(source: Node2D, target: Node2D, effects: Array[SpellEffectDefi
 	context.direction = direction.normalized()
 	var h := source.get_node_or_null("HitboxComponent") as HitboxComponent
 	if h: context.modifiers.damage = h.effects.magnitude("buff_damage")
-	context.modifiers.scale = float(source.get_meta("outgoing_damage_multiplier", 1.0))
 	return SpellExecutor.execute_effects(context, target, effects)
 static func strike(source: Node2D, target: Node2D, damage: float, knockback: float = 0) -> bool:
 	var hit := DamageEffect.new()

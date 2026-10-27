@@ -9,11 +9,12 @@ func tick(delta: float) -> void:
 	var bb: Dictionary = enemy.detection.blackboard
 	var profile: EnemyAIProfile = enemy.ai.profile
 	var direction := 0.0
-	var speed: float = enemy.chase_speed + enemy.hitbox.effects.magnitude("buff_speed")
+	var speed := maxf(0, enemy.chase_speed + enemy.hitbox.effects.magnitude("buff_speed"))
 	if enemy.combat.busy(): enemy.velocity.x = move_toward(enemy.velocity.x, 0, speed * delta * 4); return
 	match intent:
 		EnemyAIAction.Kind.PATROL:
-			enemy.velocity.x = enemy.patrol.patrol_tick(enemy, enemy._facing_right)
+			var patrol_velocity: float = enemy.patrol.patrol_tick(enemy, enemy._facing_right)
+			enemy.velocity.x = signf(patrol_velocity) * maxf(0, absf(patrol_velocity) + enemy.hitbox.effects.magnitude("buff_speed")) * (1 - enemy.hitbox.get_slow_factor())
 			enemy._update_facing(enemy.velocity.x)
 			return
 		EnemyAIAction.Kind.INVESTIGATE, EnemyAIAction.Kind.REPOSITION:

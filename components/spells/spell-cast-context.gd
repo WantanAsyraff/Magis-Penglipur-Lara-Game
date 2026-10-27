@@ -22,6 +22,7 @@ func _init(actor: Node2D = null, definition: SpellData = null) -> void:
 	spell = definition
 	timestamp_msec = Time.get_ticks_msec()
 	if is_instance_valid(actor):
+		modifiers.damage_multiplier = float(actor.get_meta("outgoing_damage_multiplier", 1.0))
 		source_position = actor.global_position
 		source_team = CombatFactions.faction(actor)
 

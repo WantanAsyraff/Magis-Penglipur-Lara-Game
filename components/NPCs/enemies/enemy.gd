@@ -1,4 +1,10 @@
 class_name Enemy extends CharacterBody2D
+static var _next_spawn_id: int = 0
+
+static func allocate_spawn_id(prefix: String) -> String:
+	_next_spawn_id += 1
+	return "%s:%d" % [prefix, _next_spawn_id]
+
 signal enemy_died
 signal enemy_hurt(amount: float)
 signal state_changed(new_state: State)
@@ -40,7 +46,7 @@ func _ready() -> void:
 	set_meta("enemy_id", definition.enemy_id)
 	set_meta("faction_id", definition.faction_id)
 	set_meta("spell_team", definition.faction_id)
-	if spawn_id.is_empty(): spawn_id = "%s:%s" % [definition.enemy_id, get_path()]
+	if spawn_id.is_empty(): spawn_id = allocate_spawn_id("%s:%s" % [definition.enemy_id, get_path()])
 	set_meta("enemy_network_id", spawn_id)
 	add_to_group("enemy")
 	stats = EnemyStatsComponent.new()

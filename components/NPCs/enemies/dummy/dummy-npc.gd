@@ -10,7 +10,7 @@ var current_hp: float
 const DAMAGE_INDICATOR = preload("res://components/damage-indicator/damage-indicator.tscn")
 
 @onready var sprite: Sprite2D = $Sprite2D
-@onready var hp_label: Label = $HpLabel  # add a Label child named HpLabel
+@onready var hp_label: Label = get_node_or_null("HpLabel") as Label  # add a Label child named HpLabel
 
 func _ready() -> void:
 	current_hp = max_hp

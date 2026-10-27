@@ -74,6 +74,8 @@ func receive_hit(spell: SpellData, hit_direction: Vector2 = Vector2.ZERO) -> voi
 		return
 	# Public legacy API: direct callers still receive the same adapter payload.
 	var context := SpellCastContext.new(_parent as Node2D, spell)
+	# This legacy API has no attacker: the defender is only a lifecycle owner.
+	context.modifiers.damage_multiplier = 1.0
 	context.direction = hit_direction
 	SpellExecutor.new().execute(context, _parent as Node2D)
 

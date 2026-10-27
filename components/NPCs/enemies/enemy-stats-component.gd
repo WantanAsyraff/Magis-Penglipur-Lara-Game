@@ -10,6 +10,8 @@ func configure(value: EnemyStatsData) -> void:
 	enemy.spell_mana = config.max_mana
 	enemy.move_speed = config.move_speed
 	enemy.chase_speed = config.chase_speed
+	enemy.damage_reduction = config.defense
+	enemy.damage_multiplier = config.incoming_multiplier
 	enemy.set_meta("outgoing_damage_multiplier", config.outgoing_multiplier)
 	var h: HitboxComponent = enemy.hitbox
 	h.damage_reduction = config.defense
@@ -29,7 +31,7 @@ func tick(delta: float) -> void:
 	if regen_remaining <= 0:
 		heal(config.health_regen * delta)
 		if not enemy.hitbox.effects.has("mana_drain"):
-			enemy.spell_mana = minf(config.max_mana, enemy.spell_mana + (config.mana_regen + enemy.hitbox.effects.magnitude("buff_mana_regen")) * delta)
+			enemy.spell_mana = clampf(enemy.spell_mana + (config.mana_regen + enemy.hitbox.effects.magnitude("buff_mana_regen")) * delta, 0, config.max_mana)
 func receive_damage(amount: float) -> void:
 	if not SpellExecutor.is_authoritative(self): return
 	var enemy := get_parent()

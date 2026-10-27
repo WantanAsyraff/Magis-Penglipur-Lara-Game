@@ -71,7 +71,7 @@ func _commit_spawn(entry: SpawnData, epoch: int) -> void:
 		if _position_clear(enemy, point): placed = true; break
 	if not placed: enemy.free(); return
 	_sequence += 1
-	enemy.spawn_id = "%s:%d" % [get_path(), _sequence]
+	enemy.spawn_id = Enemy.allocate_spawn_id(String(get_path()))
 	# Set local coordinates before parenting, so _ready sees the correct world origin.
 	enemy.position = get_parent().to_local(point)
 	get_parent().add_child(enemy)

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SpawnData" format=3]
+[ext_resource type="Script" path="res://data/npc/enemies/spawn/spawn-data.gd" id="1"]
+[ext_resource type="PackedScene" path="res://components/NPCs/enemies/Enemy.tscn" id="2"]
+[ext_resource type="Resource" path="res://data/npc/enemies/definitions/training-guardian.tres" id="3"]
+[resource]
+script = ExtResource("1")
+enemy_scene = ExtResource("2")
+enemy_data = ExtResource("3")
+spawn_weight = 10.0

@@ -189,6 +189,8 @@ func _directions(row: Node, keys: Array[String]) -> void:
 func _refresh_sequence() -> void:
 	if not is_instance_valid(player): return
 	var sequence := player.incantations.get_sequence_snapshot()
+	if not sequence.is_empty() and shown_chain != player.incantation_chain_id:
+		_show_chain(player.incantation_chain_id)
 	if sequence != last_sequence:
 		if invalid_feedback and not sequence.is_empty():
 			invalid_feedback = false
@@ -283,7 +285,6 @@ static func cost_text(spell: SpellData) -> String:
 func _request_status(_id: int, chain: int, spell: SpellData, status: SpellCastingComponent.RequestStatus, reason: String) -> void:
 	if spell == null: return
 	invalid_feedback = false
-	shown_chain = chain
 	if status == SpellCastingComponent.RequestStatus.COMPLETED:
 		_play(spell.cast_sound if spell.cast_sound else success_tone)
 		counts[chain] = counts.get(chain, 0) + 1
@@ -295,6 +296,22 @@ func _request_status(_id: int, chain: int, spell: SpellData, status: SpellCastin
 			if old < chain - 64:
 				counts.erase(old)
 				successes.erase(old)
+	_show_chain(player.incantation_chain_id)
+	result_icon.texture = spell.spell_icon
+	result.text = spell.spell_name + " — " + STATUS[status] + (": " + reason if not reason.is_empty() else "") + " • " + cost_text(spell)
+	if chain != player.incantation_chain_id:
+		result.text += " • earlier chain ×%d" % counts.get(chain, 0)
+	result.modulate = Color("edac9b") if status >= SpellCastingComponent.RequestStatus.FAILED else Color("d8e9c8")
+	_fit_content.call_deferred()
+	if status == SpellCastingComponent.RequestStatus.COMPLETED:
+		if pulse: pulse.kill()
+		sequence_row.modulate = Color.WHITE
+		result_icon.modulate = Color(1.8, 1.6, 1.1)
+		pulse = create_tween()
+		pulse.tween_property(result_icon, "modulate", Color.WHITE, 0.22)
+
+func _show_chain(chain: int) -> void:
+	shown_chain = chain
 	_clear(success_row)
 	if successes.has(chain):
 		var executed := Label.new()
@@ -304,17 +321,7 @@ func _request_status(_id: int, chain: int, spell: SpellData, status: SpellCastin
 			var badge := _icon(completed.spell_icon, 22)
 			badge.tooltip_text = completed.spell_name
 			success_row.add_child(badge)
-	result_icon.texture = spell.spell_icon
-	result.text = spell.spell_name + " — " + STATUS[status] + (": " + reason if not reason.is_empty() else "") + " • " + cost_text(spell)
-	result.modulate = Color("edac9b") if status >= SpellCastingComponent.RequestStatus.FAILED else Color("d8e9c8")
-	_fit_content.call_deferred()
 	chain_label.text = "Chain ×%d" % counts.get(chain, 0)
-	if status == SpellCastingComponent.RequestStatus.COMPLETED:
-		if pulse: pulse.kill()
-		sequence_row.modulate = Color.WHITE
-		result_icon.modulate = Color(1.8, 1.6, 1.1)
-		pulse = create_tween()
-		pulse.tween_property(result_icon, "modulate", Color.WHITE, 0.22)
 
 func _rejected() -> void:
 	invalid_feedback = true

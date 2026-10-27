@@ -13,7 +13,7 @@ root = Path(__file__).resolve().parents[1]
 cases = [
     ('import', ['--editor', '--import', '--quit'], None),
     ('regression', ['res://tests/spell-regression.tscn'], ('SPELL_REGRESSION', 71)),
-    ('assistant', ['res://tests/incantation-assistant.tscn'], ('INCANTATION_ASSISTANT', 53)),
+    ('assistant', ['res://tests/incantation-assistant.tscn'], ('INCANTATION_ASSISTANT', 60)),
     ('player-combos', ['res://tests/player-combo-chains.tscn'], ('PLAYER_COMBO_CHAINS', 22)),
     ('equipment-ui', ['res://tests/spell-equipment-ui.tscn'], ('SPELL_EQUIPMENT_UI', 38)),
     ('my-spells', ['res://tests/my-spells.tscn'], ('MY_SPELLS', 148)),

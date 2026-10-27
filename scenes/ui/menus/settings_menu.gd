@@ -199,7 +199,7 @@ func _restore_snapshot() -> void:
 		for event in _saved_snapshot[action]:
 			InputMap.action_add_event(action, event)
 
-func _save_to_file() -> void:
+func _save_to_file(path: String = SAVE_PATH) -> void:
 	var cfg := ConfigFile.new()
 	for entry in ACTIONS:
 		var action: String = entry[0]
@@ -210,15 +210,15 @@ func _save_to_file() -> void:
 			if event is InputEventKey:
 				keycodes.append({"keycode": event.keycode, "physical_keycode": event.physical_keycode})
 		cfg.set_value("keybinds", action, keycodes)
-	cfg.save(SAVE_PATH)
+	cfg.save(path)
 
 func _on_back_button_pressed() -> void:
 	_go_back()
 
 ## Call this from your game's boot/autoload to restore saved binds on startup.
-static func load_from_file() -> void:
+static func load_from_file(path: String = SAVE_PATH) -> void:
 	var cfg := ConfigFile.new()
-	if cfg.load(SAVE_PATH) != OK:
+	if cfg.load(path) != OK:
 		return
 	for action in (cfg.get_section_keys("keybinds") if cfg.has_section("keybinds") else []):
 		if not InputMap.has_action(action):

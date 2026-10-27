@@ -103,6 +103,7 @@ func _ready() -> void:
 	player._clear_sequence()
 	check(player.casting.state == SpellCastingComponent.State.PREPARING and player.casting._queue.size() == 2, "Clear input leaves preparation and queue intact")
 	player._add_sequence("up")
+	check(ui.chain_label.text == "Chain ×0" and ui.success_row.get_child_count() == 0, "New incomplete incantation has its own chain indicator")
 	player._add_sequence("right")
 	check(events.back().chain != first_chain, "Independent incantation gets a new chain identity")
 	player.casting._physics_process(0.5)
@@ -141,6 +142,27 @@ func _ready() -> void:
 	player.casting.enqueue_cast(b, Vector2.ZERO, Vector2.RIGHT, [], 400)
 	player.casting.cancel("Interrupted by damage")
 	check(events.filter(func(e): return e.chain == 400 and e.status == SpellCastingComponent.RequestStatus.INTERRUPTED).size() == 1, "Damage interruption correlates active request")
+	Player_Global_Data.p_curr_mana = 100
+	a.cast_time = 0
+	a.is_channelled = true
+	a.channel_duration = 1
+	a.mana_per_second = 3
+	player.casting.enqueue_cast(a, Vector2.ZERO, Vector2.RIGHT, [], 500)
+	check(events.back().status == SpellCastingComponent.RequestStatus.CHANNELING and ui.result.text.contains("Channeling"), "Channel request has correlated channeling feedback")
+	player.casting._physics_process(0.2)
+	check(is_equal_approx(Player_Global_Data.p_curr_mana, 97.4), "Channel forecast uses the actual per-second payment model")
+	player.cancel_active_casting()
+	check(not ui.counts.has(500) and is_equal_approx(Player_Global_Data.p_curr_mana, 99.4), "Explicit channel cancellation refunds preparation but never spent channel mana or shows false completion")
+	a.is_channelled = false
+	a.cast_time = 0.5
+	player.casting.enqueue_cast(a, Vector2.ZERO, Vector2.RIGHT, [], 501)
+	player.casting.enqueue_cast(b, Vector2.ZERO, Vector2.RIGHT, [], 501)
+	var cooling_request: int = events.back().id
+	player.casting.cooldowns[b.spell_id] = 3
+	player.casting._physics_process(0.5)
+	player.casting._physics_process(0)
+	check(events.back().id == cooling_request and events.back().reason == "Spell is cooling down", "Queued cooldown rejection keeps its original request identity")
+	player.casting.cooldowns.clear()
 	player._enter_casting_stance()
 	Player_Global_Data.assistance_mode = 1
 	Player_Global_Data.assistance_changed.emit(1)
@@ -169,6 +191,23 @@ func _ready() -> void:
 	Player_Global_Data.assistance_mode = 0
 	Player_Global_Data.load_assistance_settings(settings_path)
 	check(Player_Global_Data.assistance_mode == 1, "Assistance preference reloads from disk")
+	var keybind_path := "user://assistant-keybind-test-%d.cfg" % OS.get_process_id()
+	var saved_up := InputMap.action_get_events("incantation_up")
+	InputMap.action_erase_events("incantation_up")
+	var physical := InputEventKey.new()
+	physical.physical_keycode = KEY_I
+	InputMap.action_add_event("incantation_up", physical)
+	var settings: Control = load("res://scenes/ui/menus/settings-menu.tscn").instantiate()
+	add_child(settings)
+	settings._save_to_file(keybind_path)
+	InputMap.action_erase_events("incantation_up")
+	load("res://scenes/ui/menus/settings_menu.gd").load_from_file(keybind_path)
+	check(InputMap.action_get_events("incantation_up")[0].physical_keycode == KEY_I, "Saving assistance settings preserves physical directional bindings")
+	check(settings.ACTIONS.any(func(entry): return entry[0] == "cancel_casting") and InputMap.action_get_events("cancel_casting").is_empty(), "Cast cancellation is configurable without adding a conflicting default key")
+	InputMap.action_erase_events("incantation_up")
+	for event in saved_up: InputMap.action_add_event("incantation_up", event)
+	settings.queue_free()
+	DirAccess.remove_absolute(keybind_path)
 	DirAccess.remove_absolute(settings_path)
 	Player_Global_Data.assistance_mode = 0
 	Player_Global_Data.assistance_changed.emit(0)

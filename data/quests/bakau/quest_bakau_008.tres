@@ -1,0 +1,54 @@
+[gd_resource type="Resource" script_class="QuestData" format=3]
+
+[ext_resource type="Script" path="res://data/quests/quest-data.gd" id="x0"]
+[ext_resource type="Script" path="res://data/quests/quest-objective-data.gd" id="x1"]
+[ext_resource type="Script" path="res://data/loot/loot-data.gd" id="x2"]
+[ext_resource type="Resource" path="res://data/items/components/tech-scrap-low-grade.tres" id="x3"]
+
+[sub_resource type="Resource" id="r0"]
+script = ExtResource("x1")
+objective_id = "quest_bakau_008_1"
+description = "Fish Meat"
+type = 1
+target_ids = ["drop_001"]
+required_amount = 2
+
+[sub_resource type="Resource" id="r1"]
+script = ExtResource("x1")
+objective_id = "quest_bakau_008_2"
+description = "Dragonfly Scales"
+type = 1
+target_ids = ["drop_004"]
+required_amount = 2
+
+[sub_resource type="Resource" id="r2"]
+script = ExtResource("x1")
+objective_id = "quest_bakau_008_3"
+description = "Crab Shell"
+type = 1
+target_ids = ["drop_007"]
+required_amount = 2
+
+[sub_resource type="Resource" id="r3"]
+script = ExtResource("x2")
+item = ExtResource("x3")
+drop_chance = 1
+min_quantity = 6
+max_quantity = 6
+
+[resource]
+script = ExtResource("x0")
+quest_id = "quest_bakau_008"
+title = "Field Sample Bundle"
+description = "I need a comparative batch — same collection run, all three specimens. Cross-contamination is a concern if you do it separately."
+faculty = 6
+region_id = "bakau"
+pool_id = "technology_science"
+hand_in_npc_id = "bakau_field_researcher"
+prerequisite_quest_ids = ["quest_bakau_006"]
+objectives = [SubResource("r0"), SubResource("r1"), SubResource("r2")]
+reward_xp = 220
+reward_items = [SubResource("r3")]
+dialogue_offer = "I need a comparative batch — same collection run, all three specimens. Cross-contamination is a concern if you do it separately."
+dialogue_incomplete = "The field work is still underway. Check your journal for each requirement."
+dialogue_complete = "Your work is recorded. Thank you; your research stipend is ready."

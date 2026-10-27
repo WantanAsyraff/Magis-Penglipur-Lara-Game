@@ -1,0 +1,54 @@
+[gd_resource type="Resource" script_class="QuestData" format=3]
+
+[ext_resource type="Script" path="res://data/quests/quest-data.gd" id="x0"]
+[ext_resource type="Script" path="res://data/quests/quest-objective-data.gd" id="x1"]
+[ext_resource type="Script" path="res://data/loot/loot-data.gd" id="x2"]
+[ext_resource type="Resource" path="res://data/items/components/mana-vile-low-grade.tres" id="x3"]
+
+[sub_resource type="Resource" id="r0"]
+script = ExtResource("x1")
+objective_id = "quest_bakau_007_1"
+description = "Haruan"
+type = 2
+target_ids = ["enemy_mangroove_snakehead_murrel"]
+required_amount = 5
+
+[sub_resource type="Resource" id="r1"]
+script = ExtResource("x1")
+objective_id = "quest_bakau_007_2"
+description = "Pepatung"
+type = 2
+target_ids = ["enemy_mangroove_dragonfly"]
+required_amount = 4
+
+[sub_resource type="Resource" id="r2"]
+script = ExtResource("x1")
+objective_id = "quest_bakau_007_3"
+description = "Ketam"
+type = 2
+target_ids = ["enemy_mangroove_stone_crab"]
+required_amount = 6
+
+[sub_resource type="Resource" id="r3"]
+script = ExtResource("x2")
+item = ExtResource("x3")
+drop_chance = 1
+min_quantity = 6
+max_quantity = 6
+
+[resource]
+script = ExtResource("x0")
+quest_id = "quest_bakau_007"
+title = "Mana Fauna Survey"
+description = "A full zone sweep. I need disruption data across all three fauna types simultaneously — partial readings are useless to me."
+faculty = 6
+region_id = "bakau"
+pool_id = "technology_science"
+hand_in_npc_id = "bakau_field_researcher"
+prerequisite_quest_ids = []
+objectives = [SubResource("r0"), SubResource("r1"), SubResource("r2")]
+reward_xp = 280
+reward_items = [SubResource("r3")]
+dialogue_offer = "A full zone sweep. I need disruption data across all three fauna types simultaneously — partial readings are useless to me."
+dialogue_incomplete = "The field work is still underway. Check your journal for each requirement."
+dialogue_complete = "Your work is recorded. Thank you; your research stipend is ready."

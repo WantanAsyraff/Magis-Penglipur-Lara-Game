@@ -15,3 +15,11 @@ extends Resource
 
 @export_group("World Drop")
 @export var rarity_color: Color = Color.WHITE
+
+@export_enum("Common", "Uncommon", "Rare", "Epic") var rarity: int = 0
+func validate() -> PackedStringArray:
+	if item == null or item.item_id.is_empty() or not is_finite(drop_chance) or drop_chance < 0 or drop_chance > 1 or min_quantity < 1 or max_quantity < min_quantity or max_quantity > 9999:
+		return PackedStringArray(["Invalid loot item, probability or quantity"])
+	for extra in extra_drops:
+		if extra == null or extra.item_id.is_empty(): return PackedStringArray(["Invalid bundled extra drop"])
+	return PackedStringArray()

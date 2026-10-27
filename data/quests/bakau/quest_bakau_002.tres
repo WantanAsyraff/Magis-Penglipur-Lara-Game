@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="QuestData" format=3]
+
+[ext_resource type="Script" path="res://data/quests/quest-data.gd" id="x0"]
+[ext_resource type="Script" path="res://data/quests/quest-objective-data.gd" id="x1"]
+[ext_resource type="Script" path="res://data/loot/loot-data.gd" id="x2"]
+[ext_resource type="Resource" path="res://data/items/components/tech-scrap-low-grade.tres" id="x3"]
+
+[sub_resource type="Resource" id="r0"]
+script = ExtResource("x1")
+objective_id = "quest_bakau_002_1"
+description = "Mixed Fish Samples"
+type = 1
+target_ids = ["drop_001", "drop_002", "drop_003"]
+required_amount = 5
+
+[sub_resource type="Resource" id="r1"]
+script = ExtResource("x2")
+item = ExtResource("x3")
+drop_chance = 1
+min_quantity = 4
+max_quantity = 4
+
+[resource]
+script = ExtResource("x0")
+quest_id = "quest_bakau_002"
+title = "Specimen: Haruan"
+description = "Fresh specimens only. The mana degradation rate on dead haruan is faster than anything I've documented."
+faculty = 6
+region_id = "bakau"
+pool_id = "technology_science"
+hand_in_npc_id = "bakau_field_researcher"
+prerequisite_quest_ids = ["quest_bakau_001"]
+objectives = [SubResource("r0")]
+reward_xp = 80
+reward_items = [SubResource("r1")]
+dialogue_offer = "Fresh specimens only. The mana degradation rate on dead haruan is faster than anything I've documented."
+dialogue_incomplete = "The field work is still underway. Check your journal for each requirement."
+dialogue_complete = "Your work is recorded. Thank you; your research stipend is ready."

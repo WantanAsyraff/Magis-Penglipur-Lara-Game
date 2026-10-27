@@ -9,8 +9,7 @@ item_id = "drop_001"
 item_name = "Fish Meat"
 item_icon = ExtResource("1_7ukwd")
 item_type = 6
-description = "A Kocheen's favourite meat! Used for cooking. 
-"
+description = "A Kocheen's favourite meat! Used for cooking."
 ringgit_value = 2.5
 health_restore = 5
 metadata/_custom_type_script = "uid://dwparggceebhq"

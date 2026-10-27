@@ -4,9 +4,13 @@ extends Node
 @onready var _player: Player = get_parent() as Player
 var _phone_open: bool = false
 func _process(_delta: float) -> void:
+	if multiplayer.has_multiplayer_peer() and not get_parent().is_multiplayer_authority():
+		return
 	_update_flip()
 	_update_animations()
 func _unhandled_input(event: InputEvent) -> void:
+	if multiplayer.has_multiplayer_peer() and not get_parent().is_multiplayer_authority():
+		return
 	if event.is_action_pressed("open_phone") and not Player_Global_Data.combat_mode:
 		_phone_open = not _phone_open
 func _update_flip() -> void:

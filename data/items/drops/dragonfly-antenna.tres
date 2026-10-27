@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://data/items/item-data.gd" id="x0"]
+[ext_resource type="Texture2D" path="res://assets/loot/branch.png" id="x1"]
+
+
+
+[resource]
+script = ExtResource("x0")
+item_id = "drop_006"
+item_name = "Dragonfly Antenna"
+item_type = 4
+item_icon = ExtResource("x1")
+description = "Sensory organs used in perception potions."
+tags = ["monster_drop"]

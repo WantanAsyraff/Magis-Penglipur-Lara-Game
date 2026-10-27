@@ -3,8 +3,9 @@ extends EditorScript
 
 func _run() -> void:
 	var paths := _scan_dir("res://data/worlds/hubs/")
+	paths.sort()
 	var lines: Array[String] = []
-	lines.append("# AUTO-GENERATED — run tools/bake_world_manifest.gd to update")
+	lines.append("# AUTO-GENERATED — run tools/bake-world-manifest.gd to update")
 	lines.append("# Do not edit manually.")
 	lines.append("extends Node")
 	lines.append("")

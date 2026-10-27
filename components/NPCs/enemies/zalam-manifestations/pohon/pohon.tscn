@@ -6,7 +6,11 @@
 [ext_resource type="Resource" uid="uid://c7hnhpvtmkbkr" path="res://data/loot/enemy-drops/test-loot1.tres" id="4_7l61k"]
 [ext_resource type="Resource" uid="uid://div5wmyiwnd0o" path="res://data/loot/enemy-drops/pohon-bark-sample.tres" id="5_l17qw"]
 
+
+[ext_resource type="Resource" path="res://data/npc/enemies/definitions/pohon.tres" id="enemy_definition"]
+
 [node name="Enemy" unique_id=1787106916 instance=ExtResource("1_mkrr6")]
+enemy_data = ExtResource("enemy_definition")
 scale = Vector2(2, 2)
 enemy_name = "pohon"
 max_health = 50.0

@@ -28,10 +28,7 @@ const COMPREHENSION_MULTIPLIER: Dictionary = {
 }
 
 func get_subject_cost(data: subjectData) -> int:
-	var comp_mult: float = COMPREHENSION_MULTIPLIER.get(data.magis_comprehension, 1.0)
-	var spell_mult: float = 1.0 + (data.contained_spells.size() * SPELL_COUNT_WEIGHT)
-	var cost := BASE_COST * (data.difficulty_level * data.difficulty_level) * comp_mult * spell_mult
-	return int(cost)
+	return Player_Global_Data.get_subject_cost(data)
 
 func can_afford_subject(data: subjectData) -> bool:
 	return Player_Global_Data.player_exp >= get_subject_cost(data)
@@ -41,6 +38,7 @@ func can_afford_subject(data: subjectData) -> bool:
 # -------------------------
 func _ready() -> void:
 	add_to_group("spell_tree_view")
+	Player_Global_Data.progression_changed.connect(_refresh_lock_states)
 	if course_data:
 		field_label.text = course_data.course_name
 		build_spell_field()
@@ -86,19 +84,15 @@ func build_spell_field() -> void:
 # LOCK STATE
 # -------------------------
 func _is_subject_locked(data: subjectData) -> bool:
+	if not AcademicValidator.validate_course(course_data).is_empty():
+		return true
 	for prereq_id in data.prerequisites:
 		if not _player_has_completed_subject(prereq_id):
 			return true
 	return false
 
 func _player_has_completed_subject(subject_id: String) -> bool:
-	for s in course_data.subjects:
-		if s.subject_id == subject_id:
-			for spell in s.contained_spells:
-				if Player_Global_Data.learned_spells.has(spell):
-					return true
-			return false
-	return false
+	return Player_Global_Data.has_completed_subject(subject_id)
 
 func _refresh_lock_states() -> void:
 	for node in container.get_children():
@@ -108,13 +102,18 @@ func _refresh_lock_states() -> void:
 # -------------------------
 # DEPTH
 # -------------------------
-func _get_depth(data: subjectData, dict: Dictionary) -> int:
+func _get_depth(data: subjectData, dict: Dictionary, visiting: Array = []) -> int:
+	if data.subject_id in visiting:
+		push_warning("Circular subject prerequisite: " + data.subject_id)
+		return 0
+	visiting = visiting.duplicate()
+	visiting.append(data.subject_id)
 	if data.prerequisites.is_empty():
 		return 0
 	var max_d = 0
 	for pid in data.prerequisites:
 		if dict.has(pid):
-			max_d = max(max_d, _get_depth(dict[pid], dict) + 1)
+			max_d = max(max_d, _get_depth(dict[pid], dict, visiting) + 1)
 	return max_d
 
 # -------------------------
@@ -137,14 +136,13 @@ func _on_subject_selected(subject: subjectData) -> void:
 	var cost := get_subject_cost(subject)
 	var panel = SUBJECT_PANEL_SCENE.instantiate()
 	panel.subject_data = subject
+	panel.course_data = course_data
 	panel.xp_cost = cost
 	panel.spells_learned.connect(_on_spells_learned)
 	add_child(panel)
 
 func _on_spells_learned(spells: Array[SpellData]) -> void:
-	var player := get_tree().get_first_node_in_group("player")
-	if player:
-		player.add_spells(spells)
+	Player_Global_Data.add_spells(spells)
 	_refresh_lock_states()
 
 func _on_button_pressed() -> void:

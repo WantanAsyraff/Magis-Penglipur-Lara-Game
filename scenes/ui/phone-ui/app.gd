@@ -6,6 +6,7 @@ signal app_pressed(app_scene: PackedScene)
 @onready var texture_rect = $TextureRect
 
 func _ready():
+	focus_mode = Control.FOCUS_ALL
 	if icon:
 		texture_rect.texture = icon
 	mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="FieldData" format=3]
+
+[ext_resource type="Script" path="res://data/Resources/ilmu/field.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+field_id = &"physics"
+display_name = "Physics"
+description = "Matter, motion, force, waves and energy."

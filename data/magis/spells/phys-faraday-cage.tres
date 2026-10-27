@@ -1,0 +1,37 @@
+[gd_resource type="Resource" script_class="SpellData" format=3]
+
+[ext_resource type="Script" path="res://data/Resources/ilmu/spell.gd" id="spell"]
+[ext_resource type="Resource" path="res://data/magis/fields/physics.tres" id="field"]
+[ext_resource type="Texture2D" path="res://assets/temp/temp-mana.png" id="icon"]
+[ext_resource type="PackedScene" path="res://components/spells/spell-construct.tscn" id="construct"]
+
+
+
+[resource]
+script = ExtResource("spell")
+academic_fields = [ExtResource("field")]
+spell_icon = ExtResource("icon")
+projectile_texture = ExtResource("icon")
+spell_incantation = Array[String](["right", "right", "up", "down", "up", "right"])
+effects = []
+spell_colour = Color(0.400, 1.000, 0.906, 1)
+spell_name = "Faraday Cage"
+spell_id = "phys-faraday-cage"
+magis_archetype = "Ilmiah"
+magis_comprehension = "Intermediate"
+theory_desc = "Conducting enclosures redistribute charge; shielding depends on geometry and frequency. Mana supplies the fictional energy and control. Stationary field construct intercepts hostile magical projectiles."
+spell_flavour_text = "Stationary field construct intercepts hostile magical projectiles."
+delivery = 8
+upfront_cost = 20
+cast_time = 0.2
+cooldown = 1.5
+projectile_range = 950.0
+projectile_speed = 850.0
+projectile_size = 1.0
+aoe_spell_radius = 110
+area_duration = 4.0
+area_tick_interval = 0.5
+target_range = 500.0
+beam_width = 30.0
+aim_placement = true
+summon_scene = ExtResource("construct")

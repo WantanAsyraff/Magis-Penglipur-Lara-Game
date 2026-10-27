@@ -11,6 +11,7 @@ extends Control
 var current_app_node: Control = null
 
 func _ready():
+	add_to_group("phone_ui")
 	if Player_Global_Data.phone_visible:
 		$".".visible = true
 		print("Phone enabled")
@@ -24,10 +25,12 @@ func _ready():
 		$".".visible = false
 		print("Phone disabled")
 
-func _input(event):
+func _unhandled_input(event):
+	if QuestOfferDialog.is_open() or Dialogic.current_timeline != null: return
 	if event.is_action_pressed("open_phone"):
 		phone_selected = !phone_selected
 		_animate_phone()
+		get_viewport().set_input_as_handled()
 	if event.is_action_pressed("ui_cancel") and phone_selected:
 		if current_app_node:
 			_close_current_app()
@@ -43,11 +46,10 @@ func _animate_phone():
 		.set_ease(Tween.EASE_OUT)
 
 func _on_app_opened(app_resource: PackedScene):
+	if QuestOfferDialog.is_open() or Dialogic.current_timeline != null: return
 	if current_app_node:
 		return
 
-	# Save scene + position when an app is opened
-	Player_Manager.save_current_state(get_tree().current_scene.scene_file_path)
 
 	current_app_node = app_resource.instantiate()
 	%PhoneBG.add_child(current_app_node)

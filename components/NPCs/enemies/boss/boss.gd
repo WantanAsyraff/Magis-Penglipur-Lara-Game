@@ -71,6 +71,11 @@ enum State { IDLE, CHASE, ATTACK, HURT, PHASE_TRANSITION, DEATH }
 # ─────────────────────────────────────────
 # RUNTIME STATE
 # ─────────────────────────────────────────
+@export var spell_mana: float = 400
+var casting: SpellCastingComponent
+var perception: EnemyDetection
+var _attack_epoch: int = 0
+var _transition_epoch: int = 0
 var current_state: State = State.IDLE
 var current_health: float = 0.0
 var current_phase_index: int = 0
@@ -89,6 +94,17 @@ var _is_invincible: bool = false
 func _ready() -> void:
 	assert(phases.size() > 0, "Boss needs at least one BossPhaseData assigned!")
 	current_health = max_health
+	set_meta("spell_team", &"enemy")
+	set_meta("faction_id", &"enemy")
+	casting = SpellCastingComponent.new()
+	add_child(casting)
+	perception = EnemyDetection.new()
+	add_child(perception)
+	var perception_data := EnemyPerceptionData.new()
+	perception_data.detection_range = detection_radius
+	perception_data.sight_memory = sight_memory
+	perception.configure(perception_data)
+	perception.connect_area(detection_area)
 
 	hitbox.receives_status_effects = receives_status_effects
 	hitbox.has_mana = false
@@ -110,6 +126,16 @@ func _ready() -> void:
 	_set_state(State.IDLE)
 
 func _physics_process(delta: float) -> void:
+	if not SpellExecutor.is_authoritative(self) or current_state == State.DEATH: return
+	perception.tick(delta)
+	_player = perception.player
+	if hitbox.is_stunned():
+		if current_attack: _attack_epoch += 1; current_attack = null; _can_attack = true
+		casting.cancel("Boss stunned")
+		velocity.x = 0
+		_apply_gravity(delta)
+		move_and_slide()
+		return
 	_apply_gravity(delta)
 	_update_sight_memory(delta)
 	_run_state(delta)
@@ -156,11 +182,11 @@ func _run_state(delta: float) -> void:
 # ─────────────────────────────────────────
 func _state_idle() -> void:
 	velocity.x = move_toward(velocity.x, 0, current_phase.move_speed if current_phase else 80.0)
-	if _player != null:
+	if is_instance_valid(_player):
 		_set_state(State.CHASE)
 
 func _state_chase() -> void:
-	if _player == null:
+	if not is_instance_valid(_player):
 		_set_state(State.IDLE)
 		return
 	if not _has_line_of_sight() and _sight_memory_timer <= 0.0:
@@ -194,6 +220,9 @@ func _enter_phase(index: int) -> void:
 		return
 	current_phase_index = index
 	current_phase = phases[index]
+	hitbox.damage_reduction = current_phase.defense if current_phase.defense >= 0 else damage_reduction
+	hitbox.damage_multiplier = current_phase.incoming_multiplier if current_phase.incoming_multiplier >= 0 else damage_multiplier
+	hitbox.status_resistances = current_phase.status_resistances.duplicate()
 	phase_changed.emit(index, current_phase)
 	print("[Boss] Entering phase %d: %s" % [index, current_phase.phase_name])
 
@@ -210,22 +239,28 @@ func _check_phase_transition() -> void:
 		_trigger_phase_transition(target_phase)
 
 func _trigger_phase_transition(new_index: int) -> void:
+	_attack_epoch += 1
+	_transition_epoch += 1
+	var token := _transition_epoch
+	casting.cancel("Phase transition")
+	current_attack = null
+	_can_attack = true
 	_set_state(State.PHASE_TRANSITION)
 	_enter_phase(new_index)
-
-	if current_phase.invincible_on_transition:
+	var phase := current_phase
+	if phase.invincible_on_transition:
 		_is_invincible = true
-		await get_tree().create_timer(current_phase.transition_invincible_duration).timeout
+		hitbox.set_invincible(true)
+		await get_tree().create_timer(maxf(phase.transition_invincible_duration, 0.01)).timeout
+		if token != _transition_epoch or current_state == State.DEATH: return
 		_is_invincible = false
-
-	if current_phase.transition_animation != "":
-		_play_animation(current_phase.transition_animation)
-		await sprite.animation_finished
-
-	if _player != null:
-		_set_state(State.CHASE)
-	else:
-		_set_state(State.IDLE)
+		hitbox.set_invincible(false)
+	if phase.transition_animation != "" and sprite.sprite_frames and sprite.sprite_frames.has_animation(phase.transition_animation):
+		_play_animation(phase.transition_animation)
+		# Bounded wait also handles inherited looping animations.
+		await get_tree().create_timer(0.5).timeout
+		if token != _transition_epoch or current_state == State.DEATH: return
+	_set_state(State.CHASE if is_instance_valid(_player) else State.IDLE)
 
 # ─────────────────────────────────────────
 # ATTACK SELECTION — WEIGHTED RANDOM
@@ -296,57 +331,53 @@ func _pick_attack_in_range(dist: float) -> BossAttackData:
 # ATTACK EXECUTION
 # ─────────────────────────────────────────
 func _execute_current_attack() -> void:
-	if current_attack == null or _player == null:
-		_set_state(State.CHASE)
-		return
-
+	if current_attack == null or not is_instance_valid(_player) or not SpellExecutor.is_authoritative(self):
+		_set_state(State.CHASE); return
 	_can_attack = false
-	attack_started.emit(current_attack)
-	print("[Boss] Executing: %s | kind: %s" % [current_attack.attack_name, BossAttackData.AttackKind.keys()[current_attack.kind]])
-
-	match current_attack.kind:
-		BossAttackData.AttackKind.MELEE_SLAM:
-			await _do_melee_slam()
-		BossAttackData.AttackKind.MELEE_DASH:
-			await _do_melee_dash()
-		BossAttackData.AttackKind.RANGED_BURST:
-			await _do_ranged_burst()
-		BossAttackData.AttackKind.AOE_SLAM:
-			await _do_aoe_slam()
-		BossAttackData.AttackKind.SUMMON:
-			await _do_summon()
-
-	print("[Boss] Attack finished: ", current_attack.attack_name)
-	attack_finished.emit(current_attack)
-	attack_timer.wait_time = current_attack.cooldown
-	attack_timer.start()
+	_attack_epoch += 1
+	var token := _attack_epoch
+	var attack := current_attack
+	attack_started.emit(attack)
+	SpellFeedback.flash(self, Color(1, 0.3, .2))
+	match attack.kind:
+		BossAttackData.AttackKind.MELEE_SLAM: await _do_melee_slam()
+		BossAttackData.AttackKind.MELEE_DASH: await _do_melee_dash()
+		BossAttackData.AttackKind.RANGED_BURST: await _do_ranged_burst()
+		BossAttackData.AttackKind.AOE_SLAM: await _do_aoe_slam()
+		BossAttackData.AttackKind.SUMMON: await _do_summon()
+	if not _attack_valid(token): return
+	attack_finished.emit(attack)
+	attack_timer.start(maxf(attack.cooldown, 0.05))
 
 # ─────────────────────────────────────────
 # ATTACK IMPLEMENTATIONS
 # ─────────────────────────────────────────
 func _do_melee_slam() -> void:
-	await get_tree().create_timer(current_attack.windup).timeout
-	if _player == null:
+	var attack := current_attack
+	var token := _attack_epoch
+	await get_tree().create_timer(maxf(attack.windup, .01)).timeout
+	if not _attack_valid(token): return
+	if not is_instance_valid(_player):
 		return
 	var dist := global_position.distance_to(_player.global_position)
-	if dist <= current_attack.melee_range:
+	if dist <= attack.melee_range:
 		var player_hitbox := _player.get_node_or_null("HitboxComponent") as HitboxComponent
 		if player_hitbox:
 			var dir: Vector2 = (_player.global_position - global_position).normalized()
-			var fake_spell := SpellData.new()
-			fake_spell.projectile_damage = current_attack.melee_damage
-			fake_spell.knockback_force = 200.0
-			player_hitbox.receive_hit(fake_spell, dir)
-			print("[Boss] Melee slam hit for: ", current_attack.melee_damage)
+			CombatRequest.strike(self, _player, attack.melee_damage, 200)
+			print("[Boss] Melee slam hit for: ", attack.melee_damage)
 
 func _do_melee_dash() -> void:
-	if _player == null:
+	var attack := current_attack
+	var token := _attack_epoch
+	if not is_instance_valid(_player):
 		return
 	var dash_dir: Vector2 = (_player.global_position - global_position).normalized()
-	var dash_speed := current_phase.chase_speed * current_attack.dash_speed_multiplier
+	var dash_speed := current_phase.chase_speed * attack.dash_speed_multiplier
 	var elapsed := 0.0
 
-	while elapsed < current_attack.dash_duration:
+	while elapsed < attack.dash_duration:
+		if not _attack_valid(token): return
 		velocity.x = dash_dir.x * dash_speed
 		velocity.y = dash_dir.y * dash_speed * 0.3
 		elapsed += get_physics_process_delta_time()
@@ -354,57 +385,44 @@ func _do_melee_dash() -> void:
 
 	velocity = Vector2.ZERO
 
-	if _player != null:
+	if is_instance_valid(_player):
 		var dist := global_position.distance_to(_player.global_position)
-		if dist <= current_attack.melee_range * 1.5:
+		if dist <= attack.melee_range * 1.5:
 			var player_hitbox := _player.get_node_or_null("HitboxComponent") as HitboxComponent
 			if player_hitbox:
 				var dir: Vector2 = (_player.global_position - global_position).normalized()
-				var fake_spell := SpellData.new()
-				fake_spell.projectile_damage = current_attack.melee_damage
-				fake_spell.knockback_force = 350.0
-				player_hitbox.receive_hit(fake_spell, dir)
-				print("[Boss] Dash hit for: ", current_attack.melee_damage)
+				CombatRequest.strike(self, _player, attack.melee_damage, 350)
+				print("[Boss] Dash hit for: ", attack.melee_damage)
 
 func _do_ranged_burst() -> void:
-	if current_attack.ranged_spell == null or _player == null:
-		push_warning("Boss ranged burst: no ranged_spell assigned on attack: " + current_attack.attack_name)
-		return
-
-	await get_tree().create_timer(current_attack.windup).timeout
-
-	var base_dir: Vector2 = (_player.global_position - global_position).normalized()
-	var count := current_attack.burst_count
-	var spread := current_attack.burst_spread
-
+	var attack := current_attack
+	var token := _attack_epoch
+	if attack.ranged_spell == null: return
+	await get_tree().create_timer(maxf(attack.windup, .01)).timeout
+	if not _attack_valid(token) or not is_instance_valid(_player): return
+	var definition := attack.ranged_spell.duplicate() as SpellData
+	definition.cast_time = 0 # BossAttackData owns the windup for the projectile burst.
+	var count := clampi(attack.burst_count, 1, 32)
+	definition.upfront_cost = ceili(float(definition.upfront_cost) / count)
 	for i in count:
-		if _player == null:
-			break
-		var angle_offset := 0.0
-		if count > 1:
-			angle_offset = deg_to_rad(-spread / 2.0 + (spread / (count - 1)) * i)
-		var fire_dir: Vector2 = base_dir.rotated(angle_offset)
-
-		var scene_to_use: PackedScene = current_attack.ranged_spell.spell_scene if current_attack.ranged_spell.spell_scene \
-			else preload("res://components/projectiles/magis-projectile.tscn")
-		var inst = scene_to_use.instantiate()
-		inst.spell_data = current_attack.ranged_spell
-		inst.source = self
-		inst.position = global_position + fire_dir * 60.0
-		inst.direction = fire_dir
-		get_parent().add_child(inst)
-
-		if i < count - 1:
-			await get_tree().create_timer(current_attack.burst_interval).timeout
+		if not _attack_valid(token) or not is_instance_valid(_player): return
+		var heading: Vector2 = (_player.global_position - global_position).normalized()
+		if count > 1: heading = heading.rotated(deg_to_rad(-attack.burst_spread / 2 + attack.burst_spread * i / (count - 1)))
+		var targets: Array[Node2D] = [_player]
+		if not casting.request_cast(definition, global_position + heading * 60, heading, targets): return
+		if i < count - 1: await get_tree().create_timer(maxf(attack.burst_interval, .01)).timeout
 
 func _do_aoe_slam() -> void:
-	print("[Boss] AOE warning — ", current_attack.aoe_warning_duration, "s")
-	await get_tree().create_timer(current_attack.aoe_warning_duration).timeout
+	var attack := current_attack
+	var token := _attack_epoch
+	print("[Boss] AOE warning — ", attack.aoe_warning_duration, "s")
+	await get_tree().create_timer(maxf(attack.aoe_warning_duration, .01)).timeout
+	if not _attack_valid(token): return
 
 	var space := get_world_2d().direct_space_state
 	var query := PhysicsShapeQueryParameters2D.new()
 	var shape := CircleShape2D.new()
-	shape.radius = current_attack.aoe_radius
+	shape.radius = attack.aoe_radius
 	query.shape = shape
 	query.transform = Transform2D(0, global_position)
 
@@ -413,28 +431,31 @@ func _do_aoe_slam() -> void:
 		var body: Node2D = result.collider
 		if body == self:
 			continue
-		if body.is_in_group("player"):
+		if CombatFactions.relation(self, body) < 0:
 			var player_hitbox := body.get_node_or_null("HitboxComponent") as HitboxComponent
 			if player_hitbox:
 				var dir: Vector2 = (body.global_position - global_position).normalized()
-				var fake_spell := SpellData.new()
-				fake_spell.projectile_damage = current_attack.aoe_damage
-				fake_spell.knockback_force = current_attack.aoe_knockback
-				player_hitbox.receive_hit(fake_spell, dir)
-				print("[Boss] AOE hit player for: ", current_attack.aoe_damage)
+				CombatRequest.strike(self, body, attack.aoe_damage, attack.aoe_knockback)
+				print("[Boss] AOE hit player for: ", attack.aoe_damage)
 
 func _do_summon() -> void:
-	if current_attack.minion_scene == null:
-		push_warning("Boss summon: no minion_scene assigned on attack: " + current_attack.attack_name)
+	var attack := current_attack
+	var token := _attack_epoch
+	if attack.minion_scene == null:
+		push_warning("Boss summon: no minion_scene assigned on attack: " + attack.attack_name)
 		return
 
-	await get_tree().create_timer(current_attack.windup).timeout
+	await get_tree().create_timer(maxf(attack.windup, .01)).timeout
+	if not _attack_valid(token): return
 
-	for i in current_attack.minion_count:
-		var angle := (TAU / current_attack.minion_count) * i
-		var offset := Vector2(cos(angle), sin(angle)) * current_attack.spawn_radius
-		var minion = current_attack.minion_scene.instantiate()
-		minion.global_position = global_position + offset
+	for i in mini(attack.minion_count, 12):
+		if not _attack_valid(token) or _owned_minions() >= 12: break
+		var angle := (TAU / attack.minion_count) * i
+		var offset := Vector2(cos(angle), sin(angle)) * attack.spawn_radius
+		var minion = attack.minion_scene.instantiate()
+		if not minion is Node2D: minion.free(); continue
+		minion.position = get_parent().to_local(global_position + offset)
+		CombatLifecycle.own(minion, self)
 		get_parent().add_child(minion)
 		print("[Boss] Spawned minion at: ", minion.global_position)
 
@@ -442,19 +463,30 @@ func _do_summon() -> void:
 # DEATH
 # ─────────────────────────────────────────
 func _on_death() -> void:
+	if get_meta("combat_dead", false) or not SpellExecutor.is_authoritative(self): return
+	set_meta("combat_dead", true)
+	_attack_epoch += 1
+	_transition_epoch += 1
+	casting.cancel("Boss died")
+	attack_timer.stop()
+	hurt_timer.stop()
+	CombatLifecycle.cleanup(self)
 	boss_died.emit()
 	hitbox.clear_all_effects()
 	set_physics_process(false)
 	if sprite.sprite_frames and sprite.sprite_frames.has_animation("death"):
 		sprite.play("death")
-		await sprite.animation_finished
+		await get_tree().create_timer(.5).timeout
 	queue_free()
 
 # ─────────────────────────────────────────
 # DETECTION & SIGHT
 # ─────────────────────────────────────────
 func _has_line_of_sight() -> bool:
-	if _player == null:
+	return perception.has_line_of_sight()
+
+func _legacy_line_of_sight() -> bool:
+	if not is_instance_valid(_player):
 		return false
 	raycast.target_position = to_local(_player.global_position)
 	raycast.force_raycast_update()
@@ -463,7 +495,7 @@ func _has_line_of_sight() -> bool:
 	return raycast.get_collider() == _player
 
 func _update_sight_memory(delta: float) -> void:
-	if _player != null and _has_line_of_sight():
+	if is_instance_valid(_player) and _has_line_of_sight():
 		_sight_memory_timer = sight_memory
 	elif _sight_memory_timer > 0.0:
 		_sight_memory_timer -= delta
@@ -480,8 +512,11 @@ func _on_detection_area_body_exited(body: Node) -> void:
 # HITBOX CALLBACKS
 # ─────────────────────────────────────────
 func _on_damage_taken(amount: float) -> void:
-	if _is_invincible:
+	if not SpellExecutor.is_authoritative(self) or current_state == State.DEATH or _is_invincible or amount <= 0:
 		return
+	_attack_epoch += 1
+	_can_attack = true
+	casting.cancel("Boss interrupted by damage")
 	current_health = maxf(current_health - amount, 0.0)
 	boss_hurt.emit(amount)
 	print("[Boss] Took %.1f damage — HP: %.1f/%.1f" % [amount, current_health, max_health])
@@ -502,14 +537,14 @@ func _on_damage_taken(amount: float) -> void:
 func _on_attack_timer_timeout() -> void:
 	_can_attack = true
 	if current_state == State.ATTACK:
-		if _player != null:
+		if is_instance_valid(_player):
 			_set_state(State.CHASE)
 		else:
 			_set_state(State.IDLE)
 
 func _on_hurt_timer_timeout() -> void:
 	if current_state == State.HURT:
-		if _player != null:
+		if is_instance_valid(_player):
 			_set_state(State.CHASE)
 		else:
 			_set_state(State.IDLE)
@@ -539,3 +574,19 @@ func get_health_ratio() -> float:
 func apply_spell_hit(spell: SpellData, direction: Vector2) -> void:
 	if not _is_invincible:
 		hitbox.receive_hit(spell, direction)
+
+func _attack_valid(token: int) -> bool:
+	return SpellExecutor.is_authoritative(self) and token == _attack_epoch and current_state != State.DEATH and not hitbox.is_stunned()
+func _owned_minions() -> int:
+	var count := 0
+	for node in get_tree().get_nodes_in_group("combat_owned"):
+		if node.get_meta("combat_owner", null) == self and node is Enemy and not node.is_queued_for_deletion(): count += 1
+	return count
+func consume_spell_mana(amount: float) -> bool:
+	if not is_finite(amount) or amount < 0 or amount > spell_mana: return false
+	spell_mana -= amount
+	return true
+func restore_spell_mana(amount: float) -> void:
+	spell_mana += maxf(amount, 0)
+func _exit_tree() -> void:
+	CombatLifecycle.cleanup(self)

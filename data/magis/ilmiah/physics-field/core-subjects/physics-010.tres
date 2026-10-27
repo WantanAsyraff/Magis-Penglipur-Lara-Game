@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="subjectData" format=3]
+
+[ext_resource type="Script" path="res://data/Resources/ilmu/subject.gd" id="subject"]
+[ext_resource type="Texture2D" path="res://assets/temp/temp-mana.png" id="icon"]
+[ext_resource type="Resource" path="res://data/magis/fields/physics.tres" id="field"]
+[ext_resource type="Resource" path="res://data/magis/spells/phys-sonic-pulse.tres" id="s0"]
+[ext_resource type="Resource" path="res://data/magis/spells/phys-harmonic-stabilization.tres" id="s1"]
+[ext_resource type="Resource" path="res://data/magis/spells/phys-phase-cancellation.tres" id="s2"]
+
+[resource]
+script = ExtResource("subject")
+academic_fields = [ExtResource("field")]
+subject_icon = ExtResource("icon")
+subject_name = "Acoustics and Harmonic Physics"
+subject_id = "PHY-010"
+subject_archetype = "Physical Sciences"
+magis_archetype = "Ilmiah"
+magis_comprehension = "Advanced"
+difficulty_level = 3
+prerequisites = Array[String](["PHY-002"])
+contained_spells = [ExtResource("s0"), ExtResource("s1"), ExtResource("s2")]
+theoretical_foundation = "Sound is a propagating pressure disturbance in a medium. Oscillations can be controlled by feedback; biological healing here is entirely magical. Opposite-phase coherent waves can cancel displacement locally, without erasing energy."
+field_of_study = "Acoustics and Harmonic Physics"
+casters_notes = "Learn: Sonic Pulse, Harmonic Stabilization, Phase Cancellation. Mana supplies fictional effects; capability tags restrict environmental manipulation."

@@ -18,7 +18,7 @@ const DIRECTION_ICONS := {
 @export var combat_mode: bool = false:
 	set(value):
 		combat_mode = value
-		if Player_Global_Data.combat_mode != value:
+		if (not is_inside_tree() or is_multiplayer_authority()) and Player_Global_Data.combat_mode != value:
 			Player_Global_Data.combat_mode = value
 		_on_combat_mode_changed(value)
 
@@ -51,15 +51,22 @@ var dash_direction := Vector2.ZERO
 var is_dashing := false:
 	set(value):
 		is_dashing = value
-		Player_Global_Data.is_dashing = value
+		if is_multiplayer_authority():
+			Player_Global_Data.is_dashing = value
 
 var dash_charges: int = Player_Global_Data.MAX_DASH_CHARGES:
 	set(value):
-		dash_charges = clampi(value, 0, max_dashes)
-		Player_Global_Data.current_dash_charges = dash_charges
+		dash_charges = clampi(value, 0, get_max_dash_charges())
+		if is_multiplayer_authority():
+			Player_Global_Data.current_dash_charges = dash_charges
 var dash_regen_timer := 0.0
 
 # Spells
+@export var incantation_strategy: IncantationResolver.Strategy = IncantationResolver.Strategy.CHAINED
+var casting: SpellCastingComponent
+var incantations := IncantationResolver.new()
+var _remote_health: float = 100.0
+var _remote_mana: float = 400.0
 var spell_inventory: Array[SpellData] = []
 var spell_string: Array[String] = []
 
@@ -99,6 +106,20 @@ var _parry_active: bool  = false
 # -------------------------
 func _ready() -> void:
 	add_to_group("player")
+	casting = SpellCastingComponent.new()
+	add_child(casting)
+	casting.cast_failed.connect(_on_cast_failed)
+	hitbox.status_applied.connect(func(key):
+		if key == "buff_dash_charges":
+			dash_charges = get_max_dash_charges())
+	if multiplayer.has_multiplayer_peer() and not is_multiplayer_authority():
+		set_process_unhandled_input(false)
+		hitbox.has_mana = true
+		hitbox.died.connect(_on_died)
+		hitbox.damage_taken.connect(_on_damage_taken)
+		hitbox.healed.connect(restore_spell_health)
+		hitbox.mana_drained.connect(_on_mana_drained)
+		return
 	_sync_spells_from_global()
 	Player_Global_Data.combat_mode_changed.connect(func(new_val): combat_mode = new_val)
 
@@ -112,6 +133,7 @@ func _ready() -> void:
 	hitbox.has_mana = true
 	hitbox.receives_knockback = true
 	hitbox.damage_taken.connect(_on_damage_taken)
+	hitbox.healed.connect(restore_spell_health)
 	hitbox.died.connect(_on_died)
 	hitbox.status_applied.connect(_on_status_applied)
 	hitbox.status_expired.connect(_on_status_expired)
@@ -125,6 +147,11 @@ func _ready() -> void:
 # LOGIC: PHYSICS & MOVEMENT
 # -------------------------
 func _physics_process(delta: float) -> void:
+	if multiplayer.has_multiplayer_peer() and not is_multiplayer_authority():
+		return
+	var delayed := incantations.tick(delta)
+	if delayed:
+		_cast_resolved(delayed)
 	_handle_dash_timers(delta)
 	_handle_jump_timers(delta)
 	_handle_block_timers(delta)
@@ -166,7 +193,7 @@ func _handle_movement() -> void:
 		_try_jump()
 		return
 
-	var current_speed := SPEED * (1.0 - hitbox.get_slow_factor())
+	var current_speed := (SPEED + hitbox.effects.magnitude("buff_speed")) * (1.0 - hitbox.get_slow_factor())
 	var dir := Input.get_axis("move_left", "move_right")
 	if dir != 0:
 		velocity.x = dir * current_speed
@@ -253,7 +280,8 @@ func _handle_dash_timers(delta: float) -> void:
 		if dash_timer <= 0:
 			is_dashing = false
 
-	if dash_charges < max_dashes:
+	dash_charges = mini(dash_charges, get_max_dash_charges())
+	if dash_charges < get_max_dash_charges():
 		dash_regen_timer += delta
 		if dash_regen_timer >= DASH_COOLDOWN:
 			dash_charges += 1
@@ -316,7 +344,7 @@ func _regen_mana(delta: float) -> void:
 		return
 	if Player_Global_Data.p_curr_mana < Player_Global_Data.p_max_mana:
 		Player_Global_Data.p_curr_mana = minf(
-			Player_Global_Data.p_curr_mana + mana_regen_rate * delta,
+			Player_Global_Data.p_curr_mana + (mana_regen_rate + hitbox.effects.magnitude("buff_mana_regen")) * delta,
 			Player_Global_Data.p_max_mana
 		)
 
@@ -324,6 +352,8 @@ func _regen_mana(delta: float) -> void:
 # INPUT
 # -------------------------
 func _unhandled_input(_event: InputEvent) -> void:
+	if multiplayer.has_multiplayer_peer() and not is_multiplayer_authority():
+		return
 	if Input.is_action_just_pressed("casting_aim_lock"):
 		_stop_moving_locked = not _stop_moving_locked
 		Player_Global_Data.p_moveable = not _stop_moving_locked
@@ -342,6 +372,9 @@ func _unhandled_input(_event: InputEvent) -> void:
 				spell_label.text = "Silenced!"
 				return
 			if _in_casting_stance:
+				var confirmed := incantations.confirm()
+				if confirmed:
+					_cast_resolved(confirmed)
 				_exit_casting_stance()
 			else:
 				_enter_casting_stance()
@@ -365,6 +398,7 @@ func _unhandled_input(_event: InputEvent) -> void:
 # CASTING STANCE
 # -------------------------
 func _enter_casting_stance() -> void:
+	incantations.clear()
 	_in_casting_stance = true
 	Player_Global_Data.is_casting = true
 	spell_string.clear()
@@ -372,6 +406,7 @@ func _enter_casting_stance() -> void:
 	_clear_spell_icons()
 
 func _exit_casting_stance() -> void:
+	incantations.clear()
 	_in_casting_stance = false
 	_aim_locked = false
 	Player_Global_Data.is_casting = false
@@ -384,68 +419,41 @@ func _exit_casting_stance() -> void:
 # -------------------------
 func _sync_spells_from_global() -> void:
 	spell_inventory = Player_Global_Data.equipped_spells.duplicate()
+	incantations.strategy = incantation_strategy
+	incantations.rebuild(spell_inventory)
 
 func _has_partial_match(candidate: Array) -> bool:
-	for spell in spell_inventory:
-		var keys: Array = spell.spell_incantation.filter(func(k): return k != "")
-		if keys.size() < candidate.size():
-			continue
-		var matches := true
-		for i in candidate.size():
-			if keys[i] != candidate[i]:
-				matches = false
-				break
-		if matches:
-			return true
-	return false
+	return not candidate.is_empty() and incantations.accepts(candidate.back())
 
-func _has_chain_potential(current_sequence: Array) -> bool:
-	for spell in spell_inventory:
-		var keys: Array = spell.spell_incantation.filter(func(k): return k != "")
-		# Must be strictly longer — same length means it's the spell we just cast
-		if keys.size() <= current_sequence.size():
-			continue
-		var matches := true
-		for i in current_sequence.size():
-			if keys[i] != current_sequence[i]:
-				matches = false
-				break
-		if matches:
-			return true
-	return false
+func _has_chain_potential(_current_sequence: Array) -> bool:
+	return incantations.has_extension()
 
 func _add_sequence(incantation: String) -> void:
-	spell_string.append(incantation)
+	var matched_spell := incantations.push(incantation)
+	spell_string = incantations.sequence.duplicate()
 	_update_spell_icons()
-
-	var matched_spell: SpellData = _find_spell_match()
 	if matched_spell:
-		if Player_Global_Data.p_curr_mana < matched_spell.upfront_cost:
-			_fail_cast("Not enough mana!")
-			return
+		_cast_resolved(matched_spell)
 
-		Player_Global_Data.p_curr_mana -= matched_spell.upfront_cost
-		_execute_spell_instantiation(matched_spell)
-
-		spell_label.text = matched_spell.spell_name + " cast!"
-
-		var label_ref := spell_label
-		if _has_chain_potential(spell_string):
-			# Keep sequence alive — player can chain into a longer combo
-			get_tree().create_timer(0.3).timeout.connect(func():
-				if _in_casting_stance and label_ref:
-					label_ref.text = ""
-			, CONNECT_ONE_SHOT)
-		else:
-			# No further combos possible from this sequence, clear it
-			spell_string.clear()
-			_clear_spell_icons()
-			get_tree().create_timer(0.3).timeout.connect(func():
-				if _in_casting_stance and label_ref:
-					label_ref.text = ""
-			, CONNECT_ONE_SHOT)
+func _cast_resolved(spell: SpellData) -> void:
+	var accepted: bool
+	var aim := castMarker.position.normalized()
+	var targets: Array[Node2D] = []
+	if LegacySpellAdapter.delivery_for(spell) == SpellData.Delivery.DIRECT_TARGET:
+		var targeting_context := SpellCastContext.new(self, spell)
+		targeting_context.direction = aim
+		var target := SpellDelivery.pick_target(targeting_context)
+		if target: targets.append(target)
+	if incantation_strategy == IncantationResolver.Strategy.CHAINED:
+		accepted = casting.enqueue_cast(spell, castMarker.global_position, aim, targets)
+	else:
+		accepted = casting.request_cast(spell, castMarker.global_position, aim, targets)
+	if accepted:
+		spell_label.text = spell.spell_name + " cast!"
 
 func _clear_sequence() -> void:
+	incantations.clear()
+	casting.cancel()
 	spell_string.clear()
 	spell_label.text = ""
 	_clear_spell_icons()
@@ -476,165 +484,33 @@ func _find_spell_match() -> SpellData:
 			return spell
 	return null
 
+# Compatibility entry points delegate to the same service.
 func _execute_spell_instantiation(spell: SpellData) -> void:
-	match spell.spell_category:
-		SpellData.SpellCategory.HEALING:
-			_execute_healing(spell)
-		SpellData.SpellCategory.BUFF:
-			_execute_buff(spell)
-		SpellData.SpellCategory.DECAST:
-			_execute_decast(spell)
-		_:
-			# PROJECTILE and AOE use the existing instantiation path
-			_execute_projectile(spell)
-
+	_cast_resolved(spell)
 func _execute_projectile(spell: SpellData) -> void:
-	var scene_to_use = spell.spell_scene if spell.spell_scene else PROJECTILE_SCENE
-	var base_dir = castMarker.position.normalized()
-	var count = max(1, spell.projectile_count)
-
-	# Spells that don't rely on movement/collision to find their target:
-	# AOE (detonates at cast position) and self-cast (applies to source directly).
-	var is_immediate := spell.spell_category == SpellData.SpellCategory.AOE \
-		or spell.is_self_cast
-
-	for i in count:
-		var inst = scene_to_use.instantiate()
-		inst.spell_data = spell
-		inst.source = self
-		inst.position = castMarker.global_position
-
-		if spell.is_self_cast:
-			inst.position = global_position
-		elif spell.spell_category != SpellData.SpellCategory.AOE:
-			if count == 1:
-				inst.direction = base_dir
-			else:
-				var step = (spell.projectile_spread / (count - 1)) if count > 1 else 0.0
-				var angle_offset = deg_to_rad(-spell.projectile_spread / 2.0 + step * i)
-				inst.direction = base_dir.rotated(angle_offset)
-
-		get_parent().add_child(inst)
-		inst.start()
-
-		if is_immediate and inst.has_method("trigger_immediate"):
-			inst.trigger_immediate()
-
+	_cast_resolved(spell)
 func _execute_healing(spell: SpellData) -> void:
-	if spell.heal_over_time:
-		# Kick off a repeating timer on the tree
-		var elapsed := 0.0
-		var ticks := int(spell.hot_duration / spell.hot_tick_interval)
-		for i in ticks:
-			get_tree().create_timer(spell.hot_tick_interval * i).timeout.connect(func():
-				Player_Global_Data.p_curr_health = minf(
-					Player_Global_Data.p_curr_health + spell.hot_tick_heal,
-					Player_Global_Data.p_max_health
-				)
-				_spawn_indicator("+%.0f" % spell.hot_tick_heal, "#4ADE80")
-			, CONNECT_ONE_SHOT)
-	else:
-		Player_Global_Data.p_curr_health = minf(
-			Player_Global_Data.p_curr_health + spell.heal_amount,
-			Player_Global_Data.p_max_health
-		)
-		_spawn_indicator("+%.0f" % spell.heal_amount, "#4ADE80")
-
+	_cast_resolved(spell)
 func _execute_buff(spell: SpellData) -> void:
-	# Stacking guard
-	var stack_key := "buff_%s" % SpellData.BuffType.keys()[spell.buff_type]
-	if not spell.is_stackable and hitbox.get_active_effects().has(stack_key):
-		_spawn_indicator("Already buffed!", "#A78BFA")
-		return
-
-	match spell.buff_type:
-		SpellData.BuffType.SPEED:
-			var base := Player_Global_Data.p_speed
-			Player_Global_Data.p_speed += spell.buff_magnitude
-			SPEED = Player_Global_Data.p_speed
-			get_tree().create_timer(spell.buff_duration).timeout.connect(func():
-				Player_Global_Data.p_speed = base
-				SPEED = base
-			, CONNECT_ONE_SHOT)
-		SpellData.BuffType.MANA_REGEN:
-			mana_regen_rate += spell.buff_magnitude
-			get_tree().create_timer(spell.buff_duration).timeout.connect(func():
-				mana_regen_rate -= spell.buff_magnitude
-			, CONNECT_ONE_SHOT)
-		SpellData.BuffType.DASH_CHARGES:
-			max_dashes += int(spell.buff_magnitude)
-			dash_charges += int(spell.buff_magnitude)
-			get_tree().create_timer(spell.buff_duration).timeout.connect(func():
-				max_dashes -= int(spell.buff_magnitude)
-				dash_charges = clampi(dash_charges, 0, max_dashes)
-			, CONNECT_ONE_SHOT)
-		SpellData.BuffType.CAST_SPEED:
-			# Hook this into your channelled cast time when you implement it
-			pass
-		SpellData.BuffType.DAMAGE, SpellData.BuffType.DEFENSE:
-			# These are read by the projectile/hitbox at damage calculation time.
-			# Store them in Player_Global_Data so projectiles can pick them up.
-			Player_Global_Data.active_buffs[stack_key] = {
-				"magnitude": spell.buff_magnitude,
-				"expires": Time.get_ticks_msec() + int(spell.buff_duration * 1000)
-			}
-			# Spells with an on-hit proc (e.g. Triple-Point Buffer) register it
-			# here so HitboxComponent.receive_hit can roll the proc on the
-			# player's outgoing hits while this buff is active.
-			if spell.on_hit_proc_id != "":
-				Player_Global_Data.active_buffs[stack_key]["on_hit_proc"] = spell.on_hit_proc_id
-			get_tree().create_timer(spell.buff_duration).timeout.connect(func():
-				Player_Global_Data.active_buffs.erase(stack_key)
-			, CONNECT_ONE_SHOT)
-
-	_spawn_indicator("Buffed!", "#A78BFA")
-
+	_cast_resolved(spell)
 func _execute_decast(spell: SpellData) -> void:
-	match spell.decast_mode:
-		SpellData.DecastMode.DISPEL_SELF:
-			# Strip all debuffs from the player immediately
-			for effect in ["stun", "silence", "slow", "dot", "mana_drain"]:
-				if hitbox.get_active_effects().has(effect):
-					hitbox.remove_effect(effect)
-			_spawn_indicator("Dispelled!", "#60A5FA")
+	_cast_resolved(spell)
 
-		SpellData.DecastMode.AOE_PULSE:
-			# Hits everything in radius -- enemies lose buffs, allies lose debuffs
-			var targets := get_tree().get_nodes_in_group("hitbox")
-			for t in targets:
-				if t == hitbox:
-					continue
-				var dist: float = t.global_position.distance_to(global_position)
-				if dist <= spell.decast_radius:
-					if spell.purge_enemy_buffs and t.is_in_group("enemy_hitbox"):
-						t.clear_all_buffs()  # implement on HitboxComponent
-					if spell.purge_debuffs and t.is_in_group("ally_hitbox"):
-						t.clear_all_debuffs()
-			_spawn_indicator("Pulse!", "#60A5FA")
+func _on_cast_failed(message: String) -> void:
+	# A failed short prefix must not discard the path to a longer combo.
+	_fail_cast(message, incantation_strategy != IncantationResolver.Strategy.CHAINED)
 
-		SpellData.DecastMode.TARGETED:
-			# Fire a projectile that carries a decast payload
-			var scene_to_use = spell.spell_scene if spell.spell_scene else PROJECTILE_SCENE
-			var inst = scene_to_use.instantiate()
-			inst.spell_data = spell
-			inst.source = self
-			inst.position = castMarker.global_position
-			inst.direction = castMarker.position.normalized()
-			get_parent().add_child(inst)
-			inst.start()
-			# The decast projectile's on_hit handler reads spell.purge_enemy_buffs
-			# and spell.purge_debuffs to decide what to strip on contact.
-
-func _fail_cast(message: String) -> void:
-	_clear_spell_icons()
-	spell_string.clear()
+func _fail_cast(message: String, reset_input: bool = true) -> void:
+	if reset_input:
+		incantations.clear()
+		_clear_spell_icons()
+		spell_string.clear()
 	spell_label.text = message
+	get_tree().create_timer(0.5).timeout.connect(_clear_cast_message.bind(message), CONNECT_ONE_SHOT)
 
-	var label_ref := spell_label
-	get_tree().create_timer(0.5).timeout.connect(func():
-		if _in_casting_stance and label_ref:
-			label_ref.text = ""
-	, CONNECT_ONE_SHOT)
+func _clear_cast_message(message: String) -> void:
+	if _in_casting_stance and spell_label.text == message:
+		spell_label.text = ""
 
 # -------------------------
 # FLOATING INDICATOR
@@ -673,6 +549,13 @@ func _spawn_particles(scene: PackedScene) -> void:
 # HITBOX HANDLERS
 # -------------------------
 func _on_damage_taken(amount: float) -> void:
+	if not SpellExecutor.is_authoritative(self):
+		return
+	if multiplayer.has_multiplayer_peer() and not is_multiplayer_authority():
+		_remote_health = maxf(_remote_health - amount, 0)
+		if _remote_health <= 0:
+			hitbox.died.emit()
+		return
 	# ---- PARRY: full negation ----
 	if _parry_active:
 		_parry_active = false
@@ -701,16 +584,24 @@ func _on_damage_taken(amount: float) -> void:
 		return
 
 	# ---- Normal hit ----
+	casting.cancel("Interrupted by damage")
 	Player_Global_Data.p_curr_health = maxf(
 		Player_Global_Data.p_curr_health - amount, 0.0
 	)
 
 func _on_died() -> void:
+	casting.cancel("Caster died")
+	if multiplayer.has_multiplayer_peer() and not is_multiplayer_authority():
+		hitbox.clear_all_effects()
+		return
 	Player_Global_Data.p_moveable = false
 	hitbox.clear_all_effects()
 	_exit_casting_stance()
 
 func _on_mana_drained(amount: float) -> void:
+	if multiplayer.has_multiplayer_peer() and not is_multiplayer_authority():
+		_remote_mana = maxf(_remote_mana - amount, 0)
+		return
 	if _parry_active or _is_blocking:
 		return
 	Player_Global_Data.p_curr_mana = maxf(
@@ -725,6 +616,8 @@ func _on_knocked_back(force: Vector2) -> void:
 		dash_timer = 0.0
 
 func _on_status_applied(effect_name: String) -> void:
+	if effect_name in ["stun", "silence"]:
+		casting.cancel("Cast interrupted")
 	if _parry_active:
 		hitbox.remove_effect(effect_name)
 		return
@@ -788,3 +681,32 @@ func _play_dash_effect() -> void:
 	dash_particles.global_position = global_position
 	mat.direction = Vector3(-dash_direction.x, -dash_direction.y, 0)
 	dash_particles.restart()
+
+func can_cast_spell(spell: SpellData) -> bool:
+	return is_multiplayer_authority() and Player_Global_Data.has_spell(spell) and Player_Global_Data.is_spell_equipped(spell)
+
+func consume_spell_mana(amount: float) -> bool:
+	if not is_finite(amount) or amount < 0:
+		return false
+	if multiplayer.has_multiplayer_peer() and not is_multiplayer_authority():
+		if _remote_mana < amount:
+			return false
+		_remote_mana -= amount
+		return true
+	return Player_Global_Data.consume_mana(amount)
+
+func restore_spell_mana(amount: float) -> void:
+	if multiplayer.has_multiplayer_peer() and not is_multiplayer_authority():
+		_remote_mana = minf(_remote_mana + amount, 400)
+	else:
+		Player_Global_Data.restore_mana(amount)
+
+func restore_spell_health(amount: float) -> void:
+	if multiplayer.has_multiplayer_peer() and not is_multiplayer_authority():
+		_remote_health = minf(_remote_health + amount, 100)
+	else:
+		Player_Global_Data.p_curr_health += int(amount)
+
+func get_max_dash_charges() -> int:
+	var h := get_node_or_null("HitboxComponent") as HitboxComponent
+	return maxi(0, max_dashes + int(h.effects.magnitude("buff_dash_charges") if h else 0))

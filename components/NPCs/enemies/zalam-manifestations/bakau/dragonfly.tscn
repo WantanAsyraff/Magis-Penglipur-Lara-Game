@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3]
+[ext_resource type="PackedScene" path="res://components/NPCs/enemies/Enemy.tscn" id="1"]
+[ext_resource type="Resource" path="res://data/npc/enemies/definitions/bakau/dragonfly.tres" id="2"]
+[sub_resource type="RectangleShape2D" id="body"]
+size = Vector2(58, 28)
+[node name="Enemy" instance=ExtResource("1")]
+enemy_data = ExtResource("2")
+[node name="CollisionShape2D" parent="."]
+position = Vector2(0, 0)
+shape = SubResource("body")
+[node name="RayCast2D(Right)" parent="."]
+position = Vector2(31.0, 6.0)
+scale = Vector2(1, 1)
+[node name="RayCast2D(Left)" parent="."]
+position = Vector2(-31.0, 6.0)
+scale = Vector2(1, 1)

@@ -1,0 +1,40 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://ye7g3ekq55wk"]
+
+[ext_resource type="Script" uid="uid://s7pe5qibmbcl" path="res://data/Resources/ilmu/field.gd" id="1_dm4o3"]
+[ext_resource type="Script" uid="uid://cefhbim2wny71" path="res://data/Resources/spell-effects/spell-effect-definition.gd" id="3_m5i32"]
+[ext_resource type="Script" uid="uid://crs2l0ayghg1p" path="res://data/Resources/spell-effects/damage-effect.gd" id="e0"]
+[ext_resource type="Resource" path="res://data/magis/fields/physics.tres" id="field"]
+[ext_resource type="Texture2D" uid="uid://bunu70fnhqow" path="res://assets/temp/temp-mana.png" id="icon"]
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="spell"]
+
+[sub_resource type="Resource" id="Effect_0"]
+script = ExtResource("e0")
+amount = 7
+
+[resource]
+script = ExtResource("spell")
+spell_name = "Prism Split"
+spell_id = "phys-prism-split"
+spell_icon = ExtResource("icon")
+spell_colour = Color(0.4, 0.809, 1, 1)
+spell_flavour_text = "Three bounded beam trajectories spread over a fan."
+theory_desc = "A prism disperses wavelengths; magical splitting pays for three output paths. Mana supplies the fictional energy and control. Three bounded beam trajectories spread over a fan."
+magis_archetype = "Ilmiah"
+magis_comprehension = "Advanced"
+spell_incantation = Array[String](["right", "right", "up", "down", "left", "up"])
+upfront_cost = 25
+cast_time = 0.30000000000000004
+projectile_texture = ExtResource("icon")
+projectile_range = 950.0
+projectile_size = 1.0
+projectile_speed = 850.0
+delivery = 6
+effects = Array[ExtResource("3_m5i32")]([SubResource("Effect_0")])
+academic_fields = Array[ExtResource("1_dm4o3")]([ExtResource("field")])
+cooldown = 2.0
+target_range = 500.0
+area_duration = 1
+area_tick_interval = 0.5
+beam_width = 30.0
+has_wave_tag = true
+beam_angles = Array[float]([-22.0, 0.0, 22.0])

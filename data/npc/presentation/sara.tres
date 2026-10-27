@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="NPCPresentation" format=3]
+[ext_resource type="Script" path="res://data/npc/npc-presentation.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/temp/sara.jpg" id="2"]
+[ext_resource type="Resource" path="res://dialogue/characters/sara.dch" id="3"]
+[resource]
+script = ExtResource("1")
+npc_id = "flac_sarah_npc"
+display_name = "Sara"
+portrait = ExtResource("2")
+dialogue_identity = "flac_sarah_npc"
+declined = "No worries. Come find me when you have some time."
+
+dialogic_character = ExtResource("3")

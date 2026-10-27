@@ -1,0 +1,47 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://dkk3nrn8arfgv"]
+
+[ext_resource type="Script" uid="uid://s7pe5qibmbcl" path="res://data/Resources/ilmu/field.gd" id="1_xy4ef"]
+[ext_resource type="Script" uid="uid://cefhbim2wny71" path="res://data/Resources/spell-effects/spell-effect-definition.gd" id="3_j7y73"]
+[ext_resource type="Script" uid="uid://ck55xnn6n6v3t" path="res://data/Resources/spell-effects/vector-effect.gd" id="e0"]
+[ext_resource type="Script" uid="uid://c0pnvjkbrcl16" path="res://data/Resources/spell-effects/knockback-effect.gd" id="e1"]
+[ext_resource type="Resource" path="res://data/magis/fields/physics.tres" id="field"]
+[ext_resource type="Texture2D" uid="uid://bunu70fnhqow" path="res://assets/temp/temp-mana.png" id="icon"]
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="spell"]
+
+[sub_resource type="Resource" id="Effect_0"]
+script = ExtResource("e0")
+strength = 110
+
+[sub_resource type="Resource" id="Effect_1"]
+script = ExtResource("e1")
+force = 80
+
+[resource]
+script = ExtResource("spell")
+spell_name = "Pressure Jet"
+spell_id = "phys-pressure-jet"
+spell_icon = ExtResource("icon")
+spell_colour = Color(0.4, 0.525, 1, 1)
+spell_flavour_text = "Continuous directional displacement during a mana-charged interruptible channel."
+theory_desc = "Pressure gradients drive fluid acceleration. Mana supplies the fictional energy and control. Continuous directional displacement during a mana-charged interruptible channel."
+magis_archetype = "Ilmiah"
+magis_comprehension = "Intermediate"
+spell_incantation = Array[String](["right", "right", "up", "down", "left", "left"])
+upfront_cost = 20
+mana_per_second = 5
+cast_time = 0.2
+is_channelled = true
+channel_duration = 2
+projectile_texture = ExtResource("icon")
+projectile_range = 950.0
+projectile_size = 1.0
+projectile_speed = 850.0
+delivery = 6
+effects = Array[ExtResource("3_j7y73")]([SubResource("Effect_0"), SubResource("Effect_1")])
+academic_fields = Array[ExtResource("1_xy4ef")]([ExtResource("field")])
+cooldown = 1.5
+target_range = 500.0
+area_duration = 2.5
+area_tick_interval = 0.2
+beam_width = 45
+live_channel = true

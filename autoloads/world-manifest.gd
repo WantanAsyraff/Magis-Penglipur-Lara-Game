@@ -45,7 +45,7 @@ func _get_baked_paths() -> PackedStringArray:
 	if not manifest:
 		push_error("WorldManifest: No baked manifest found! Run tools/bake_world_manifest.gd first.")
 		return []
-	return manifest.new().BAKED_PATHS
+	return manifest.BAKED_PATHS
 
 func _validate_scene_ids() -> void:
 	print("─── WorldManifest: validating scene_ids ───")

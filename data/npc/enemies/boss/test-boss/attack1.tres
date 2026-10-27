@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="BossAttackData" format=3 uid="uid://0kbwdbamjtp6"]
 
-[ext_resource type="Resource" uid="uid://by4dm8igq3oep" path="res://data/magis/spells/viscous-drag.tres" id="1_ryha5"]
+[ext_resource type="Resource" uid="uid://by4dm8igq3oep" path="res://data/magis/legacy-enemy-spells/viscous-drag.tres" id="1_ryha5"]
 [ext_resource type="Script" uid="uid://mosqxd6t24fg" path="res://data/npc/enemies/boss-attack-data.gd" id="2_ui4m2"]
 
 [resource]

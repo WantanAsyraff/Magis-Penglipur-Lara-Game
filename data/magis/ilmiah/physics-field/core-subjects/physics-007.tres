@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="subjectData" format=3]
+
+[ext_resource type="Script" path="res://data/Resources/ilmu/subject.gd" id="subject"]
+[ext_resource type="Texture2D" path="res://assets/temp/temp-mana.png" id="icon"]
+[ext_resource type="Resource" path="res://data/magis/fields/physics.tres" id="field"]
+[ext_resource type="Resource" path="res://data/magis/spells/phys-refraction-beam.tres" id="s0"]
+[ext_resource type="Resource" path="res://data/magis/spells/phys-total-internal-reflection.tres" id="s1"]
+[ext_resource type="Resource" path="res://data/magis/spells/phys-prism-split.tres" id="s2"]
+[ext_resource type="Resource" path="res://data/magis/spells/phys-optical-trap.tres" id="s3"]
+
+[resource]
+script = ExtResource("subject")
+academic_fields = [ExtResource("field")]
+subject_icon = ExtResource("icon")
+subject_name = "Optics and Photonics"
+subject_id = "PHY-007"
+subject_archetype = "Physical Sciences"
+magis_archetype = "Ilmiah"
+magis_comprehension = "Advanced"
+difficulty_level = 3
+prerequisites = Array[String](["PHY-002"])
+contained_spells = [ExtResource("s0"), ExtResource("s1"), ExtResource("s2"), ExtResource("s3")]
+theoretical_foundation = "Refraction changes propagation direction at an optical interface. Total internal reflection requires a higher-index medium and incidence above its critical angle. A prism disperses wavelengths; magical splitting pays for three output paths. Optical forces can trap small particles; confining creatures is deliberately magical."
+field_of_study = "Optics and Photonics"
+casters_notes = "Learn: Refraction Beam, Total Internal Reflection, Prism Split, Optical Trap. Mana supplies fictional effects; capability tags restrict environmental manipulation."

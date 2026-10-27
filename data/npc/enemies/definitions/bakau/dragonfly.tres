@@ -1,0 +1,45 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://d36hh60p7o86e"]
+
+[ext_resource type="Script" uid="uid://cefhbim2wny71" path="res://data/Resources/spell-effects/spell-effect-definition.gd" id="2_npeut"]
+[ext_resource type="Script" uid="uid://doxgmvpmyr7hx" path="res://data/loot/loot-data.gd" id="5_hsfke"]
+[ext_resource type="Script" uid="uid://hql7i0k33mm8" path="res://data/npc/enemies/enemy-data.gd" id="x0"]
+[ext_resource type="PackedScene" path="res://components/NPCs/enemies/visuals/dragonfly.tscn" id="x1"]
+[ext_resource type="Script" uid="uid://nehir4xnq5u1" path="res://data/npc/enemies/enemy-stats-data.gd" id="x2"]
+[ext_resource type="Script" uid="uid://b0j8jb57v35wo" path="res://data/npc/enemies/enemy-perception-data.gd" id="x3"]
+[ext_resource type="Resource" uid="uid://cjn8ojnw8yqfu" path="res://data/npc/enemies/ai-profiles/defensive-ranged.tres" id="x4"]
+[ext_resource type="Script" uid="uid://col4innb47rry" path="res://data/npc/enemies/enemy-ability-data.gd" id="x5"]
+[ext_resource type="Resource" uid="uid://cnrhq7o43qym8" path="res://data/magis/enemy-spells/bunga-seed.tres" id="x6"]
+[ext_resource type="Resource" path="res://data/loot/bakau/drop-004.tres" id="x7"]
+[ext_resource type="Resource" path="res://data/loot/bakau/drop-005.tres" id="x8"]
+[ext_resource type="Resource" path="res://data/loot/bakau/drop-006.tres" id="x9"]
+
+[sub_resource type="Resource" id="r2"]
+script = ExtResource("x5")
+ability_id = "enemy_mangroove_dragonfly_dart"
+spell = ExtResource("x6")
+min_range = 90
+max_range = 600
+cooldown = 1.6
+
+[sub_resource type="Resource" id="r1"]
+script = ExtResource("x3")
+detection_range = 650
+
+[sub_resource type="Resource" id="r0"]
+script = ExtResource("x2")
+max_health = 36
+max_mana = 80
+mana_regen = 2
+move_speed = 160
+chase_speed = 220
+
+[resource]
+script = ExtResource("x0")
+enemy_name = "Dragonfly / Pepatung"
+visual_scene = ExtResource("x1")
+stats = SubResource("r0")
+perception = SubResource("r1")
+ai_profile = ExtResource("x4")
+abilities = Array[ExtResource("x5")]([SubResource("r2")])
+loot = Array[ExtResource("5_hsfke")]([ExtResource("x7"), ExtResource("x8"), ExtResource("x9")])
+quest_enemy_id = "enemy_mangroove_dragonfly"

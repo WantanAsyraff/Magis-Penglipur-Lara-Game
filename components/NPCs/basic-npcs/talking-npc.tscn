@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://cj3mkhidrb0kx" path="res://components/NPCs/npc.tscn" id="1_6s7fs"]
 [ext_resource type="Script" uid="uid://c0xoolvt1774s" path="res://components/NPCs/dialogic-component.gd" id="2_65il1"]
-[ext_resource type="Resource" uid="uid://d2r2lttexnjj8" path="res://dialogue/story-mode/akademi-bintang-utama/prologue/scene-3.dtl" id="3_2vnfm"]
+[ext_resource type="Resource" path="res://dialogue/tutorials/students-and-errands.dtl" id="3_2vnfm"]
 
 [node name="NPC" unique_id=1277948925 instance=ExtResource("1_6s7fs")]
 

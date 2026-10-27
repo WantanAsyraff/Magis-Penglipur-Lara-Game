@@ -14,3 +14,5 @@ var magis_comprehension = "Novice"
 @export_range(1,5) var difficulty_level: int
 @export var prerequisites: Array[String]
 @export var subjects: Array[subjectData]
+
+@export var academic_fields: Array[FieldData] = []

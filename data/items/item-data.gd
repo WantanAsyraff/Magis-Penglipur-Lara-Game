@@ -1,7 +1,7 @@
 class_name ItemData
 extends Resource
 
-enum ItemType { CONSUMABLE, EQUIPMENT, KEY_ITEM, QUEST_ITEM, MATERIAL, COMPONENT, FOOD }
+enum ItemType { CONSUMABLE, EQUIPMENT, KEY_ITEM, QUEST_ITEM, MATERIAL, COMPONENT, FOOD, WEAPON_MATERIAL, RARE_MATERIAL }
 
 @export_group("Identity")
 @export var item_id: String = ""
@@ -35,3 +35,5 @@ enum ItemType { CONSUMABLE, EQUIPMENT, KEY_ITEM, QUEST_ITEM, MATERIAL, COMPONENT
 @export var qty_2: int = 0
 @export var ingredient_3: ItemData = null
 @export var qty_3: int = 0
+
+@export var tags: Array[StringName] = []

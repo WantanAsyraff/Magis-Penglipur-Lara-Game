@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://ivywuse0b637"]
+
+[ext_resource type="Script" uid="uid://s7pe5qibmbcl" path="res://data/Resources/ilmu/field.gd" id="1_0m4fq"]
+[ext_resource type="Script" uid="uid://cefhbim2wny71" path="res://data/Resources/spell-effects/spell-effect-definition.gd" id="2_10b47"]
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="x0"]
+[ext_resource type="Script" uid="uid://c0pnvjkbrcl16" path="res://data/Resources/spell-effects/knockback-effect.gd" id="x1"]
+[ext_resource type="Script" uid="uid://bbxxh60du46xv" path="res://data/Resources/spell-effects/apply-status-effect.gd" id="x2"]
+
+[sub_resource type="Resource" id="r0"]
+script = ExtResource("x1")
+force = 280
+
+[sub_resource type="Resource" id="r1"]
+script = ExtResource("x2")
+status = "slow"
+duration = 0.8
+magnitude = 0.35
+
+[resource]
+script = ExtResource("x0")
+spell_name = "Petal Repulse"
+spell_id = "bunga_repulse"
+upfront_cost = 8
+cast_time = 0.15
+aoe_spell_radius = 180
+delivery = 4
+effects = Array[ExtResource("2_10b47")]([SubResource("r0"), SubResource("r1")])
+cooldown = 3

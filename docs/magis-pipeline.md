@@ -1,304 +1,58 @@
-# Magis Pipeline
+# Magis pipeline
 
-This documents how magic content and spell behavior flow through the project, from authored data to runtime combat and progression.
+The pipeline preserves the eight main spell resources, their IDs, UIDs and incantations, and the existing projectile scenes. New definitions can use reusable effects; existing definitions are converted at runtime by `LegacySpellAdapter` without mutating the resources.
 
-It is part of the technical documentation for Magis Penglipur Lara and is meant to describe the current implementation, not just the intended design.
+## Execution path
 
-## Overview
+1. Player input enters the casting stance and feeds `IncantationResolver`, indexed from equipped spells.
+2. The resolver returns an intentional match according to its configured strategy.
+3. `SpellCastingComponent` checks authority, learning/equipment, status restrictions, resource validity, cooldown, targeting and mana.
+4. It reserves the upfront mana and enters preparation, optional channeling, execution and recovery.
+5. `SpellDelivery` dispatches the context to a projectile, self, direct target, burst, persistent area, beam, trap or summon.
+6. `SpellExecutor` applies ordered effect resources, checking compatibility and a shared budget.
+7. The target's `HitboxComponent` handles mitigated damage, knockback and owner-ticked active effects. Existing damage, healing, mana and status signals still drive presentation and character state.
 
-The Magis pipeline has three main jobs:
+Enemy ranged attacks use the same casting component. Enemy melee and other existing `receive_hit(spell, direction)` callers retain their public API through the legacy adapter.
 
-1. turn authored spell and study data into runtime spell definitions
-2. let the player learn, equip, and cast those spells
-3. resolve spell effects through the same hitbox and status pipeline used by other combat interactions
+## Incantations
 
-In other words, magic is not a separate silo. It is stitched into the same systems that handle enemies, items, quests, and UI.
+The Player inspector exposes `incantation_strategy`:
 
-## Data layer
+| Strategy | Prefix behavior |
+| --- | --- |
+| CHAINED (default) | Each completed incantation triggers immediately, including exact prefixes. Longer continuations remain available; if the next arrow cannot extend a completed combo, it can start another equipped combo. Up to eight pending casts wait for the current cast. Each is validated and charged when it starts. |
+| IMMEDIATE | First exact match casts and consumes the sequence. |
+| CONFIRMATION (opt-in) | O confirms the current exact match when leaving the stance. |
+| DELAYED | An ambiguous exact prefix waits 0.35 seconds; continuation replaces it. |
 
-### Spell data
+P clears the sequence, cancels preparation/channeling and clears pending casts. O closes the stance; already accepted casts continue. Silence, stun, damage and death interrupt active preparation/channeling. UI reports queued/accepted matches before execution; completion and failure signals are available for richer presentation.
 
-Spells are authored as `SpellData` resources, currently found under:
+## Learning
 
-- `data/magis/spells/`
+`Player_Global_Data.purchase_subject(subject, course)` validates completion, prerequisites, comprehension and XP, marks completion before emitting signals, charges once and grants all contained spells. Subject costs use the existing formula with a minimum difficulty of one; Physics I's invalid zero difficulty is corrected to one. Owning an individual spell never implies subject completion. Course prerequisites refer to completed subject IDs. `AcademicValidator` rejects duplicate IDs and prerequisite cycles within a course.
 
-Example files include:
+The spell tree and subject panel use the singleton API and progression signals, replacing per-frame panel rebuilding. Items still unlock spells through the existing inventory path. Quest and course IDs remain unchanged.
 
-- `phys-collapse.tres`
-- `phys-crash.tres`
-- `phys-force.tres`
-- `phys-resonate.tres`
-- `phys-shatterwave.tres`
-- `phys-strike.tres`
-- `phys-terminal.tres`
-- `thermal-kinetic.tres`
+## Content discovery
 
-`SpellData` carries a large amount of classification and behavior data, including:
+`Spell_Library` loads explicit preloads from `data/magis/spell-manifest.gd`. In editor builds it also discovers unbaked `.tres` additions and reports a warning. Duplicate IDs are rejected without overwriting. Invalid definitions stay visible for diagnosis but fail casting validation. Duplicate incantations and prefix ambiguities are reported separately.
 
-- category: projectile, AOE, healing, buff, decast
-- identity: name, id, icon, color, flavor text, theory description
-- classification: spell type, spell manifest, magis archetype, magis comprehension
-- incantation sequence
-- mana cost and channeling details
-- projectile fields: scene, texture, particles, sounds, range, size, damage, speed, spread, piercing, self-cast flag
-- AOE fields: radius, explosive force, knockback force
-- healing fields: flat heal, HoT flag, tick heal, tick interval, HoT duration
-- buff fields: buff type, magnitude, duration, stacking
-- decast fields: mode, radius, purge behavior, misfire silence
-- tether/chain fields: chain range, max targets, damage falloff, equilibrium bias
-- status effect flags: stun, DOT, slow, mana drain, silence
-- a placeholder hook for future status effect resources
+Use the [authoring guide](spell-authoring-guide.md), [architecture](spell-architecture-v2.md), [migration guide](spell-migration-guide.md) and [implementation report](spell-pipeline-v2-report.md) for details and measured verification results.
 
-That is a lot of data for one resource, but it also means spells are the main bridge between design intent and runtime behavior.
+## Physics reference curriculum
 
-### Study data
+The course now contains twelve subjects and 42 working spell resources, with the original eight IDs, paths, UIDs and incantations retained. See [curriculum and measured tests](physics-curriculum.md), [catalogue](physics-spell-catalogue.md), [interactions](physics-spell-interactions.md) and [baseline coverage audit](physics-implementation-coverage.md).
 
-Study content is authored as:
+Player direct-target input selects the nearest eligible target in an aim cone (dot product at least 0.35), weighted by distance and lateral offset. World-targeted areas/constructs use a bounded point along the cast direction. Solid construct placement checks terrain overlap. Bursts center on the caster. Invalid direct targets fail through the normal casting failure signal without consuming mana.
 
-- `subjectData`
-- `CourseData`
+New reusable components: VectorEffect with additive collision-aware SpellMotionImpulse; ProjectileFieldEffect for reversal, curvature, local speed and wave cancellation; ChainEffect with a visited set and hop limit; TriggerEffect with owner-attached, expiring SpellHitTrigger; InterruptEffect; bounded ReplayEffect; and expiring SpellConstruct with optional collision, following, interception and reflection. ApplyStatusEffect accepts authored status tags; ConditionalEffect supports stack thresholds, capability metadata and consumption. Existing damage, healing, stat, removal, spawn and teleport effects remain available.
 
-These live under:
+Beams use bounded terrain raycasts, configured optical interfaces and up to five output angles / four segments per path. Reflective constructs transfer segment ownership. Projectiles perform a center sweep each physics step to reduce tunneling, use size-derived collision radii and select collision masks from the casting team. Native activation flashes, status markers, visible areas/traps/beams and construct duration indicators provide feedback without external assets.
 
-- `data/Resources/ilmu/`
+`live_channel` is opt-in for beam/area/trap deliveries: dispatch occurs at channel start, upfront mana becomes committed, per-second mana is charged for elapsed time, and cancellation/completion deletes the owned delivery. Ordinary channels retain their prior dispatch-on-completion policy. Effects already delivered never produce a refunded free channel cast. Persistent casts are limited to twelve active nodes per caster. Execution budgets remain per context, so very dense repeated areas may exhaust them before normal expiry.
 
-`subjectData` includes:
+Echo records only compatible successful simple payloads, uses a fresh 64-effect context, scales damage/healing to half and excludes recursive replay/spawn/trigger payloads. Paid casts still follow learning, equipment, mana, cooldown and authority rules. This does not complete multiplayer client requests or replication; the V2 limitations remain.
 
-- name, id, icon
-- subject archetype
-- field of study, theoretical foundation, caster notes
-- magis archetype and comprehension
-- difficulty level
-- prerequisites
-- contained spells
+Chained input does not wait for a second O press. Existing SpellData preparation, channel, recovery, cooldown, mana and authority rules still apply. Up to eight completed combos queue during an active cast; queued spells validate and pay mana when they start. A rejected prefix does not erase the resolver's continuation, so a cooling-down or unaffordable short spell cannot prevent an eligible longer spell. Invalid partial input still clears normally. A valid longer continuation takes priority over restarting from the root when both could match.
 
-`CourseData` includes:
-
-- course name, id, archetype
-- description
-- magis archetype and comprehension
-- difficulty level
-- prerequisites
-- subjects
-
-So spells are not just a flat list. They can be grouped into subjects and courses, which is what gives the magic system its academic structure.
-
-## Spell library loading
-
-At runtime, `Spell_Library` does two things:
-
-1. scans `res://data/magis/spells/` for `.tres` files and loads them as `SpellData`
-2. builds an incantation map from the spell’s incantation sequence to the spell resource
-
-The result is two lookup paths:
-
-- by spell id
-- by incantation sequence, stored as a comma-joined string
-
-That means a spell can be found either by its identifier or by the input sequence used to cast it.
-
-The loader is intentionally directory-driven. If you author a new spell resource and drop it into the spells folder, it should become part of the library automatically.
-
-## Learning and equipment
-
-### How spells enter the player’s repertoire
-
-The player does not start with every spell. Spells enter the repertoire through:
-
-- `Player_Global_Data.learned_spells`
-- `Player_Global_Data.equipped_spells`
-
-Learning can happen from:
-
-- items that carry `spell_to_unlock`
-- the spell tree UI when a subject is completed
-
-### Player spell management
-
-`Player_Global_Data` provides:
-
-- `add_spell`
-- `add_spells`
-- `remove_spell`
-- `has_spell`
-- `equip_spell`
-- `unequip_spell`
-- `is_spell_equipped`
-
-Learning and equipping both emit `spells_updated`, which is how UI panels stay in sync.
-
-There is also a transient `selected_spell` field on `Player_Global_Data`, which suggests spell selection can be tracked separately from permanent learning.
-
-## Incantation casting path
-
-One of the more distinct parts of the pipeline is that spells can be addressed by an incantation sequence.
-
-The sequence is stored as an `Array[String]` on `SpellData`, and `Spell_Library` converts it into a lookup key like:
-
-- `down,down,right,up`
-
-That implies a casting model where the player performs a sequence of directional or ritual inputs and the game resolves it to a spell.
-
-The relevant runtime pieces are:
-
-- `Spell_Library.incantation_map`
-- `Spell_Library.get_spell_by_incantation`
-- `Player_Global_Data.selected_spell`
-
-So the casting pipeline is not just “click a spell icon.” There is also a path for sequence-based spell selection.
-
-## Combat spell execution
-
-Once a spell is selected or triggered, it flows into the same combat pipeline used by other attacks.
-
-### Projectile behavior
-
-`MagicProjectile` is the main spell projectile behavior. It reads `SpellData` and uses it to determine:
-
-- visuals and scale
-- lifetime from range and speed
-- movement direction and speed
-- collision behavior
-- piercing vs single-target behavior
-- AOE radius and shape query
-- impact particles
-- sound/visual hooks from spell data
-
-Important runtime behavior includes:
-
-- the projectile tracks its source
-- it skips hitting its source
-- it treats world/tile hits as terminal impacts
-- it supports piercing through already-hit bodies
-- it applies AOE around the hit point when the spell has a radius
-- it calls `HitboxComponent.receive_hit` on eligible targets
-
-So a spell’s data fields are not just flavor; they directly control movement, impact, and area behavior.
-
-### Hitbox and status effects
-
-When a spell hits an entity with a `HitboxComponent`, the spell’s effects are applied through that component.
-
-`HitboxComponent.receive_hit` handles:
-
-- damage from `projectile_damage`
-- knockback from `knockback_force`
-- stun
-- slow
-- DOT
-- mana drain
-- silence
-
-Status effects are tracked internally and ticked over time, with expiration behavior for each active effect.
-
-That means the magic system reuses the same effect pipeline as other combat interactions, which keeps damage and debuff resolution consistent.
-
-### Enemy spell usage
-
-Enemies can also participate in the magic pipeline.
-
-`EnemyCombat` supports ranged attacks that can spawn a spell projectile from:
-
-- `ranged_spell.spell_scene` if assigned
-- a fallback enemy projectile scene otherwise
-
-So enemies are not limited to melee. They can be given a `SpellData` and fire it as a ranged attack when line of sight is clear.
-
-### Damage resolution flow
-
-A typical spell hit flow looks like this:
-
-1. projectile or effect reaches a target
-2. target’s `HitboxComponent` is found
-3. `receive_hit` is called with the spell and hit direction
-4. damage is calculated using `damage_reduction` and `damage_multiplier`
-5. knockback and status effects are applied according to spell flags
-6. AOE may expand the effect to nearby bodies
-7. projectiles may free themselves depending on piercing behavior
-
-That flow is shared across player spells and enemy spells, which is a good sign that the pipeline is cohesive.
-
-## Progression and gating
-
-### Study gating via the spell tree
-
-The spell tree UI uses course/subject data to decide what the player can learn.
-
-`SpellTreeView` computes:
-
-- subject depth from prerequisites
-- lock state from missing prerequisites
-- learning cost from difficulty, comprehension, and contained spell count
-
-It then updates lock states when the player learns new spells.
-
-So magic progression is gated by study completion rather than only by currency or level.
-
-### Cost model
-
-The subject cost formula uses:
-
-- a base cost
-- a difficulty squared multiplier
-- a comprehension multiplier
-- a spell count weight
-
-That makes later or deeper subjects more expensive, which is a simple but effective progression curve.
-
-### Spell unlocking from items
-
-Items can also unlock spells directly through `spell_to_unlock`.
-
-That gives items a direct role in the magic pipeline, not just in inventory or economy.
-
-## Magic classification model
-
-Spell data already includes several classification fields:
-
-- `SpellCategory`
-- `SpellType`
-- `SpellManifest`
-- `magis_archetype`
-- `magis_comprehension`
-- archetype resonance and off-archetype penalty fields
-
-These suggest an intended design where:
-
-- spells have a top-level intent category
-- they have a finer type/manifest classification
-- they belong to a magis archetype and comprehension level
-- casting outside your dominant archetype may be tuned or restricted
-
-Some of those fields may still be partially wired, but they establish the shape of the system: not all spells are equal, and the academic archetype framing is meant to matter.
-
-## Where the pipeline is still incomplete
-
-Based on the current code, a few parts look more established than others:
-
-- spell authoring and loading are clearly in place
-- projectile and hitbox resolution are implemented
-- incantation mapping exists
-- study gating via subjects/courses exists
-- enemy spell usage is supported by the combat component
-
-Parts that may still need more work or explicit documentation:
-
-- the full runtime flow from input to spell selection to casting is not fully visible from the current survey
-- some spell fields may be intended for systems that are not yet fully built out
-- the status effect hook array on `SpellData` is currently described as future-proofing
-- the exact incantation input mapping from player controls to `selected_spell` should be documented when the surrounding casting UI/input wiring is finalized
-
-## Summary
-
-The Magis pipeline is already more than a spell list. It is:
-
-- a data-driven spell and study authoring pipeline
-- a library loader that indexes spells by id and incantation
-- a player learning/equipment layer
-- a casting path that can use incantation sequences
-- a combat resolution path through projectiles and hitboxes
-- a study-gated progression model
-- a classification model that supports archetype, comprehension, and spell category
-
-That matches the project’s broader theme: magic is treated as something you learn and apply through structured knowledge, not just a set of isolated abilities.
-
+`tests/player-combo-chains.tscn` runs 22 checks through the production Player: automatic completion, prefix continuations, independent follow-ups, queue order/payment, cooldown/mana rejection, equipment revalidation, cancellation/refund, optional confirmation and the 9999 XP / 400 HP defaults. The Physics runner includes it; packed quest verification repeats it from the exported game.

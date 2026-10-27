@@ -31,3 +31,10 @@ These docs are meant to describe the codebase as it currently exists, not just t
 
 When a subsystem becomes stable, give it its own file and link it from here.
 
+
+## Spell pipeline V2
+
+- [Architecture](spell-architecture-v2.md)
+- [Authoring guide](spell-authoring-guide.md)
+- [Migration guide](spell-migration-guide.md)
+- [Implementation and verification report](spell-pipeline-v2-report.md)

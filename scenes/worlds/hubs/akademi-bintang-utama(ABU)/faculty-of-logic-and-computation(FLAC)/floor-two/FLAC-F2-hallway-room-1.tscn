@@ -8,6 +8,13 @@
 [ext_resource type="PackedScene" uid="uid://26coxr1n5ylb" path="res://components/NPCs/quest-npcs/flac/sara-npc.tscn" id="5_gh1b8"]
 [ext_resource type="Script" uid="uid://cydbgraiijs02" path="res://system/audio-stream-player.gd" id="7_740sv"]
 
+[ext_resource type="Script" path="res://components/NPCs/npc-spawn-validator.gd" id="npc_safety"]
+
+[sub_resource type="Resource" id="npc_policy"]
+script = ExtResource("npc_safety")
+allowed_region = Rect2(-3911, -400, 5700, 900)
+max_attempts = 20
+
 [node name="WorldTemplate" unique_id=426960778 instance=ExtResource("1_anwcr")]
 
 [node name="AudioStreamPlayer" parent="." index="0" unique_id=1832510335]
@@ -55,3 +62,22 @@ npc_directory = Dictionary[String, PackedScene]({
 "flac_hasan_npc": ExtResource("4_gh1b8"),
 "flac_sarah_npc": ExtResource("5_gh1b8")
 })
+
+spawn_validator = SubResource("npc_policy")
+safe_spawn_markers = Array[NodePath]([NodePath("SafeLeft"), NodePath("SafeRight"), NodePath("SafeMiddle")])
+access_markers = Array[NodePath]([NodePath("AccessLeft"), NodePath("AccessRight")])
+
+[node name="SafeLeft" type="Marker2D" parent="World/GameComponents/NpcQuestSpawner"]
+position = Vector2(-3161, 0)
+
+[node name="SafeRight" type="Marker2D" parent="World/GameComponents/NpcQuestSpawner"]
+position = Vector2(1339, 0)
+
+[node name="SafeMiddle" type="Marker2D" parent="World/GameComponents/NpcQuestSpawner"]
+position = Vector2(939, 0)
+
+[node name="AccessLeft" type="Marker2D" parent="World/GameComponents/NpcQuestSpawner"]
+position = Vector2(-3261, 0)
+
+[node name="AccessRight" type="Marker2D" parent="World/GameComponents/NpcQuestSpawner"]
+position = Vector2(1639, 0)

@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://d2qeds1exuviw"]
+
+[ext_resource type="Script" uid="uid://col4innb47rry" path="res://data/npc/enemies/enemy-ability-data.gd" id="1_5vdwv"]
+[ext_resource type="Script" uid="uid://doxgmvpmyr7hx" path="res://data/loot/loot-data.gd" id="4_avqhd"]
+[ext_resource type="Script" uid="uid://hql7i0k33mm8" path="res://data/npc/enemies/enemy-data.gd" id="x0"]
+[ext_resource type="Script" uid="uid://nehir4xnq5u1" path="res://data/npc/enemies/enemy-stats-data.gd" id="x1"]
+[ext_resource type="Script" uid="uid://b0j8jb57v35wo" path="res://data/npc/enemies/enemy-perception-data.gd" id="x2"]
+[ext_resource type="Resource" uid="uid://dkh51asv3ocyl" path="res://data/npc/enemies/ai-profiles/heavy-guardian.tres" id="x3"]
+[ext_resource type="Resource" uid="uid://bxvesjct2w6ko" path="res://data/npc/enemies/abilities/guardian-melee.tres" id="x4"]
+
+[sub_resource type="Resource" id="r1"]
+script = ExtResource("x2")
+
+[sub_resource type="Resource" id="r0"]
+script = ExtResource("x1")
+
+[resource]
+script = ExtResource("x0")
+enemy_name = "Training-guardian"
+description = "Resource-only third-enemy example."
+stats = SubResource("r0")
+perception = SubResource("r1")
+ai_profile = ExtResource("x3")
+abilities = Array[ExtResource("1_5vdwv")]([ExtResource("x4")])

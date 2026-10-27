@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="SpellData" format=3]
+
+[ext_resource type="Script" path="res://data/Resources/ilmu/spell.gd" id="spell"]
+[ext_resource type="Resource" path="res://data/magis/fields/physics.tres" id="field"]
+[ext_resource type="Texture2D" path="res://assets/temp/temp-mana.png" id="icon"]
+[ext_resource type="PackedScene" path="res://components/spells/spell-construct.tscn" id="construct"]
+
+
+
+[resource]
+script = ExtResource("spell")
+academic_fields = [ExtResource("field")]
+spell_icon = ExtResource("icon")
+projectile_texture = ExtResource("icon")
+spell_incantation = Array[String](["right", "right", "up", "down", "right", "right"])
+effects = []
+spell_colour = Color(0.560, 0.400, 1.000, 1)
+spell_name = "Structural Fabrication"
+spell_id = "phys-structural-fabrication"
+magis_archetype = "Ilmiah"
+magis_comprehension = "Advanced"
+theory_desc = "Structures transmit loads through their geometry and constituent materials. Mana supplies the fictional energy and control. Creates a temporary solid platform for traversal; mana supplies fictional matter."
+spell_flavour_text = "Creates a temporary solid platform for traversal; mana supplies fictional matter."
+delivery = 8
+upfront_cost = 25
+cast_time = 0.30000000000000004
+cooldown = 2.0
+projectile_range = 950.0
+projectile_speed = 850.0
+projectile_size = 1.0
+aoe_spell_radius = 0
+area_duration = 8
+area_tick_interval = 0.5
+target_range = 500.0
+beam_width = 30.0
+aim_placement = true
+construct_solid = true
+summon_scene = ExtResource("construct")

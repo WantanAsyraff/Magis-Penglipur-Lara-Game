@@ -1,0 +1,50 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://cecmmhl3saa3w"]
+
+[ext_resource type="Script" uid="uid://s7pe5qibmbcl" path="res://data/Resources/ilmu/field.gd" id="1_1fts0"]
+[ext_resource type="Script" uid="uid://cefhbim2wny71" path="res://data/Resources/spell-effects/spell-effect-definition.gd" id="3_0nahb"]
+[ext_resource type="Script" uid="uid://c0pnvjkbrcl16" path="res://data/Resources/spell-effects/knockback-effect.gd" id="e0"]
+[ext_resource type="Script" uid="uid://bj5218y8jfdrq" path="res://data/Resources/spell-effects/interrupt-effect.gd" id="e1"]
+[ext_resource type="Script" uid="uid://bbxxh60du46xv" path="res://data/Resources/spell-effects/apply-status-effect.gd" id="e2"]
+[ext_resource type="Resource" path="res://data/magis/fields/physics.tres" id="field"]
+[ext_resource type="Texture2D" uid="uid://bunu70fnhqow" path="res://assets/temp/temp-mana.png" id="icon"]
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="spell"]
+
+[sub_resource type="Resource" id="Effect_0"]
+script = ExtResource("e0")
+force = 350
+
+[sub_resource type="Resource" id="Effect_1"]
+script = ExtResource("e1")
+
+[sub_resource type="Resource" id="Effect_2"]
+script = ExtResource("e2")
+status = "silence"
+duration = 0.5
+
+[resource]
+script = ExtResource("spell")
+spell_name = "Sonic Pulse"
+spell_id = "phys-sonic-pulse"
+spell_icon = ExtResource("icon")
+spell_colour = Color(0.844, 0.4, 1, 1)
+spell_flavour_text = "Radial pressure impulse interrupts nearby spell preparation and channels."
+theory_desc = "Sound is a propagating pressure disturbance in a medium. Mana supplies the fictional energy and control. Radial pressure impulse interrupts nearby spell preparation and channels."
+magis_archetype = "Ilmiah"
+magis_comprehension = "Advanced"
+spell_incantation = Array[String](["right", "right", "up", "left", "up", "down"])
+upfront_cost = 25
+cast_time = 0.30000000000000004
+projectile_texture = ExtResource("icon")
+projectile_range = 950.0
+projectile_size = 1.0
+projectile_speed = 850.0
+aoe_spell_radius = 150.0
+delivery = 4
+effects = Array[ExtResource("3_0nahb")]([SubResource("Effect_0"), SubResource("Effect_1"), SubResource("Effect_2")])
+academic_fields = Array[ExtResource("1_1fts0")]([ExtResource("field")])
+cooldown = 2.0
+target_range = 500.0
+area_duration = 4.0
+area_tick_interval = 0.5
+beam_width = 30.0
+has_wave_tag = true

@@ -17,13 +17,14 @@ func _physics_process(delta: float) -> void:
 	if not pickup or not pickup._is_collectible:
 		return
 
-	if not _target:
+	if not is_instance_valid(_target) or _target.is_queued_for_deletion():
 		_find_player()
 	else:
 		_pull_to_player(delta)
 
 func _find_player() -> void:
 	var players = get_tree().get_nodes_in_group("player")
+	players = players.filter(func(p): return GameplayEvent.owner_for(p) == QuestManager.active_owner_id and (_parent.loot_owner_id.is_empty() or _parent.loot_owner_id == GameplayEvent.owner_for(p)))
 	if players.size() > 0:
 		var p = players[0]
 		if _parent.global_position.distance_to(p.global_position) < detection_range:

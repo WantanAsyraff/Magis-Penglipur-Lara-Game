@@ -50,6 +50,8 @@ func _setup_label() -> void:
 # INPUT
 # -------------------------
 func _unhandled_input(event: InputEvent) -> void:
+	if multiplayer.has_multiplayer_peer() and not get_parent().is_multiplayer_authority():
+		return
 	if Input.is_action_just_pressed("god_mode"):
 		_toggle()
 
@@ -92,6 +94,8 @@ func _on_exit() -> void:
 # PHYSICS
 # -------------------------
 func _physics_process(delta: float) -> void:
+	if multiplayer.has_multiplayer_peer() and not get_parent().is_multiplayer_authority():
+		return
 	if not _active or not _player:
 		return
 	if not Player_Global_Data.p_moveable:

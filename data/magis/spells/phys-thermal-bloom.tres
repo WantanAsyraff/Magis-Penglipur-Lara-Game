@@ -1,0 +1,62 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://radpih006mom"]
+
+[ext_resource type="Script" uid="uid://s7pe5qibmbcl" path="res://data/Resources/ilmu/field.gd" id="1_o2f2i"]
+[ext_resource type="Script" uid="uid://cefhbim2wny71" path="res://data/Resources/spell-effects/spell-effect-definition.gd" id="3_qvwc6"]
+[ext_resource type="Script" uid="uid://crs2l0ayghg1p" path="res://data/Resources/spell-effects/damage-effect.gd" id="e0"]
+[ext_resource type="Script" uid="uid://b7nncn118gd8j" path="res://data/Resources/spell-effects/conditional-effect.gd" id="e1"]
+[ext_resource type="Script" uid="uid://dnl0jhciqa6ok" path="res://data/Resources/spell-effects/remove-status-effect.gd" id="e2"]
+[ext_resource type="Script" uid="uid://bbxxh60du46xv" path="res://data/Resources/spell-effects/apply-status-effect.gd" id="e3"]
+[ext_resource type="Resource" path="res://data/magis/fields/physics.tres" id="field"]
+[ext_resource type="Texture2D" uid="uid://bunu70fnhqow" path="res://assets/temp/temp-mana.png" id="icon"]
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="spell"]
+
+[sub_resource type="Resource" id="Effect_0"]
+script = ExtResource("e0")
+amount = 5
+
+[sub_resource type="Resource" id="Effect_1"]
+script = ExtResource("e0")
+amount = 12
+
+[sub_resource type="Resource" id="Effect_2"]
+script = ExtResource("e2")
+status = "slow"
+remove_debuffs = false
+
+[sub_resource type="Resource" id="Effect_3"]
+script = ExtResource("e1")
+required_status = "cooled"
+children = Array[ExtResource("3_qvwc6")]([SubResource("Effect_1"), SubResource("Effect_2")])
+consume = true
+
+[sub_resource type="Resource" id="Effect_4"]
+script = ExtResource("e3")
+status = "heated"
+duration = 2
+
+[resource]
+script = ExtResource("spell")
+spell_name = "Thermal Bloom"
+spell_id = "phys-thermal-bloom"
+spell_icon = ExtResource("icon")
+spell_colour = Color(0.4, 1, 0.622, 1)
+spell_flavour_text = "Visible damaging heat zone consumes cooling for one extra shock and removes the slow."
+theory_desc = "Heat flows because of temperature differences; mana supplies heating energy. Mana supplies the fictional energy and control. Visible damaging heat zone consumes cooling for one extra shock and removes the slow."
+magis_archetype = "Ilmiah"
+magis_comprehension = "Intermediate"
+spell_incantation = Array[String](["right", "right", "up", "up", "right", "right"])
+upfront_cost = 20
+cast_time = 0.2
+projectile_texture = ExtResource("icon")
+projectile_range = 950.0
+projectile_size = 1.0
+projectile_speed = 850.0
+aoe_spell_radius = 150.0
+delivery = 5
+effects = Array[ExtResource("3_qvwc6")]([SubResource("Effect_0"), SubResource("Effect_3"), SubResource("Effect_4")])
+academic_fields = Array[ExtResource("1_o2f2i")]([ExtResource("field")])
+cooldown = 1.5
+target_range = 500.0
+area_duration = 5
+beam_width = 30.0
+aim_placement = true

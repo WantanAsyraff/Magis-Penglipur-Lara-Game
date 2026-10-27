@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="EnemyAbilityData" format=3 uid="uid://dd1oc2uyyxdn5"]
+
+[ext_resource type="Script" uid="uid://cefhbim2wny71" path="res://data/Resources/spell-effects/spell-effect-definition.gd" id="1_7xmcx"]
+[ext_resource type="Script" uid="uid://col4innb47rry" path="res://data/npc/enemies/enemy-ability-data.gd" id="x0"]
+[ext_resource type="Script" uid="uid://crs2l0ayghg1p" path="res://data/Resources/spell-effects/damage-effect.gd" id="x1"]
+[ext_resource type="Script" uid="uid://c0pnvjkbrcl16" path="res://data/Resources/spell-effects/knockback-effect.gd" id="x2"]
+
+[sub_resource type="Resource" id="r0"]
+script = ExtResource("x1")
+amount = 8
+
+[sub_resource type="Resource" id="r1"]
+script = ExtResource("x2")
+force = 120
+
+[resource]
+script = ExtResource("x0")
+ability_id = "bunga_melee"
+kind = 0
+effects = Array[ExtResource("1_7xmcx")]([SubResource("r0"), SubResource("r1")])
+max_range = 140
+cooldown = 1.5

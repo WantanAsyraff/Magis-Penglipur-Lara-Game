@@ -22,3 +22,8 @@ var magis_comprehension = "Novice"
 
 @export var prerequisites: Array[String] = [] # e.g., ["basic_biology"]
 @export var contained_spells: Array[SpellData] = []
+
+@export var academic_fields: Array[FieldData] = []
+
+## Field ID -> minimum comprehension rank (0 means no requirement).
+@export var comprehension_requirements: Dictionary[StringName, int] = {}

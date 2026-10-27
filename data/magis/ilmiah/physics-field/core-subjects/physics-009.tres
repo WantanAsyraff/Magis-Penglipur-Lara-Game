@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="subjectData" format=3]
+
+[ext_resource type="Script" path="res://data/Resources/ilmu/subject.gd" id="subject"]
+[ext_resource type="Texture2D" path="res://assets/temp/temp-mana.png" id="icon"]
+[ext_resource type="Resource" path="res://data/magis/fields/physics.tres" id="field"]
+[ext_resource type="Resource" path="res://data/magis/spells/phys-elastic-barrier.tres" id="s0"]
+[ext_resource type="Resource" path="res://data/magis/spells/phys-brittle-fracture.tres" id="s1"]
+[ext_resource type="Resource" path="res://data/magis/spells/phys-structural-fabrication.tres" id="s2"]
+[ext_resource type="Resource" path="res://data/magis/spells/phys-resonance-threshold.tres" id="s3"]
+
+[resource]
+script = ExtResource("subject")
+academic_fields = [ExtResource("field")]
+subject_icon = ExtResource("icon")
+subject_name = "Material and Structural Physics"
+subject_id = "PHY-009"
+subject_archetype = "Physical Sciences"
+magis_archetype = "Ilmiah"
+magis_comprehension = "Advanced"
+difficulty_level = 3
+prerequisites = Array[String](["PHY-004"])
+contained_spells = [ExtResource("s0"), ExtResource("s1"), ExtResource("s2"), ExtResource("s3")]
+theoretical_foundation = "Elastic deformation can store energy and return part of an impact. Brittle materials fracture with little plastic deformation. Structures transmit loads through their geometry and constituent materials. Repeated driving can accumulate response when losses are sufficiently small."
+field_of_study = "Material and Structural Physics"
+casters_notes = "Learn: Elastic Barrier, Brittle Fracture, Structural Fabrication, Resonance Threshold. Mana supplies fictional effects; capability tags restrict environmental manipulation."

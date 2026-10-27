@@ -8,6 +8,10 @@ signal casting_changed(is_casting: bool)
 signal mana_changed(new_value: float)
 signal health_changed(new_value: int)
 signal spells_updated()
+signal progression_changed()
+var academic_comprehension: Dictionary[StringName, int] = {}
+var completed_subjects: Array[String] = []
+var active_buffs: Dictionary = {}
 signal dash_charges_changed(current: int)
 
 # -------------------------
@@ -76,7 +80,10 @@ var p_mood: String
 # PROGRESSION
 # -------------------------
 var player_level: int = 1
-var player_exp: float = 500
+var player_exp: float = 9999:
+	set(value):
+		player_exp = maxf(value, 0.0)
+		progression_changed.emit()
 var completed_quests: Array[String] = []
 var active_quest_states: Dictionary = {}   # quest_id -> {obj_id: progress} for saving
 # -------------------------
@@ -136,7 +143,7 @@ var p_size: float = 1.0
 # -------------------------
 # HEALTH
 # -------------------------
-var p_max_health: int = 100
+var p_max_health: int = 400
 var p_curr_health: int = p_max_health:
 	set(value):
 		p_curr_health = clamp(value, 0, p_max_health)
@@ -211,7 +218,7 @@ func is_spell_equipped(spell: SpellData) -> bool:
 # MANA HELPERS
 # -------------------------
 func consume_mana(amount: float) -> bool:
-	if p_curr_mana < amount:
+	if not is_finite(amount) or amount < 0 or p_curr_mana < amount:
 		return false
 	p_curr_mana -= amount
 	return true
@@ -235,6 +242,10 @@ func is_alive() -> bool:
 # RESET
 # -------------------------
 func reset() -> void:
+	academic_comprehension.clear()
+	completed_subjects.clear()
+	active_buffs.clear()
+	progression_changed.emit()
 	p_curr_health = p_max_health
 	p_curr_mana = p_max_mana
 	learned_spells.clear()
@@ -242,3 +253,49 @@ func reset() -> void:
 	is_casting = false
 	combat_mode = false
 	spells_updated.emit()
+
+# All purchase callers share one atomic validation and application path.
+func get_subject_cost(data: subjectData) -> int:
+	if data == null:
+		return 0
+	var multipliers := {"Novice": 1.0, "Intermediate": 1.5, "Advanced": 2.25, "Expert": 3.5}
+	return int(30 * pow(maxi(data.difficulty_level, 1), 2) * multipliers.get(data.magis_comprehension, 1.0) * (1.0 + data.contained_spells.size() * 0.25))
+
+func has_completed_subject(id: String) -> bool:
+	return completed_subjects.has(id)
+
+func can_purchase_subject(data: subjectData, course: CourseData = null) -> bool:
+	if data == null or data.subject_id.is_empty() or has_completed_subject(data.subject_id):
+		return false
+	if course != null:
+		if not course.subjects.has(data) or not AcademicValidator.validate_course(course).is_empty():
+			return false
+		for id in course.prerequisites:
+			if not has_completed_subject(id):
+				return false
+	for field_id in data.comprehension_requirements:
+		if academic_comprehension.get(field_id, 0) < data.comprehension_requirements[field_id]:
+			return false
+	for id in data.prerequisites:
+		if not has_completed_subject(id):
+			return false
+	for spell in data.contained_spells:
+		if spell == null:
+			return false
+	return player_exp >= get_subject_cost(data)
+
+func purchase_subject(data: subjectData, course: CourseData = null) -> bool:
+	if not can_purchase_subject(data, course):
+		return false
+	# Commit completion before emitting signals, including the XP setter signal.
+	completed_subjects.append(data.subject_id)
+	player_exp -= get_subject_cost(data)
+	add_spells(data.contained_spells)
+	progression_changed.emit()
+	return true
+
+func set_comprehension(field_id: StringName, rank: int) -> void:
+	if field_id == &"":
+		return
+	academic_comprehension[field_id] = maxi(rank, 0)
+	progression_changed.emit()

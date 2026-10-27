@@ -1,0 +1,41 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://00flfvm7pd2q"]
+
+[ext_resource type="Script" uid="uid://s7pe5qibmbcl" path="res://data/Resources/ilmu/field.gd" id="1_yuji5"]
+[ext_resource type="Script" uid="uid://cefhbim2wny71" path="res://data/Resources/spell-effects/spell-effect-definition.gd" id="3_gqe32"]
+[ext_resource type="Script" uid="uid://crs2l0ayghg1p" path="res://data/Resources/spell-effects/damage-effect.gd" id="damage"]
+[ext_resource type="Script" uid="uid://c0pnvjkbrcl16" path="res://data/Resources/spell-effects/knockback-effect.gd" id="force"]
+[ext_resource type="Texture2D" uid="uid://bunu70fnhqow" path="res://assets/temp/temp-mana.png" id="icon"]
+[ext_resource type="Resource" path="res://data/magis/fields/physics.tres" id="physics"]
+[ext_resource type="Script" uid="uid://bbxxh60du46xv" path="res://data/Resources/spell-effects/apply-status-effect.gd" id="slow"]
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="spell"]
+
+[sub_resource type="Resource" id="Damage"]
+script = ExtResource("damage")
+amount = 8.0
+
+[sub_resource type="Resource" id="Force"]
+script = ExtResource("force")
+force = 700.0
+
+[sub_resource type="Resource" id="Slow"]
+script = ExtResource("slow")
+status = "slow"
+duration = 5.0
+magnitude = 0.3
+
+[resource]
+script = ExtResource("spell")
+spell_name = "Force Laboratory"
+spell_id = "example-physics-force-v2"
+spell_icon = ExtResource("icon")
+magis_archetype = "Ilmiah"
+spell_incantation = Array[String](["right", "up", "right"])
+upfront_cost = 15
+cast_time = 0.2
+projectile_texture = ExtResource("icon")
+projectile_range = 1000.0
+projectile_size = 0.8
+projectile_speed = 1000.0
+delivery = 1
+effects = Array[ExtResource("3_gqe32")]([SubResource("Damage"), SubResource("Force"), SubResource("Slow")])
+academic_fields = Array[ExtResource("1_yuji5")]([ExtResource("physics")])

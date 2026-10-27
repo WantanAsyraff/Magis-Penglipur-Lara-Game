@@ -9,6 +9,5 @@ item_id = "drop_002"
 item_name = "Fish Bone"
 item_icon = ExtResource("1_qqpyj")
 item_type = 4
-description = "Sharp, brittle bones. used for basic needles.
-"
+description = "Sharp, brittle bones. Used for basic needles."
 metadata/_custom_type_script = "uid://dwparggceebhq"

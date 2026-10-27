@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="LootData" format=3 uid="uid://div5wmyiwnd0o"]
+
+[ext_resource type="Script" uid="uid://doxgmvpmyr7hx" path="res://data/loot/loot-data.gd" id="1"]
+[ext_resource type="Script" uid="uid://dwparggceebhq" path="res://data/items/item-data.gd" id="2"]
+[ext_resource type="Texture2D" uid="uid://dph1iir6fpsmg" path="res://assets/loot/branch.png" id="3"]
+
+[sub_resource type="Resource" id="Item"]
+script = ExtResource("2")
+item_id = "pohon_bark_sample"
+item_name = "Pohon Bark Sample"
+item_icon = ExtResource("3")
+item_type = 3
+quest_objective_ids = Array[String](["gather_pohon_bark_sample"])
+
+[resource]
+script = ExtResource("1")
+item = SubResource("Item")
+drop_chance = 0.6

@@ -1,0 +1,41 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://ca24f80xa6s2q"]
+
+[ext_resource type="Script" uid="uid://s7pe5qibmbcl" path="res://data/Resources/ilmu/field.gd" id="1_30xvw"]
+[ext_resource type="Script" uid="uid://cefhbim2wny71" path="res://data/Resources/spell-effects/spell-effect-definition.gd" id="3_pnd71"]
+[ext_resource type="Script" uid="uid://ck55xnn6n6v3t" path="res://data/Resources/spell-effects/vector-effect.gd" id="e0"]
+[ext_resource type="Resource" path="res://data/magis/fields/physics.tres" id="field"]
+[ext_resource type="Texture2D" uid="uid://bunu70fnhqow" path="res://assets/temp/temp-mana.png" id="icon"]
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="spell"]
+
+[sub_resource type="Resource" id="Effect_0"]
+script = ExtResource("e0")
+mode = 1
+strength = 110
+
+[resource]
+script = ExtResource("spell")
+spell_name = "Vortex Well"
+spell_id = "phys-vortex-well"
+spell_icon = ExtResource("icon")
+spell_colour = Color(0.4, 0.525, 1, 1)
+spell_flavour_text = "Pure grouping field without damage, cheaper than advanced gravity."
+theory_desc = "Converging fluid flow carries momentum toward a sink. Mana supplies the fictional energy and control. Pure grouping field without damage, cheaper than advanced gravity."
+magis_archetype = "Ilmiah"
+magis_comprehension = "Intermediate"
+spell_incantation = Array[String](["right", "right", "up", "down", "right", "up"])
+upfront_cost = 20
+cast_time = 0.2
+projectile_texture = ExtResource("icon")
+projectile_range = 950.0
+projectile_size = 1.0
+projectile_speed = 850.0
+aoe_spell_radius = 150.0
+delivery = 5
+effects = Array[ExtResource("3_pnd71")]([SubResource("Effect_0")])
+academic_fields = Array[ExtResource("1_30xvw")]([ExtResource("field")])
+cooldown = 1.5
+target_range = 500.0
+area_duration = 4.0
+area_tick_interval = 0.25
+beam_width = 30.0
+aim_placement = true

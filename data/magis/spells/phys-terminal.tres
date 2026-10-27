@@ -1,28 +1,47 @@
 [gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://dpwxqn23j1ilq"]
 
-[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="1_87xkn"]
-[ext_resource type="PackedScene" uid="uid://5847o4yjb45a" path="res://components/effects/impact/ground-slam-impact.tscn" id="1_m74oo"]
-[ext_resource type="Texture2D" uid="uid://cnnad3qojgc2y" path="res://assets/temp/temp-mana.png" id="2_as6dd"]
-[ext_resource type="PackedScene" uid="uid://h0msm0ixfq2n" path="res://components/effects/trails/root-snare-particle.tscn" id="2_d2r2p"]
-[ext_resource type="PackedScene" uid="uid://b2fvlmdplgevi" path="res://components/projectiles/player-magis-projectile.tscn" id="5_7jcdk"]
+[ext_resource type="Script" uid="uid://s7pe5qibmbcl" path="res://data/Resources/ilmu/field.gd" id="1_lobdc"]
+[ext_resource type="Script" uid="uid://cefhbim2wny71" path="res://data/Resources/spell-effects/spell-effect-definition.gd" id="3_3wpgx"]
+[ext_resource type="Script" uid="uid://crs2l0ayghg1p" path="res://data/Resources/spell-effects/damage-effect.gd" id="e0"]
+[ext_resource type="Script" uid="uid://c0pnvjkbrcl16" path="res://data/Resources/spell-effects/knockback-effect.gd" id="e1"]
+[ext_resource type="Script" uid="uid://bbxxh60du46xv" path="res://data/Resources/spell-effects/apply-status-effect.gd" id="e2"]
+[ext_resource type="Resource" path="res://data/magis/fields/physics.tres" id="field"]
+[ext_resource type="PackedScene" uid="uid://5847o4yjb45a" path="res://components/effects/impact/ground-slam-impact.tscn" id="legacy_1_m74oo"]
+[ext_resource type="Texture2D" uid="uid://bunu70fnhqow" path="res://assets/temp/temp-mana.png" id="legacy_2_as6dd"]
+[ext_resource type="PackedScene" uid="uid://h0msm0ixfq2n" path="res://components/effects/trails/root-snare-particle.tscn" id="legacy_2_d2r2p"]
+[ext_resource type="PackedScene" uid="uid://b2fvlmdplgevi" path="res://components/projectiles/player-magis-projectile.tscn" id="legacy_5_7jcdk"]
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="spell"]
+
+[sub_resource type="Resource" id="Effect_0"]
+script = ExtResource("e0")
+amount = 85
+
+[sub_resource type="Resource" id="Effect_1"]
+script = ExtResource("e1")
+force = 750
+
+[sub_resource type="Resource" id="Effect_2"]
+script = ExtResource("e2")
+status = "slow"
+duration = 2
+magnitude = 0.25
 
 [resource]
-script = ExtResource("1_87xkn")
+script = ExtResource("spell")
 spell_name = "Terminal"
 spell_id = "phys-terminal"
-spell_icon = ExtResource("2_as6dd")
-spell_flavour_text = "At a certain speed, arrival and destruction become the same event."
-theory_desc = "Terminal velocity: the point at which acceleration can no longer increase. A projectile sustained at maximum force output across its entire path, not just at launch. The caster must hold the calculation for every metre it travels or the spell degrades mid-flight."
-spell_manifest = 1
+spell_icon = ExtResource("legacy_2_as6dd")
+spell_colour = Color(1, 0.969, 0.4, 1)
+spell_flavour_text = "Expensive long-range terminal impulse with explosive impact; unlike Collapse, it is a single moving payload."
+theory_desc = "Terminal speed is a balance of driving and drag forces, not a universal maximum speed. Mana supplies the fictional energy and control. Expensive long-range terminal impulse with explosive impact; unlike Collapse, it is a single moving payload."
 magis_archetype = "Ilmiah"
-magis_comprehension = "Advanced"
 spell_incantation = Array[String](["up", "right", "down", "left", "up", "right", "down"])
 upfront_cost = 55
 cast_time = 0.35
-spell_scene = ExtResource("5_7jcdk")
-projectile_texture = ExtResource("2_as6dd")
-projectile_particles = ExtResource("2_d2r2p")
-impact_particles = ExtResource("1_m74oo")
+spell_scene = ExtResource("legacy_5_7jcdk")
+projectile_texture = ExtResource("legacy_2_as6dd")
+projectile_particles = ExtResource("legacy_2_d2r2p")
+impact_particles = ExtResource("legacy_1_m74oo")
 projectile_range = 2000.0
 projectile_size = 1.35
 projectile_damage = 85.0
@@ -30,4 +49,12 @@ projectile_speed = 1300.0
 aoe_spell_radius = 200.0
 explosive = 40.0
 knockback_force = 750.0
-metadata/_custom_type_script = "uid://ddmcw1l0ht73f"
+delivery = 1
+effects = Array[ExtResource("3_3wpgx")]([SubResource("Effect_0"), SubResource("Effect_1"), SubResource("Effect_2")])
+academic_fields = Array[ExtResource("1_lobdc")]([ExtResource("field")])
+cooldown = 6
+target_range = 500.0
+area_duration = 4.0
+area_tick_interval = 0.5
+beam_width = 30.0
+has_wave_tag = true

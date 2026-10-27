@@ -28,3 +28,8 @@ extends Resource
 @export var transition_invincible_duration: float = 1.5
 ## Animation to play on phase transition. Leave empty to skip.
 @export var transition_animation: String = "phase_transition"
+
+## Negative values preserve the boss's base mitigation.
+@export var defense: float = -1
+@export var incoming_multiplier: float = -1
+@export var status_resistances: Dictionary[String, float] = {}

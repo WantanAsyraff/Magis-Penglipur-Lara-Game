@@ -9,68 +9,91 @@ signal dialogue_ended
 
 @export var QUEST_TIMELINE_PATH = "res://dialogue/quest/QuestDialogue.dtl"
 
+var _previous_movement: bool = true
 var _open: bool = false
+var _cancelled: bool = false
+var _quest_npc: String = ""
 
 # -------------------------
 # DIRECT TEXT (quest dialogue)
 # -------------------------
-func start_direct_text(text: String, npc_id: String = "") -> void:
-	if _open or text.is_empty(): 
-		return
-	
+func start_direct_text(text: String, npc_id: String = "", portrait_identity: String = "") -> bool:
+	if _open or Dialogic.current_timeline != null or text.is_empty() or not use_dialogic:
+		return false
+
+	_cancelled = false
+	_quest_npc = npc_id
 	_open = true
+	_previous_movement = Player_Global_Data.p_moveable
 	Player_Global_Data.p_moveable = false
 	dialogue_started.emit()
-	
+
 	# Set quest text
 	Dialogic.VAR.set_variable("QuestText", text)
-	
+
 	# ✅ FIXED HERE
 	if not npc_id.is_empty():
-		Dialogic.VAR.set_variable("CurrentPortrait", npc_id)
-	
+		Dialogic.VAR.set_variable("CurrentPortrait", portrait_identity if not portrait_identity.is_empty() else npc_id)
+
 	var style = load("res://dialogue/styles/main-style.tres")
 	Dialogic.start(QUEST_TIMELINE_PATH, style)
-	
+
 	await Dialogic.timeline_ended
 	_finish_dialogue()
+	return not _cancelled
 
 # -------------------------
 # STANDARD TIMELINE
 # -------------------------
 func start(npc_id: String = "") -> bool:
-	if _open or not use_dialogic or npc_timeline == null: 
+	if _open or Dialogic.current_timeline != null or not use_dialogic or npc_timeline == null:
 		return false
-	
+
+	_cancelled = false
+	_quest_npc = npc_id
 	_open = true
+	_previous_movement = Player_Global_Data.p_moveable
 	Player_Global_Data.p_moveable = false
 	dialogue_started.emit()
-	
+
 	# ✅ FIXED HERE
 	if not npc_id.is_empty():
 		Dialogic.VAR.set_variable("CurrentPortrait", npc_id)
-	
+
 	Dialogic.start(npc_timeline)
-	
+
 	await Dialogic.timeline_ended
 	_finish_dialogue()
-	return true
+	return not _cancelled
 
 # -------------------------
 # HELPERS
 # -------------------------
 func close() -> void:
 	if not _open: return
+	_cancelled = true
 	Dialogic.end_timeline()
 
 func _finish_dialogue() -> void:
 	_open = false
-	
+
 	# FIXED HERE
 	Dialogic.VAR.set_variable("CurrentPortrait", "")
-	
-	Player_Global_Data.p_moveable = true
+
+	Player_Global_Data.p_moveable = _previous_movement
+	if not _cancelled and not _quest_npc.is_empty(): QuestManager.publish(GameplayEvent.new(GameplayEvent.Type.DIALOGUE_COMPLETED, _quest_npc))
 	dialogue_ended.emit()
 
 func is_open() -> bool:
 	return _open
+
+func _exit_tree() -> void:
+	if _open:
+		_cancelled = true
+		Dialogic.end_timeline()
+		Player_Global_Data.p_moveable = _previous_movement
+
+func _unhandled_key_input(event: InputEvent) -> void:
+	if _open and event.is_action_pressed("ui_cancel"):
+		close()
+		get_viewport().set_input_as_handled()

@@ -22,6 +22,8 @@ var _dead: bool = false
 # LIFECYCLE
 # ─────────────────────────────────────────
 func _process(_delta: float) -> void:
+	if multiplayer.has_multiplayer_peer() and not get_parent().is_multiplayer_authority():
+		return
 	if _dead:
 		return
 	if Player_Global_Data.p_curr_health <= 0.0:
@@ -32,6 +34,9 @@ func _process(_delta: float) -> void:
 # ─────────────────────────────────────────
 func _trigger_death() -> void:
 	_dead = true
+	var player := get_parent() as Player
+	if player:
+		player._on_died()
 	Player_Global_Data.p_curr_health = 0.0
 	Player_Global_Data.p_moveable = false
 	Player_Global_Data.is_casting = false

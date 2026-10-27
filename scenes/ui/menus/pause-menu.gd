@@ -13,8 +13,12 @@ func _on_resume_button_pressed() -> void:
 		visible = false
 
 func _on_save_button_pressed() -> void:
-	# TODO: hook up SaveManager when ready
-	print("Save functionality not yet implemented")
+	var dialog := AcceptDialog.new()
+	dialog.title = "Save progress"
+	dialog.dialog_text = "Quest, inventory and reward progress saved." if QuestManager.save_game() else "Could not save progress. Check available storage and try again."
+	add_child(dialog)
+	dialog.popup_centered()
+	dialog.confirmed.connect(dialog.queue_free)
 
 func _on_settings_button_pressed() -> void:
 	get_tree().paused = false

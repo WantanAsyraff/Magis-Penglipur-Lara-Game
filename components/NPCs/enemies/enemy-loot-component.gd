@@ -9,22 +9,32 @@ const DROPPED_ITEM_SCENE = preload("res://components/loot/dropped-item/dropped-i
 @export var apply_spread: bool = true
 @export var spread_force: float = 300.0
 
+var _resolved: bool = false
+
 func _ready() -> void:
 	var parent = get_parent()
 	if parent.has_signal("enemy_died"):
 		parent.enemy_died.connect(_on_enemy_died)
 
 func _on_enemy_died() -> void:
-	_process_all_loot.call_deferred()
+	if _resolved or not SpellExecutor.is_authoritative(self): return
+	_resolved = true
+	_process_all_loot()
 
 func _process_all_loot() -> void:
 	for loot in loot_table:
 		_process_loot_entry(loot)
 
 func _process_loot_entry(loot: LootData) -> void:
-	if randf() > loot.drop_chance:
+	if loot == null or not loot.validate().is_empty() or loot.drop_chance <= 0 or (loot.drop_chance < 1 and randf() >= loot.drop_chance):
 		return
 	_spawn_item(loot)
+	for extra in loot.extra_drops:
+		if extra == null or extra == loot.item: continue
+		var additional := loot.duplicate() as LootData
+		additional.item = extra
+		additional.extra_drops = []
+		_spawn_item(additional)
 
 func _spawn_item(loot: LootData) -> void:
 	if not loot.item:
@@ -34,8 +44,9 @@ func _spawn_item(loot: LootData) -> void:
 	var item_instance: DroppedItem = DROPPED_ITEM_SCENE.instantiate()
 	item_instance.loot_data = loot
 	item_instance.quantity = randi_range(loot.min_quantity, loot.max_quantity)
+	item_instance.loot_owner_id = String(get_parent().get_meta("quest_credit_owner", ""))
 
-	get_tree().current_scene.add_child(item_instance)
+	get_parent().get_parent().add_child(item_instance)
 	item_instance.global_position = global_position
 
 	if apply_spread:

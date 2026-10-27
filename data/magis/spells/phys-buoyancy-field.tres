@@ -1,0 +1,42 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://bmjb1j7g0daa7"]
+
+[ext_resource type="Script" uid="uid://s7pe5qibmbcl" path="res://data/Resources/ilmu/field.gd" id="1_vvisj"]
+[ext_resource type="Script" uid="uid://cefhbim2wny71" path="res://data/Resources/spell-effects/spell-effect-definition.gd" id="3_phi6u"]
+[ext_resource type="Script" uid="uid://ck55xnn6n6v3t" path="res://data/Resources/spell-effects/vector-effect.gd" id="e0"]
+[ext_resource type="Resource" path="res://data/magis/fields/physics.tres" id="field"]
+[ext_resource type="Texture2D" uid="uid://bunu70fnhqow" path="res://assets/temp/temp-mana.png" id="icon"]
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="spell"]
+
+[sub_resource type="Resource" id="Effect_0"]
+script = ExtResource("e0")
+mode = 4
+strength = 160
+
+[resource]
+script = ExtResource("spell")
+spell_name = "Buoyancy Field"
+spell_id = "phys-buoyancy-field"
+spell_icon = ExtResource("icon")
+spell_colour = Color(0.4, 0.525, 1, 1)
+spell_flavour_text = "Lifts allies and enemies locally for traversal and control."
+theory_desc = "Buoyancy is the net pressure force on a displaced fluid volume. Mana supplies the fictional energy and control. Lifts allies and enemies locally for traversal and control."
+magis_archetype = "Ilmiah"
+magis_comprehension = "Intermediate"
+spell_incantation = Array[String](["right", "right", "up", "down", "left", "right"])
+upfront_cost = 20
+cast_time = 0.2
+projectile_texture = ExtResource("icon")
+projectile_range = 950.0
+projectile_size = 1.0
+projectile_speed = 850.0
+aoe_spell_radius = 150.0
+delivery = 5
+effects = Array[ExtResource("3_phi6u")]([SubResource("Effect_0")])
+targeting = 2
+academic_fields = Array[ExtResource("1_vvisj")]([ExtResource("field")])
+cooldown = 1.5
+target_range = 500.0
+area_duration = 4.0
+area_tick_interval = 0.2
+beam_width = 30.0
+aim_placement = true

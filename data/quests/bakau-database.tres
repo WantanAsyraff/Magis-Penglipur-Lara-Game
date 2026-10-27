@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="QuestDatabase" format=3]
+
+[ext_resource type="Script" path="res://data/quests/quest-database.gd" id="x0"]
+[ext_resource type="Resource" path="res://data/quests/bakau/quest_bakau_001.tres" id="x1"]
+[ext_resource type="Resource" path="res://data/quests/bakau/quest_bakau_002.tres" id="x2"]
+[ext_resource type="Resource" path="res://data/quests/bakau/quest_bakau_003.tres" id="x3"]
+[ext_resource type="Resource" path="res://data/quests/bakau/quest_bakau_004.tres" id="x4"]
+[ext_resource type="Resource" path="res://data/quests/bakau/quest_bakau_005.tres" id="x5"]
+[ext_resource type="Resource" path="res://data/quests/bakau/quest_bakau_006.tres" id="x6"]
+[ext_resource type="Resource" path="res://data/quests/bakau/quest_bakau_007.tres" id="x7"]
+[ext_resource type="Resource" path="res://data/quests/bakau/quest_bakau_008.tres" id="x8"]
+[ext_resource type="Resource" path="res://data/quests/bakau/quest_bakau_009.tres" id="x9"]
+[ext_resource type="Resource" path="res://data/quests/bakau/quest_bakau_010.tres" id="x10"]
+
+
+
+[resource]
+script = ExtResource("x0")
+quests = [ExtResource("x1"), ExtResource("x2"), ExtResource("x3"), ExtResource("x4"), ExtResource("x5"), ExtResource("x6"), ExtResource("x7"), ExtResource("x8"), ExtResource("x9"), ExtResource("x10")]

@@ -1,30 +1,63 @@
 [gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://ceh7ek7xhncbp"]
 
-[ext_resource type="PackedScene" path="res://components/effects/impact/resonance-crack-impact.tscn" id="1_igu00"]
-[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="1_y2v8i"]
-[ext_resource type="Texture2D" uid="uid://cnnad3qojgc2y" path="res://assets/temp/temp-mana.png" id="2_0otjm"]
-[ext_resource type="PackedScene" uid="uid://5847o4yjb45a" path="res://components/effects/impact/ground-slam-impact.tscn" id="2_ityix"]
-[ext_resource type="Texture2D" uid="uid://dxhgewyjajudr" path="res://assets/projectiles/small-pojectile-temp.png" id="3_igu00"]
-[ext_resource type="PackedScene" uid="uid://b2fvlmdplgevi" path="res://components/projectiles/player-magis-projectile.tscn" id="3_u6wap"]
+[ext_resource type="Script" uid="uid://s7pe5qibmbcl" path="res://data/Resources/ilmu/field.gd" id="1_l2521"]
+[ext_resource type="Script" uid="uid://cefhbim2wny71" path="res://data/Resources/spell-effects/spell-effect-definition.gd" id="3_s1yf7"]
+[ext_resource type="Script" uid="uid://crs2l0ayghg1p" path="res://data/Resources/spell-effects/damage-effect.gd" id="e0"]
+[ext_resource type="Script" uid="uid://ck55xnn6n6v3t" path="res://data/Resources/spell-effects/vector-effect.gd" id="e1"]
+[ext_resource type="Script" uid="uid://b7nncn118gd8j" path="res://data/Resources/spell-effects/conditional-effect.gd" id="e2"]
+[ext_resource type="Resource" path="res://data/magis/fields/physics.tres" id="field"]
+[ext_resource type="PackedScene" path="res://components/effects/impact/resonance-crack-impact.tscn" id="legacy_1_igu00"]
+[ext_resource type="Texture2D" uid="uid://bunu70fnhqow" path="res://assets/temp/temp-mana.png" id="legacy_2_0otjm"]
+[ext_resource type="PackedScene" uid="uid://5847o4yjb45a" path="res://components/effects/impact/ground-slam-impact.tscn" id="legacy_2_ityix"]
+[ext_resource type="Texture2D" uid="uid://dxhgewyjajudr" path="res://assets/projectiles/small-pojectile-temp.png" id="legacy_3_igu00"]
+[ext_resource type="PackedScene" uid="uid://b2fvlmdplgevi" path="res://components/projectiles/player-magis-projectile.tscn" id="legacy_3_u6wap"]
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="spell"]
+
+[sub_resource type="Resource" id="Effect_0"]
+script = ExtResource("e0")
+amount = 8
+
+[sub_resource type="Resource" id="Effect_1"]
+script = ExtResource("e1")
+mode = 1
+strength = 70
+
+[sub_resource type="Resource" id="Effect_2"]
+script = ExtResource("e0")
+amount = 7
+
+[sub_resource type="Resource" id="Effect_3"]
+script = ExtResource("e2")
+required_status = "resonance"
+children = Array[ExtResource("3_s1yf7")]([SubResource("Effect_2")])
 
 [resource]
-script = ExtResource("1_y2v8i")
+script = ExtResource("spell")
 spell_name = "Collapse"
 spell_id = "phys-collapse"
-spell_icon = ExtResource("2_0otjm")
-spell_flavour_text = "Wave superposition: multiple wave states held simultaneously, released at the exact moment of overlap. The resulting interference is total, not additive. The surrounding field does not weaken. It ceases."
-theory_desc = "Superposition ends the moment you stop holding both truths at once."
-spell_manifest = 1
+spell_icon = ExtResource("legacy_2_0otjm")
+spell_colour = Color(1, 0.969, 0.4, 1)
+spell_flavour_text = "Stationary interference field damages and draws targets repeatedly."
+theory_desc = "Overlapping driven waves can focus energy locally. Mana supplies the fictional energy and control. Stationary interference field damages and draws targets repeatedly."
 magis_archetype = "Ilmiah"
-magis_comprehension = "Advanced"
 spell_incantation = Array[String](["down", "left", "down", "right", "down", "left"])
 upfront_cost = 40
-spell_scene = ExtResource("3_u6wap")
-projectile_texture = ExtResource("3_igu00")
-projectile_particles = ExtResource("2_ityix")
-impact_particles = ExtResource("1_igu00")
+cast_time = 0.1
+spell_scene = ExtResource("legacy_3_u6wap")
+projectile_texture = ExtResource("legacy_3_igu00")
+projectile_particles = ExtResource("legacy_2_ityix")
+impact_particles = ExtResource("legacy_1_igu00")
 projectile_range = 2000.0
 projectile_size = 2.0
 projectile_damage = 55.0
 projectile_speed = 2200.0
-metadata/_custom_type_script = "uid://ddmcw1l0ht73f"
+aoe_spell_radius = 130
+delivery = 5
+effects = Array[ExtResource("3_s1yf7")]([SubResource("Effect_0"), SubResource("Effect_1"), SubResource("Effect_3")])
+academic_fields = Array[ExtResource("1_l2521")]([ExtResource("field")])
+cooldown = 1.0
+target_range = 500.0
+area_tick_interval = 0.5
+beam_width = 30.0
+aim_placement = true
+has_wave_tag = true

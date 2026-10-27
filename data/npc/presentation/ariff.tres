@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="NPCPresentation" format=3]
+[ext_resource type="Script" path="res://data/npc/npc-presentation.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/temp/ariff.jpg" id="2"]
+[ext_resource type="Resource" path="res://dialogue/characters/ariff.dch" id="3"]
+[resource]
+script = ExtResource("1")
+npc_id = "flac_ariff_npc"
+display_name = "Ariff"
+portrait = ExtResource("2")
+dialogue_identity = "flac_ariff_npc"
+declined = "Alaa, okay lah. Let me know if you are free later."
+
+dialogic_character = ExtResource("3")

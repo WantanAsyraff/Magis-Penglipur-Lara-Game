@@ -3,7 +3,7 @@ class_name QuestBoard extends Area2D
 @export var display_name: String = "Technology & Science Field Researcher"
 @export var region_id: StringName = &"bakau"
 @export var database: QuestDatabase
-var panel: QuestUI
+var panel: QuestCatalogue
 var canvas: CanvasLayer
 var _was_paused: bool = false
 var _nearby: Array[Node2D] = []
@@ -17,6 +17,7 @@ func _ready() -> void:
 	collision.shape = shape
 	add_child(collision)
 	var label := Label.new()
+	label.name = "InteractLabel"
 	label.position = Vector2(-120, -100)
 	label.text = display_name + "\nE: quest board"
 	label.add_theme_font_size_override("font_size", 18)
@@ -26,16 +27,20 @@ func _ready() -> void:
 	body_entered.connect(func(body):
 		if body.is_in_group("player") and body not in _nearby: _nearby.append(body))
 	body_exited.connect(func(body): _nearby.erase(body))
+	var detection := DetectionComponent.new()
+	detection.interacted.connect(open)
+	add_child(detection)
 	queue_redraw()
 func open() -> void:
-	if is_instance_valid(panel) or not QuestManager.authoritative(): return
+	if is_instance_valid(panel) or Dialogic.current_timeline != null or QuestOfferDialog.is_open() or not QuestManager.authoritative(): return
 	QuestManager.publish(GameplayEvent.new(GameplayEvent.Type.NPC_INTERACTED, npc_id))
 	_was_paused = get_tree().paused
 	canvas = CanvasLayer.new()
 	canvas.layer = 20
 	add_child(canvas)
-	panel = load("res://scenes/ui/quest-ui/quest-ui.tscn").instantiate()
+	panel = load("res://scenes/ui/quest-ui/quest-catalogue.tscn").instantiate()
 	panel.allow_offers = true
+	panel.offer_source = self
 	panel.embedded = true
 	panel.hand_in_npc_id = npc_id
 	panel.region_filter = region_id
@@ -51,11 +56,6 @@ func close() -> void:
 	get_tree().paused = _was_paused
 func _exit_tree() -> void:
 	if is_instance_valid(panel): get_tree().paused = _was_paused
-func _unhandled_key_input(event: InputEvent) -> void:
-	_nearby = _nearby.filter(func(p): return is_instance_valid(p))
-	if event.is_action_pressed("interact") and not _nearby.is_empty():
-		open()
-		get_viewport().set_input_as_handled()
 func _draw() -> void:
 	draw_rect(Rect2(-42, -45, 84, 90), Color(.25, .35, .43))
 	draw_rect(Rect2(-34, -36, 68, 65), Color(.75, .81, .7))

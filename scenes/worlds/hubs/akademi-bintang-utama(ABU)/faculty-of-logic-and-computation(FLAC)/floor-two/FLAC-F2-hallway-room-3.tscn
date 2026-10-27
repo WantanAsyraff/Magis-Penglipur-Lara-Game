@@ -7,6 +7,13 @@
 [ext_resource type="PackedScene" uid="uid://dcspfctpja23s" path="res://components/NPCs/quest-npcs/flac/hasan-npc.tscn" id="4_t5sc7"]
 [ext_resource type="PackedScene" uid="uid://26coxr1n5ylb" path="res://components/NPCs/quest-npcs/flac/sara-npc.tscn" id="5_80l00"]
 
+[ext_resource type="Script" path="res://components/NPCs/npc-spawn-validator.gd" id="npc_safety"]
+
+[sub_resource type="Resource" id="npc_policy"]
+script = ExtResource("npc_safety")
+allowed_region = Rect2(-3911, -400, 5700, 900)
+max_attempts = 20
+
 [node name="WorldTemplate" unique_id=426960778 instance=ExtResource("1_k0orj")]
 
 [node name="ColorRect" parent="World/GameComponents/Skybox" parent_id_path=PackedInt32Array(2122455167) index="0" unique_id=871121015]
@@ -49,3 +56,22 @@ npc_directory = Dictionary[String, PackedScene]({
 "flac_hasan_npc": ExtResource("4_t5sc7"),
 "flac_sara_npc": ExtResource("5_80l00")
 })
+
+spawn_validator = SubResource("npc_policy")
+safe_spawn_markers = Array[NodePath]([NodePath("SafeLeft"), NodePath("SafeRight"), NodePath("SafeMiddle")])
+access_markers = Array[NodePath]([NodePath("AccessLeft"), NodePath("AccessRight")])
+
+[node name="SafeLeft" type="Marker2D" parent="NpcQuestSpawner"]
+position = Vector2(-3161, 0)
+
+[node name="SafeRight" type="Marker2D" parent="NpcQuestSpawner"]
+position = Vector2(1339, 0)
+
+[node name="SafeMiddle" type="Marker2D" parent="NpcQuestSpawner"]
+position = Vector2(939, 0)
+
+[node name="AccessLeft" type="Marker2D" parent="NpcQuestSpawner"]
+position = Vector2(-3261, 0)
+
+[node name="AccessRight" type="Marker2D" parent="NpcQuestSpawner"]
+position = Vector2(1639, 0)

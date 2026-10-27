@@ -46,9 +46,7 @@ func _ready() -> void:
 # -------------------------
 func _on_interacted() -> void:
 	print("[NPC] _on_interacted | quest=%s | dialogic=%s" % [quest, dialogic])
-	if dialogic and dialogic.is_open():
-		dialogic.close()
-		return
+	if (dialogic and dialogic.is_open()) or QuestOfferDialog.is_open(): return
 	if quest:
 		quest.interact()
 		return
@@ -57,24 +55,15 @@ func _on_interacted() -> void:
 # -------------------------
 # QUEST DIALOGUE
 # -------------------------
-func _on_quest_dialogue_requested(dialogue_text: String, instance: QuestInstance) -> void:
-	if not dialogic:
-		match instance.status:
-			QuestInstance.Status.AVAILABLE:
-				quest.confirm_offer_complete()
-			QuestInstance.Status.HANDED_OFF:
-				quest.confirm_complete_dialogue_done()
-		return
-	await dialogic.start_direct_text(dialogue_text)
-	match instance.status:
-		QuestInstance.Status.AVAILABLE:
-			quest.confirm_offer_complete()
-		QuestInstance.Status.HANDED_OFF:
-			quest.confirm_complete_dialogue_done()
+func _on_quest_dialogue_requested(dialogue_text: String, _instance: QuestInstance) -> void:
+	# Narrative completion is never an acceptance or reward action.
+	if dialogic: await dialogic.start_direct_text(dialogue_text)
 # -------------------------
 # PHYSICS
 # -------------------------
 func _physics_process(delta: float) -> void:
+	if not SpellExecutor.is_authoritative(self): return
+	if wander: wander.steer(delta)
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 	move_and_slide()
@@ -82,6 +71,7 @@ func _physics_process(delta: float) -> void:
 # POST-DIALOGUE
 # -------------------------
 func _on_dialogue_ended() -> void:
+	if quest: return
 	if tutorial and await tutorial.try_show():
 		return
 	_finish()

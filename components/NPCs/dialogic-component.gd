@@ -9,6 +9,7 @@ signal dialogue_ended
 
 @export var QUEST_TIMELINE_PATH = "res://dialogue/quest/QuestDialogue.dtl"
 
+var _previous_movement: bool = true
 var _open: bool = false
 var _cancelled: bool = false
 var _quest_npc: String = ""
@@ -16,13 +17,14 @@ var _quest_npc: String = ""
 # -------------------------
 # DIRECT TEXT (quest dialogue)
 # -------------------------
-func start_direct_text(text: String, npc_id: String = "") -> bool:
+func start_direct_text(text: String, npc_id: String = "", portrait_identity: String = "") -> bool:
 	if _open or Dialogic.current_timeline != null or text.is_empty() or not use_dialogic:
 		return false
 
 	_cancelled = false
 	_quest_npc = npc_id
 	_open = true
+	_previous_movement = Player_Global_Data.p_moveable
 	Player_Global_Data.p_moveable = false
 	dialogue_started.emit()
 
@@ -31,7 +33,7 @@ func start_direct_text(text: String, npc_id: String = "") -> bool:
 
 	# ✅ FIXED HERE
 	if not npc_id.is_empty():
-		Dialogic.VAR.set_variable("CurrentPortrait", npc_id)
+		Dialogic.VAR.set_variable("CurrentPortrait", portrait_identity if not portrait_identity.is_empty() else npc_id)
 
 	var style = load("res://dialogue/styles/main-style.tres")
 	Dialogic.start(QUEST_TIMELINE_PATH, style)
@@ -50,6 +52,7 @@ func start(npc_id: String = "") -> bool:
 	_cancelled = false
 	_quest_npc = npc_id
 	_open = true
+	_previous_movement = Player_Global_Data.p_moveable
 	Player_Global_Data.p_moveable = false
 	dialogue_started.emit()
 
@@ -77,7 +80,7 @@ func _finish_dialogue() -> void:
 	# FIXED HERE
 	Dialogic.VAR.set_variable("CurrentPortrait", "")
 
-	Player_Global_Data.p_moveable = true
+	Player_Global_Data.p_moveable = _previous_movement
 	if not _cancelled and not _quest_npc.is_empty(): QuestManager.publish(GameplayEvent.new(GameplayEvent.Type.DIALOGUE_COMPLETED, _quest_npc))
 	dialogue_ended.emit()
 
@@ -88,4 +91,9 @@ func _exit_tree() -> void:
 	if _open:
 		_cancelled = true
 		Dialogic.end_timeline()
-		Player_Global_Data.p_moveable = true
+		Player_Global_Data.p_moveable = _previous_movement
+
+func _unhandled_key_input(event: InputEvent) -> void:
+	if _open and event.is_action_pressed("ui_cancel"):
+		close()
+		get_viewport().set_input_as_handled()

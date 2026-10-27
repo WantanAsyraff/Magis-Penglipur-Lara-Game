@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="NPCPresentation" format=3]
+[ext_resource type="Script" path="res://data/npc/npc-presentation.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/temp/player-temp.png" id="2"]
+[resource]
+script = ExtResource("1")
+npc_id = "bakau_field_researcher"
+display_name = "Bakau Field Researcher"
+portrait = ExtResource("2")
+dialogue_identity = "bakau_field_researcher"
+declined = "That is alright. The field station will be here when you are ready."

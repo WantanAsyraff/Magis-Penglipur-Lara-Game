@@ -1,119 +1,111 @@
 class_name QuestUI extends Control
-signal close_requested
-@export var allow_offers: bool = false
-@export var embedded: bool = false
-@export var hand_in_npc_id: String = ""
-@export var region_filter: StringName = &""
-var allowed_quest_ids: Array[String] = []
-var selected_quest_id: String = ""
-var _refresh_queued: bool = false
-var _buttons: Dictionary = {}
-var _instance: QuestInstance
-var dialogic: DialogicComponent
+signal back_pressed
+var selected_contact: String = ""
+var _layout: VBoxContainer
+var _history: VBoxContainer
+var _scroll: ScrollContainer
+var _queued := false
+var rendered_bubbles: Array[Control] = []
+var quest_cards: Dictionary = {}
+var contact_rows: Dictionary = {}
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
-	QuestManager.quests_changed.connect(_schedule_refresh)
+	theme = QuestWidgets.theme()
+	QuestManager.quests_changed.connect(_schedule)
 	_refresh()
-func _schedule_refresh() -> void:
-	if _refresh_queued: return
-	_refresh_queued = true
+func _schedule() -> void:
+	if _queued: return
+	_queued = true
 	_refresh.call_deferred()
-func _find_instance(id: String) -> QuestInstance:
-	var result: QuestInstance
-	for instance in QuestManager._active_instances.values():
-		if instance.owner_id == QuestManager.active_owner_id and instance.status not in [QuestInstance.Status.EXPIRED, QuestInstance.Status.CANCELLED] and instance.quest_data.quest_id == id: result = instance
-	return result
-func _refresh(_unused: QuestInstance = null) -> void:
-	_refresh_queued = false
-	for child in %ChatLogsVBox.get_children():
-		%ChatLogsVBox.remove_child(child)
-		child.queue_free()
-	_buttons.clear()
-	var group: StringName = &""
-	for data in QuestManager.registry.quests.values():
-		if region_filter != &"" and data.region_id != region_filter: continue
-		if not allowed_quest_ids.is_empty() and data.quest_id not in allowed_quest_ids: continue
-		if data.region_id != group:
-			group = data.region_id
-			var heading := Label.new()
-			heading.text = ("Technology & Science" if data.faculty == QuestData.Faculty.TECHNOLOGY_SCIENCE else String(QuestData.Faculty.keys()[data.faculty]).capitalize()) + " / " + String(data.region_id).capitalize()
-			heading.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-			heading.add_theme_font_size_override("font_size", 18)
-			%ChatLogsVBox.add_child(heading)
-		var instance := _find_instance(data.quest_id)
-		var state := "Completed" if QuestManager.is_quest_complete(data.quest_id) else "Locked" if not QuestManager._prerequisites_met(data) else "Available"
-		if instance: state = QuestInstance.Status.keys()[instance.status].capitalize()
-		var button := Button.new()
-		button.text = data.title + "\n" + state + (" • Tracked" if instance and instance.instance_id == QuestManager.selected_instance_id else "")
-		button.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		button.alignment = HORIZONTAL_ALIGNMENT_LEFT
-		button.custom_minimum_size = Vector2(240, 64)
-		button.pressed.connect(_select.bind(data.quest_id))
-		%ChatLogsVBox.add_child(button)
-		_buttons[data.quest_id] = button
-	if selected_quest_id.is_empty() or not _buttons.has(selected_quest_id):
-		var tracked := QuestManager.get_instance(QuestManager.selected_instance_id)
-		selected_quest_id = tracked.quest_data.quest_id if tracked and _buttons.has(tracked.quest_data.quest_id) else String(_buttons.keys()[0]) if not _buttons.is_empty() else ""
-	_show_details()
+func _refresh() -> void:
+	_queued = false
+	for child in get_children(): remove_child(child); child.queue_free()
+	rendered_bubbles.clear()
+	quest_cards.clear()
+	contact_rows.clear()
+	var background := ColorRect.new()
+	background.color = Color("0f192a")
+	background.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	add_child(background)
+	var margin := MarginContainer.new()
+	margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	for edge in ["left", "right", "top", "bottom"]: margin.add_theme_constant_override("margin_" + edge, 12)
+	add_child(margin)
+	_layout = VBoxContainer.new()
+	_layout.add_theme_constant_override("separation", 12)
+	margin.add_child(_layout)
+	var header := HBoxContainer.new()
+	header.add_theme_constant_override("separation", 10)
+	header.add_child(QuestWidgets.button("‹", _back))
+	if selected_contact.is_empty():
+		header.add_child(QuestWidgets.label("Quest messages", 24))
+	else:
+		var identity := NPCPresentation.for_conversation(QuestManager.conversations.contacts[selected_contact])
+		header.add_child(QuestWidgets.avatar(identity, 44))
+		header.add_child(QuestWidgets.label(identity.display_name, 20))
+	_layout.add_child(header)
+	_scroll = ScrollContainer.new()
+	_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	_layout.add_child(_scroll)
+	_history = VBoxContainer.new()
+	_history.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_history.add_theme_constant_override("separation", 12)
+	_scroll.add_child(_history)
+	if selected_contact.is_empty(): _show_contacts()
+	else: _show_history()
+func _show_contacts() -> void:
+	var contacts: Array = QuestManager.conversations.contacts.values()
+	contacts.sort_custom(func(a, b): return int(a.entries.back().sequence) > int(b.entries.back().sequence))
+	if contacts.is_empty():
+		_history.add_child(QuestWidgets.label("Your quest contacts will appear here after you speak with a quest giver.", 18, QuestWidgets.MUTED))
+	for contact in contacts:
+		var identity := NPCPresentation.for_conversation(contact)
+		var button := QuestWidgets.contact_preview(identity, contact, _contact_status(contact), _select.bind(contact.npc_id))
+		_history.add_child(button)
+		contact_rows[contact.npc_id] = button
+func _contact_status(contact: QuestConversation) -> String:
+	for i in range(contact.entries.size()-1, -1, -1):
+		var kind: String = contact.entries[i].event_type
+		if kind in ["PLAYER_DECLINED", "PLAYER_ACCEPTED", "QUEST_READY_FOR_HAND_IN", "QUEST_COMPLETED", "QUEST_EXPIRED", "OFFER_PRESENTED"]:
+			return {"PLAYER_DECLINED": "Declined", "PLAYER_ACCEPTED": "Accepted", "QUEST_READY_FOR_HAND_IN": "Ready to Submit", "QUEST_COMPLETED": "Completed", "QUEST_EXPIRED": "Expired", "OFFER_PRESENTED": "Offered"}[kind]
+	return "Quest contact"
 func _select(id: String) -> void:
-	selected_quest_id = id
-	_show_details()
-func _show_details() -> void:
-	var data: QuestData = QuestManager.registry.quests.get(selected_quest_id)
-	if data == null: return
-	_instance = _find_instance(data.quest_id)
-	%QuestNameLabel.text = data.title
-	%QuestFlavourLabel.text = data.description
-	var lines: Array[String] = []
-	for obj in data.objectives:
-		var count := int(_instance.objective_progress.get(obj.objective_id, 0)) if _instance else 0
-		var text := "%s: %d / %d" % [obj.description, count, obj.required_amount]
-		if obj.is_optional: text += " (optional)"
-		if _instance and not _instance.eligible(obj): text += " — Complete earlier objective first"
-		if obj.type == QuestObjectiveData.ObjectiveType.COLLECT_ITEM:
-			text += "\n" + ["Acquire after acceptance", "Currently held", "Deliver at hand-in"][obj.collection_mode]
-			if obj.targets().size() > 1: text += " • Any combination"
-		lines.append(text)
-	%ObjectivesLabel.text = "\n\n".join(lines)
-	var rewards: Array[String] = ["%d XP" % data.reward_xp]
-	if data.reward_currency > 0: rewards.append("RM %d" % data.reward_currency)
-	for loot in data.reward_items: rewards.append("%d × %s" % [loot.min_quantity, loot.item.item_name])
-	for spell in data.reward_spells: rewards.append("Learn " + spell.spell_name)
-	%RewardsLabel.text = "Rewards\n" + "\n".join(rewards)
-	var required: Array[String] = []
-	for id in data.prerequisite_quest_ids:
-		required.append(QuestManager.registry.quests[id].title + (" ✓" if QuestManager.is_quest_complete(id) else " — incomplete"))
-	%PrerequisitesLabel.text = "Prerequisites: " + (", ".join(required) if not required.is_empty() else "None")
-	var ready := _instance and _instance.status == QuestInstance.Status.COMPLETE
-	%StatusLabel.text = "Completed" if QuestManager.is_quest_complete(data.quest_id) else "Ready for hand-in" if ready else "In progress" if _instance and _instance.status == QuestInstance.Status.ACTIVE else "Locked" if not QuestManager._prerequisites_met(data) else "Available from a quest giver"
-	if _instance and not _instance.pending_claim.is_empty(): %StatusLabel.text += "\n" + _instance.pending_claim
-	%AcceptButton.visible = allow_offers and (not _instance or _instance.status == QuestInstance.Status.AVAILABLE) and not QuestManager.is_quest_complete(data.quest_id)
-	%AcceptButton.disabled = not QuestManager._prerequisites_met(data)
-	%ClaimButton.visible = allow_offers and ready
-	%TrackButton.disabled = _instance == null or _instance.status not in [QuestInstance.Status.ACTIVE, QuestInstance.Status.COMPLETE]
-	%DiscussButton.visible = dialogic != null
-func _accept() -> void:
-	var instance := QuestManager.offer_quest(selected_quest_id, hand_in_npc_id)
-	if instance:
-		QuestManager.publish(GameplayEvent.new(GameplayEvent.Type.NPC_INTERACTED, hand_in_npc_id))
-		QuestManager.accept_quest(instance.instance_id)
-func _claim() -> void:
-	if _instance: QuestManager.try_hand_off(_instance.instance_id, hand_in_npc_id)
-	_show_details()
-func _track() -> void:
-	if _instance: QuestManager.select_quest(_instance.instance_id)
-func _discuss() -> void:
-	if dialogic == null or dialogic.is_open(): return
-	var data: QuestData = QuestManager.registry.quests[selected_quest_id]
-	var text := data.dialogue_complete if QuestManager.is_quest_complete(data.quest_id) else data.dialogue_incomplete if _instance and _instance.status == QuestInstance.Status.ACTIVE else data.dialogue_offer
-	var was_paused := get_tree().paused
-	get_tree().paused = false
-	await dialogic.start_direct_text(text, hand_in_npc_id)
-	if is_inside_tree() and embedded: get_tree().paused = was_paused
-func _on_back_button_pressed() -> void:
-	if embedded: close_requested.emit(); return
-	if not Player_Global_Data.previous_scene.is_empty(): SceneManager.change_scene(Player_Global_Data.previous_scene)
-	else: hide()
-	Player_Global_Data.p_moveable = true
+	selected_contact = id
+	QuestManager.mark_conversation_read(id)
+	_refresh()
+func _show_history() -> void:
+	var contact: QuestConversation = QuestManager.conversations.contacts.get(selected_contact)
+	if contact == null: selected_contact = ""; _show_contacts(); return
+	for entry in contact.entries:
+		var bubble := QuestWidgets.bubble(entry)
+		rendered_bubbles.append(bubble)
+		_history.add_child(bubble)
+	for id in contact.quest_ids:
+		var data: QuestData = QuestManager.registry.quests.get(id)
+		if not data: continue
+		var current: QuestInstance
+		for instance in QuestManager._active_instances.values():
+			if instance.quest_data.quest_id == id and instance.assigned_npc_id == selected_contact and instance.owner_id == QuestManager.active_owner_id: current = instance
+		var status_override := ""
+		if current == null or current.status == QuestInstance.Status.AVAILABLE:
+			for i in range(contact.entries.size()-1, -1, -1):
+				var entry: Dictionary = contact.entries[i]
+				if entry.quest_id != id: continue
+				if entry.event_type == "PLAYER_DECLINED": status_override = "Declined · Reoffer available in person"; break
+				if entry.event_type == "OFFER_DISMISSED": status_override = "Dismissed · No decision"; break
+				if entry.event_type == "OFFER_PRESENTED": break
+		var card := QuestWidgets.card(data, current, status_override)
+		quest_cards[id] = card
+		_history.add_child(card)
+	QuestManager.mark_conversation_read(selected_contact)
+	_scroll_to_end.call_deferred()
+func _scroll_to_end() -> void:
+	if is_instance_valid(_scroll): _scroll.scroll_vertical = int(_scroll.get_v_scroll_bar().max_value)
+func _back() -> void:
+	if not selected_contact.is_empty(): selected_contact = ""; _refresh()
+	else: back_pressed.emit()
 func _unhandled_key_input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_cancel"): _on_back_button_pressed(); get_viewport().set_input_as_handled()
+	if event.is_action_pressed("ui_cancel"):
+		_back()
+		get_viewport().set_input_as_handled()

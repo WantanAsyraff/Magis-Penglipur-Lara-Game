@@ -16,7 +16,7 @@ static func encode(manager: Node) -> Dictionary:
 	var learned: Array[String] = []
 	for spell in Player_Global_Data.learned_spells:
 		if GameplayEvent.service("Spell_Library").call("get_spell_by_id", spell.spell_id): learned.append(spell.spell_id)
-	return {"version": VERSION, "owner_id": manager.active_owner_id, "instances": instances, "completed_quests": Player_Global_Data.completed_quests.duplicate(), "claims": manager.reward_claims.duplicate(true), "seen_events": manager.seen_events.duplicate(), "selected_quest": manager.selected_instance_id, "world_flags": manager.world_flags.duplicate(), "pending_events": manager.pending_events.duplicate(true), "inventory": inventory, "equipment": equipment, "acquisition_receipts": Inventory_Manager.acquisition_receipts.duplicate(), "max_slots": Inventory_Manager.max_slots, "player_xp": Player_Global_Data.player_exp, "currency": Player_Global_Data.p_curr_ringgit, "learned_spells": learned}
+	return {"version": VERSION, "conversations": manager.conversations.to_dict(), "owner_id": manager.active_owner_id, "instances": instances, "completed_quests": Player_Global_Data.completed_quests.duplicate(), "claims": manager.reward_claims.duplicate(true), "seen_events": manager.seen_events.duplicate(), "selected_quest": manager.selected_instance_id, "world_flags": manager.world_flags.duplicate(), "pending_events": manager.pending_events.duplicate(true), "inventory": inventory, "equipment": equipment, "acquisition_receipts": Inventory_Manager.acquisition_receipts.duplicate(), "max_slots": Inventory_Manager.max_slots, "player_xp": Player_Global_Data.player_exp, "currency": Player_Global_Data.p_curr_ringgit, "learned_spells": learned}
 static func stage(manager: Node, data: Dictionary) -> Dictionary:
 	if data.get("version", 0) != VERSION or data.get("owner_id", "") != manager.active_owner_id: return {}
 	for key in ["instances", "inventory", "completed_quests", "learned_spells"]:
@@ -33,6 +33,8 @@ static func stage(manager: Node, data: Dictionary) -> Dictionary:
 		if not claim is Dictionary or not claim.get("quest_id") is String or not claim.get("owner_id") is String: return {}
 	for receipt in data.acquisition_receipts.values():
 		if not (receipt is int or receipt is float) or not is_finite(float(receipt)) or float(receipt) < 0: return {}
+	var conversations := QuestConversationStore.restore(data.get("conversations", {}), manager.registry)
+	if conversations == null: return {}
 	var staged_inventory := {}
 	var max_slots := int(data.get("max_slots", 64))
 	if max_slots < 1 or max_slots > 10000: return {}
@@ -92,7 +94,7 @@ static func stage(manager: Node, data: Dictionary) -> Dictionary:
 		var spell: SpellData = GameplayEvent.service("Spell_Library").call("get_spell_by_id", String(id))
 		if spell == null: return {}
 		learned.append(spell)
-	return {"instances": instances, "inventory": staged_inventory, "equipment": equipment, "learned": learned, "data": data}
+	return {"conversations": conversations, "instances": instances, "inventory": staged_inventory, "equipment": equipment, "learned": learned, "data": data}
 static func write_atomic(path: String, data: Dictionary) -> bool:
 	if data.is_empty() or not path.begins_with("user://") or path.contains("..") or path.length() > 512: return false
 	var temp := path + ".tmp"

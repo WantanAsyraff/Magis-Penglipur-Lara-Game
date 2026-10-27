@@ -32,14 +32,15 @@ quest_indicator = NodePath("../QuestIndicator")
 [node name="WanderComponent" type="Node2D" parent="." index="7" unique_id=102624462]
 unique_name_in_owner = true
 script = ExtResource("5_7ka2g")
-move_speed = 500.0
-wander_range_x = 600.0
-pause_duration = 0.5
+move_speed = 70.0
+wander_range_x = 180.0
+pause_duration = 2.0
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="WanderComponent" index="0" unique_id=228808160]
 unique_name_in_owner = true
 
 [node name="QuestIndicator" type="Sprite2D" parent="." index="8" unique_id=1785206720]
+z_index = 90
 visible = false
 position = Vector2(-1, -116.5)
 scale = Vector2(0.26666668, 0.26666668)

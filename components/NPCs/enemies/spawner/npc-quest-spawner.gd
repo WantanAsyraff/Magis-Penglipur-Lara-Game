@@ -13,6 +13,9 @@ class_name RoomQuestManager
 @export_group("NPC Directory")
 @export var npc_directory: Dictionary[String, PackedScene] = {}
 
+@export var spawn_validator: NPCSpawnValidator
+@export var safe_spawn_markers: Array[NodePath] = []
+@export var access_markers: Array[NodePath] = []
 var active_npcs: Array[Node2D] = []
 var quests_completed_in_room: int = 0
 var completion_threshold: int = 0
@@ -29,11 +32,14 @@ func _ready() -> void:
 	
 	print("[RoomQuestManager:%s] Ready — threshold: %d" % [room_id, completion_threshold])
 	
-	_spawn_random_npcs()
+	_spawn_after_physics()
 
 # -------------------------
 # SPAWN LOGIC
 # -------------------------
+func _spawn_after_physics() -> void:
+	await get_tree().physics_frame
+	_spawn_random_npcs()
 func _spawn_random_npcs() -> void:
 	if npc_directory.is_empty():
 		return
@@ -57,40 +63,51 @@ func _spawn_random_npcs() -> void:
 		spawn_npc(pool[i])
 
 func spawn_npc(npc_id_to_spawn: String) -> void:
-	if active_npcs.size() >= max_npcs:
+	active_npcs = active_npcs.filter(func(n): return is_instance_valid(n) and not n.is_queued_for_deletion())
+	if not SpellExecutor.is_authoritative(self) or active_npcs.size() >= max_npcs: return
+	if spawn_validator == null:
+		push_warning("Room %s has no authored NPC placement policy; skipping unsafe spawn." % room_id)
 		return
+	var markers: Array[Vector2] = []
+	var access: Array[Vector2] = []
+	var others: Array[Vector2] = []
+	for path in safe_spawn_markers:
+		var marker := get_node_or_null(path) as Marker2D
+		if marker: markers.append(marker.global_position)
+	for path in access_markers:
+		var marker := get_node_or_null(path) as Marker2D
+		if marker: access.append(marker.global_position)
+	for npc in get_tree().get_nodes_in_group("quest_npc"):
+		if not npc.is_queued_for_deletion(): others.append(npc.global_position)
+	var placement := spawn_validator.choose(get_world_2d().direct_space_state, global_position, markers, access, others)
+	if placement.is_empty():
+		push_warning("Room %s: no accessible NPC position after bounded validation; skipped %s." % [room_id, npc_id_to_spawn])
+		return
+	var npc: CharacterBody2D = npc_directory[npc_id_to_spawn].instantiate()
+	var component := npc.find_child("QuestNPCComponent") as QuestNPCComponent
+	if component:
+		component.faculty = room_faculty
+		component.npc_id = npc_id_to_spawn
+	npc.position = to_local(placement.position)
+	npc.add_to_group("quest_npc")
+	add_child(npc)
+	active_npcs.append(npc)
+	Player_Global_Data.register_npc(npc_id_to_spawn)
+	var wander := npc.find_child("WanderComponent") as WanderComponent
+	if wander:
+		wander.validator = spawn_validator
+		wander.region = Rect2(global_position + spawn_validator.allowed_region.position, spawn_validator.allowed_region.size)
+		wander.set_origin(npc.global_position)
+	if component:
+		component.setup_quest()
+		component.despawned.connect(func():
+			active_npcs.erase(npc)
+			_replenish.call_deferred())
 
-	# FIX: Instead of calling is_npc_registered, check the array directly
-	var is_registered = Player_Global_Data.active_npc_ids.has(npc_id_to_spawn)
-	
-	# If not registered, register them using the existing function
-	if not is_registered:
-		Player_Global_Data.register_npc(npc_id_to_spawn)
-
-	var npc_scene: PackedScene = npc_directory[npc_id_to_spawn]
-	var npc_instance: Node2D = npc_scene.instantiate()
-	
-	var prepared := npc_instance.find_child("QuestNPCComponent") as QuestNPCComponent
-	if prepared:
-		prepared.faculty = room_faculty
-		prepared.npc_id = npc_id_to_spawn
-	npc_instance.position = Vector2(randf_range(-100, 100), randf_range(-50, 50))
-	add_child(npc_instance)
-	active_npcs.append(npc_instance)
-	
-	npc_instance.position = Vector2(randf_range(-100, 100), randf_range(-50, 50))
-
-	var q_comp := npc_instance.find_child("QuestNPCComponent") as QuestNPCComponent
-	if q_comp:
-		q_comp.faculty = room_faculty
-		q_comp.npc_id = npc_id_to_spawn
-		q_comp.setup_quest() 
-		
-		q_comp.despawned.connect(func() -> void:
-			if active_npcs.has(npc_instance):
-				active_npcs.erase(npc_instance)
-			Player_Global_Data.unregister_npc(npc_id_to_spawn)
-		)
+func _replenish() -> void:
+	await get_tree().physics_frame
+	await get_tree().process_frame
+	_spawn_random_npcs()
 
 # -------------------------
 # ROOM PROGRESSION
@@ -120,6 +137,7 @@ func _clear_and_reset_room() -> void:
 		
 		var q_comp := npc.find_child("QuestNPCComponent") as QuestNPCComponent
 		if q_comp:
+			if q_comp._busy: continue
 			if q_comp._instance and q_comp._instance.status in [QuestInstance.Status.ACTIVE, QuestInstance.Status.COMPLETE]:
 				continue
 			to_remove.append(npc)

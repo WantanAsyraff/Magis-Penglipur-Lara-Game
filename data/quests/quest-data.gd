@@ -36,3 +36,6 @@ enum Faculty { NONE, PHYSICS, COMPUTER_SCIENCE, ENGINEERING, MEDICINE, LAW, TECH
 @export_multiline var dialogue_offer: String = ""
 @export_multiline var dialogue_incomplete: String = ""
 @export_multiline var dialogue_complete: String = ""
+
+@export_multiline var dialogue_accepted: String = ""
+@export_multiline var dialogue_declined: String = ""

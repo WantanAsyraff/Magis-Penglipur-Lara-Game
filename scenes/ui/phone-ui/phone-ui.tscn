@@ -98,7 +98,7 @@ offset_right = 0.19998169
 offset_bottom = -0.14001465
 icon = ExtResource("8_m42wd")
 newApp = ExtResource("9_chuhu")
-fullscreen = true
+fullscreen = false
 
 [node name="PlayerStats" parent="AppList" unique_id=462390566 instance=ExtResource("1_qb4dd")]
 clip_contents = true

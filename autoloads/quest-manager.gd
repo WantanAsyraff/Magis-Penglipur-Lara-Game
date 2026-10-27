@@ -6,6 +6,9 @@ signal quest_handed_off(instance: QuestInstance)
 signal quest_changed(instance: QuestInstance)
 signal quests_changed
 signal save_finished(success: bool)
+var conversations := QuestConversationStore.new()
+var live_offers: Dictionary = {}
+var offer_cooldowns: Dictionary = {}
 var registry: QuestRegistry
 var database: QuestDatabase
 var active_owner_id: String = "local"
@@ -69,7 +72,7 @@ func request_quest_for_npc(faculty: QuestData.Faculty, npc_id: String) -> QuestI
 		var instance := offer_quest(data.quest_id, npc_id)
 		if instance: return instance
 	return null
-func accept_quest(id: String, owner: String = "") -> bool:
+func accept_quest(id: String, owner: String = "", decision_receipt: String = "") -> bool:
 	if not authoritative(): return false
 	if owner.is_empty(): owner = active_owner_id
 	var instance := get_instance(id)
@@ -83,6 +86,8 @@ func accept_quest(id: String, owner: String = "") -> bool:
 		if obj.type == QuestObjectiveData.ObjectiveType.QUEST_COMPLETED:
 			for target in obj.targets():
 				if is_quest_complete(target, owner): instance.update_objective(obj.objective_id)
+	if not decision_receipt.is_empty(): _log_entry(instance, "PLAYER_ACCEPTED", "player", "Accepted: " + instance.quest_data.title, "accepted:" + instance.instance_id)
+	_log_entry(instance, "QUEST_STARTED", "system", "Quest started: " + instance.quest_data.title, "started:" + instance.instance_id)
 	quest_started.emit(instance)
 	if instance.status == QuestInstance.Status.COMPLETE: quest_completed.emit(instance)
 	changed(instance)
@@ -100,7 +105,9 @@ func publish(event: GameplayEvent) -> bool:
 			changed_ids.append_array(QuestObjectiveEvaluator.reconcile_inventory(instance, Inventory_Manager.inventory))
 		for id in changed_ids: quest_objective_updated.emit(instance, id)
 		if before != QuestInstance.Status.COMPLETE and instance.status == QuestInstance.Status.COMPLETE: quest_completed.emit(instance)
-		if not changed_ids.is_empty(): quest_changed.emit(instance)
+		if not changed_ids.is_empty():
+			_log_lifecycle(instance)
+			quest_changed.emit(instance)
 	_update_goals()
 	quests_changed.emit()
 	schedule_save()
@@ -138,7 +145,7 @@ func _continue_chain(instance: QuestInstance) -> void:
 	for other in _active_instances.values():
 		if other.owner_id == instance.owner_id and other.quest_data.quest_id == instance.quest_data.next_quest_id: return
 	var next := offer_quest(instance.quest_data.next_quest_id, instance.assigned_npc_id, instance.owner_id)
-	if next and instance.quest_data.auto_accept_next: accept_quest(next.instance_id, instance.owner_id)
+	# Chained quests are offered; every acceptance requires an explicit player decision.
 func cancel_quest(id: String) -> bool:
 	var instance := get_instance(id)
 	if not authoritative() or instance == null or instance.owner_id != active_owner_id or instance.status not in [QuestInstance.Status.AVAILABLE, QuestInstance.Status.ACTIVE, QuestInstance.Status.COMPLETE]: return false
@@ -150,6 +157,7 @@ func release_npc(npc_id: String) -> void:
 	for instance in _active_instances.values():
 		if instance.owner_id == active_owner_id and instance.assigned_npc_id == npc_id and instance.status == QuestInstance.Status.AVAILABLE:
 			instance.status = QuestInstance.Status.EXPIRED
+			_log_lifecycle(instance)
 	_npc_instance_map.erase(active_owner_id + "|" + npc_id)
 	changed()
 func notify_npc_despawned(id: String) -> void:
@@ -190,6 +198,7 @@ func select_quest(id: String) -> bool:
 	changed(instance)
 	return true
 func changed(instance: QuestInstance = null) -> void:
+	if instance: _log_lifecycle(instance)
 	if instance: quest_changed.emit(instance)
 	_update_goals()
 	quests_changed.emit()
@@ -233,6 +242,8 @@ func load_game(path: String = "") -> bool:
 	if staged.is_empty(): return false
 	_restoring = true
 	_save_timer.stop()
+	live_offers.clear()
+	conversations = staged.conversations
 	_active_instances = staged.instances
 	_npc_instance_map.clear()
 	_quest_active_count.clear()
@@ -251,6 +262,7 @@ func load_game(path: String = "") -> bool:
 	selected_instance_id = String(value.get("selected_quest", ""))
 	for instance in _active_instances.values():
 		if instance.status in [QuestInstance.Status.ACTIVE, QuestInstance.Status.COMPLETE]: QuestObjectiveEvaluator.reconcile_inventory(instance, Inventory_Manager.inventory)
+		_log_lifecycle(instance)
 	_restoring = false
 	drain_outbox()
 	for instance in _active_instances.values().duplicate():
@@ -273,3 +285,60 @@ func drain_outbox() -> void:
 		var row: Dictionary = pending_events.pop_front()
 		var event := GameplayEvent.from_dict(row)
 		if event: publish(event)
+
+func _log_entry(instance: QuestInstance, kind: String, sender: String, text: String, receipt: String, snapshot: Dictionary = {}) -> void:
+	if instance.owner_id != active_owner_id: return
+	if conversations.record(instance.assigned_npc_id, instance.quest_data.quest_id, kind, sender, text, receipt, snapshot):
+		quests_changed.emit()
+		schedule_save()
+func _log_lifecycle(instance: QuestInstance) -> void:
+	for obj in instance.quest_data.objectives:
+		if instance.done(obj.objective_id): _log_entry(instance, "OBJECTIVE_UPDATED", "system", obj.description + " completed.", "objective:" + instance.instance_id + ":" + obj.objective_id, instance.objective_progress)
+	match instance.status:
+		QuestInstance.Status.COMPLETE:
+			_log_entry(instance, "QUEST_READY_FOR_HAND_IN", "system", "Objectives completed. Return to the quest giver.", "ready:" + instance.instance_id, instance.objective_progress)
+		QuestInstance.Status.HANDED_OFF:
+			_log_entry(instance, "QUEST_COMPLETED", "system", "Completed: " + instance.quest_data.title, "completed:" + instance.instance_id)
+			_log_entry(instance, "REWARD_CLAIMED", "system", "Rewards received.", "claimed:" + instance.instance_id, {"xp": instance.quest_data.reward_xp, "currency": instance.quest_data.reward_currency})
+		QuestInstance.Status.EXPIRED:
+			_log_entry(instance, "QUEST_EXPIRED", "system", "Quest expired.", "expired:" + instance.instance_id)
+func present_offer(id: String, npc: String, identity: NPCPresentation = null) -> String:
+	var instance := get_instance(id)
+	if not authoritative() or instance == null or instance.owner_id != active_owner_id or instance.status != QuestInstance.Status.AVAILABLE or instance.assigned_npc_id != npc or not _prerequisites_met(instance.quest_data): return ""
+	if float(offer_cooldowns.get(npc + "|" + instance.quest_data.quest_id, 0)) > Time.get_unix_time_from_system(): return ""
+	if identity == null: identity = NPCPresentation.resolve(npc)
+	if identity.npc_id != npc: return ""
+	for token in live_offers:
+		if live_offers[token].instance_id == id: return ""
+	var token := Crypto.new().generate_random_bytes(16).hex_encode()
+	live_offers[token] = {"instance_id": id, "npc_id": npc, "identity": identity}
+	_log_entry(instance, "OFFER_PRESENTED", "npc", identity.offer_dialogue if not identity.offer_dialogue.is_empty() else instance.quest_data.dialogue_offer if not instance.quest_data.dialogue_offer.is_empty() else instance.quest_data.description, "offer:" + token)
+	var contact: QuestConversation = conversations.contacts.get(npc)
+	if contact:
+		contact.display_name = identity.display_name
+		contact.portrait_path = identity.resolved_portrait().resource_path if identity.resolved_portrait() else ""
+	return token
+func decide_offer(token: String, decision: String) -> bool:
+	if not authoritative() or not live_offers.has(token) or decision not in ["accept", "decline", "dismiss"]: return false
+	var offer: Dictionary = live_offers[token]
+	var instance := get_instance(offer.instance_id)
+	if instance == null or instance.owner_id != active_owner_id or instance.assigned_npc_id != offer.npc_id: live_offers.erase(token); return false
+	if instance.status != QuestInstance.Status.AVAILABLE and decision != "dismiss": live_offers.erase(token); return false
+	if decision == "accept" and not _prerequisites_met(instance.quest_data): return false
+	live_offers.erase(token)
+	if decision == "accept":
+		if not accept_quest(instance.instance_id, "", token): return false
+	elif decision == "decline":
+		_log_entry(instance, "PLAYER_DECLINED", "player", "Declined quest.", "declined:" + token)
+		offer_cooldowns[offer.npc_id + "|" + instance.quest_data.quest_id] = Time.get_unix_time_from_system() + offer.identity.reoffer_cooldown
+	else:
+		_log_entry(instance, "OFFER_DISMISSED", "system", "Offer closed without a decision.", "dismissed:" + token)
+	if decision != "dismiss":
+		var text: String = instance.quest_data.dialogue_accepted if decision == "accept" else instance.quest_data.dialogue_declined
+		if text.is_empty(): text = offer.identity.accepted if decision == "accept" else offer.identity.declined
+		_log_entry(instance, "NPC_REACTION", "npc", text, "reaction:" + token)
+	changed(instance)
+	return true
+func mark_conversation_read(id: String) -> void:
+	conversations.mark_read(id)
+	schedule_save()

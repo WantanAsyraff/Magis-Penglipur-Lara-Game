@@ -17,6 +17,7 @@ The supported file is `user://quest-progress-v2.json`, version 2, for `QuestMana
 | acquisition_receipts / max_slots | Confirmed acquisition deduplication and capacity |
 | player_xp / currency | Progression values in same reward snapshot |
 | learned_spells | Registered spell IDs |
+| conversations (optional v2 extension) | Stable NPC contacts, display/portrait references, ordered deduplicated entries and read state |
 
 Resources are resolved through registries rather than arbitrary save-provided file paths. Stage validates version/owner, required container types, numeric bounds, item/spell/quest references, inventory capacity/stacks, unique instance IDs, objective progress and matching handed-off/claim markers before replacing live values. Unknown schema/resource references fail without partially mutating state. This is a local save format, not a secure network message or tamper-proof economy.
 
@@ -29,3 +30,5 @@ On load, inventory/held objectives reconcile; durable outbox events replay using
 This is quest, inventory and reward progression persistence, not a whole-world save. It does not restore scene/position, health, enemies/dropped objects, arbitrary NPC movement, world-object presentation, equipped spell slots or derived equipment stats. World scenes must consume restored flags. Remote player inventories and network persistence are not supplied. Starting with a different owner rejects the local file. There was no prior gameplay save schema to migrate; the existing completed-quest list is retained in the bundle. Future item/quest retirement needs explicit schema migration; unknown IDs currently reject a snapshot.
 
 Receipt/claim histories are retained without compaction. Do not prune them independently of world-drop lifetime and persistence guarantees.
+
+Conversation restore replaces the store, validates referenced quests and receipts, and repairs missing lifecycle messages from authoritative instances. Old v2 files without conversations remain supported. Unresolved offer tokens/panels are not approvals and do not restore; live NPCs reacquire their newly loaded instance. See [conversation schema](quest-conversation-model.md).

@@ -53,3 +53,24 @@ Pre-existing changes to player data, Physics spell resources, two loot resources
 ## Explicit limits
 
 Authority/owner isolation is implemented; complete multiplayer replication, remote inventory and party progress are not. Persistence covers quest/inventory/reward state rather than full world state. Branch storage is implemented without branching dialogue/UI. Held/delivery authoring should use explicit item IDs; event matching supports explicit tags/metadata. Delivery allocation detects ambiguous overlaps safely but is not a general set solver. Receipt history has no compaction policy yet. Native visuals, reused item icons and Dragonfly ground movement need production art/navigation work. Existing resource-leak/UID warnings are reported, not repaired by unrelated changes.
+
+## Mandatory accessibility, decision and messaging extension
+
+This extension preserves the four FLAC quest definitions, the ten Bakau definitions, all thirteen drops and their rewards. It adds grounded/access-validated spawn policies and authored markers to the three FLAC F2 rooms, gives npc.gd sole physics movement ownership, bounds wandering and chooses one unobstructed interaction focus. NPCs retain natural body layering while markers/prompts render independently. Room slots replenish after despawn, and pending offers cannot be borrowed from a different giver. Live NPCs refresh their restored instance after loading.
+
+Natural Dialogic introduction completion no longer accepts a quest. The shared native offer panel uses a manager-issued single-use token for explicit Accept, Decline or Dismiss. Decline is reofferable by default and has Resource-authored NPC responses. Reaction dialogue yields visibility/input back to the existing Dialogic installation; no addon internals are changed. Original FLAC scene dialogue/characters/assets remain intact. Selected QuestData narrative takes precedence over generic NPC lines that describe unrelated materials. The legacy auto_accept_next flag remains serialized but no longer bypasses the explicit decision.
+
+QuestUI is now the embedded phone messaging app. The in-world board's discoverable/locked catalogue moved to QuestCatalogue; all offer actions open the same card. QuestConversationStore persists stable contacts, actual decisions, meaningful lifecycle messages, optional snapshots and read state in an optional v2 field. Historical bubbles/cards are read-only; reward claims remain centralized. Existing item icons are used, with native SVG XP/currency symbols and the existing NPC sprite fallback where needed.
+
+Pre-existing edited Enemy Resources had omitted identity fields. Small schema compatibility getters recover enemy identity from the canonical quest identity/registered filename, AI action identity from its kind and standalone ability identity from its filename, without replacing those edited Resources. Full fresh export exposed an unused generic talking-NPC template referencing a missing old story timeline; it now uses the existing FLAC greeting. Generated export conversion cache is cleared by packed verification so old binary conversions cannot silently strip added dialogue fields.
+
+New reference documents: quest-dialogue-ui.md, quest-conversation-model.md and npc-spawn-accessibility.md. The updated test report records 940 source assertions and 273 packed repetitions with zero failures, including all 90 accessibility/UI checks, plus an actual rendered run and eight inspected screenshots. All testing is on the current working tree with preserved pre-existing edits; a separately clean checkout is not claimed.
+
+Additional commits:
+
+- `0f914bf`: compatible identity recovery for edited Enemy Resources.
+- `e3c2c00`: accessible NPC placement/movement/focus, explicit native offers and persistent phone conversations.
+- `092c733`: all-fourteen offer coverage, real dialogue/phone input tests, giver association, nonquest greeting repair and source/PCK restart verification.
+- The documentation commit adds the final guides; use `git log 6fba0e8..HEAD --oneline` for the complete extension history.
+
+Remaining boundaries are conservative authored floor routes rather than arbitrary jump/navmesh planning, transient offer UI/cooldown policy, no history compaction, provisional portraits/item art where no final asset exists, and the previously documented multiplayer/world-save limits. No push or merge was performed.

@@ -34,6 +34,7 @@ const ACTIONS: Array = [
 	["incantation_down",    "Incantation ↓",        ""],
 	["incantation_left",    "Incantation ←",        ""],
 	["incantation_right",   "Incantation →",        ""],
+	["cancel_casting",      "Cancel Active Cast / Queue", ""],
 	["clear_incantation",   "Clear Incantation",    ""],
 	# ── Combat / Casting ──────────────────────────────────────
 	["start_incantation",   "Toggle Casting Stance","Combat & Casting"],
@@ -42,6 +43,7 @@ const ACTIONS: Array = [
 # -------------------------
 # STATE
 # -------------------------
+var _assistance: OptionButton
 var _rows           : Array[KeybindRow] = []
 var _listening_row  : KeybindRow        = null
 var _saved_snapshot : Dictionary        = {}   # action → Array[InputEvent]
@@ -96,6 +98,14 @@ func _build_rows() -> void:
 		child.queue_free()
 	_rows.clear()
 
+	var assistance_label := Label.new()
+	assistance_label.text = "Incantation assistance"
+	bind_list.add_child(assistance_label)
+	_assistance = OptionButton.new()
+	for title in ["Guided", "Minimal", "Off"]: _assistance.add_item(title)
+	_assistance.select(Player_Global_Data.assistance_mode)
+	bind_list.add_child(_assistance)
+
 	for entry in ACTIONS:
 		var action_str   : String = entry[0]
 		var display_name : String = entry[1]
@@ -142,6 +152,7 @@ func _stop_listening() -> void:
 # -------------------------
 func _on_save() -> void:
 	_stop_listening()
+	Player_Global_Data.set_assistance_mode(_assistance.selected)
 	_save_to_file()
 	_snapshot_current_binds()
 	_go_back()
@@ -166,6 +177,7 @@ func _go_back() -> void:
 
 func _on_reset_all() -> void:
 	_stop_listening()
+	_assistance.select(0)
 	for row in _rows:
 		row.reset_to_default()
 
@@ -193,10 +205,10 @@ func _save_to_file() -> void:
 		var action: String = entry[0]
 		if not InputMap.has_action(action):
 			continue
-		var keycodes: Array[int] = []
+		var keycodes: Array[Dictionary] = []
 		for event in InputMap.action_get_events(action):
 			if event is InputEventKey:
-				keycodes.append((event as InputEventKey).keycode)
+				keycodes.append({"keycode": event.keycode, "physical_keycode": event.physical_keycode})
 		cfg.set_value("keybinds", action, keycodes)
 	cfg.save(SAVE_PATH)
 
@@ -208,11 +220,15 @@ static func load_from_file() -> void:
 	var cfg := ConfigFile.new()
 	if cfg.load(SAVE_PATH) != OK:
 		return
-	for action in cfg.get_section_keys("keybinds"):
+	for action in (cfg.get_section_keys("keybinds") if cfg.has_section("keybinds") else []):
 		if not InputMap.has_action(action):
 			continue
 		InputMap.action_erase_events(action)
 		for keycode in cfg.get_value("keybinds", action, []):
 			var event := InputEventKey.new()
-			event.keycode = keycode
+			if keycode is Dictionary:
+				event.keycode = int(keycode.get("keycode", 0))
+				event.physical_keycode = int(keycode.get("physical_keycode", 0))
+			else:
+				event.keycode = int(keycode)
 			InputMap.action_add_event(action, event)

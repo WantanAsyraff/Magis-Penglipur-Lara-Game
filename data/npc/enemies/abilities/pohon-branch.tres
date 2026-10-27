@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="EnemyAbilityData" format=3]
+
+[ext_resource type="Script" path="res://data/npc/enemies/enemy-ability-data.gd" id="x0"]
+[ext_resource type="Resource" path="res://data/magis/enemy-spells/pohon-branch.tres" id="x1"]
+
+
+
+[resource]
+script = ExtResource("x0")
+ability_id = "pohon_branch"
+spell = ExtResource("x1")
+min_range = 200
+max_range = 900
+cooldown = 2.4
+windup = 0.25

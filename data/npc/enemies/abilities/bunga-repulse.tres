@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="EnemyAbilityData" format=3]
+
+[ext_resource type="Script" path="res://data/npc/enemies/enemy-ability-data.gd" id="x0"]
+[ext_resource type="Resource" path="res://data/magis/enemy-spells/bunga-repulse.tres" id="x1"]
+
+
+
+[resource]
+script = ExtResource("x0")
+ability_id = "bunga_repulse"
+role = 1
+spell = ExtResource("x1")
+max_range = 180
+cooldown = 4

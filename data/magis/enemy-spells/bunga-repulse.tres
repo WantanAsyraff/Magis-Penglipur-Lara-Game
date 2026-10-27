@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="SpellData" format=3]
+
+[ext_resource type="Script" path="res://data/Resources/ilmu/spell.gd" id="x0"]
+[ext_resource type="Script" path="res://data/Resources/spell-effects/knockback-effect.gd" id="x1"]
+[ext_resource type="Script" path="res://data/Resources/spell-effects/apply-status-effect.gd" id="x2"]
+
+[sub_resource type="Resource" id="r0"]
+script = ExtResource("x1")
+force = 280
+
+[sub_resource type="Resource" id="r1"]
+script = ExtResource("x2")
+status = "slow"
+duration = 0.8
+magnitude = 0.35
+
+[resource]
+script = ExtResource("x0")
+spell_name = "Petal Repulse"
+spell_id = "bunga_repulse"
+delivery = 4
+effects = [SubResource("r0"), SubResource("r1")]
+upfront_cost = 8
+cast_time = 0.15
+aoe_spell_radius = 180
+cooldown = 3

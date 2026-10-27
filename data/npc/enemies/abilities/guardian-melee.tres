@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="EnemyAbilityData" format=3]
+
+[ext_resource type="Script" path="res://data/npc/enemies/enemy-ability-data.gd" id="x0"]
+[ext_resource type="Script" path="res://data/Resources/spell-effects/damage-effect.gd" id="x1"]
+[ext_resource type="Script" path="res://data/Resources/spell-effects/knockback-effect.gd" id="x2"]
+
+[sub_resource type="Resource" id="r0"]
+script = ExtResource("x1")
+amount = 15
+
+[sub_resource type="Resource" id="r1"]
+script = ExtResource("x2")
+force = 120
+
+[resource]
+script = ExtResource("x0")
+ability_id = "guardian_melee"
+kind = 0
+max_range = 80
+cooldown = 1.5
+windup = 0.35
+effects = [SubResource("r0"), SubResource("r1")]

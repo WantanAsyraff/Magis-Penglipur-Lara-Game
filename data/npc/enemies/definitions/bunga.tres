@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3]
+
+[ext_resource type="Script" path="res://data/npc/enemies/enemy-data.gd" id="x0"]
+[ext_resource type="Script" path="res://data/npc/enemies/enemy-stats-data.gd" id="x1"]
+[ext_resource type="Script" path="res://data/npc/enemies/enemy-perception-data.gd" id="x2"]
+[ext_resource type="Resource" path="res://data/npc/enemies/ai-profiles/bunga.tres" id="x3"]
+[ext_resource type="Resource" path="res://data/npc/enemies/abilities/bunga-melee.tres" id="x4"]
+[ext_resource type="Resource" path="res://data/npc/enemies/abilities/bunga-seed.tres" id="x5"]
+[ext_resource type="Resource" path="res://data/npc/enemies/abilities/bunga-repulse.tres" id="x6"]
+[ext_resource type="Resource" path="res://data/loot/enemy-drops/fish-loot.tres" id="x7"]
+
+[sub_resource type="Resource" id="r0"]
+script = ExtResource("x1")
+max_health = 40
+max_mana = 60
+mana_regen = 2
+move_speed = 300
+chase_speed = 500
+
+[sub_resource type="Resource" id="r1"]
+script = ExtResource("x2")
+detection_range = 621
+
+[resource]
+script = ExtResource("x0")
+enemy_id = "bunga"
+enemy_name = "Bunga"
+description = "Preserved scene identity with explicit reusable loadout."
+stats = SubResource("r0")
+perception = SubResource("r1")
+ai_profile = ExtResource("x3")
+abilities = [ExtResource("x4"), ExtResource("x5"), ExtResource("x6")]
+quest_enemy_id = "bunga"
+loot = [ExtResource("x7")]

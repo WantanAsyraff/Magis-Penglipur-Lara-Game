@@ -116,6 +116,7 @@ func receive_damage(raw_damage: float, source: Node2D = null) -> void:
 		return
 	if not is_finite(raw_damage) or raw_damage < 0: return
 	var final_damage := maxf((raw_damage - damage_reduction - effects.magnitude("buff_defense")) * damage_multiplier, 0.0)
+	if is_instance_valid(source) and final_damage > 0: get_parent().set_meta("quest_credit_owner", GameplayEvent.owner_for(source))
 	hit_received.emit(source, final_damage)
 	damage_taken.emit(final_damage)
 

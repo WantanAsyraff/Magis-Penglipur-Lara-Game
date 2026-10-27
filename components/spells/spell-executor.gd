@@ -17,6 +17,7 @@ static func execute_effects(context: SpellCastContext, target: Node2D, definitio
 		if effect != null and effect.validate().is_empty() and effect.accepts(target):
 			if effect.execute(context, target):
 				applied = true
+				QuestEventHooks.hit(context, target)
 				if on_success.is_valid() and is_instance_valid(target):
 					on_success.call(context.cast_id, target, effect)
 	context.chain_depth -= 1

@@ -18,8 +18,9 @@ func _on_enemy_died() -> void:
 	_notify_quest_manager()
 
 func _notify_quest_manager() -> void:
-	for instance in QuestManager.get_all_active():
-		for objective in instance.quest_data.objectives:
-			if objective.type == QuestObjectiveData.ObjectiveType.DEFEAT_ENEMY:
-				if enemy_id == objective.target_id:
-					QuestManager.update_objective(instance.instance_id, objective.objective_id, 1)
+	var owner := String(get_parent().get_meta("quest_credit_owner", ""))
+	if owner.is_empty(): return
+	var event := GameplayEvent.new(GameplayEvent.Type.ENEMY_DEFEATED, enemy_id, 1, owner, "enemy:" + String(get_parent().get_meta("enemy_network_id", get_parent().get_instance_id())))
+	event.source_instance_id = String(get_parent().get_meta("enemy_network_id", ""))
+	if get_parent() is Enemy: event.tags.assign(get_parent().definition.enemy_tags)
+	QuestManager.publish(event)

@@ -32,6 +32,7 @@ for label, scene, summary in [
     command = [args.godot, '--headless', '--path', str(root), scene]
     if summary is None:
         command += ['--quit-after', '300']
+    command += ['--', '--quest-test-mode']
     result = subprocess.run(command, cwd=root, capture_output=True, text=True, timeout=120)
     output = result.stdout + result.stderr
     log = Path(tempfile.gettempdir()) / f'magis-enemy-{label}.log'

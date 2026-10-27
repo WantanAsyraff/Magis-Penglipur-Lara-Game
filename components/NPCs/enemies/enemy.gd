@@ -1,9 +1,11 @@
 class_name Enemy extends CharacterBody2D
 static var _next_spawn_id: int = 0
+static var _spawn_session: String = ""
 
 static func allocate_spawn_id(prefix: String) -> String:
+	if _spawn_session.is_empty(): _spawn_session = Crypto.new().generate_random_bytes(8).hex_encode()
 	_next_spawn_id += 1
-	return "%s:%d" % [prefix, _next_spawn_id]
+	return "%s:%s:%d" % [prefix, _spawn_session, _next_spawn_id]
 
 signal enemy_died
 signal enemy_hurt(amount: float)

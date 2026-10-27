@@ -22,7 +22,7 @@ failed = False
 for name, arguments, expected in cases:
     log = Path(tempfile.gettempdir()) / ('magis-physics-' + name + '.log')
     try:
-        result = subprocess.run([args.godot, '--headless', '--path', str(root), *arguments],
+        result = subprocess.run([args.godot, '--headless', '--path', str(root), *arguments, '--', '--quest-test-mode'],
                                 capture_output=True, text=True, timeout=120)
     except subprocess.TimeoutExpired:
         print(f'FAIL {name}: exceeded 120 seconds')

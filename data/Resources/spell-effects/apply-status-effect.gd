@@ -15,4 +15,7 @@ func execute(context: SpellCastContext, target: Node2D) -> bool:
 	var h: HitboxComponent = target.get_node("HitboxComponent")
 	if not h.receives_status_effects or h.is_invincible() or (status == "mana_drain" and not h.has_mana):
 		return false
-	return h.apply_status(status, duration, {"amount": magnitude, "factor": clampf(magnitude, 0, 1), "interval": tick_interval}, str(context.cast_id), stacking, max_stacks)
+	var applied := h.apply_status(status, duration, {"amount": magnitude, "factor": clampf(magnitude, 0, 1), "interval": tick_interval}, str(context.cast_id), stacking, max_stacks)
+
+	if applied: QuestEventHooks.status(context, target, status)
+	return applied

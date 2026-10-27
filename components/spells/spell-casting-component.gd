@@ -117,6 +117,7 @@ func _execute() -> void:
 		previous_targets = context.targets.duplicate()
 	_paid_upfront = 0
 	cooldowns[context.spell.spell_id] = context.spell.cooldown
+	QuestEventHooks.cast(context)
 	cast_completed.emit(context)
 	remaining = context.spell.recovery_time
 	_set_state(State.RECOVERY)

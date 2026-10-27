@@ -26,7 +26,7 @@ func _process_all_loot() -> void:
 		_process_loot_entry(loot)
 
 func _process_loot_entry(loot: LootData) -> void:
-	if loot == null or not is_finite(loot.drop_chance) or loot.min_quantity < 1 or loot.max_quantity < loot.min_quantity or randf() > loot.drop_chance:
+	if loot == null or not loot.validate().is_empty() or randf() >= loot.drop_chance:
 		return
 	_spawn_item(loot)
 	for extra in loot.extra_drops:
@@ -44,6 +44,7 @@ func _spawn_item(loot: LootData) -> void:
 	var item_instance: DroppedItem = DROPPED_ITEM_SCENE.instantiate()
 	item_instance.loot_data = loot
 	item_instance.quantity = randi_range(loot.min_quantity, loot.max_quantity)
+	item_instance.loot_owner_id = String(get_parent().get_meta("quest_credit_owner", ""))
 
 	get_parent().get_parent().add_child(item_instance)
 	item_instance.global_position = global_position

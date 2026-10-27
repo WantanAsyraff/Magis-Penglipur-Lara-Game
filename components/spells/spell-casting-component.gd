@@ -1,5 +1,11 @@
 class_name SpellCastingComponent extends Node
 enum State { IDLE, PREPARING, CHANNELING, EXECUTING, RECOVERY }
+enum RequestStatus { RECOGNIZED, QUEUED, PREPARING, CHANNELING, EXECUTING, COMPLETED, FAILED, INTERRUPTED, CANCELLED }
+signal request_status(request_id: int, chain_id: int, spell: SpellData, status: RequestStatus, reason: String)
+var _next_request_id: int = 0
+var _attempt: Dictionary = {}
+var _active: Dictionary = {}
+
 signal state_changed(state: State)
 signal cast_failed(reason: String)
 signal cast_completed(context: SpellCastContext)
@@ -20,11 +26,21 @@ func _ready() -> void:
 func _set_state(value: State) -> void:
 	state = value
 	state_changed.emit(state)
+	var statuses := {State.PREPARING: RequestStatus.PREPARING, State.CHANNELING: RequestStatus.CHANNELING, State.EXECUTING: RequestStatus.EXECUTING}
+	if statuses.has(state) and not _active.is_empty(): _report(_active, statuses[state])
 
-func request_cast(spell: SpellData, origin: Vector2, direction: Vector2, targets: Array[Node2D] = []) -> bool:
+func request_cast(spell: SpellData, origin: Vector2, direction: Vector2, targets: Array[Node2D] = [], chain_id: int = 0) -> bool:
+	return _start(_new_request(spell, origin, direction, targets, chain_id))
+
+func _start(request: Dictionary) -> bool:
+	_attempt = request
+	var spell: SpellData = request.spell
+	var origin: Vector2 = request.origin
+	var direction: Vector2 = request.direction
+	var targets: Array[Node2D] = request.targets
 	if state != State.IDLE:
 		return _fail("Already casting")
-	if spell == null or not SpellExecutor.is_authoritative(caster):
+	if spell == null or not is_instance_valid(caster) or caster.is_queued_for_deletion() or caster.get_meta("combat_dead", false) or not SpellExecutor.is_authoritative(caster):
 		return _fail("Casting requires gameplay authority")
 	var errors := SpellValidator.validate(spell)
 	if not errors.is_empty():
@@ -42,9 +58,12 @@ func request_cast(spell: SpellData, origin: Vector2, direction: Vector2, targets
 			return _fail("Invalid target")
 	if not caster.has_method("consume_spell_mana") or not caster.consume_spell_mana(spell.upfront_cost):
 		return _fail("Not enough mana")
+	_active = request
 	SpellFeedback.flash(caster, spell.spell_colour)
 	_paid_upfront = spell.upfront_cost
 	context = SpellCastContext.new(caster, spell)
+	context.request_id = request.id
+	context.incantation_chain_id = request.chain
 	context.source_position = origin
 	context.direction = direction.normalized()
 	context.targets = targets.duplicate()
@@ -67,7 +86,7 @@ func _physics_process(delta: float) -> void:
 	if state == State.IDLE:
 		if not _queue.is_empty():
 			var next: Dictionary = _queue.pop_front()
-			request_cast(next.spell, next.origin, next.direction, next.targets)
+			_start(next)
 		return
 	if not is_instance_valid(caster) or caster.is_queued_for_deletion() or _restricted() or not SpellExecutor.is_authoritative(caster):
 		cancel("Cast interrupted")
@@ -118,6 +137,8 @@ func _execute() -> void:
 	_paid_upfront = 0
 	cooldowns[context.spell.spell_id] = context.spell.cooldown
 	QuestEventHooks.cast(context)
+	_report(_active, RequestStatus.COMPLETED)
+	_active = {}
 	cast_completed.emit(context)
 	remaining = context.spell.recovery_time
 	_set_state(State.RECOVERY)
@@ -125,7 +146,11 @@ func _execute() -> void:
 		_set_state(State.IDLE)
 
 func cancel(reason: String = "Cancelled") -> void:
+	for request in _queue: _report(request, RequestStatus.CANCELLED, reason)
 	_queue.clear()
+	if not _active.is_empty():
+		_report(_active, RequestStatus.CANCELLED if reason == "Cancelled" else RequestStatus.INTERRUPTED, reason)
+		_active = {}
 	if is_instance_valid(live_delivery): live_delivery.queue_free()
 	live_delivery = null
 	if state == State.IDLE:
@@ -144,16 +169,42 @@ func _restricted() -> bool:
 	return h != null and (h.is_stunned() or h.is_silenced())
 
 func _fail(reason: String) -> bool:
+	_report(_attempt, RequestStatus.FAILED, reason)
 	cast_failed.emit(reason)
 	return false
 
-func enqueue_cast(spell: SpellData, origin: Vector2, direction: Vector2, targets: Array[Node2D] = []) -> bool:
-	if state == State.IDLE:
-		return request_cast(spell, origin, direction, targets)
+func _new_request(spell: SpellData, origin: Vector2, direction: Vector2, targets: Array[Node2D], chain_id: int) -> Dictionary:
+	_next_request_id += 1
+	var request := {"id": _next_request_id, "chain": chain_id, "spell": spell, "origin": origin, "direction": direction, "targets": targets.duplicate()}
+	_report(request, RequestStatus.RECOGNIZED)
+	return request
+
+func _report(request: Dictionary, status: RequestStatus, reason: String = "") -> void:
+	if not request.is_empty(): request_status.emit(request.id, request.chain, request.spell, status, reason)
+
+func enqueue_cast(spell: SpellData, origin: Vector2, direction: Vector2, targets: Array[Node2D] = [], chain_id: int = 0) -> bool:
+	var request := _new_request(spell, origin, direction, targets, chain_id)
+	if state == State.IDLE and _queue.is_empty():
+		return _start(request)
 	if _queue.size() >= 8:
+		_attempt = request
 		return _fail("Cast queue is full")
-	_queue.append({"spell": spell, "origin": origin, "direction": direction, "targets": targets.duplicate()})
+	_queue.append(request)
+	_report(request, RequestStatus.QUEUED)
 	return true
+
+func _exit_tree() -> void:
+	cancel("Caster removed")
+
+# Advisory only: actual authorization and payment remain in _start().
+func preview_restriction(spell: SpellData, mana: float) -> String:
+	if not is_instance_valid(caster) or not SpellExecutor.is_authoritative(caster): return "No gameplay authority"
+	if _restricted(): return "Silenced or stunned"
+	if caster.has_method("can_cast_spell") and not caster.can_cast_spell(spell): return "Not equipped"
+	var cooldown: float = cooldowns.get(spell.spell_id, 0.0)
+	if cooldown > 0: return "Ready in %.1fs" % cooldown
+	if mana < spell.upfront_cost: return "Insufficient mana"
+	return "Ready (preview)"
 
 static func echo_eligible(spell: SpellData) -> bool:
 	if LegacySpellAdapter.delivery_for(spell) not in [SpellData.Delivery.PROJECTILE, SpellData.Delivery.SELF, SpellData.Delivery.DIRECT_TARGET, SpellData.Delivery.AREA_BURST]: return false

@@ -1,6 +1,8 @@
 class_name SpellCastContext extends RefCounted
 
 static var _next_id: int = 0
+var request_id: int = 0
+var incantation_chain_id: int = 0
 var cast_id: int
 var caster: Node2D
 var spell: SpellData

@@ -11,8 +11,8 @@ func execute(context: SpellCastContext, target: Node2D) -> bool:
 	var hitbox := target.get_node_or_null("HitboxComponent") as HitboxComponent
 	var bonus: float = context.modifiers.get("damage", 0.0)
 	if hitbox:
-		hitbox._apply_damage(maxf(amount * float(context.modifiers.get("scale", 1.0)) + bonus, 0.0))
+		hitbox.receive_damage(maxf(amount * float(context.modifiers.get("scale", 1.0)) + bonus, 0.0), context.caster)
 	else:
 		target.take_damage(int(maxf(amount * float(context.modifiers.get("scale", 1.0)) + bonus, 0.0)))
-	SpellFeedback.flash(target, context.spell.spell_colour)
+	SpellFeedback.flash(target, (context.spell.spell_colour if context.spell else Color.ORANGE))
 	return true

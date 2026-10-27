@@ -6,6 +6,7 @@ extends Node
 # SIGNALS
 # ─────────────────────────────────────────
 signal damage_taken(amount: float)
+signal hit_received(source: Node2D, amount: float)
 signal healed(amount: float)
 signal died()
 signal status_applied(effect_name: String)
@@ -34,6 +35,9 @@ signal knocked_back(force: Vector2)
 # ─────────────────────────────────────────
 # INTERNAL STATE
 # ─────────────────────────────────────────
+@export_range(0, 1) var knockback_resistance: float = 0.0
+@export var status_resistances: Dictionary[String, float] = {}
+
 var effects := ActiveEffectManager.new()
 var _invincible: bool = false
 
@@ -48,6 +52,7 @@ var _character_body: CharacterBody2D = null
 # ─────────────────────────────────────────
 func _ready() -> void:
 	_parent = get_parent()
+	_parent.add_to_group("combat_target")
 	_create_feedback.call_deferred()
 	add_to_group("hitbox")
 	add_to_group("ally_hitbox" if _parent is Player else "enemy_hitbox")
@@ -102,17 +107,22 @@ func set_invincible(value: bool) -> void:
 # EFFECT APPLICATORS
 # ─────────────────────────────────────────
 func _apply_damage(raw_damage: float) -> void:
-	if _invincible or not SpellExecutor.is_authoritative(self):
+	receive_damage(raw_damage)
+
+func receive_damage(raw_damage: float, source: Node2D = null) -> void:
+	if _invincible or not SpellExecutor.is_authoritative(self) or get_parent().get_meta("combat_dead", false):
 		return
+	if not is_finite(raw_damage) or raw_damage < 0: return
 	var final_damage := maxf((raw_damage - damage_reduction - effects.magnitude("buff_defense")) * damage_multiplier, 0.0)
+	hit_received.emit(source, final_damage)
 	damage_taken.emit(final_damage)
 
 func _apply_knockback(direction: Vector2, force: float) -> void:
-	if _invincible or not SpellExecutor.is_authoritative(self):
+	if _invincible or not SpellExecutor.is_authoritative(self) or get_parent().get_meta("combat_dead", false):
 		return
 	if _character_body == null or direction == Vector2.ZERO:
 		return
-	var kb := direction.normalized() * force
+	var kb := direction.normalized() * force * (1.0 - knockback_resistance)
 	_character_body.velocity += kb
 	knocked_back.emit(kb)
 
@@ -150,3 +160,10 @@ func _create_feedback() -> void:
 	var feedback := SpellStatusFeedback.new()
 	feedback.hitbox = self
 	_parent.add_child(feedback)
+
+func apply_status(key: String, duration: float, data: Dictionary, source: String, policy: ActiveEffectManager.StackPolicy, max_stacks: int) -> bool:
+	if not receives_status_effects or _invincible or get_parent().get_meta("combat_dead", false) or not SpellExecutor.is_authoritative(self): return false
+	if key == "mana_drain" and not has_mana: return false
+	var resistance := clampf(status_resistances.get(key, 0.0), 0, 1)
+	if resistance >= 1: return false
+	return effects.apply(key, duration * (1 - resistance), data, source, policy, max_stacks)

@@ -105,14 +105,15 @@ static func apply_area(context: SpellCastContext, position: Vector2, beam: bool 
 static func can_target(context: SpellCastContext, target: Node2D) -> bool:
 	if not is_instance_valid(target):
 		return false
-	var team: StringName = target.get_meta("spell_team", &"player" if target.is_in_group("player") else &"enemy")
-	var ally := team == context.source_team
+	var relation := CombatFactions.relation(context.caster, target)
+	if target.get_meta("combat_dead", false) or target.is_queued_for_deletion(): return false
+	var ally := relation > 0
 	if context.spell.spell_category == SpellData.SpellCategory.DECAST:
-		return (ally and context.spell.purge_debuffs) or (not ally and context.spell.purge_enemy_buffs)
+		return (ally and context.spell.purge_debuffs) or (relation < 0 and context.spell.purge_enemy_buffs)
 	match context.spell.targeting:
 		SpellData.Targeting.ALLIES: return ally
 		SpellData.Targeting.ANY: return true
-	return not ally
+	return relation < 0
 
 static func pick_target(context: SpellCastContext) -> Node2D:
 	var best: Node2D

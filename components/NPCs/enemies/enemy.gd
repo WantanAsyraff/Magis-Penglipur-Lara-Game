@@ -36,6 +36,8 @@ enum AttackType { MELEE, RANGED, BOTH }
 # IDENTITY
 # ─────────────────────────────────────────
 @export_group("Identity")
+@export var spawn_id: String = ""
+@export var enemy_data: EnemyData
 @export var enemy_name: String = "Unknown Enemy"
 
 # ─────────────────────────────────────────
@@ -212,7 +214,7 @@ func _on_damage_taken(amount: float) -> void:
 		_set_state(State.HURT)
 
 func _on_died() -> void:
-	enemy_died.emit()
+	if current_state != State.DEATH: _set_state(State.DEATH)
 
 func _on_hurt_timer_timeout() -> void:
 	if current_state == State.HURT:

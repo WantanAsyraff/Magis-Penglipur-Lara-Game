@@ -20,9 +20,9 @@ The Player inspector exposes `incantation_strategy`:
 
 | Strategy | Prefix behavior |
 | --- | --- |
-| CHAINED (default) | Each exact prefix casts; longer continuations remain available. Up to eight pending casts wait for the current cast. Each is validated and charged when it starts. |
+| CHAINED (opt-in) | Each exact prefix casts; longer continuations remain available. Up to eight pending casts wait for the current cast. Each is validated and charged when it starts. |
 | IMMEDIATE | First exact match casts and consumes the sequence. |
-| CONFIRMATION | O confirms the current exact match when leaving the stance. |
+| CONFIRMATION (default) | O confirms the current exact match when leaving the stance. |
 | DELAYED | An ambiguous exact prefix waits 0.35 seconds; continuation replaces it. |
 
 P clears the sequence, cancels preparation/channeling and clears pending casts. O closes the stance; already accepted casts continue. Silence, stun, damage and death interrupt active preparation/channeling. UI reports queued/accepted matches before execution; completion and failure signals are available for richer presentation.
@@ -38,3 +38,17 @@ The spell tree and subject panel use the singleton API and progression signals, 
 `Spell_Library` loads explicit preloads from `data/magis/spell-manifest.gd`. In editor builds it also discovers unbaked `.tres` additions and reports a warning. Duplicate IDs are rejected without overwriting. Invalid definitions stay visible for diagnosis but fail casting validation. Duplicate incantations and prefix ambiguities are reported separately.
 
 Use the [authoring guide](spell-authoring-guide.md), [architecture](spell-architecture-v2.md), [migration guide](spell-migration-guide.md) and [implementation report](spell-pipeline-v2-report.md) for details and measured verification results.
+
+## Physics reference curriculum
+
+The course now contains twelve subjects and 42 working spell resources, with the original eight IDs, paths, UIDs and incantations retained. See [curriculum and measured tests](physics-curriculum.md), [catalogue](physics-spell-catalogue.md), [interactions](physics-spell-interactions.md) and [baseline coverage audit](physics-implementation-coverage.md).
+
+Player direct-target input selects the nearest eligible target in an aim cone (dot product at least 0.35), weighted by distance and lateral offset. World-targeted areas/constructs use a bounded point along the cast direction. Solid construct placement checks terrain overlap. Bursts center on the caster. Invalid direct targets fail through the normal casting failure signal without consuming mana.
+
+New reusable components: VectorEffect with additive collision-aware SpellMotionImpulse; ProjectileFieldEffect for reversal, curvature, local speed and wave cancellation; ChainEffect with a visited set and hop limit; TriggerEffect with owner-attached, expiring SpellHitTrigger; InterruptEffect; bounded ReplayEffect; and expiring SpellConstruct with optional collision, following, interception and reflection. ApplyStatusEffect accepts authored status tags; ConditionalEffect supports stack thresholds, capability metadata and consumption. Existing damage, healing, stat, removal, spawn and teleport effects remain available.
+
+Beams use bounded terrain raycasts, configured optical interfaces and up to five output angles / four segments per path. Reflective constructs transfer segment ownership. Projectiles perform a center sweep each physics step to reduce tunneling, use size-derived collision radii and select collision masks from the casting team. Native activation flashes, status markers, visible areas/traps/beams and construct duration indicators provide feedback without external assets.
+
+`live_channel` is opt-in for beam/area/trap deliveries: dispatch occurs at channel start, upfront mana becomes committed, per-second mana is charged for elapsed time, and cancellation/completion deletes the owned delivery. Ordinary channels retain their prior dispatch-on-completion policy. Effects already delivered never produce a refunded free channel cast. Persistent casts are limited to twelve active nodes per caster. Execution budgets remain per context, so very dense repeated areas may exhaust them before normal expiry.
+
+Echo records only compatible successful simple payloads, uses a fresh 64-effect context, scales damage/healing to half and excludes recursive replay/spawn/trigger payloads. Paid casts still follow learning, equipment, mana, cooldown and authority rules. This does not complete multiplayer client requests or replication; the V2 limitations remain.

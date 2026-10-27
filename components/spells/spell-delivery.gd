@@ -72,6 +72,7 @@ static func dispatch(context: SpellCastContext) -> bool:
 				inst.direction = context.direction.rotated(angle)
 				actor.get_parent().add_child(inst)
 				inst.global_position = context.source_position
+				inst.collision_mask = 16 | (2 if context.source_team == &"player" else 1)
 				inst.start()
 			return true
 	return false

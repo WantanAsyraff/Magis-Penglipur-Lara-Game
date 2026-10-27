@@ -63,7 +63,7 @@ func _ready() -> void:
 	get_tree().quit(1 if failures else 0)
 
 func run_tests() -> void:
-	check(Spell_Library.all_spells.size() == 8, "01 all eight legacy spells load")
+	check(Spell_Library.all_spells.size() == 42, "01 42 catalogue spells load")
 	check(Spell_Library.validation_errors.is_empty(), "01 legacy definitions validate: " + str(Spell_Library.validation_errors))
 	var first: SpellData = Spell_Library.all_spells.values()[0]
 	var count := Spell_Library.all_spells.size()
@@ -216,7 +216,7 @@ func run_tests() -> void:
 	var c2 := SpellCastContext.new(a, legacy)
 	c1.state["visited"] = true
 	check(c1.cast_id != c2.cast_id and c2.state.is_empty(), "14 cast contexts isolate runtime state")
-	check(preload("res://data/magis/spell-manifest.gd").SPELLS.size() == 8, "15 baked manifest retains eight exported spell resources")
+	check(preload("res://data/magis/spell-manifest.gd").SPELLS.size() == 42, "15 baked manifest retains 42 exported spell resources")
 	var client := ENetMultiplayerPeer.new()
 	var err := client.create_client("127.0.0.1", 19998)
 	check(err == OK, "16 test client peer created")

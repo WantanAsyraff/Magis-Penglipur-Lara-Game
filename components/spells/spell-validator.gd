@@ -26,6 +26,13 @@ static func validate(spell: SpellData) -> PackedStringArray:
 		errors.append("Invalid buff type")
 		return errors
 	var delivery := LegacySpellAdapter.delivery_for(spell)
+	if spell.live_channel and (not spell.is_channelled or delivery not in [SpellData.Delivery.BEAM, SpellData.Delivery.PERSISTENT_AREA, SpellData.Delivery.TRAP]):
+		errors.append("Live channel requires a channelled area, beam or trap")
+	if delivery == SpellData.Delivery.BEAM:
+		if spell.target_range <= 0 or spell.beam_width <= 0 or spell.beam_angles.is_empty() or spell.beam_angles.size() > 5:
+			errors.append("Beam requires positive range/width and one to five directions")
+		for angle in spell.beam_angles:
+			if not is_finite(angle) or absf(angle) > 180: errors.append("Invalid beam output angle")
 	if delivery == SpellData.Delivery.PROJECTILE:
 		if spell.projectile_speed <= 0 or spell.projectile_range <= 0 or spell.projectile_size <= 0:
 			errors.append("Projectile requires positive speed, range and size")

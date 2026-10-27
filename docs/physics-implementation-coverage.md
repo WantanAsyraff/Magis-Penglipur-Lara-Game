@@ -1,6 +1,6 @@
 # Physics implementation coverage
 
-Baseline: `0dc1f76` on `refactor/magis-spell-pipeline-v2`. No AGENTS.md was present in the repository. The working tree contained unrelated local edits; these are excluded from curriculum commits.
+Baseline: `0dc1f76` on `refactor/magis-spell-pipeline-v2`. No AGENTS.md was present in the repository; ancestor engineering guidance requires scoped changes, appropriate checks and `just verify` when available (no justfile is present). The working tree contained unrelated local edits; these are excluded from curriculum commits.
 
 | Capability | Baseline | Curriculum implementation / verification |
 | --- | --- | --- |

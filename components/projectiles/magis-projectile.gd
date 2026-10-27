@@ -34,6 +34,11 @@ func _apply_visuals() -> void:
 	if spell_data.projectile_texture:
 		$Sprite2D.texture = spell_data.projectile_texture
 	$Sprite2D.scale = Vector2.ONE * spell_data.projectile_size
+	var collision := get_node_or_null("CollisionShape2D") as CollisionShape2D
+	if collision and collision.shape is CircleShape2D:
+		collision.scale = Vector2.ONE
+		collision.shape = collision.shape.duplicate()
+		(collision.shape as CircleShape2D).radius = maxf(2, 6 * spell_data.projectile_size)
 	if spell_data.projectile_particles:
 		_particle_instance = spell_data.projectile_particles.instantiate()
 		add_child(_particle_instance)

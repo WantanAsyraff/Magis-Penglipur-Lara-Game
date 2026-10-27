@@ -11,9 +11,9 @@
 7. Run `tools/validate-spells.gd` from the script editor (Run). Inspect errors and prefix warnings in Output. Prefix overlaps are allowed when the chosen incantation strategy makes them intentional.
 8. Add the resource to a subject's `contained_spells`. Use explicit prerequisite subject IDs and optional field comprehension ranks. A course's prerequisites also refer to subject IDs. Course membership and intra-course cycles are validated at purchase.
 9. Run `tools/bake-spell-manifest.gd` from the script editor before exporting, then commit the generated manifest. It explicitly preloads each resource and works with exported `.remap` resource names.
-10. Open `scenes/spell-testing/spell-testing.tscn`, assign `test_spell` in the inspector, and run the current scene. The lab learns/equips it for this runtime session. O toggles casting, I/J/K/L input directions, and P clears/interrupts. Direct-target spell tests require supplying a target through the casting API; the lab has no mouse target picker.
+10. Open `scenes/spell-testing/spell-testing.tscn`, assign `test_spell` in the inspector, and run the current scene. The lab learns/equips it for this runtime session. O toggles casting, I/J/K/L input directions, and P clears/interrupts. The original lab remains a single-spell scene. The expanded Physics lab has all 42 spells, capability-marked targets, terrain and an optical interface; Player now supplies aim-based direct targets.
 
-`data/magis/examples/physics-force-v2.tres` demonstrates damage + knockback + slow. It deliberately lives outside the main library so the original repertoire remains eight main spells. The lab includes a physical dummy, floor and terrain wall. Automated tests live in `tests/spell-regression.tscn`.
+`data/magis/examples/physics-force-v2.tres` demonstrates damage + knockback + slow. It deliberately lives outside the main library while the main Physics repertoire now contains 42 spells. The lab includes a physical dummy, floor and terrain wall. Automated tests live in `tests/spell-regression.tscn`.
 
 ## Custom effects
 
@@ -45,3 +45,5 @@ godot --headless --main-pack /tmp/magis-spells.pck res://tests/spell-regression.
 ```
 
 Use Godot 4.6. Check both the exit code and log for script errors; a scene callback can abort while the engine remains running. The suite prints an explicit check/failure count. These tests verify packed resource resolution using Godot, not a browser/WebAssembly deployment or a complete visual playthrough.
+
+For live channels, field tags, explicit capabilities, stack-consuming conditions, trigger bounds, physical constructs and replay eligibility, use the [Physics reference curriculum](physics-curriculum.md) and its native `.tres` examples. Default Player incantations require confirmation; CHAINED remains available explicitly.

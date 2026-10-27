@@ -198,3 +198,13 @@ tools/bake-world-manifest.gd
 tools/validate-spells.gd
 tools/validate-spells.gd.uid
 ```
+
+## Incantation Chain Assistant delivery — 27 October 2026
+
+Implemented on `feature/incantation-chain-assistant` from reviewed commit `4423abf`, preserving Quest, Enemy, and Magis V2. The assistant adds read-only equipped-trie prediction, correlated request lifecycle events, a local-player directional/continuation HUD, advisory mana/cooldown forecasts, successful-execution chain counts, and persistent Guided/Minimal/Off settings. Clearing input preserves accepted casts; explicit cast cancellation is configurable separately. Saving settings also preserves physical directional keybindings. No authored spell resource, incantation, effect, or stat changed.
+
+The actual renderer demonstrates Strike → Resonate → Shatterwave producing Chain ×3, with independent 15/25/22 MP upfront payments through the existing pipeline. Queue acceptance is never labeled Cast!; later failures retain the original request identity. Prior pending chains remain distinguishable after new input or a resolver reset. Full multiplayer cast replication remains outside the existing safety boundary.
+
+Final most-recent suite results total **1035 source assertions and 368 packed assertions, zero failures**. These totals count each suite once and exclude repeated runs and startup/export checks. Editor import, main-menu startup, Physics/Enemy/Quest arenas, PCK export, and real rendered previews also completed. Verification used installed Godot 4.7.2, matching the base project's declared 4.7 feature version; a separate 4.6 engine and browser export were not tested. Existing shutdown resource diagnostics and the world-ID warning remain.
+
+See [complete lifecycle/API documentation, changed-file map, per-suite counts, commands, screenshots, and limitations](incantation-chain-assistant.md). Screenshots live in `docs/previews/incantation-assistant/`; the reproducible renderer scene is `scenes/spell-testing/incantation-chain-preview.tscn`.

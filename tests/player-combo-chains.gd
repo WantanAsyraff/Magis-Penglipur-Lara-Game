@@ -94,7 +94,9 @@ func _ready() -> void:
 	Player_Global_Data.p_curr_mana = 100
 	for key in ["up", "down", "right"]: player._add_sequence(key)
 	player._clear_sequence()
-	check(player.casting.state == SpellCastingComponent.State.IDLE and player.casting._queue.is_empty() and player.spell_string.is_empty() and Player_Global_Data.p_curr_mana == 100, "Clear cancels pending chain and refunds only its reserved preparation cost")
+	check(player.casting.state == SpellCastingComponent.State.PREPARING and player.casting._queue.size() == 1 and player.spell_string.is_empty() and Player_Global_Data.p_curr_mana == 98, "Clear preserves accepted requests and their upfront payment")
+	player.cancel_active_casting()
+	check(player.casting.state == SpellCastingComponent.State.IDLE and player.casting._queue.is_empty() and Player_Global_Data.p_curr_mana == 100, "Explicit cancellation clears queue and refunds preparation")
 	var resolver := IncantationResolver.new()
 	var catalogue: Array[SpellData] = [short, longer, other]
 	resolver.rebuild(catalogue)

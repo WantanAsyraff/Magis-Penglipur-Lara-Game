@@ -13,7 +13,7 @@ script = ExtResource("3_rkqpt")
 spell_name = "Kinetic Chill"
 spell_id = "thermal_01"
 spell_icon = ExtResource("2_3pk5u")
-theory_desc = "Temperature is the average kinetic energy of particles. Reducing this 'jiggling' induces stasis."
+theory_desc = "Temperature relates to particle energy distributions; it is not identical to bulk speed. Mana-driven cooling fictionally slows the target."
 spell_manifest = 1
 magis_archetype = "Ilmiah"
 spell_incantation = Array[String](["up", "up", "up", "up"])
@@ -26,3 +26,7 @@ projectile_size = 1.0
 projectile_damage = 15.0
 projectile_speed = 700.0
 metadata/_custom_type_script = "uid://ddmcw1l0ht73f"
+
+applies_slow = true
+slow_factor = 0.4
+slow_duration = 3.0

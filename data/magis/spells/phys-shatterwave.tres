@@ -16,7 +16,7 @@ spell_name = "Shatterwave"
 spell_id = "phys-shatterwave"
 spell_icon = ExtResource("2_s8jmb")
 spell_flavour_text = "shakey shakey"
-theory_desc = "Destructive wave interference: two opposing wave fronts meeting at the same point cancel each other catastrophically. Shatterwave finds the frequency Tremor planted and collapses it outward."
+theory_desc = "Superposition can amplify or cancel displacement; destructive interference does not destroy energy. Mana supplies the fictional fracture impulse against a resonating target."
 spell_manifest = 1
 magis_archetype = "Ilmiah"
 magis_comprehension = "Intermediate"
@@ -30,3 +30,5 @@ projectile_size = 0.8
 projectile_damage = 8.0
 projectile_speed = 1000.0
 metadata/_custom_type_script = "uid://ddmcw1l0ht73f"
+
+upfront_cost = 22

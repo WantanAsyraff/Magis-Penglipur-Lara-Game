@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="BossAttackData" format=3 uid="uid://cugjgxtphm1aw"]
 
 [ext_resource type="Script" uid="uid://mosqxd6t24fg" path="res://data/npc/enemies/boss-attack-data.gd" id="1_6c25q"]
-[ext_resource type="Resource" uid="uid://bhexpdd6r7wwd" path="res://data/magis/spells/thermal-siphon.tres" id="1_wfwhf"]
+[ext_resource type="Resource" uid="uid://bhexpdd6r7wwd" path="res://data/magis/legacy-enemy-spells/thermal-siphon.tres" id="1_wfwhf"]
 
 [resource]
 script = ExtResource("1_6c25q")

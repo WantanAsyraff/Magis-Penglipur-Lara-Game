@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://bm8lirrn1ktsj"]
+
+[ext_resource type="Texture2D" uid="uid://bjbqflqnvkp1n" path="res://icon.svg" id="1_c652y"]
+[ext_resource type="PackedScene" path="res://components/effects/impact/static-bolt-impact.tscn" id="2_3vjyc"]
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="2_np5yw"]
+[ext_resource type="Script" uid="uid://b6vkafnios50y" path="res://data/Resources/ilmu/subject.gd" id="3_mgybx"]
+[ext_resource type="PackedScene" path="res://components/effects/trails/static-bolt-trail.tscn" id="3_trail"]
+
+[resource]
+script = ExtResource("2_np5yw")
+spell_name = "Static Bolt"
+spell_id = "static_bolt"
+spell_manifest = 1
+spell_incantation = Array[String](["up", "down", "up", "down"])
+magis_archetype = "Elementalist"
+magis_comprehension = "Intermediate"
+upfront_cost = 45
+cast_time = 0.8
+projectile_particles = ExtResource("3_trail")
+impact_particles = ExtResource("2_3vjyc")
+projectile_range = 600.0
+projectile_size = 1.5
+projectile_damage = 60.0
+projectile_speed = 900.0
+projectile_texture = ExtResource("1_c652y")
+aoe_spell_radius = 8.0
+stunnable = true
+stun_dur = 0.5
+theory_desc = "\"By manipulating atmospheric charge differential and ionization pathways, the caster creates a localized electric potential gradient. The discharge follows the path of least resistance, ionizing air molecules and releasing accumulated electrostatic energy in a controlled arc—momentarily disrupting neural pathways in organic targets.\""
+metadata/_custom_type_script = "uid://ddmcw1l0ht73f"

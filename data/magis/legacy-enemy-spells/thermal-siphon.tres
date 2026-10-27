@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="SpellData" format=3 uid="uid://bhexpdd6r7wwd"]
+
+[ext_resource type="PackedScene" path="res://components/effects/trails/packet-stream-trail.tscn" id="1_0ipma"]
+[ext_resource type="Script" uid="uid://ddmcw1l0ht73f" path="res://data/Resources/ilmu/spell.gd" id="1_h7vfb"]
+[ext_resource type="PackedScene" path="res://components/effects/trails/ground-slam-charge-particle.tscn" id="2_3tqhv"]
+[ext_resource type="Texture2D" uid="uid://cnnad3qojgc2y" path="res://assets/temp/temp-mana.png" id="2_8iocq"]
+[ext_resource type="PackedScene" uid="uid://bv7k8xal2arhv" path="res://components/projectiles/magis-projectile.tscn" id="5_688cq"]
+
+[resource]
+script = ExtResource("1_h7vfb")
+spell_name = "Thermal Siphon"
+spell_id = "PHY-TH-001"
+spell_icon = ExtResource("2_8iocq")
+spell_flavour_text = "Cold doesn't attack warmth. It simply receives it."
+theory_desc = "Second Law of Thermodynamics. Caster creates a mana-temperature differential between themselves and the target, drawing thermal energy out of the target's mana field. Suppresses target mana regen. ~30% mana return to caster over DoT duration. Not fire damage — cold drain.
+Synergy: Third Law Impact weakens aura resistance first → boosts mana return to ~50%."
+spell_type = 7
+spell_manifest = 4
+magis_archetype = "Ilmiah"
+spell_incantation = Array[String](["up", "up", "down", "right", "down"])
+upfront_cost = 40
+cast_time = 1.0
+spell_scene = ExtResource("5_688cq")
+projectile_texture = ExtResource("2_8iocq")
+projectile_particles = ExtResource("2_3tqhv")
+impact_particles = ExtResource("1_0ipma")
+projectile_range = 3000.0
+projectile_size = 2.0
+projectile_damage = 50.0
+projectile_speed = 1150.0
+dot = true
+dot_damage = 6.0
+applies_slow = true
+slow_factor = 0.1
+slow_duration = 5.0
+metadata/_custom_type_script = "uid://ddmcw1l0ht73f"

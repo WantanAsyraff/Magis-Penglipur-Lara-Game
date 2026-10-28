@@ -448,11 +448,18 @@ func _has_partial_match(candidate: Array) -> bool:
 func _has_chain_potential(_current_sequence: Array) -> bool:
 	return incantations.has_extension()
 
+signal incantation_direction_accepted(direction: String)
+
 func _add_sequence(incantation: String) -> void:
+	if not _in_casting_stance or hitbox.is_stunned() or hitbox.is_silenced() or get_tree().paused or get_meta("combat_dead", false) or not is_multiplayer_authority() or not incantations.accepts(incantation): return
+	if Dialogic.current_timeline != null or QuestOfferDialog.is_open(): return
+	var phone := get_tree().get_first_node_in_group("phone_ui")
+	if phone and phone.phone_selected: return
 	if _new_chain or incantations.starts_new_sequence(incantation):
 		incantation_chain_id += 1
 		_new_chain = false
 	var matched_spell := incantations.push(incantation)
+	incantation_direction_accepted.emit(incantation)
 	spell_string = incantations.sequence.duplicate()
 	_update_spell_icons()
 	if matched_spell:

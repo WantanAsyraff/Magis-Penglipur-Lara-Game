@@ -22,6 +22,8 @@
 [ext_resource type="Texture2D" uid="uid://cqagte7igt8vy" path="res://assets/player/yan-concept-art.png" id="15_3rlg4"]
 [ext_resource type="Texture2D" uid="uid://c381wirw82php" path="res://assets/player/player-temp-holding-phone.png" id="16_3rlg4"]
 
+[ext_resource type="PackedScene" path="res://components/characters/player/effects/incantation-input-particles.tscn" id="99_feedback"]
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_k8mmp"]
 animations = [{
 "frames": [{
@@ -219,3 +221,5 @@ position_smoothing_speed = 4.2
 unique_name_in_owner = true
 offset_right = 40.0
 offset_bottom = 23.0
+
+[node name="IncantationInputParticles" parent="." instance=ExtResource("99_feedback")]

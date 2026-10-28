@@ -46,6 +46,8 @@ Current Player default is **CHAINED**. Strike → Resonate → Shatterwave are t
 | CONFIRMATION | Wait for confirm (O/start_incantation when leaving stance) |
 | DELAYED | Wait delay_seconds (default .35) when extensions exist; otherwise complete immediately |
 
+Default project bindings are O for stance, I/J/K/L for up/left/down/right and P for **clear sequence only**. The separate cancel_casting action cancels active/queued casts and starts unbound; assign it in Settings. Saved user keybindings can differ.
+
 An exact duplicate combo is ambiguous and invalid catalogue design. A proper prefix is valid and intentional. Resolver re-evaluations do not execute previewed spells. The assistant remains a compact next-direction row; equipped repertoire is separate existing UI.
 
 ## Extension boundary and completion checklist
@@ -59,3 +61,43 @@ Compose existing [effect types](spell-effects.md) first. A new persistent behavi
 - [ ] Source and PCK tests plus visual/aim/collision checks; fresh-process save compatibility.
 
 For common failures see [troubleshooting](../reference/troubleshooting.md).
+
+## Native `.tres` composition example
+
+This hypothetical new definition uses the same typed DamageEffect/ApplyStatusEffect schema as thermal-kinetic.tres. It is checked by Godot as a Resource and by SpellValidator. It is not automatically registered or added to the game; follow the Editor/manifest/subject steps above. UIDs are intentionally omitted so a new authored asset does not copy an existing one.
+
+```tres
+[gd_resource type="Resource" script_class="SpellData" load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://data/Resources/ilmu/spell.gd" id="spell"]
+[ext_resource type="Script" path="res://data/Resources/ilmu/field.gd" id="field_type"]
+[ext_resource type="Script" path="res://data/Resources/spell-effects/spell-effect-definition.gd" id="effect_type"]
+[ext_resource type="Script" path="res://data/Resources/spell-effects/damage-effect.gd" id="damage"]
+[ext_resource type="Script" path="res://data/Resources/spell-effects/apply-status-effect.gd" id="status"]
+[ext_resource type="Resource" path="res://data/magis/fields/physics.tres" id="physics"]
+
+[sub_resource type="Resource" id="Damage"]
+script = ExtResource("damage")
+amount = 10.0
+
+[sub_resource type="Resource" id="Slow"]
+script = ExtResource("status")
+status = "slow"
+duration = 2.0
+magnitude = 0.2
+
+[resource]
+script = ExtResource("spell")
+spell_id = "demo-study-pulse"
+spell_name = "Study Pulse"
+spell_incantation = Array[String](["up", "up", "right", "down", "left", "down", "up"])
+upfront_cost = 10
+cast_time = 0.1
+recovery_time = 0.15
+delivery = 4
+aoe_spell_radius = 140.0
+effects = Array[ExtResource("effect_type")]([SubResource("Damage"), SubResource("Slow")])
+academic_fields = Array[ExtResource("field_type")]([ExtResource("physics")])
+```
+
+In this format `delivery = 4` is the current AREA_BURST enum value. Prefer selecting the named value in Inspector; changing enum order would require migration of authored numeric data.

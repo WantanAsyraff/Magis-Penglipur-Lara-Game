@@ -1,0 +1,18 @@
+# Crafting
+
+Crafting is already partly data-driven through **ItemData**, not a RecipeData Resource and not a hardcoded recipe dictionary. The output item carries ingredient_1/qty_1 through ingredient_3/qty_3. [CraftingRoom](../../scenes/crafting-room/crafting-room.gd) exports available_recipes: Array[ItemData], writes it and NPC presentation into Crafting_Context, and [CraftingUI](../../scenes/crafting-room/crafting-ui.gd) reads that context when opened.
+
+The existing crafting-room.tscn lists [mana-vile-low-grade.tres](../../data/items/components/mana-vile-low-grade.tres), medium and high grade outputs as recipes; inspect their actual ingredient fields/defaults before treating a listed output as a complete balanced recipe. The low-grade output currently has no ingredient references, so its empty-removal plan allows crafting when output capacity permits; the medium/high-grade outputs configure actual inputs. This guide does not rebalance those definitions.
+
+## Add a recipe in the Editor
+
+1. Create/register the input and output ItemData Resources using [items and loot](items-and-loot.md). Give the output a unique item_id and desired stack settings/icon/name. Choose existing inputs for a first exercise.
+2. On the output Resource, assign ingredient_1 and positive qty_1. Add up to two more ingredient/positive-quantity pairs. Leave unused ingredients null with quantity 0. Repeated input IDs aggregate in the transaction removal plan. Do not use a null ingredient with a positive quantity expecting it to be consumed.
+3. Instance or create an inherited `scenes/crafting-room/crafting-room.tscn`, retain its CraftingUI/unique node contracts, and add the **output** Resource to available_recipes. Set npc_name, npc_portrait and npc_dialogue if desired.
+4. Enter the room through an NPC/transition that records Player_Manager.previous_scene_path; the leave action requires it. Open crafting, select the recipe, inspect three ingredient slots and craft with sufficient inventory.
+5. CraftingUI calls Inventory_Manager.plan_transaction for removals and one output item. If capacity/ingredients fail it refuses the whole plan. On success it assigns the planned inventory and emits confirmed quantity-change events. Verify exact removal/output once and quest reconciliation, including full inventory and shared ingredient cases.
+6. Return to a supported campaign ZoneRoot before saving. This crafting UI room is not itself a saveable world destination. Its recipe availability/presentation comes from scene/Resource refs and is not saved as separate recipe-unlock progression.
+
+No independent recipe registry or bake tool exists. Item registration still matters for inventory/quest/save validation; adding an output to available_recipes does not register it in QuestRegistry. Editor and PCK must retain the room/output/input reference chain. There are no generic crafting XP, result pickup effects, unlock flags or gear-stat calculations: direct plan commit does not run Inventory_Manager.pickup's restore-health/mana/XP/spell hooks.
+
+Validation: ingredient references registered, quantities positive/unused pairs empty, output capacity valid, actual UI open/selection/craft/return tested, quest event/receipt behavior and save after return checked. A Resource recipe needs no new core controller; a new crafting economy/unlock mechanic or multiplayer authorization flow requires code. CraftingUI currently lacks a separate server-authority gate around its direct plan assignment; do not expose it as a trusted multiplayer crafting service without implementing that boundary. This is an audit finding, not a gameplay change made by the handbook.

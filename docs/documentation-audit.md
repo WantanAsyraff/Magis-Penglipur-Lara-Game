@@ -35,6 +35,7 @@ No broken Markdown destination links were found in the initial 35-page audit. Ba
 - NPCSpawnValidator is a conservative grounded walking/approach check, not a navigation or jump planner. Training Guardian defaults must be read from the current Resource, not historical prose.
 - SceneData.default_spawn_marker is consumed by elevator selection; ZoneRoot's ordinary fallback searches PlayerSpawn. Portal overrides should be explicit.
 - Crafting directly commits an inventory plan; it does not trigger pickup-based health/mana/XP/spell effects. A crafting room is not itself a supported campaign save destination.
+- CraftingUI directly assigns the validated inventory plan without a separate server-authority gate in its craft callback; it must not be exposed as an authorized multiplayer crafting service without extending that boundary. No gameplay fix is made here.
 - No generic character-class, RecipeData, persistent timed-effect or multiplayer campaign-save system exists.
 
 ## Coverage and evidence

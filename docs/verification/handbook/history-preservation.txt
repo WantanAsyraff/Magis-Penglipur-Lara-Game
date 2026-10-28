@@ -1,0 +1,2 @@
+PASS original bodies retained in 9 historical reports/guides
+PASS assistant history retained, signature correctly labelled nonexecutable

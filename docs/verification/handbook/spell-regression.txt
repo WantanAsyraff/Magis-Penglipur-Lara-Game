@@ -1,0 +1,191 @@
+Godot Engine v4.7.2.stable.flathub.ed1daf0bf - https://godotengine.org
+
+─── WorldManifest: registered 35 scenes ───
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/abu-campus-entrance.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/abu-courtyard.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/dormitory/abu-dorm-room.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/dormitory/abu-dormitory-hallway.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/dueling-grounds-selection.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/dueling-grounds.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/dueling-grounds/dueling-selection.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/FLAC-courtyard.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/FLAC-entrance.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-one/FLAC-F1-central-hub.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-one/FLAC-F1-hallway.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-one/FLAC-F1-outside.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-one/FLAC-F1-receptionist-area.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-one/FLAC-F1-student-longue.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-three/FLAC-F3-central-hub.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-three/FLAC-F3-hallway-1.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-three/FLAC-F3-hallway-2-Science-Crafting.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-three/FLAC-F3-hallway-2.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-three/FLAC-F3-hallway-3.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-three/FLAC-F3-hallway-4.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-three/FLAC-F3-hallway-balcony.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-two/FLAC-F2-central-hub.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-two/FLAC-F2-hallway-1.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-two/FLAC-F2-hallway-3.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-two/FLAC-F2-hallway-4.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-two/FLAC-F2-hallway-balcony.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-two/FLAC-F2-hallway-2.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/spell-tree.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/story(legacy)/e-hailing.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/story(legacy)/missions-selection.tres
+  • res://data/worlds/hubs/chapters/chapter-1/subway-scene.tres
+  • res://data/worlds/hubs/chapters/prologue/yan-exam-tutorial.tres
+  • res://data/worlds/hubs/chapters/prologue/yan-prologue-house-entrance.tres
+  • res://data/worlds/hubs/the-echanted-forest(TEF)/deeper-forest/TEF-deeper-forest-area-east.tres
+  • res://data/worlds/hubs/the-echanted-forest(TEF)/deeper-forest/TEF-forest-entrance.tres
+─── WorldManifest: validating scene_ids ───
+  1 issue(s) found
+[LyricsOverlay] _ready called
+[LyricsOverlay] Label node found: true
+[LyricsOverlay] Lyrics enabled: true
+[LyricsOverlay] Connected to LyricsManager.lyric_changed
+PASS 01 42 catalogue spells load
+PASS 01 legacy definitions validate: []
+PASS 02 duplicate ID rejected without overwrite
+PASS 03 chained prefix spells resolve intentionally
+PASS 03 confirmation delays ambiguous prefix
+PASS 03 delayed strategy waits for timeout
+PASS 03 immediate strategy consumes sequence
+PASS 04 insufficient mana is unchanged
+PASS 04 unequipped spell denied
+PASS 05 casting blocked by silence
+PASS 05 casting blocked by stun
+PASS 06 preparation reserves upfront mana
+PASS 06 interruption refunds upfront without applying heal
+PASS 06 explicit channel lifecycle
+PASS 06 channel cancellation refunds only upfront mana
+PASS 06 cooldown prevents repeat cast
+PASS 06 cooldown expires
+PASS 07 terrain impact applies AOE exactly once
+PASS 08 healing ticks through final interval then expires
+PASS 09 independent stacks enforce maximum
+PASS 09 earlier expiry preserves later buff
+PASS 09 buffs expire without restoring stale base values
+PASS 10 dispel removes debuffs and preserves buffs
+PASS 10 purge removes buffs
+PASS 11 missing prerequisite prevents purchase
+PASS 11 valid subject purchase succeeds
+PASS 11 repeated purchase cannot deduct XP
+PASS 12 circular effect execution stops at depth limit
+PASS 12 effect budget bounds ordered execution
+PASS 13 queued caster prevents new effects
+PASS 13 deleted caster remains safe
+PASS 14 legacy damage knockback and slow adapt without resource mutation
+PASS 14 cast contexts isolate runtime state
+PASS 15 baked manifest retains 42 exported spell resources
+PASS 16 test client peer created
+PASS 16 client has no gameplay authority
+PASS 16 client cannot apply authoritative effects
+PASS 16 client cannot dispatch authoritative casts
+PASS 18 direct delivery combines ordered damage and healing
+PASS 18 area burst dispatches reusable effects
+PASS 18 area/beam/trap mode 5 delivers effects
+PASS 18 area/beam/trap mode 6 delivers effects
+PASS 18 area/beam/trap mode 7 delivers effects
+PASS 19 queued chain does not precharge next cast
+PASS 19 queued chain validates and charges when it starts
+PASS 19 cancellation refunds pending preparation and clears queue
+PASS 20 academic cycle diagnosed without recursion overflow
+PASS 20 comprehension requirements gate purchase
+PASS 21 source cancellation preserves other stacks
+Phone enabled
+AppList node: AppList:<Control#277696482849>
+Screen node: PhoneBG:<Panel#277629373981>
+[HUD] goals_changed fired — 0 goal(s): []
+UI ready. Network_Manager is:Network_Manager:<Node#193055426138>
+Spawned player for peer:1at(10000.0, -1000.0)
+PASS 22 production Player scene initializes casting component
+Global learned spell: Strike
+Equipped spell: Strike
+PASS 22 production learned/equipped eligibility
+PASS 22 Player delegates preparation to casting service
+PASS 22 production Player interruption refunds mana
+PASS 22 production enemy casting component initializes
+PASS 23 test authority server created
+Phone enabled
+AppList node: AppList:<Control#284642250512>
+Screen node: PhoneBG:<Panel#284575141398>
+[HUD] goals_changed fired — 0 goal(s): []
+UI ready. Network_Manager is:Network_Manager:<Node#193055426138>
+PASS 23 remote actor keeps its own health and mana
+PASS 23 remote hits do not change local singleton stats
+PASS 23 remote Player does not process local input
+PASS 24 duplicate incantation diagnosed
+PASS 24 prefix ambiguity appears in library diagnostics
+PASS 24 cyclic resource rejected during validation
+PASS 25 summon delivery creates configured entity
+PASS 25 spawn entity is reusable as an effect
+PASS 25 valid empty area still counts as a completed cast
+PASS 25 V2 authoring example validates with three effects
+PASS 26 NPC spell uses shared casting service
+PASS 26 enemy projectile initializes at global origin under transformed parent
+Global learned spell: Force
+PASS 26 spell ownership does not imply subject completion
+PASS 27 incompatible scene roots fail safely
+PASS 17 malformed effect reference diagnosed
+PASS 17 zero tick interval rejected
+SPELL_REGRESSION: 71 checks, 0 failures
+WARNING: res://data/magis/spells/phys-force.tres:7 - ext_resource, invalid UID: uid://cnnad3qojgc2y - using text path instead: res://assets/temp/temp-mana.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://assets/custom-labels/ui-stats-label.tres:3 - ext_resource, invalid UID: uid://bid56dcwfjc8v - using text path instead: res://assets/font/Bitter/static/Bitter-Bold.ttf
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://scenes/ui/spell-combat-ui/repetoire.tscn:4 - ext_resource, invalid UID: uid://diiqo28q375lq - using text path instead: res://assets/ui/spells/RepetoireBook.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/NPCs/npc.tscn:4 - ext_resource, invalid UID: uid://doaygnck5qus5 - using text path instead: res://assets/temp/player-temp.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/platforms/temptilemap.tscn:3 - ext_resource, invalid UID: uid://157vauidtvr1 - using text path instead: res://assets/temp/platform.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/platforms/temptilemap.tscn:5 - ext_resource, invalid UID: uid://djldihdqsy2qq - using text path instead: res://assets/temp/classroom-temp1.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/platforms/temptilemap.tscn:6 - ext_resource, invalid UID: uid://clgvvrn3l1gqs - using text path instead: res://assets/temp/classroom-temp1-items.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/tilemaps/palleteTemp.tscn:3 - ext_resource, invalid UID: uid://cmrde1ocyibd0 - using text path instead: res://assets/temp/pallete.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/tilemaps/palleteTemp.tscn:4 - ext_resource, invalid UID: uid://clgvvrn3l1gqs - using text path instead: res://assets/temp/classroom-temp1-items.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/panels/tutorials/tutorial-panel.tscn:5 - ext_resource, invalid UID: uid://bid56dcwfjc8v - using text path instead: res://assets/font/Bitter/static/Bitter-Bold.ttf
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/NPCs/enemies/Enemy.tscn:12 - ext_resource, invalid UID: uid://caaqv80a8h88s - using text path instead: res://assets/temp/player-temp-left.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/NPCs/enemies/Enemy.tscn:14 - ext_resource, invalid UID: uid://bid56dcwfjc8v - using text path instead: res://assets/font/Bitter/static/Bitter-Bold.ttf
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/NPCs/enemies/zalam-manifestations/bunga/bunga.tscn:4 - ext_resource, invalid UID: uid://cdb2b3lesaux2 - using text path instead: res://assets/enemy/bunga-attack.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/NPCs/enemies/dummy/dummy-npc.tscn:3 - ext_resource, invalid UID: uid://yc3tgp66iwpq - using text path instead: res://assets/temp/dummy-temp.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] register_paths (res://autoloads/scene-registry.gd:32)
+         [1] _ready (res://autoloads/world-manifest.gd:18)
+WARNING: res://components/platforms/platform.tscn:3 - ext_resource, invalid UID: uid://157vauidtvr1 - using text path instead: res://assets/temp/platform.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] register_paths (res://autoloads/scene-registry.gd:32)
+         [1] _ready (res://autoloads/world-manifest.gd:18)
+WARNING: res://components/destructables/Box.tscn:4 - ext_resource, invalid UID: uid://cu6j36h4d1f3g - using text path instead: res://assets/temp/cratebox.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] register_paths (res://autoloads/scene-registry.gd:32)
+         [1] _ready (res://autoloads/world-manifest.gd:18)
+WARNING: res://scenes/spell-tree/spell-tree.tscn:8 - ext_resource, invalid UID: uid://bu1aqpqnok4e7 - using text path instead: res://assets/ui/spell-tree/field-title.svg
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] register_paths (res://autoloads/scene-registry.gd:32)
+         [1] _ready (res://autoloads/world-manifest.gd:18)
+WARNING:   ⚠ 'FLAC_F3_hallway_2_science_crafting' has uppercase letters
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _validate_scene_ids (res://autoloads/world-manifest.gd:58)
+         [1] _ready (res://autoloads/world-manifest.gd:24)
+WARNING: Camera2D overridden to physics process mode due to use of physics interpolation.
+     at: _update_process_callback (scene/2d/camera_2d.cpp:88)
+     GDScript backtrace (most recent call first):
+         [0] spawn_player_for_peer (res://autoloads/player-manager.gd:67)
+         [1] spawn_player (res://autoloads/player-manager.gd:46)
+         [2] run_tests (res://tests/spell-regression.gd:288)
+WARNING: 58 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 25 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

@@ -1,0 +1,50 @@
+Godot Engine v4.7.2.stable.flathub.ed1daf0bf - https://godotengine.org
+
+[   0% ] first_scan_filesystem | Started Project initialization (5 steps)
+[   0% ] first_scan_filesystem | Scanning file structure...
+[  16% ] first_scan_filesystem | Loading global class names...
+[  33% ] first_scan_filesystem | Verifying GDExtensions...
+[  50% ] first_scan_filesystem | Creating autoload scripts...
+WARNING: res://data/magis/spells/phys-force.tres:7 - ext_resource, invalid UID: uid://cnnad3qojgc2y - using text path instead: res://assets/temp/temp-mana.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://assets/custom-labels/ui-stats-label.tres:3 - ext_resource, invalid UID: uid://bid56dcwfjc8v - using text path instead: res://assets/font/Bitter/static/Bitter-Bold.ttf
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://scenes/ui/spell-combat-ui/repetoire.tscn:4 - ext_resource, invalid UID: uid://diiqo28q375lq - using text path instead: res://assets/ui/spells/RepetoireBook.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/NPCs/npc.tscn:4 - ext_resource, invalid UID: uid://doaygnck5qus5 - using text path instead: res://assets/temp/player-temp.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/platforms/temptilemap.tscn:3 - ext_resource, invalid UID: uid://157vauidtvr1 - using text path instead: res://assets/temp/platform.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/platforms/temptilemap.tscn:5 - ext_resource, invalid UID: uid://djldihdqsy2qq - using text path instead: res://assets/temp/classroom-temp1.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/platforms/temptilemap.tscn:6 - ext_resource, invalid UID: uid://clgvvrn3l1gqs - using text path instead: res://assets/temp/classroom-temp1-items.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/tilemaps/palleteTemp.tscn:3 - ext_resource, invalid UID: uid://cmrde1ocyibd0 - using text path instead: res://assets/temp/pallete.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/tilemaps/palleteTemp.tscn:4 - ext_resource, invalid UID: uid://clgvvrn3l1gqs - using text path instead: res://assets/temp/classroom-temp1-items.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/panels/tutorials/tutorial-panel.tscn:5 - ext_resource, invalid UID: uid://bid56dcwfjc8v - using text path instead: res://assets/font/Bitter/static/Bitter-Bold.ttf
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/NPCs/enemies/Enemy.tscn:12 - ext_resource, invalid UID: uid://caaqv80a8h88s - using text path instead: res://assets/temp/player-temp-left.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/NPCs/enemies/Enemy.tscn:14 - ext_resource, invalid UID: uid://bid56dcwfjc8v - using text path instead: res://assets/font/Bitter/static/Bitter-Bold.ttf
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/NPCs/enemies/zalam-manifestations/bunga/bunga.tscn:4 - ext_resource, invalid UID: uid://cdb2b3lesaux2 - using text path instead: res://assets/enemy/bunga-attack.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+[  66% ] first_scan_filesystem | Initializing plugins...
+[  83% ] first_scan_filesystem | Starting file scan...
+[ DONE ] first_scan_filesystem
+
+[   0% ] loading_editor_layout | Started Loading editor (5 steps)
+[   0% ] loading_editor_layout | Loading editor layout...
+[  16% ] loading_editor_layout | Loading docks...
+[  33% ] loading_editor_layout | Reopening scenes...
+WARNING: res://components/NPCs/enemies/boss/boss.tscn:5 - ext_resource, invalid UID: uid://bqbot7ncx7r8f - using text path instead: res://assets/temp/player-temp-right.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+[  50% ] loading_editor_layout | Loading central editor layout...
+[  66% ] loading_editor_layout | Loading plugin window layout...
+[  83% ] loading_editor_layout | Editor layout ready.
+[ DONE ] loading_editor_layout
+
+WARNING: 2 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)

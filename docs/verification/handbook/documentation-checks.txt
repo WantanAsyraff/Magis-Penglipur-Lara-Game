@@ -1,0 +1,7 @@
+DOCS: 70 Markdown files, 1069 local link/path checks, 42 Resource classes, 409 exported properties
+GDSCRIPT_REFERENCE_VALIDATION: 2 executable snippets, 0 failures
+NOTE: existing engine resource shutdown diagnostic remains.
+GDSCRIPT: 2 executable snippets checked
+RESOURCE_REFERENCE_VALIDATION: 42 classes, 409 properties, 2 examples, 0 failures
+NOTE: existing engine resource shutdown diagnostic remains.
+DOCUMENTATION_VALIDATION: 0 errors

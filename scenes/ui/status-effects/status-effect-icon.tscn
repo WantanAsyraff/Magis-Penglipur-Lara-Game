@@ -1,0 +1,4 @@
+[gd_scene load_steps=2 format=3]
+[ext_resource type="Script" path="res://scenes/ui/status-effects/status-effect-icon.gd" id="1"]
+[node name="StatusEffectIcon" type="Control"]
+script = ExtResource("1")

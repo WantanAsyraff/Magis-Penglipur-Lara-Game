@@ -169,4 +169,4 @@ func apply_status(key: String, duration: float, data: Dictionary, source: String
 	if key == "mana_drain" and not has_mana: return false
 	var resistance := clampf(status_resistances.get(key, 0.0), 0, 1)
 	if resistance >= 1: return false
-	return effects.apply(key, duration * (1 - resistance), data, source, policy, max_stacks)
+	return effects.apply(key, duration * (1 - resistance), data, source, policy, max_stacks, key == "hot" or key.begins_with("buff_"))

@@ -1,0 +1,4 @@
+[gd_scene load_steps=2 format=3]
+[ext_resource type="Script" path="res://scenes/ui/status-effects/status-effects-hud.gd" id="1"]
+[node name="StatusEffectsHud" type="HBoxContainer"]
+script = ExtResource("1")

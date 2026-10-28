@@ -19,6 +19,7 @@ func execute(context: SpellCastContext, target: Node2D) -> bool:
 		Mode.DAMP: body.velocity *= clampf(1.0 - strength, 0, 1)
 		Mode.LIFT: body.velocity.y = minf(body.velocity.y, -strength)
 	body.velocity = body.velocity.limit_length(1800)
+	if mode == Mode.DAMP: return true
 	var motion := body.get_node_or_null("SpellMotionImpulse") as SpellMotionImpulse
 	if motion == null:
 		motion = SpellMotionImpulse.new()

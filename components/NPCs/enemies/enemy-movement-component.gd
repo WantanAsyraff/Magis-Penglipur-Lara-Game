@@ -3,6 +3,12 @@ var intent: EnemyAIAction.Kind = EnemyAIAction.Kind.IDLE
 func tick(delta: float) -> void:
 	if not SpellExecutor.is_authoritative(self): return
 	var enemy := get_parent()
+	var push := enemy.get_node_or_null("PlayerPushImpulse") as SpellMotionImpulse
+	if push == null: push = enemy.get_node_or_null("SpellMotionImpulse") as SpellMotionImpulse
+	if push and not push.is_queued_for_deletion() and push.remaining > 0:
+		# A shove owns horizontal motion briefly; chase intent must not cancel it.
+		enemy.velocity.x = 0
+		return
 	if enemy.hitbox.is_stunned() or enemy.current_state == Enemy.State.HURT:
 		enemy.velocity.x = move_toward(enemy.velocity.x, 0, enemy.chase_speed * delta * 4)
 		return

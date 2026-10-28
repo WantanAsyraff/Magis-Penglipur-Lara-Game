@@ -210,7 +210,7 @@ Source: [data/npc/enemies/enemy-data.gd](../../data/npc/enemies/enemy-data.gd). 
 | `experience_reward` | `int` | Nonnegative XP on ordinary enemy death; not a quest reward amount. | Conditional/optional | `0` | `@export`; see guide for runtime constraints. | [enemy](../../components/NPCs/enemies/enemy.gd) |
 | `quest_enemy_id` | `String` | Kill observer identity; match registered enemy/objective ID for quests. | Conditional/optional | `""` | `@export`; see guide for runtime constraints. | [enemy](../../components/NPCs/enemies/enemy.gd) |
 | `death_delay` | `float` | Bounded 0–30 seconds before cleanup. | Conditional/optional | `0.25` | `@export`; see guide for runtime constraints. | [enemy](../../components/NPCs/enemies/enemy.gd) |
-| `enemy_tags` | `Array[StringName]` | Tags published on credited enemy death events. | Conditional/optional | `[]` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/npc/enemies/enemy-data.gd) |
+| `enemy_tags` | `Array[StringName]` | Tags published on credited death events; structural/magnetic also opt into manipulation. | Conditional/optional | `[]` | `@export`; see guide for runtime constraints. | [enemy](../../components/NPCs/enemies/enemy.gd) |
 
 ## EnemyPerceptionData
 

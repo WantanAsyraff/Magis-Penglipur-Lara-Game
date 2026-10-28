@@ -48,9 +48,13 @@ func _ready() -> void:
 	set_meta("enemy_id", definition.enemy_id)
 	set_meta("faction_id", definition.faction_id)
 	set_meta("spell_team", definition.faction_id)
+	set_meta("structural", true)
+	for tag in definition.enemy_tags:
+		if tag in [&"structural", &"magnetic"]: set_meta(tag, true)
 	if spawn_id.is_empty(): spawn_id = allocate_spawn_id("%s:%s" % [definition.enemy_id, get_path()])
 	set_meta("enemy_network_id", spawn_id)
 	add_to_group("enemy")
+	PlayerEnemyCollision.configure(self)
 	stats = EnemyStatsComponent.new()
 	stats.name = "EnemyStatsComponent"
 	add_child(stats)

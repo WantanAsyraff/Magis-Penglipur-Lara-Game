@@ -11,7 +11,7 @@
 3. Expand spell_incantation: enter lowercase `up`, `down`, `left`, `right`. Check the whole registered/equipped repertoire for an exact duplicate. Empty arrays are not a useful player-cast spell even though SpellValidator does not itself reject emptiness; Spell_Library does.
 4. Select an explicit V2 delivery. For an ordinary projectile, configure positive projectile_speed, projectile_range and projectile_size. For an area, set positive aoe_spell_radius. SELF and DIRECT_TARGET do not require projectile fields.
 5. Expand effects, add New DamageEffect, set amount; add supported effects in intended order. Explicit nonempty effects **replace** the legacy flag-derived payload, they do not append automatically.
-6. Set nonnegative upfront_cost, cast_time, cooldown and recovery_time. For channeling set is_channelled, positive channel_duration and mana_per_second. Without live_channel the payload dispatches at channel completion; live_channel is only supported for channelled beam/persistent-area/trap deliveries.
+6. Set nonnegative upfront_cost, cast_time, cooldown and recovery_time. Player casts skip post-dispatch recovery; enemies retain recovery_time. Individual spell cooldowns always apply. For channeling set is_channelled, positive channel_duration and mana_per_second. Without live_channel the payload dispatches at channel completion; live_channel is only supported for channelled beam/persistent-area/trap deliveries.
 7. Assign relevant FieldData references. Drag the new spell into a subjectData.contained_spells array to make it learnable; field tags alone grant nothing. After purchase, equip it in My Spells. The equipped list builds the player's resolver, not the entire global library.
 8. Open tools/bake-spell-manifest.gd in the Script editor and run Ctrl+Shift+X. Review that data/magis/spell-manifest.gd preloads the new top-level path. Open/run tools/validate-spells.gd the same way; resolve errors and review prefix warnings.
 9. Play through the subject/unlock/equip route and complete the combo in casting stance. Check accepted-input feedback independently of execution success. Run spell regression, combo, assistant and curriculum tests; add targeted behavior checks rather than changing old expectations blindly.
@@ -46,7 +46,9 @@ Current Player default is **CHAINED**. Strike → Resonate → Shatterwave are t
 | CONFIRMATION | Wait for confirm (O/start_incantation when leaving stance) |
 | DELAYED | Wait delay_seconds (default .35) when extensions exist; otherwise complete immediately |
 
-Default project bindings are O for stance, I/J/K/L for up/left/down/right and P for **clear sequence only**. The separate cancel_casting action cancels active/queued casts and starts unbound; assign it in Settings. Saved user keybindings can differ.
+Default project bindings are O for stance, I/J/K/L for up/left/down/right, Q for the next locked enemy and P for **clear sequence only**. Player aiming automatically locks the nearest eligible enemy; mouse movement does not aim. See [lock rules and HUD placement](../auto-targeting-and-buff-hud.md). The separate cancel_casting action cancels active/queued casts and starts unbound; assign it in Settings. Saved user keybindings can differ.
+
+My Spells and the available loadout library offer type filters derived from classification, effective delivery and effects. Equipped cards remain visible. See [category rules and snappy chaining](../snappy-combat-and-spell-filters.md).
 
 An exact duplicate combo is ambiguous and invalid catalogue design. A proper prefix is valid and intentional. Resolver re-evaluations do not execute previewed spells. The assistant remains a compact next-direction row; equipped repertoire is separate existing UI.
 

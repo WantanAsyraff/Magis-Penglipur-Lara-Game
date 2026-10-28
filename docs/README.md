@@ -22,6 +22,8 @@ Start with [getting started](getting-started.md), then follow the [three content
 - [System map](architecture/system-overview.md) and [Resource-driven architecture](architecture/data-driven-architecture.md).
 - [Resource lifecycle](architecture/resource-lifecycle.md) and [registries/manifests](architecture/registries-and-manifests.md).
 - [Combat](architecture/combat-architecture.md), [progression](architecture/progression-architecture.md) and [save/load architecture and content evolution](architecture/save-load-architecture.md).
+- [Automatic targeting, Q switching and larger buff icons](auto-targeting-and-buff-hud.md).
+- [Snappy casting, E pushback and Spells filters](snappy-combat-and-spell-filters.md), [spell runtime repair and live audit](spell-runtime-repair.md).
 - [Save V1 schema and recovery policy](save-system-v1.md), [status HUD](status-effects-hud.md), [accepted-input particles](incantation-input-feedback.md).
 
 ## Develop and validate

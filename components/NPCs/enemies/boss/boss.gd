@@ -101,6 +101,8 @@ func _ready() -> void:
 	current_health = max_health
 	set_meta("spell_team", &"enemy")
 	set_meta("faction_id", &"enemy")
+	set_meta("structural", true)
+	PlayerEnemyCollision.configure(self)
 	casting = SpellCastingComponent.new()
 	add_child(casting)
 	perception = EnemyDetection.new()

@@ -23,6 +23,7 @@ var _is_open: bool = false
 var _prompt_label: Label = null
 
 func _ready() -> void:
+	add_to_group("world_interaction")
 	interact_area.body_entered.connect(_on_interact_area_body_entered)
 	interact_area.body_exited.connect(_on_interact_area_body_exited)
 	_setup_prompt()
@@ -94,3 +95,6 @@ func _open_door() -> void:
 
 	if sprite and sprite.sprite_frames and sprite.sprite_frames.has_animation("open"):
 		sprite.play("open")
+
+func blocks_combat_push(player: Node2D) -> bool:
+	return not _is_open and _player_nearby == player

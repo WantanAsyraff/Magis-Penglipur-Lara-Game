@@ -24,6 +24,7 @@ var _triggered: bool = false
 # BOOTSTRAP
 # -------------------------
 func _ready() -> void:
+	add_to_group("world_interaction")
 	if enter_label:
 		enter_label.modulate.a = 0.0
 # -------------------------
@@ -125,3 +126,6 @@ func _on_floor_selected(scene_id: String, spawn_marker: String) -> void:
 	Player_Manager.previous_scene_path = get_tree().current_scene.scene_file_path
 	await SceneManager.change_scene(scene_data.scene.resource_path)
 	print("ElevatorPortal: transitioned to ", scene_data.scene.resource_path)
+
+func blocks_combat_push(player: Node2D) -> bool:
+	return _player_in_area and overlaps_body(player)

@@ -78,7 +78,6 @@ var spell_string: Array[String] = []
 var _in_casting_stance: bool = false
 
 # Aim lock — true while held during casting stance
-var _aim_locked: bool = false
 
 # Ladder
 const CLIMB_SPEED: float = 1500.0
@@ -108,9 +107,18 @@ var _parry_active: bool  = false
 # -------------------------
 # BOOTSTRAP
 # -------------------------
+var target_lock: PlayerTargetLock
+var pushback: PlayerPushback
+
 func _ready() -> void:
 	add_to_group("player")
+	PlayerEnemyCollision.configure(self)
+	target_lock = PlayerTargetLock.new()
+	add_child(target_lock)
+	pushback = PlayerPushback.new()
+	add_child(pushback)
 	casting = SpellCastingComponent.new()
+	casting.immediate_chaining = true
 	add_child(casting)
 	casting.cast_failed.connect(_on_cast_failed)
 	hitbox.status_applied.connect(func(key):
@@ -199,11 +207,6 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func _handle_movement() -> void:
-	if _aim_locked:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		_try_jump()
-		return
-
 	var current_speed := (SPEED + hitbox.effects.magnitude("buff_speed")) * (1.0 - hitbox.get_slow_factor())
 	var dir := Input.get_axis("move_left", "move_right")
 	if dir != 0:
@@ -219,22 +222,20 @@ func _try_jump() -> void:
 		_coyote_timer = 0.0
 		_jump_buffer_timer = 0.0
 
-func _handle_combat_input() -> void:
-	move_and_slide()
-
-func _process_incantation_inputs() -> void:
-	if hitbox.is_stunned() or hitbox.is_silenced():
+func _process_incantation_inputs(event: InputEvent) -> void:
+	if event.is_echo() or hitbox.is_stunned() or hitbox.is_silenced():
 		return
 
-	if Input.is_action_just_pressed("clear_incantation"):
+	if event.is_action_pressed("clear_incantation"):
 		_clear_sequence()
 		return
 
 	var pressed := ""
-	if Input.is_action_just_pressed("incantation_up"):    pressed = "up"
-	elif Input.is_action_just_pressed("incantation_down"):  pressed = "down"
-	elif Input.is_action_just_pressed("incantation_left"):  pressed = "left"
-	elif Input.is_action_just_pressed("incantation_right"): pressed = "right"
+	for direction in ["up", "down", "left", "right"]:
+		var action: String = "incantation_" + direction
+		if event.is_action_pressed(action):
+			pressed = direction
+			break
 
 	if pressed == "":
 		return
@@ -366,23 +367,30 @@ func _regen_mana(delta: float) -> void:
 func _unhandled_input(_event: InputEvent) -> void:
 	if multiplayer.has_multiplayer_peer() and not is_multiplayer_authority():
 		return
-	if Input.is_action_just_pressed("cancel_casting"):
+	if _event.is_action_pressed("cycle_target") and not _event.is_echo():
+		if target_lock.can_cycle():
+			target_lock.refresh()
+			target_lock.cycle_target()
+			_update_aim_direction()
+			get_viewport().set_input_as_handled()
+		return
+	if _event.is_action_pressed("pushback") and not _event.is_echo():
+		if pushback.try_push(_event.is_action_pressed("interact")):
+			get_viewport().set_input_as_handled()
+			return
+	if _event.is_action_pressed("cancel_casting") and not _event.is_echo():
 		cancel_active_casting()
 		return
-	if Input.is_action_just_pressed("casting_aim_lock"):
+	if _event.is_action_pressed("casting_aim_lock") and not _event.is_echo():
 		_stop_moving_locked = not _stop_moving_locked
 		Player_Global_Data.p_moveable = not _stop_moving_locked
 		if stop_label:
 			stop_label.text = "STOP MODE"
 			stop_label.visible = _stop_moving_locked
 
-	# Aim lock flag updated regardless of p_moveable — aim lock IS the casting stance
-	if _in_casting_stance:
-		_aim_locked = Input.is_action_pressed("casting_aim_lock")
-
-	# Casting inputs are intentionally allowed even when movement is locked (aim lock mode)
+	# Casting and target switching remain available when movement is stopped.
 	if combat_mode:
-		if Input.is_action_just_pressed("start_incantation"):
+		if _event.is_action_pressed("start_incantation") and not _event.is_echo():
 			if hitbox.is_silenced():
 				spell_label.text = "Silenced!"
 				return
@@ -395,19 +403,17 @@ func _unhandled_input(_event: InputEvent) -> void:
 				_enter_casting_stance()
 
 		if _in_casting_stance:
-			_process_incantation_inputs()
+			_process_incantation_inputs(_event)
 
 	if not Player_Global_Data.p_moveable:
 		return
 
-	if Input.is_action_just_pressed("dash") \
+	if _event.is_action_pressed("dash") and not _event.is_echo() \
 		and not is_dashing \
 		and not hitbox.is_stunned() \
 		and dash_charges > 0:
 			_try_dash()
 
-	if combat_mode:
-		_handle_combat_input()
 
 # -------------------------
 # CASTING STANCE
@@ -425,7 +431,6 @@ func _exit_casting_stance() -> void:
 	_new_chain = true
 	incantations.clear()
 	_in_casting_stance = false
-	_aim_locked = false
 	Player_Global_Data.is_casting = false
 	spell_string.clear()
 	spell_label.text = ""
@@ -467,18 +472,23 @@ func _add_sequence(incantation: String) -> void:
 	if incantations.sequence.is_empty(): _new_chain = true
 
 func _cast_resolved(spell: SpellData) -> void:
+	_update_aim_direction()
 	var accepted: bool
 	var aim := castMarker.position.normalized()
 	var targets: Array[Node2D] = []
-	if LegacySpellAdapter.delivery_for(spell) == SpellData.Delivery.DIRECT_TARGET:
-		var targeting_context := SpellCastContext.new(self, spell)
+	var delivery := LegacySpellAdapter.delivery_for(spell)
+	var selected := target_lock.locked_target
+	if is_instance_valid(selected) and spell.targeting != SpellData.Targeting.ALLIES and delivery not in [SpellData.Delivery.SELF,SpellData.Delivery.SUMMON]:
+		targets.append(selected)
+	elif delivery == SpellData.Delivery.DIRECT_TARGET:
+		var targeting_context := SpellCastContext.new(self,spell)
 		targeting_context.direction = aim
 		var target := SpellDelivery.pick_target(targeting_context)
 		if target: targets.append(target)
 	if incantation_strategy == IncantationResolver.Strategy.CHAINED:
-		accepted = casting.enqueue_cast(spell, castMarker.global_position, aim, targets, incantation_chain_id)
+		accepted = casting.enqueue_cast(spell, global_position, aim, targets, incantation_chain_id)
 	else:
-		accepted = casting.request_cast(spell, castMarker.global_position, aim, targets, incantation_chain_id)
+		accepted = casting.request_cast(spell, global_position, aim, targets, incantation_chain_id)
 	if accepted:
 		pass # Lifecycle events provide accurate feedback, including synchronous completion.
 
@@ -688,14 +698,26 @@ func _on_status_expired(effect_name: String) -> void:
 # AIM
 # -------------------------
 func _update_aim_direction() -> void:
-	var aim_input = Input.get_vector("move_left", "move_right", "climb_up", "climb_down")
-	if aim_input != Vector2.ZERO:
-		var target_pos = Vector2.ZERO
-		target_pos.x = aim_input.x * 140.0
-		target_pos.y = -180.0 if aim_input.y < 0 else (180.0 if aim_input.y > 0 else 0.0)
-		if aim_input.y == 0:
-			target_pos.y = 0.0
-		castMarker.position = target_pos
+	if target_lock:
+		target_lock.refresh()
+		if is_instance_valid(target_lock.locked_target):
+			var heading := PlayerTargetLock.aim_point(target_lock.locked_target) - global_position
+			if not heading.is_zero_approx(): castMarker.position = heading.normalized() * 120.0
+			return
+	var aim_input := Input.get_vector("move_left","move_right","climb_up","climb_down")
+	if not aim_input.is_zero_approx(): castMarker.position = aim_input.normalized() * 120.0
+
+func aim_locked_cast(context: SpellCastContext) -> void:
+	# Each queued request retains its selected enemy, while tracking its movement through preparation.
+	if context.targets.is_empty() or not target_lock.eligible(context.targets[0]): return
+	var point := PlayerTargetLock.aim_point(context.targets[0])
+	var heading := point - global_position
+	if heading.is_zero_approx(): return
+	context.direction = heading.normalized()
+	var delivery := LegacySpellAdapter.delivery_for(context.spell)
+	if delivery in [SpellData.Delivery.PROJECTILE,SpellData.Delivery.BEAM]: context.source_position = global_position
+	if context.spell.aim_placement:
+		context.source_position = global_position + context.direction * minf(220.0,context.spell.target_range)
 
 # -------------------------
 # COMBAT MODE

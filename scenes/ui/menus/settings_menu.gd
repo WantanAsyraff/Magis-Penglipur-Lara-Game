@@ -38,7 +38,9 @@ const ACTIONS: Array = [
 	["clear_incantation",   "Clear Incantation",    ""],
 	# ── Combat / Casting ──────────────────────────────────────
 	["start_incantation",   "Toggle Casting Stance","Combat & Casting"],
-	["casting_aim_lock",    "Aim Lock / Stop Mode", ""],
+	["pushback",            "Push Enemies",          ""],
+	["cycle_target",        "Next Enemy Target",     ""],
+	["casting_aim_lock",    "Stop Movement (optional)", ""],
 ]
 # -------------------------
 # STATE

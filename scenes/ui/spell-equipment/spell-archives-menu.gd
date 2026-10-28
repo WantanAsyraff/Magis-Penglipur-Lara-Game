@@ -5,27 +5,31 @@ const SPELL_SLOT = preload("res://scenes/ui/spell-combat-ui/spell-slot.tscn")
 
 func _ready() -> void:
 	Player_Global_Data.spells_updated.connect(_populate_spell_list)
+	%CategoryFilter.item_selected.connect(func(_index): _populate_spell_list())
 	_populate_spell_list()
 
 func _populate_spell_list() -> void:
 	for child in %LearnedSpells.get_children():
 		%LearnedSpells.remove_child(child)
 		child.queue_free()
+	var filtered: Array[SpellData] = []
 	for spell in Player_Global_Data.learned_spells:
+		if not %CategoryFilter.matches(spell): continue
+		filtered.append(spell)
 		var slot = SPELL_SLOT.instantiate()
 		%LearnedSpells.add_child(slot)
 		slot.set_spell(spell, Player_Global_Data.is_spell_equipped(spell))
 		slot.spell_selected.connect(_on_spell_selected)
 	var selected := Player_Global_Data.selected_spell
-	if not Player_Global_Data.learned_spells.has(selected):
-		selected = Player_Global_Data.learned_spells[0] if not Player_Global_Data.learned_spells.is_empty() else null
+	if not filtered.has(selected):
+		selected = filtered[0] if not filtered.is_empty() else null
 	if selected:
 		_on_spell_selected(selected)
 	else:
 		Player_Global_Data.selected_spell = null
 		%TextureRect.texture = null
-		%SpellNameLabel.text = "No learned spells"
-		%SpellFlavourLabel.text = "Learn a spell to view its incantation, effects and theory."
+		%SpellNameLabel.text = "No learned spells" if Player_Global_Data.learned_spells.is_empty() else "No matching spells"
+		%SpellFlavourLabel.text = "Learn a spell to view its incantation, effects and theory." if Player_Global_Data.learned_spells.is_empty() else "Choose another spell type or All spells."
 		%SpellMoveLabel.text = ""
 		%SpellTheoryLabel.text = ""
 		%CastersNotesLabel.text = ""

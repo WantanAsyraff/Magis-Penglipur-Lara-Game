@@ -219,7 +219,7 @@ PURPOSE = {
  'loot':'Independent LootData entries consumed once per authoritative death.',
  'experience_reward':'Nonnegative XP on ordinary enemy death; not a quest reward amount.',
  'death_delay':'Bounded 0–30 seconds before cleanup.',
- 'enemy_tags':'Tags published on credited enemy death events.',
+ 'enemy_tags':'Tags published on credited death events; structural/magnetic also opt into manipulation.',
  'max_health':'Positive starting/max HP; runtime HP is not written into the Resource.',
  'max_mana':'Mana capacity/initial value; 0 means no mana pool for ordinary enemy.',
  'health_regen':'Health per second after configured regen delay.',

@@ -4,7 +4,7 @@ var remaining: float = 0
 var duration: float = 1
 var panel := StyleBoxFlat.new()
 func _ready() -> void:
-	custom_minimum_size = Vector2(34, 34)
+	custom_minimum_size = Vector2(52, 52)
 	focus_mode = Control.FOCUS_ALL
 	mouse_filter = Control.MOUSE_FILTER_STOP
 func present(value: Dictionary) -> void:
@@ -19,6 +19,7 @@ func _draw() -> void:
 	var good: bool = row.beneficial
 	var accent := Color("86bcb2") if good else Color("d39792")
 	draw_style_box(_panel(accent), Rect2(Vector2.ZERO, size))
+	draw_set_transform(Vector2.ZERO,0,Vector2.ONE * (minf(size.x,size.y)/34.0))
 	# Buffs have a rounded upper mark; debuffs a triangular warning mark.
 	if good: draw_arc(Vector2(17, 8), 3, PI, TAU, 8, accent, 1.5, true)
 	else: draw_polyline(PackedVector2Array([Vector2(13,9),Vector2(17,4),Vector2(21,9)]), accent, 1.5, true)

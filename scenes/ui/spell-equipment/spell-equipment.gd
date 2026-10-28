@@ -12,6 +12,7 @@ var _refresh_pending := false
 func _ready() -> void:
 	Player_Global_Data.spells_updated.connect(_schedule_refresh)
 	%LoadoutScroll.resized.connect(_update_columns)
+	%CategoryFilter.item_selected.connect(func(_index): _populate_both())
 	_populate_both()
 
 func _schedule_refresh() -> void:
@@ -24,13 +25,15 @@ func _populate_both() -> void:
 	_clear_cards(vbox)
 	_clear_cards(spellEquip)
 	for spell in Player_Global_Data.learned_spells:
-		if not Player_Global_Data.is_spell_equipped(spell):
+		if not Player_Global_Data.is_spell_equipped(spell) and %CategoryFilter.matches(spell):
 			_add_card(vbox, spell, false, _on_learned_spell_selected)
 	for spell in Player_Global_Data.equipped_spells:
 		_add_card(spellEquip, spell, true, _on_equipped_spell_selected)
 	%LearnedCountLabel.text = "%d available" % vbox.get_child_count()
 	%EquippedCountLabel.text = "%d / %d slots used" % [spellEquip.get_child_count(), MAX_EQUIPPED_SPELLS]
 	%LearnedEmptyLabel.text = "All learned spells are equipped." if not Player_Global_Data.learned_spells.is_empty() else "Learn a spell to add it to your loadout."
+	if %CategoryFilter.get_selected_id() != SpellCategoryFilter.Category.ALL:
+		%LearnedEmptyLabel.text = "No available spells of this type. Choose another type or All spells."
 	%LearnedEmptyLabel.visible = vbox.get_child_count() == 0
 	%EquippedEmptyLabel.text = "Your loadout is empty. Choose a spell from the left."
 	%EquippedEmptyLabel.visible = spellEquip.get_child_count() == 0

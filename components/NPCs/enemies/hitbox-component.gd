@@ -127,6 +127,13 @@ func _apply_knockback(direction: Vector2, force: float) -> void:
 		return
 	var kb := direction.normalized() * force * (1.0 - knockback_resistance)
 	_character_body.velocity += kb
+	var motion := _character_body.get_node_or_null("SpellMotionImpulse") as SpellMotionImpulse
+	if motion == null:
+		motion = SpellMotionImpulse.new()
+		motion.name = "SpellMotionImpulse"
+		_character_body.add_child(motion)
+	motion.impulse = (motion.impulse + kb).limit_length(2400)
+	motion.remaining = 0.25
 	knocked_back.emit(kb)
 
 func _apply_stun(duration: float) -> void:

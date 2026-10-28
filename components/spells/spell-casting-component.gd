@@ -9,6 +9,8 @@ var _active: Dictionary = {}
 signal state_changed(state: State)
 signal cast_failed(reason: String)
 signal cast_completed(context: SpellCastContext)
+## Player chains skip post-dispatch recovery; enemies retain authored pacing.
+var immediate_chaining: bool = false
 var previous_spell: SpellData
 var previous_targets: Array[Node2D] = []
 var live_delivery: SpellAreaDelivery
@@ -71,6 +73,7 @@ func _start(request: Dictionary) -> bool:
 	if spell.aim_placement:
 		context.source_position = caster.global_position + context.direction * minf(spell.target_range, 220)
 
+	if caster.has_method("aim_locked_cast"): caster.aim_locked_cast(context)
 	var h := caster.get_node_or_null("HitboxComponent") as HitboxComponent
 	if h:
 		context.modifiers.damage = h.effects.magnitude("buff_damage")
@@ -84,9 +87,7 @@ func _physics_process(delta: float) -> void:
 	for id in cooldowns.keys():
 		cooldowns[id] = maxf(cooldowns[id] - delta, 0)
 	if state == State.IDLE:
-		if not _queue.is_empty():
-			var next: Dictionary = _queue.pop_front()
-			_start(next)
+		_drain_queue()
 		return
 	if not is_instance_valid(caster) or caster.is_queued_for_deletion() or _restricted() or not SpellExecutor.is_authoritative(caster):
 		cancel("Cast interrupted")
@@ -106,8 +107,17 @@ func _physics_process(delta: float) -> void:
 			_execute()
 		State.RECOVERY:
 			_set_state(State.IDLE)
+	_drain_queue()
+
+func _drain_queue() -> void:
+	# Bound work even if callbacks append new requests. Failed requests never stall the queue.
+	var budget := 8
+	while state == State.IDLE and not _queue.is_empty() and budget > 0:
+		budget -= 1
+		_start(_queue.pop_front())
 
 func _finish_preparation() -> void:
+	if caster.has_method("aim_locked_cast"): caster.aim_locked_cast(context)
 	if context.spell.is_channelled and context.spell.channel_duration > 0:
 		remaining = context.spell.channel_duration
 		_set_state(State.CHANNELING)
@@ -121,6 +131,7 @@ func _finish_preparation() -> void:
 		_execute()
 
 func _execute() -> void:
+	if caster.has_method("aim_locked_cast"): caster.aim_locked_cast(context)
 	if LegacySpellAdapter.delivery_for(context.spell) == SpellData.Delivery.DIRECT_TARGET:
 		if context.targets.is_empty() or not is_instance_valid(context.targets[0]) or context.targets[0].is_queued_for_deletion() or context.targets[0].global_position.distance_to(caster.global_position) > context.spell.target_range:
 			cancel("Target lost during preparation")
@@ -140,7 +151,7 @@ func _execute() -> void:
 	_report(_active, RequestStatus.COMPLETED)
 	_active = {}
 	cast_completed.emit(context)
-	remaining = context.spell.recovery_time
+	remaining = 0.0 if immediate_chaining else context.spell.recovery_time
 	_set_state(State.RECOVERY)
 	if remaining <= 0:
 		_set_state(State.IDLE)

@@ -64,6 +64,10 @@ var dash_regen_timer := 0.0
 # Spells
 @export var incantation_strategy: IncantationResolver.Strategy = IncantationResolver.Strategy.CHAINED
 var casting: SpellCastingComponent
+signal incantation_rejected
+var incantation_chain_id: int = 1
+var _new_chain: bool = true
+var chain_assistant: Control
 var incantations := IncantationResolver.new()
 var _remote_health: float = 100.0
 var _remote_mana: float = 400.0
@@ -120,6 +124,13 @@ func _ready() -> void:
 		hitbox.healed.connect(restore_spell_health)
 		hitbox.mana_drained.connect(_on_mana_drained)
 		return
+	var assistant_layer := CanvasLayer.new()
+	assistant_layer.layer = 5
+	add_child(assistant_layer)
+	chain_assistant = preload("res://scenes/ui/spell-combat-ui/incantation-assistant.tscn").instantiate()
+	assistant_layer.add_child(chain_assistant)
+	chain_assistant.bind_player(self)
+	casting.request_status.connect(_on_request_status)
 	_sync_spells_from_global()
 	Player_Global_Data.combat_mode_changed.connect(func(new_val): combat_mode = new_val)
 
@@ -230,7 +241,8 @@ func _process_incantation_inputs() -> void:
 
 	var candidate := spell_string + [pressed]
 	if not _has_partial_match(candidate):
-		_fail_cast("No match!")
+		incantation_rejected.emit()
+		_fail_cast("Invalid direction")
 		return
 
 	_add_sequence(pressed)
@@ -354,6 +366,9 @@ func _regen_mana(delta: float) -> void:
 func _unhandled_input(_event: InputEvent) -> void:
 	if multiplayer.has_multiplayer_peer() and not is_multiplayer_authority():
 		return
+	if Input.is_action_just_pressed("cancel_casting"):
+		cancel_active_casting()
+		return
 	if Input.is_action_just_pressed("casting_aim_lock"):
 		_stop_moving_locked = not _stop_moving_locked
 		Player_Global_Data.p_moveable = not _stop_moving_locked
@@ -398,6 +413,7 @@ func _unhandled_input(_event: InputEvent) -> void:
 # CASTING STANCE
 # -------------------------
 func _enter_casting_stance() -> void:
+	_new_chain = true
 	incantations.clear()
 	_in_casting_stance = true
 	Player_Global_Data.is_casting = true
@@ -406,6 +422,7 @@ func _enter_casting_stance() -> void:
 	_clear_spell_icons()
 
 func _exit_casting_stance() -> void:
+	_new_chain = true
 	incantations.clear()
 	_in_casting_stance = false
 	_aim_locked = false
@@ -420,7 +437,10 @@ func _exit_casting_stance() -> void:
 func _sync_spells_from_global() -> void:
 	spell_inventory = Player_Global_Data.equipped_spells.duplicate()
 	incantations.strategy = incantation_strategy
+	_new_chain = true
 	incantations.rebuild(spell_inventory)
+	spell_string.clear()
+	_clear_spell_icons()
 
 func _has_partial_match(candidate: Array) -> bool:
 	return not candidate.is_empty() and incantations.accepts(candidate.back())
@@ -429,11 +449,15 @@ func _has_chain_potential(_current_sequence: Array) -> bool:
 	return incantations.has_extension()
 
 func _add_sequence(incantation: String) -> void:
+	if _new_chain or incantations.starts_new_sequence(incantation):
+		incantation_chain_id += 1
+		_new_chain = false
 	var matched_spell := incantations.push(incantation)
 	spell_string = incantations.sequence.duplicate()
 	_update_spell_icons()
 	if matched_spell:
 		_cast_resolved(matched_spell)
+	if incantations.sequence.is_empty(): _new_chain = true
 
 func _cast_resolved(spell: SpellData) -> void:
 	var accepted: bool
@@ -445,18 +469,26 @@ func _cast_resolved(spell: SpellData) -> void:
 		var target := SpellDelivery.pick_target(targeting_context)
 		if target: targets.append(target)
 	if incantation_strategy == IncantationResolver.Strategy.CHAINED:
-		accepted = casting.enqueue_cast(spell, castMarker.global_position, aim, targets)
+		accepted = casting.enqueue_cast(spell, castMarker.global_position, aim, targets, incantation_chain_id)
 	else:
-		accepted = casting.request_cast(spell, castMarker.global_position, aim, targets)
+		accepted = casting.request_cast(spell, castMarker.global_position, aim, targets, incantation_chain_id)
 	if accepted:
-		spell_label.text = spell.spell_name + " cast!"
+		pass # Lifecycle events provide accurate feedback, including synchronous completion.
 
 func _clear_sequence() -> void:
+	_new_chain = true
 	incantations.clear()
-	casting.cancel()
 	spell_string.clear()
 	spell_label.text = ""
 	_clear_spell_icons()
+
+func cancel_active_casting() -> void:
+	casting.cancel()
+
+func _on_request_status(_id: int, _chain: int, spell: SpellData, status: SpellCastingComponent.RequestStatus, reason: String) -> void:
+	if spell == null: return
+	var labels := ["Recognized", "Queued", "Preparing", "Channeling", "Executing", "Cast!", "Failed", "Interrupted", "Cancelled"]
+	spell_label.text = spell.spell_name + " — " + labels[status] + (": " + reason if not reason.is_empty() else "")
 
 func _clear_spell_icons() -> void:
 	if not spell_icon_box:
@@ -502,6 +534,7 @@ func _on_cast_failed(message: String) -> void:
 
 func _fail_cast(message: String, reset_input: bool = true) -> void:
 	if reset_input:
+		_new_chain = true
 		incantations.clear()
 		_clear_spell_icons()
 		spell_string.clear()

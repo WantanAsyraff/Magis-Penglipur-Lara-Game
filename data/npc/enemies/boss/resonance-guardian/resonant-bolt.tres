@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="SpellData" format=3]
+
+[ext_resource type="Script" path="res://data/Resources/ilmu/spell.gd" id="spell"]
+[ext_resource type="PackedScene" path="res://components/projectiles/enemy-magis-projectile.tscn" id="scene"]
+[ext_resource type="Texture2D" path="res://assets/projectiles/enemy-proj-temp.png" id="texture"]
+
+[resource]
+script = ExtResource("spell")
+spell_id = "resonance_guardian_bolt"
+spell_name = "Resonant Bolt"
+spell_scene = ExtResource("scene")
+projectile_texture = ExtResource("texture")
+spell_colour = Color(1, 0.7, 0.35, 1)
+delivery = 1
+upfront_cost = 0.0
+cast_time = 0.0
+cooldown = 0.0
+recovery_time = 0.0
+projectile_damage = 18.0
+projectile_range = 2400.0
+projectile_speed = 650.0
+projectile_size = 1.6
+knockback_force = 180.0

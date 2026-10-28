@@ -26,12 +26,14 @@ signal attack_finished(attack: BossAttackData)
 # ─────────────────────────────────────────
 # ENUMS
 # ─────────────────────────────────────────
-enum State { IDLE, CHASE, ATTACK, HURT, PHASE_TRANSITION, DEATH }
+enum State { IDLE, CHASE, ATTACK, HURT, PHASE_TRANSITION, DEATH, RECOVERY }
 
 # ─────────────────────────────────────────
 # IDENTITY
 # ─────────────────────────────────────────
 @export_group("Identity")
+@export var combat_enabled: bool = true
+@export var interruption_recovery: float = 0.65
 @export var boss_name: String = "Boss"
 
 # ─────────────────────────────────────────
@@ -74,6 +76,9 @@ enum State { IDLE, CHASE, ATTACK, HURT, PHASE_TRANSITION, DEATH }
 @export var spell_mana: float = 400
 var casting: SpellCastingComponent
 var perception: EnemyDetection
+var telegraph: BossTelegraph
+var _dash_active: bool = false
+var _attack_direction := Vector2.RIGHT
 var _attack_epoch: int = 0
 var _transition_epoch: int = 0
 var current_state: State = State.IDLE
@@ -123,15 +128,17 @@ func _ready() -> void:
 	detection_area.body_exited.connect(_on_detection_area_body_exited)
 
 	_enter_phase(0)
+	hitbox.set_invincible(not combat_enabled)
 	_set_state(State.IDLE)
 
 func _physics_process(delta: float) -> void:
 	if not SpellExecutor.is_authoritative(self) or current_state == State.DEATH: return
 	perception.tick(delta)
 	_player = perception.player
-	if hitbox.is_stunned():
-		if current_attack: _attack_epoch += 1; current_attack = null; _can_attack = true
-		casting.cancel("Boss stunned")
+	if not combat_enabled or hitbox.is_stunned():
+		if current_attack or current_state == State.ATTACK:
+			_interrupt_attack("Boss stunned" if combat_enabled else "Encounter stopped")
+			_set_state(State.HURT if combat_enabled else State.IDLE)
 		velocity.x = 0
 		_apply_gravity(delta)
 		move_and_slide()
@@ -159,6 +166,8 @@ func _on_state_entered(state: State) -> void:
 		State.ATTACK:
 			_play_animation("attack")
 			_execute_current_attack()
+		State.RECOVERY:
+			_play_animation("idle")
 		State.HURT:
 			_play_animation("hurt")
 			hurt_timer.wait_time = hurt_duration
@@ -173,8 +182,9 @@ func _run_state(delta: float) -> void:
 		State.IDLE:         _state_idle()
 		State.CHASE:        _state_chase()
 		State.ATTACK:       _state_attack_hold()
-		State.HURT:         pass
-		State.PHASE_TRANSITION: pass
+		State.RECOVERY:     velocity.x = 0
+		State.HURT:         velocity.x = 0
+		State.PHASE_TRANSITION: velocity.x = 0
 		State.DEATH:        pass
 
 # ─────────────────────────────────────────
@@ -200,17 +210,12 @@ func _state_chase() -> void:
 	if _can_attack and current_phase and current_phase.attacks.size() > 0:
 		var dist := global_position.distance_to(_player.global_position)
 		var chosen := _pick_attack_in_range(dist)
-		print("[Boss] Chase dist: %.1f | can_attack: %s | chosen: %s" % [dist, _can_attack, chosen.attack_name if chosen else "none"])
 		if chosen:
 			current_attack = chosen
 			_set_state(State.ATTACK)
 
 func _state_attack_hold() -> void:
-	# Melee dash keeps momentum — others hold position
-	if current_attack and current_attack.kind == BossAttackData.AttackKind.MELEE_DASH:
-		pass
-	else:
-		velocity.x = move_toward(velocity.x, 0, current_phase.chase_speed if current_phase else 160.0)
+	if not _dash_active: velocity.x = 0
 
 # ─────────────────────────────────────────
 # PHASE MANAGEMENT
@@ -239,27 +244,24 @@ func _check_phase_transition() -> void:
 		_trigger_phase_transition(target_phase)
 
 func _trigger_phase_transition(new_index: int) -> void:
-	_attack_epoch += 1
+	if current_state == State.DEATH or not combat_enabled: return
+	_interrupt_attack("Phase transition")
 	_transition_epoch += 1
 	var token := _transition_epoch
-	casting.cancel("Phase transition")
-	current_attack = null
-	_can_attack = true
-	_set_state(State.PHASE_TRANSITION)
+	attack_timer.stop()
+	hurt_timer.stop()
 	_enter_phase(new_index)
+	_set_state(State.PHASE_TRANSITION)
 	var phase := current_phase
-	if phase.invincible_on_transition:
-		_is_invincible = true
-		hitbox.set_invincible(true)
-		await get_tree().create_timer(maxf(phase.transition_invincible_duration, 0.01)).timeout
-		if token != _transition_epoch or current_state == State.DEATH: return
-		_is_invincible = false
-		hitbox.set_invincible(false)
-	if phase.transition_animation != "" and sprite.sprite_frames and sprite.sprite_frames.has_animation(phase.transition_animation):
-		_play_animation(phase.transition_animation)
-		# Bounded wait also handles inherited looping animations.
-		await get_tree().create_timer(0.5).timeout
-		if token != _transition_epoch or current_state == State.DEATH: return
+	_is_invincible = phase.invincible_on_transition
+	hitbox.set_invincible(_is_invincible)
+	var duration := maxf(phase.transition_duration, phase.transition_invincible_duration if _is_invincible else 0)
+	await get_tree().create_timer(maxf(duration, 0.01), false).timeout
+	if token != _transition_epoch or current_state == State.DEATH or not combat_enabled: return
+	_is_invincible = false
+	hitbox.set_invincible(false)
+	_can_attack = false
+	attack_timer.start(maxf(interruption_recovery, 0.05))
 	_set_state(State.CHASE if is_instance_valid(_player) else State.IDLE)
 
 # ─────────────────────────────────────────
@@ -337,7 +339,11 @@ func _execute_current_attack() -> void:
 	_attack_epoch += 1
 	var token := _attack_epoch
 	var attack := current_attack
+	velocity.x = 0
+	_attack_direction = (_player.global_position - global_position).normalized()
+	_update_facing(_attack_direction.x)
 	attack_started.emit(attack)
+	if not _attack_valid(token): return
 	SpellFeedback.flash(self, Color(1, 0.3, .2))
 	match attack.kind:
 		BossAttackData.AttackKind.MELEE_SLAM: await _do_melee_slam()
@@ -346,8 +352,13 @@ func _execute_current_attack() -> void:
 		BossAttackData.AttackKind.AOE_SLAM: await _do_aoe_slam()
 		BossAttackData.AttackKind.SUMMON: await _do_summon()
 	if not _attack_valid(token): return
+	_clear_telegraph()
+	_dash_active = false
+	velocity.x = 0
+	_set_state(State.RECOVERY)
 	attack_finished.emit(attack)
-	attack_timer.start(maxf(attack.cooldown, 0.05))
+	if token == _attack_epoch and current_state == State.RECOVERY:
+		attack_timer.start(maxf(attack.cooldown, 0.05))
 
 # ─────────────────────────────────────────
 # ATTACK IMPLEMENTATIONS
@@ -355,51 +366,59 @@ func _execute_current_attack() -> void:
 func _do_melee_slam() -> void:
 	var attack := current_attack
 	var token := _attack_epoch
-	await get_tree().create_timer(maxf(attack.windup, .01)).timeout
+	var heading: Vector2 = (_player.global_position - global_position).normalized() if is_instance_valid(_player) else Vector2.RIGHT
+	_show_telegraph(attack, attack.windup, heading)
+	await get_tree().create_timer(maxf(attack.windup, .01), false).timeout
 	if not _attack_valid(token): return
-	if not is_instance_valid(_player):
-		return
-	var dist := global_position.distance_to(_player.global_position)
-	if dist <= attack.melee_range:
-		var player_hitbox := _player.get_node_or_null("HitboxComponent") as HitboxComponent
-		if player_hitbox:
-			var dir: Vector2 = (_player.global_position - global_position).normalized()
-			CombatRequest.strike(self, _player, attack.melee_damage, 200)
-			print("[Boss] Melee slam hit for: ", attack.melee_damage)
+	_clear_telegraph()
+	if not is_instance_valid(_player): return
+	var offset: Vector2 = _player.global_position - global_position
+	if offset.length() <= attack.melee_range and absf(heading.angle_to(offset)) <= deg_to_rad(attack.melee_arc_degrees / 2):
+		CombatRequest.strike(self, _player, attack.melee_damage, 200)
 
 func _do_melee_dash() -> void:
 	var attack := current_attack
 	var token := _attack_epoch
-	if not is_instance_valid(_player):
-		return
-	var dash_dir: Vector2 = (_player.global_position - global_position).normalized()
+	if not is_instance_valid(_player): return
+	var dash_dir := Vector2.RIGHT if _player.global_position.x >= global_position.x else Vector2.LEFT
 	var dash_speed := current_phase.chase_speed * attack.dash_speed_multiplier
+	_show_telegraph(attack, attack.windup, dash_dir, _dash_warning_length(dash_dir, dash_speed * attack.dash_duration))
+	await get_tree().create_timer(maxf(attack.windup, .01), false).timeout
+	if not _attack_valid(token): return
+	_clear_telegraph()
+	_dash_active = true
 	var elapsed := 0.0
-
+	var struck := false
 	while elapsed < attack.dash_duration:
 		if not _attack_valid(token): return
+		if get_tree().paused:
+			await get_tree().physics_frame
+			continue
 		velocity.x = dash_dir.x * dash_speed
-		velocity.y = dash_dir.y * dash_speed * 0.3
+		if not struck and is_instance_valid(_player) and global_position.distance_to(_player.global_position) <= attack.melee_range * 1.5:
+			struck = CombatRequest.strike(self, _player, attack.melee_damage, 350)
 		elapsed += get_physics_process_delta_time()
 		await get_tree().physics_frame
+	if not _attack_valid(token): return
+	_dash_active = false
+	velocity.x = 0
 
-	velocity = Vector2.ZERO
-
-	if is_instance_valid(_player):
-		var dist := global_position.distance_to(_player.global_position)
-		if dist <= attack.melee_range * 1.5:
-			var player_hitbox := _player.get_node_or_null("HitboxComponent") as HitboxComponent
-			if player_hitbox:
-				var dir: Vector2 = (_player.global_position - global_position).normalized()
-				CombatRequest.strike(self, _player, attack.melee_damage, 350)
-				print("[Boss] Dash hit for: ", attack.melee_damage)
+func _dash_warning_length(heading: Vector2, distance: float) -> float:
+	var query := PhysicsRayQueryParameters2D.create(global_position, global_position + heading * distance, 16, [get_rid()])
+	var collision := get_world_2d().direct_space_state.intersect_ray(query)
+	if collision.is_empty(): return distance
+	var shape := $CollisionShape2D as CollisionShape2D
+	var half_width := shape.shape.get_rect().size.x * absf(shape.global_scale.x) / 2
+	return maxf(0, global_position.distance_to(collision.position) - half_width - 2)
 
 func _do_ranged_burst() -> void:
 	var attack := current_attack
 	var token := _attack_epoch
 	if attack.ranged_spell == null: return
-	await get_tree().create_timer(maxf(attack.windup, .01)).timeout
+	_show_telegraph(attack, attack.windup, _attack_direction)
+	await get_tree().create_timer(maxf(attack.windup, .01), false).timeout
 	if not _attack_valid(token) or not is_instance_valid(_player): return
+	_clear_telegraph()
 	var definition := attack.ranged_spell.duplicate() as SpellData
 	definition.cast_time = 0 # BossAttackData owns the windup for the projectile burst.
 	var count := clampi(attack.burst_count, 1, 32)
@@ -410,15 +429,16 @@ func _do_ranged_burst() -> void:
 		if count > 1: heading = heading.rotated(deg_to_rad(-attack.burst_spread / 2 + attack.burst_spread * i / (count - 1)))
 		var targets: Array[Node2D] = [_player]
 		if not casting.request_cast(definition, global_position + heading * 60, heading, targets): return
-		if i < count - 1: await get_tree().create_timer(maxf(attack.burst_interval, .01)).timeout
+		if i < count - 1: await get_tree().create_timer(maxf(attack.burst_interval, .01), false).timeout
 
 func _do_aoe_slam() -> void:
 	var attack := current_attack
 	var token := _attack_epoch
-	print("[Boss] AOE warning — ", attack.aoe_warning_duration, "s")
-	await get_tree().create_timer(maxf(attack.aoe_warning_duration, .01)).timeout
+	_show_telegraph(attack, attack.aoe_warning_duration, Vector2.RIGHT)
+	await get_tree().create_timer(maxf(attack.aoe_warning_duration, .01), false).timeout
 	if not _attack_valid(token): return
 
+	_clear_telegraph()
 	var space := get_world_2d().direct_space_state
 	var query := PhysicsShapeQueryParameters2D.new()
 	var shape := CircleShape2D.new()
@@ -426,17 +446,20 @@ func _do_aoe_slam() -> void:
 	query.shape = shape
 	query.transform = Transform2D(0, global_position)
 
-	var results := space.intersect_shape(query)
+	query.collision_mask = 3
+	query.exclude = [get_rid()]
+	var hit_targets: Dictionary = {}
+	var results := space.intersect_shape(query, 64)
 	for result in results:
 		var body: Node2D = result.collider
-		if body == self:
+		if body == self or hit_targets.has(body.get_instance_id()):
 			continue
+		hit_targets[body.get_instance_id()] = true
 		if CombatFactions.relation(self, body) < 0:
 			var player_hitbox := body.get_node_or_null("HitboxComponent") as HitboxComponent
 			if player_hitbox:
 				var dir: Vector2 = (body.global_position - global_position).normalized()
 				CombatRequest.strike(self, body, attack.aoe_damage, attack.aoe_knockback)
-				print("[Boss] AOE hit player for: ", attack.aoe_damage)
 
 func _do_summon() -> void:
 	var attack := current_attack
@@ -445,7 +468,7 @@ func _do_summon() -> void:
 		push_warning("Boss summon: no minion_scene assigned on attack: " + attack.attack_name)
 		return
 
-	await get_tree().create_timer(maxf(attack.windup, .01)).timeout
+	await get_tree().create_timer(maxf(attack.windup, .01), false).timeout
 	if not _attack_valid(token): return
 
 	for i in mini(attack.minion_count, 12):
@@ -467,6 +490,9 @@ func _on_death() -> void:
 	set_meta("combat_dead", true)
 	_attack_epoch += 1
 	_transition_epoch += 1
+	_clear_telegraph()
+	_dash_active = false
+	velocity = Vector2.ZERO
 	casting.cancel("Boss died")
 	attack_timer.stop()
 	hurt_timer.stop()
@@ -512,11 +538,9 @@ func _on_detection_area_body_exited(body: Node) -> void:
 # HITBOX CALLBACKS
 # ─────────────────────────────────────────
 func _on_damage_taken(amount: float) -> void:
-	if not SpellExecutor.is_authoritative(self) or current_state == State.DEATH or _is_invincible or amount <= 0:
+	if not SpellExecutor.is_authoritative(self) or current_state == State.DEATH or not combat_enabled or _is_invincible or amount <= 0:
 		return
-	_attack_epoch += 1
-	_can_attack = true
-	casting.cancel("Boss interrupted by damage")
+	_interrupt_attack("Boss interrupted by damage")
 	current_health = maxf(current_health - amount, 0.0)
 	boss_hurt.emit(amount)
 	print("[Boss] Took %.1f damage — HP: %.1f/%.1f" % [amount, current_health, max_health])
@@ -535,8 +559,10 @@ func _on_damage_taken(amount: float) -> void:
 # TIMER CALLBACKS
 # ─────────────────────────────────────────
 func _on_attack_timer_timeout() -> void:
+	if not combat_enabled or current_state in [State.DEATH, State.PHASE_TRANSITION]: return
 	_can_attack = true
-	if current_state == State.ATTACK:
+	current_attack = null
+	if current_state in [State.ATTACK, State.RECOVERY]:
 		if is_instance_valid(_player):
 			_set_state(State.CHASE)
 		else:
@@ -576,7 +602,7 @@ func apply_spell_hit(spell: SpellData, direction: Vector2) -> void:
 		hitbox.receive_hit(spell, direction)
 
 func _attack_valid(token: int) -> bool:
-	return SpellExecutor.is_authoritative(self) and token == _attack_epoch and current_state != State.DEATH and not hitbox.is_stunned()
+	return SpellExecutor.is_authoritative(self) and not is_queued_for_deletion() and combat_enabled and token == _attack_epoch and current_state == State.ATTACK and not hitbox.is_stunned()
 func _owned_minions() -> int:
 	var count := 0
 	for node in get_tree().get_nodes_in_group("combat_owned"):
@@ -589,4 +615,49 @@ func consume_spell_mana(amount: float) -> bool:
 func restore_spell_mana(amount: float) -> void:
 	spell_mana += maxf(amount, 0)
 func _exit_tree() -> void:
+	_attack_epoch += 1
+	_transition_epoch += 1
+	_clear_telegraph()
 	CombatLifecycle.cleanup(self)
+
+func _clear_telegraph() -> void:
+	if is_instance_valid(telegraph):
+		telegraph.hide()
+		telegraph.queue_free()
+	telegraph = null
+
+func _show_telegraph(attack: BossAttackData, duration: float, heading: Vector2, distance: float = 0) -> void:
+	_clear_telegraph()
+	telegraph = BossTelegraph.new()
+	telegraph.attack = attack
+	telegraph.duration = maxf(duration, 0.01)
+	telegraph.heading = heading
+	telegraph.dash_length = distance
+	CombatLifecycle.own(telegraph, self)
+	get_parent().add_child(telegraph)
+	telegraph.global_position = global_position
+
+func _interrupt_attack(reason: String) -> void:
+	_attack_epoch += 1
+	_dash_active = false
+	velocity.x = 0
+	_clear_telegraph()
+	casting.cancel(reason)
+	var recovery := maxf(interruption_recovery, current_attack.cooldown if current_attack else 0)
+	current_attack = null
+	_can_attack = false
+	if attack_timer.is_inside_tree(): attack_timer.start(maxf(recovery, attack_timer.time_left))
+
+func set_combat_enabled(value: bool) -> void:
+	combat_enabled = value
+	if not is_node_ready() or not is_inside_tree() or current_state == State.DEATH: return
+	if not value:
+		_interrupt_attack("Encounter stopped")
+		_transition_epoch += 1
+		attack_timer.stop()
+		hurt_timer.stop()
+		CombatLifecycle.cleanup(self)
+		_set_state(State.IDLE)
+	_is_invincible = not value
+	hitbox.set_invincible(not value)
+	_can_attack = value

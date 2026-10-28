@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="BossAttackData" format=3]
+
+[ext_resource type="Script" path="res://data/npc/enemies/boss-attack-data.gd" id="attack"]
+[ext_resource type="Resource" path="res://data/npc/enemies/boss/resonance-guardian/resonant-bolt.tres" id="spell"]
+
+[resource]
+script = ExtResource("attack")
+attack_name = "Resonant Burst"
+kind = 2
+windup = 0.65
+cooldown = 1.3
+burst_count = 3
+burst_interval = 0.16
+burst_spread = 24.0
+ranged_spell = ExtResource("spell")
+telegraph_colour = Color(1, 0.65, 0.3, 1)

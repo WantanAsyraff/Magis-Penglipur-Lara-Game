@@ -299,3 +299,27 @@ func set_comprehension(field_id: StringName, rank: int) -> void:
 		return
 	academic_comprehension[field_id] = maxi(rank, 0)
 	progression_changed.emit()
+
+# Presentation preferences are independent of character saves and progression.
+signal assistance_changed(mode: int)
+enum Assistance { GUIDED, MINIMAL, OFF }
+var assistance_mode: int = Assistance.GUIDED
+const ASSISTANCE_SETTINGS := "user://incantation-assistant.cfg"
+
+func _ready() -> void:
+	load_assistance_settings()
+	load("res://scenes/ui/menus/settings_menu.gd").load_from_file()
+
+func load_assistance_settings(path: String = ASSISTANCE_SETTINGS) -> void:
+	var cfg := ConfigFile.new()
+	if cfg.load(path) == OK:
+		assistance_mode = clampi(int(cfg.get_value("presentation", "assistance", 0)), 0, 2)
+	assistance_changed.emit(assistance_mode)
+
+func set_assistance_mode(mode: int, path: String = ASSISTANCE_SETTINGS) -> Error:
+	assistance_mode = clampi(mode, 0, 2)
+	var cfg := ConfigFile.new()
+	cfg.set_value("presentation", "assistance", assistance_mode)
+	var result := cfg.save(path)
+	assistance_changed.emit(assistance_mode)
+	return result

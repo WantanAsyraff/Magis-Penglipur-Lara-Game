@@ -78,7 +78,7 @@ func refill() -> void:
 func update_readout() -> void:
 	if readout == null: return
 	var spell := spells[selector.selected]
-	readout.text = "%s | Mana %d | Sequence: %s\n%s\nO: stance / confirm | I J K L: up left down right | P: interrupt\nAim toward a target for direct casts. Platforms expire.\nGray wall blocks beams; right-hand interface turns them -45 degrees." % [spell.spell_name, spell.upfront_cost, ", ".join(spell.spell_incantation), spell.spell_flavour_text]
+	readout.text = "%s | Mana %d | Sequence: %s\n%s\nO: stance / confirm | I J K L: up left down right | P: clear sequence; bind Cancel Cast in settings\nAim toward a target for direct casts. Platforms expire.\nGray wall blocks beams; right-hand interface turns them -45 degrees." % [spell.spell_name, spell.upfront_cost, ", ".join(spell.spell_incantation), spell.spell_flavour_text]
 func _unhandled_key_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
 		match event.keycode:

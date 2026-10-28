@@ -10,6 +10,13 @@ const DIRECTION_ICONS := {
 	"right": "res://assets/ui/spells/casting-icon-right.png",
 }
 
+const DIRECTION_TEXTURES := {
+	"up": preload("res://assets/ui/spells/casting-icon-up.png"),
+	"down": preload("res://assets/ui/spells/casting-icon-down.png"),
+	"left": preload("res://assets/ui/spells/casting-icon-left.png"),
+	"right": preload("res://assets/ui/spells/casting-icon-right.png"),
+}
+
 @export var spell_data: SpellData
 @export var is_equipped: bool = false
 
@@ -34,6 +41,7 @@ func _gui_input(event: InputEvent) -> void:
 func display_spell() -> void:
 	if not spell_data:
 		return
+	%SpellIcon.texture = spell_data.spell_icon
 	%SpellNameLabel.text = spell_data.spell_name
 	tooltip_text = spell_data.spell_flavour_text
 	for child in spellMove_box.get_children():
@@ -45,7 +53,7 @@ func display_spell() -> void:
 		if key in DIRECTION_ICONS:
 			var icon := TextureRect.new()
 			icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
-			icon.texture = load(DIRECTION_ICONS[key])
+			icon.texture = DIRECTION_TEXTURES[key]
 			icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 			icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 			icon.custom_minimum_size = Vector2(24, 24)

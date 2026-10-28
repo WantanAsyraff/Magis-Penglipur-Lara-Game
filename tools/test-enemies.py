@@ -28,6 +28,7 @@ failed |= shared.returncode != 0
 for label, scene, summary in [
     ('integration', 'res://tests/enemy-pipeline.tscn', 'ENEMY_PIPELINE'),
     ('arena', 'res://scenes/tests/enemy-pipeline-test.tscn', None),
+    ('boss-prototype', 'res://tests/boss-prototype.tscn', 'BOSS_PROTOTYPE'),
 ]:
     command = [args.godot, '--headless', '--path', str(root), scene]
     if summary is None:
@@ -40,9 +41,9 @@ for label, scene, summary in [
     errors = [line for line in output.splitlines() if 'SCRIPT ERROR:' in line or
               ('ERROR:' in line and 'resources still in use at exit' not in line)]
     ok = result.returncode == 0 and not errors
-    match = re.search(r'ENEMY_PIPELINE: (\d+) checks, (\d+) failures', output) if summary else None
+    match = re.search(rf'{summary}: (\d+) checks, (\d+) failures', output) if summary else None
     if summary:
-        ok &= bool(match and int(match[1]) >= 138 and int(match[2]) == 0)
+        ok &= bool(match and int(match[1]) >= (70 if summary == "BOSS_PROTOTYPE" else 138) and int(match[2]) == 0)
     print(f'{"PASS" if ok else "FAIL"} enemy {label}: ' +
           (match[0] if match else f'exit {result.returncode}') + f' | {log}', flush=True)
     for error in errors:

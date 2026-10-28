@@ -22,6 +22,8 @@ enum AttackKind { MELEE_SLAM, MELEE_DASH, RANGED_BURST, AOE_SLAM, SUMMON }
 ## Damage for slam or dash attacks.
 @export var melee_damage: float = 25.0
 ## Range in pixels for slam hit detection.
+@export_range(1, 360) var melee_arc_degrees: float = 360
+@export var telegraph_colour: Color = Color(1.0, 0.65, 0.25)
 @export var melee_range: float = 80.0
 ## Speed multiplier during a dash (applied to boss chase_speed).
 @export var dash_speed_multiplier: float = 3.0

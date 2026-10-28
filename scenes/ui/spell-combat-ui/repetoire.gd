@@ -16,27 +16,21 @@ func _ready() -> void:
 func _on_casting_changed(casting: bool) -> void:
 	if tween:
 		tween.kill()
-	tween = create_tween()
-	tween.set_ease(Tween.EASE_OUT)
-	tween.set_trans(Tween.TRANS_CUBIC)
 
 	var viewport := get_viewport_rect().size
-	var target_x := viewport.x - size.x
-	var target_y := viewport.y - size.y
-
+	set_anchors_preset(Control.PRESET_TOP_LEFT)
+	size = Vector2(350, 420)
+	position = Vector2(viewport.x - size.x - 24, viewport.y - size.y - 28)
+	visible = casting
+	modulate.a = 0.0 if casting else 1.0
 	if casting:
-		position = Vector2(target_x / 2, viewport.y)
-		show()
-		tween.tween_property(self, "position:y", target_y, 0.4)
-	else:
-		tween.tween_property(self, "position:y", viewport.y, 0.4)
-		await tween.finished
-		hide()
+		tween = create_tween()
+		tween.tween_property(self, "modulate:a", 1.0, 0.18)
 
 func _populate_grid() -> void:
 	for child in grid.get_children():
+		grid.remove_child(child)
 		child.queue_free()
-	await get_tree().process_frame
 	for spell in Player_Global_Data.equipped_spells:
 		var slot = SPELL_SLOT.instantiate()
 		grid.add_child(slot)

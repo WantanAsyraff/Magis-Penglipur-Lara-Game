@@ -2,7 +2,7 @@ class_name SpellStatusFeedback extends Node2D
 var hitbox: HitboxComponent
 func _process(_delta: float) -> void:
 	if not is_instance_valid(hitbox): queue_free(); return
-	visible = not hitbox.effects.entries.is_empty()
+	visible = not hitbox.get_parent() is Player and not hitbox.effects.entries.is_empty()
 	queue_redraw()
 func _draw() -> void:
 	if not is_instance_valid(hitbox): return

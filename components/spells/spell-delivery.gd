@@ -90,13 +90,12 @@ static func apply_area(context: SpellCastContext, position: Vector2, beam: bool 
 
 	for node in context.caster.get_tree().get_nodes_in_group("hitbox"):
 		var target := node.get_parent() as Node2D
-		if target == null or target == context.caster:
-			continue
+		if target == null: continue
+		if target == context.caster and (context.spell.targeting == SpellData.Targeting.ENEMIES or LegacySpellAdapter.delivery_for(context.spell) == SpellData.Delivery.SELF): continue
 		var offset := target.global_position - position
-		var in_shape := offset.length() <= radius
+		var in_shape := target_distance(position, target) <= radius
 		if beam:
-			var projection := offset.dot(context.direction)
-			in_shape = projection >= 0 and projection <= context.spell.target_range and absf(offset.cross(context.direction)) <= context.spell.beam_width / 2
+			in_shape = beam_hits(target, position, position + context.direction * context.spell.target_range, context.spell.beam_width)
 
 		if in_shape and can_target(context, target):
 			var previous_direction := context.direction
@@ -129,3 +128,27 @@ static func pick_target(context: SpellCastContext) -> Node2D:
 		var candidate := offset.length() + absf(offset.cross(context.direction)) * 2
 		if candidate < score: best = target; score = candidate
 	return best
+
+## Physics body bounds, in world coordinates. Areas, beams and pushes must hit the body,
+## including scaled actors, rather than requiring its pivot to be inside the spell.
+static func target_bounds(target: Node2D) -> Rect2:
+	var bounds := Rect2(target.global_position, Vector2.ZERO)
+	var found := false
+	for child in target.get_children():
+		if child is CollisionShape2D and child.shape != null and not child.disabled:
+			var rect: Rect2 = child.global_transform * child.shape.get_rect()
+			bounds = bounds.merge(rect) if found else rect
+			found = true
+	return bounds
+
+static func target_distance(point: Vector2, target: Node2D) -> float:
+	var rect := target_bounds(target)
+	return point.distance_to(point.clamp(rect.position, rect.end))
+
+static func beam_hits(target: Node2D, start: Vector2, end: Vector2, width: float) -> bool:
+	var rect := target_bounds(target).grow(width / 2.0)
+	if rect.has_point(start) or rect.has_point(end): return true
+	var corners := [rect.position, Vector2(rect.end.x, rect.position.y), rect.end, Vector2(rect.position.x, rect.end.y)]
+	for i in 4:
+		if Geometry2D.segment_intersects_segment(start, end, corners[i], corners[(i+1)%4]) != null: return true
+	return false

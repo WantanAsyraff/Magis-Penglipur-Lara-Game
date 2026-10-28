@@ -1,5 +1,7 @@
 # Physics curriculum
 
+Current authoring: [academic guides](authoring/courses-and-subjects.md) and [spells](authoring/spells.md). The measured 4.6 results below remain historical; current project setup requires 4.7.
+
 Implemented: **12 subjects, 42 spells**, preserving all eight legacy resource paths, UIDs, IDs and directional sequences. Course ID remains `sc-stem-0001`; existing PHY-001 / PHY-002 paths and UIDs remain stable.
 
 ## Progression
@@ -19,7 +21,7 @@ Implemented: **12 subjects, 42 spells**, preserving all eight legacy resource pa
 | PHY-011 | Quantum-Inspired Mechanics | PHY-005, PHY-007 | Tunneling Step, Probabilistic Echo, Decoherence Trap |
 | PHY-012 | Relativity and Advanced Field Theory | PHY-006, PHY-011 | Gravitational Lens, Gravitational Well, Time Dilation Zone |
 
-The graph branches after Mechanics I. Structural Physics, Fluid Mechanics and Acoustics are optional for reaching the expert core. PHY-012 requires Electromagnetism and Quantum-Inspired Mechanics; the latter requires Thermodynamics and Optics. Explicit completion and purchase-once XP accounting reuse `Player_Global_Data`, tested for all twelve subjects. The existing spell-tree depth layout, edges, lock signals and scroll sizing work with the new DAG; interactive panning and label readability require visual review. No automatic save-file format is introduced.
+The graph branches after Mechanics I. Structural Physics, Fluid Mechanics and Acoustics are optional for reaching the expert core. PHY-012 requires Electromagnetism and Quantum-Inspired Mechanics; the latter requires Thermodynamics and Optics. Explicit completion and purchase-once XP accounting reuse `Player_Global_Data`, tested for all twelve subjects. The existing spell-tree depth layout, edges, lock signals and scroll sizing work with the new DAG; interactive panning and label readability require visual review. The original curriculum change introduced no separate save format; current Save V1 persists these purchases and comprehension.
 
 ## First-pass balance model
 
@@ -35,11 +37,11 @@ No sustained balance playthrough or frame-time benchmark was performed. In dense
 
 ## Interactive laboratory
 
-Run `res://scenes/spell-testing/physics-curriculum-lab.tscn` in Godot 4.6. The scene contains the production Player, stationary/moving dummies, a three-target cluster, structural/magnetic bodies that reset on defeat, floor and raised platform, a solid wall, an optical interface and an initially resonating target. The selector exposes all 42 spells. F6 casts the selected spell through Player; F7 resets targets; F8 refills mana. Native movement controls remain available. O opens casting and confirms; I/J/K/L input directions; P interrupts. Direct spells choose the nearest eligible target in the aim cone. All spells are learned/equipped only for that runtime session.
+Run `res://scenes/spell-testing/physics-curriculum-lab.tscn` in Godot 4.7. The scene contains the production Player, stationary/moving dummies, a three-target cluster, structural/magnetic bodies that reset on defeat, floor and raised platform, a solid wall, an optical interface and an initially resonating target. The selector exposes all 42 spells. F6 casts the selected spell through Player; F7 resets targets; F8 refills mana. Native movement controls remain available. O toggles casting stance; CHAINED executes exact completions immediately; I/J/K/L input directions; P clears the current sequence; bind the separate cancel_casting action in Settings to interrupt active casting. Direct spells choose the nearest eligible target in the aim cone. All spells are learned/equipped only for that runtime session.
 
 For visuals, cast every selector entry and compare its described outcome in the [catalogue](physics-spell-catalogue.md). Verify cast/activation flashes, colour-coded areas, beam paths, trap cross markers, construct boundaries, duration arcs and status indicators. Move the caster to test all aim directions; use the cluster for area/chain behavior. Fabricate a platform over open traversal space and stand on it until expiry. Position a beam against the wall and the right-hand -45° optical interface. Run the [interaction recipes](physics-spell-interactions.md). These visual/manual procedures are reproducible but have not been completed by a human tester.
 
-## Executed verification
+## Historical executed verification
 
 Engine: Godot **4.6.1 stable Linux x86_64**, downloaded to `/tmp/magis-godot` because no Godot binary was on PATH. Existing local project.godot autoload-UID edits were preserved. The source and packed checks used the working tree, including the six pre-existing local edits; these edits are excluded from curriculum commits.
 
@@ -65,6 +67,6 @@ The existing Dialogic shutdown diagnostics remain: 25 resources still in use and
 
 See the [implementation matrix](physics-implementation-coverage.md) and [interaction tests](physics-spell-interactions.md). New reusable components are VectorEffect / SpellMotionImpulse, ProjectileFieldEffect, ChainEffect, TriggerEffect / SpellHitTrigger, InterruptEffect, ReplayEffect, SpellConstruct and native feedback nodes. Existing delivery, statuses, conditional children, damage/heal, stat effects, spawn effects, teleport, casting costs and progression are reused and extended. Beam delivery now performs bounded terrain raycasts and configured optical turns/reflections. This is a 2D puzzle rule, not a full optical medium simulation.
 
-All gameplay changes retain server-only execution. Client casting requests, replication and reconciliation remain absent as documented in V2. Consequently networked spell play is incomplete. Save persistence of academic completion still depends on a future save integration. Graphical playthrough, UI navigation ergonomics, controller aim, sustained performance, competitive balance and browser export are unverified.
+All gameplay changes retain server-only execution. Client casting requests, replication and reconciliation remain absent as documented in V2. Consequently networked spell play is incomplete. Save V1 now persists academic completion and comprehension; historical curriculum verification below predates it. Graphical playthrough, UI navigation ergonomics, controller aim, sustained performance, competitive balance and browser export are unverified.
 
 Branch: `feature/physics-curriculum-expansion`, based on V2 commit `0dc1f76`. Implementation commits before final tests/docs: `e6b91b4`, `b2a9ef6`, `727ff4b`, `96d4cfb`, `0ee5726`; final tests/docs commit is the branch HEAD. Existing unrelated working-tree edits were left uncommitted.

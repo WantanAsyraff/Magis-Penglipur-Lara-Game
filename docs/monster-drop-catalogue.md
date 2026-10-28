@@ -1,5 +1,7 @@
 # Monster drop catalogue
 
+Current handbook entry: [authoring/architecture guide](authoring/items-and-loot.md). Schema defaults and current source remain authoritative; any dated test paragraphs below retain their original verification scope.
+
 All thirteen IDs resolve to ItemData, are included in the item manifest, and are attached to their intended functional Enemy V2 source. Seeded production loot rolls demonstrate every mapped item can spawn; real delayed physical overlap demonstrates pickup. New icons reuse the existing leaf placeholder; final item art remains pending. Fish UIDs, IDs, existing effects and sale values are preserved. All source descriptions match the supplied sheet.
 
 **Rates below are provisional implementation choices, not spreadsheet values.** Each entry rolls independently once per death. Quantities are uniformly selected within the successful entry's range. No quest boosts, pity rule or guaranteed quest samples are added.

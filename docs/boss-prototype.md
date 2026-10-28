@@ -1,5 +1,7 @@
 # Penjaga Resonans — three-phase combat prototype
 
+> Historical implementation/verification record. The body below preserves earlier design descriptions, commands and measurements; it is not a newly executed test or the current authoring contract. Use [the current guide](authoring/bosses.md) and [Godot 4.7 workflow](developer-workflow.md). Current Player default is CHAINED with independent shared-prefix execution; the assistant now shows only valid next-direction icons. Save V1 supersedes earlier quest-only persistence limits.
+
 Open `res://scenes/combat/boss-prototype-room.tscn` and run the current scene (F6), or launch:
 
 ```bash

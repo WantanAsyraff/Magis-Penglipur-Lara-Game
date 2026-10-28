@@ -23,6 +23,7 @@ func _process(_delta: float) -> void:
 # PAUSE
 # -------------------------
 func _handle_pause_input() -> void:
+	if SaveManager.loading: return
 	if not Input.is_action_just_pressed("paused"):
 		return
 	_toggle_pause()

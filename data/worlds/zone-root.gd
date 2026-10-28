@@ -27,6 +27,7 @@ func _deferred_setup() -> void:
 	var spawn_position := _get_spawn_position()
 	if not multiplayer.has_multiplayer_peer():
 		Player_Manager.spawn_player(self, spawn_position)
+		SaveManager.campaign_scene_ready(self)
 		return
 	if multiplayer.is_server():
 		Player_Manager.spawn_player_for_peer(self, spawn_position, 1)

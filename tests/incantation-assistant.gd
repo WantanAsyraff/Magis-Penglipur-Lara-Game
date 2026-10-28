@@ -3,6 +3,7 @@ extends Node
 var checks := 0
 var failures := 0
 var events: Array[Dictionary] = []
+var completed_contexts: Array[SpellCastContext] = []
 
 func completed_count(chain: int = -1) -> int:
 	return events.filter(func(event): return event.status == SpellCastingComponent.RequestStatus.COMPLETED and (chain == -1 or event.chain == chain)).size()
@@ -90,6 +91,7 @@ func _ready() -> void:
 	player.casting.set_physics_process(false)
 	player.hitbox.set_physics_process(false)
 	var ui: IncantationAssistant = player.chain_assistant
+	player.casting.cast_completed.connect(func(context): completed_contexts.append(context))
 	player.casting.request_status.connect(func(id, chain, spell, status, reason): events.append({"id": id, "chain": chain, "spell": spell, "status": status, "reason": reason}))
 	check(not ui.visible, "Assistant hidden outside stance")
 	player._enter_casting_stance()
@@ -116,11 +118,11 @@ func _ready() -> void:
 	player._add_sequence("right")
 	check(events.back().chain != first_chain, "Independent incantation gets a new chain identity")
 	player.casting._physics_process(0.5)
-	check(completed_count(first_chain) == 1 and player.spell_label.text.contains("Cast!"), "Successful execution increments original chain after input reset")
-	check(player.casting.context.request_id == first_id, "Cast context correlates to the original preparation request")
+	check(completed_count(first_chain) == 3 and player.spell_label.text.contains("Cast!"), "Queued instant casts complete with their original chain in the same tick")
+	check(completed_contexts[0].request_id == first_id, "Cast context correlates to the original preparation request")
 	player.casting._physics_process(0)
 	player.casting._physics_process(0)
-	check(completed_count(first_chain) == 3 and Player_Global_Data.p_curr_mana == 94, "Three successful chain spells pay independently and count three")
+	check(completed_count(first_chain) == 3 and Player_Global_Data.p_curr_mana == 92, "All four dispatched spells pay independently without queue frame gaps")
 	player.casting._physics_process(0)
 	check(completed_count(first_chain) == 3 and completed_count(events.back().chain) == 1, "Later chain completion preserves both chain identities")
 	player._clear_sequence()

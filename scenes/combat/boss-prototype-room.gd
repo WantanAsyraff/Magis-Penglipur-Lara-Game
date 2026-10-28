@@ -96,6 +96,10 @@ func _spawn_encounter() -> void:
 	player.camera.enabled = false
 	player.camera.overworldUI.hide()
 	player.camera.combatUI.show()
+	# Leave the room's two-line controls footer below the status / ability row.
+	var status_hud := player.camera.get_node("UI/StatusEffectsHUD") as StatusEffectsHUD
+	status_hud.push_panel.offset_top -= 56
+	status_hud.push_panel.offset_bottom -= 56
 	$ArenaCamera.make_current()
 	player.camera.top_level = true
 	player.camera.global_position = Vector2(1200, 0)

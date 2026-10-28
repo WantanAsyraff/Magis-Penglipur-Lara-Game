@@ -1,5 +1,7 @@
 # Spell pipeline V2 implementation report
 
+> Historical implementation/verification record. The body below preserves earlier design descriptions, commands and measurements; it is not a newly executed test or the current authoring contract. Use [the current guide](authoring/spells.md) and [Godot 4.7 workflow](developer-workflow.md). Current Player default is CHAINED with independent shared-prefix execution; the assistant now shows only valid next-direction icons. Save V1 supersedes earlier quest-only persistence limits.
+
 Date: 26 October 2026 (Asia/Kuching). Branch: `refactor/magis-spell-pipeline-v2`. Base: `4449ed9`.
 
 ## Verified initial findings

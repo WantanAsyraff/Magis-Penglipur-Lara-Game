@@ -20,7 +20,7 @@ func _on_casting_changed(casting: bool) -> void:
 	var viewport := get_viewport_rect().size
 	set_anchors_preset(Control.PRESET_TOP_LEFT)
 	size = Vector2(350, 420)
-	position = Vector2(viewport.x - size.x - 24, viewport.y - size.y - 28)
+	position = Vector2(viewport.x - size.x - 24, viewport.y - size.y - 76)
 	visible = casting
 	modulate.a = 0.0 if casting else 1.0
 	if casting:

@@ -1,5 +1,7 @@
 # Enemy Pipeline V2 migration report
 
+> Historical implementation/verification record. The body below preserves earlier design descriptions, commands and measurements; it is not a newly executed test or the current authoring contract. Use [the current guide](authoring/enemies.md) and [Godot 4.7 workflow](developer-workflow.md). Current Player default is CHAINED with independent shared-prefix execution; the assistant now shows only valid next-direction icons. Save V1 supersedes earlier quest-only persistence limits.
+
 ## Initial audit
 
 Started from `c40a29e` on `feature/physics-curriculum-expansion`; work proceeds on `refactor/enemy-pipeline-v2`. Magis V2 and the 42-spell Physics curriculum already exist. Ancestor AGENTS.md requires investigation, scoped edits, appropriate checks and `just verify` when available; no justfile exists. Pre-existing local changes to player data, spell/loot resources, vendor scripts, project configuration and a world scene are excluded from enemy commits.

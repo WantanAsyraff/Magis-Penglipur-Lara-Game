@@ -1,5 +1,7 @@
 # Incantation Chain Assistant V1
 
+> Historical implementation/verification record. The body below preserves earlier design descriptions, commands and measurements; it is not a newly executed test or the current authoring contract. Use [the current guide](authoring/spells.md) and [Godot 4.7 workflow](developer-workflow.md). Current Player default is CHAINED with independent shared-prefix execution; the assistant now shows only valid next-direction icons. Save V1 supersedes earlier quest-only persistence limits.
+
 Implemented on `feature/incantation-chain-assistant`, based on reviewed Quest/Enemy/Magis V2 commit `4423abf`. The working tree was clean before work began; no repository AGENTS.md was present. No spell resource, ID, UID, incantation, authored effect, or stat was changed. The base project declares Godot 4.7; verification used the installed Godot 4.7.2 Flatpak. Godot 4.6 compatibility was not separately verified.
 
 ## Preserved gameplay
@@ -43,7 +45,9 @@ The existing `state_changed`, `cast_failed`, `cast_completed`, boolean `request_
 
 New signal:
 
-```gdscript
+API signature (not a standalone executable script):
+
+```text
 request_status(request_id, chain_id, spell, status, reason)
 ```
 
@@ -138,3 +142,7 @@ Limits: existing project ObjectDB/resource-in-use shutdown diagnostics and the u
 - HUD: assistant, repertoire, and spell-slot scripts/scenes under `scenes/ui/spell-combat-ui/`.
 - Verification: `tests/incantation-assistant.gd/.tscn`, updated `tests/player-combo-chains.gd`, `tools/test-physics.py`, rendered preview script/scene under `scenes/spell-testing/`, and the lab's corrected clear/cancel help text. New scripts include engine-generated UID files.
 - Documentation: this document, Magis pipeline/report updates, and ten actual renderer PNGs under `docs/previews/incantation-assistant/`.
+
+## Combat feedback V1
+
+The assistant still renders only valid next-direction icons. The separate [status HUD](status-effects-hud.md) anchors bottom-left, while [accepted-input particles](incantation-input-feedback.md) originate on the player. Neither changes trie prediction, incantations or independent shared-prefix execution. Assistant mode and keybindings remain separate from character saves.

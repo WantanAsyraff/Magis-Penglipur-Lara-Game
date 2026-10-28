@@ -9,6 +9,9 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if context == null or not context.can_execute() or not SpellExecutor.is_authoritative(context.caster):
 		queue_free(); return
+	if context.spell.delivery == SpellData.Delivery.BEAM and context.caster.has_method("aim_locked_cast"):
+		context.caster.aim_locked_cast(context)
+		global_position = context.source_position
 	elapsed += delta
 	until_tick -= delta
 	if elapsed > context.spell.area_duration:
@@ -43,8 +46,7 @@ func cast_beams() -> bool:
 			for h in get_tree().get_nodes_in_group("hitbox"):
 				var target := h.get_parent() as Node2D
 				if target == null or target in visited or not SpellDelivery.can_target(beam_context, target): continue
-				var closest := Geometry2D.get_closest_point_to_segment(target.global_position, origin, end)
-				if closest.distance_to(target.global_position) <= context.spell.beam_width / 2:
+				if SpellDelivery.beam_hits(target, origin, end, context.spell.beam_width):
 					visited.append(target)
 					beam_context.remaining_effect_budget = context.remaining_effect_budget
 					applied = SpellExecutor.new().execute(beam_context, target) or applied

@@ -1,5 +1,7 @@
 # Physics implementation coverage
 
+> Historical implementation/verification record. The body below preserves earlier design descriptions, commands and measurements; it is not a newly executed test or the current authoring contract. Use [the current guide](authoring/spells.md) and [Godot 4.7 workflow](developer-workflow.md). Current Player default is CHAINED with independent shared-prefix execution; the assistant now shows only valid next-direction icons. Save V1 supersedes earlier quest-only persistence limits.
+
 Baseline: `0dc1f76` on `refactor/magis-spell-pipeline-v2`. No AGENTS.md was present in the repository; ancestor engineering guidance requires scoped changes, appropriate checks and `just verify` when available (no justfile is present). The working tree contained unrelated local edits; these are excluded from curriculum commits.
 
 | Capability | Baseline | Curriculum implementation / verification |

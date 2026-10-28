@@ -15,6 +15,10 @@ var _player_nearby: Node = null
 var _prompt_label: Label = null
 
 func _ready() -> void:
+	add_to_group("world_interaction")
+	if WorldPersistence.has_state(self,"collected"):
+		queue_free()
+		return
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
 	_setup_prompt()
@@ -51,5 +55,9 @@ func _pick_up() -> void:
 	if not keys.has(key_id):
 		keys.append(key_id)
 		Player_Global_Data.set_meta("keys", keys)
+	WorldPersistence.mark(self,"collected")
 	print("Picked up key: ", key_id)
 	queue_free()
+
+func blocks_combat_push(player: Node2D) -> bool:
+	return not is_queued_for_deletion() and _player_nearby == player

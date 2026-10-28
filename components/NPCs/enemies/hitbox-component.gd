@@ -127,6 +127,13 @@ func _apply_knockback(direction: Vector2, force: float) -> void:
 		return
 	var kb := direction.normalized() * force * (1.0 - knockback_resistance)
 	_character_body.velocity += kb
+	var motion := _character_body.get_node_or_null("SpellMotionImpulse") as SpellMotionImpulse
+	if motion == null:
+		motion = SpellMotionImpulse.new()
+		motion.name = "SpellMotionImpulse"
+		_character_body.add_child(motion)
+	motion.impulse = (motion.impulse + kb).limit_length(2400)
+	motion.remaining = 0.25
 	knocked_back.emit(kb)
 
 func _apply_stun(duration: float) -> void:
@@ -169,4 +176,4 @@ func apply_status(key: String, duration: float, data: Dictionary, source: String
 	if key == "mana_drain" and not has_mana: return false
 	var resistance := clampf(status_resistances.get(key, 0.0), 0, 1)
 	if resistance >= 1: return false
-	return effects.apply(key, duration * (1 - resistance), data, source, policy, max_stacks)
+	return effects.apply(key, duration * (1 - resistance), data, source, policy, max_stacks, key == "hot" or key.begins_with("buff_"))

@@ -46,6 +46,7 @@ func _trigger_death() -> void:
 	_go_to_main_menu()
 
 func _go_to_main_menu() -> void:
+	if await SaveManager.recover_after_death(): return
 	# Reset state clean for next session
 	Player_Global_Data.p_curr_health = Player_Global_Data.p_max_health
 	Player_Global_Data.p_curr_mana   = Player_Global_Data.p_max_mana

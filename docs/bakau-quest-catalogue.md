@@ -1,5 +1,7 @@
 # Bakau quest catalogue
 
+Current handbook entry: [authoring/architecture guide](authoring/quests.md). Schema defaults and current source remain authoritative; any dated test paragraphs below retain their original verification scope.
+
 Ten new nonrepeatable Technology & Science quests (faculty 6), region `bakau`, pool `technology_science`, hand-in `bakau_field_researcher`. All collection is cumulative after acceptance; samples are not consumed. Narrative about freshness, simultaneous surveys and comparative batches does not imply an invented timer, reset or same-life rule. Prerequisites require successful hand-in.
 
 | ID | Quest | Objectives | Prerequisite | XP | Item reward |

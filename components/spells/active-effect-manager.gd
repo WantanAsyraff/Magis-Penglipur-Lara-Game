@@ -20,8 +20,10 @@ func apply(key: String, duration: float, data: Dictionary, source_id: String = "
 				return false
 			StackPolicy.REFRESH:
 				matching[0].remaining = maxf(matching[0].remaining, duration)
+				matching[0].duration = maxf(matching[0].get("duration", 0.0), matching[0].remaining)
 				matching[0].data = data.duplicate(true)
 				matching[0].source = source_id
+				matching[0].beneficial = beneficial
 				changed.emit(key)
 				applied.emit(key)
 				return true
@@ -34,7 +36,7 @@ func apply(key: String, duration: float, data: Dictionary, source_id: String = "
 	if not is_finite(interval):
 		return false
 	interval = clampf(interval, 0.05, 3600.0)
-	entries.append({"key": key, "remaining": duration, "data": data.duplicate(true), "source": source_id, "beneficial": beneficial, "tick": interval, "interval": interval})
+	entries.append({"key": key, "duration": duration, "remaining": duration, "data": data.duplicate(true), "source": source_id, "beneficial": beneficial, "tick": interval, "interval": interval})
 	changed.emit(key)
 	applied.emit(key)
 	return true
@@ -78,9 +80,18 @@ func remove(key: String) -> void:
 		expired.emit(key)
 
 func clear(beneficial: int = -1) -> void:
+	var keys: Dictionary = {}
 	for e in entries.duplicate():
 		if beneficial == -1 or e.beneficial == bool(beneficial):
-			remove(e.key)
+			entries.erase(e)
+			keys[e.key] = true
+	for key in keys:
+		changed.emit(key)
+		if not has(key): expired.emit(key)
+
+# Detached containers: consumers cannot mutate authoritative stacks or timing.
+func get_entries() -> Array[Dictionary]:
+	return entries.duplicate(true)
 
 func snapshot() -> Dictionary:
 	var result := {}

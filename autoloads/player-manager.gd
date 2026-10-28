@@ -1,5 +1,6 @@
 #player-manager.gd
 extends Node
+signal local_player_changed(player: Node2D)
 @export var player_scene: PackedScene = preload("res://components/characters/player/player.tscn")
 var players: Dictionary = {}
 var _is_spawning: bool = false
@@ -69,6 +70,7 @@ func spawn_player_for_peer(parent: Node, spawn_position: Vector2, peer_id: int) 
 	parent.add_child(player)
 	player.global_position = spawn_position
 	players[peer_id] = player
+	if peer_id == get_local_peer_id(): local_player_changed.emit(player)
 	print("Spawned player for peer:", peer_id, "at", spawn_position)
 	_is_spawning = false
 	return player
@@ -77,6 +79,7 @@ func remove_player(peer_id: int) -> void:
 	if players.has(peer_id) and is_instance_valid(players[peer_id]):
 		players[peer_id].queue_free()
 	players.erase(peer_id)
+	if peer_id == get_local_peer_id(): local_player_changed.emit(null)
 
 func clear_all() -> void:
 	for peer_id in players.keys():

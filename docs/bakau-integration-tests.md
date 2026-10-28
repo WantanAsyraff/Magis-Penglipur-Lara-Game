@@ -1,5 +1,7 @@
 # Bakau integration and regression evidence
 
+> Historical implementation/verification record. The body below preserves earlier design descriptions, commands and measurements; it is not a newly executed test or the current authoring contract. Use [the current guide](authoring/quests.md) and [Godot 4.7 workflow](developer-workflow.md). Current Player default is CHAINED with independent shared-prefix execution; the assistant now shows only valid next-direction icons. Save V1 supersedes earlier quest-only persistence limits.
+
 Validated with Godot **4.6.1 stable** on Linux on the current working tree, including preserved pre-existing edits. Those edits are excluded from quest commits; this does not claim an independently tested clean checkout. All automated gameplay launches pass `--quest-test-mode`; test save files are isolated from `user://quest-progress-v2.json` and cleaned by the reader/suite.
 
 ## Commands and measured results

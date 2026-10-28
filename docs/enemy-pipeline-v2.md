@@ -1,5 +1,7 @@
 # Enemy Pipeline V2
 
+Current handbook entry: [authoring/architecture guide](authoring/enemies.md). Schema defaults and current source remain authoritative; any dated test paragraphs below retain their original verification scope.
+
 The existing Enemy scene is the reusable gameplay shell. Pohon, Bunga and the training guardian use the same controller. EnemyData and its nested typed resources define configuration; active health, mana, cooldowns, threat, memory, decisions and effect entries remain instance-local. Shared definitions are never used as writable runtime storage.
 
 ```mermaid

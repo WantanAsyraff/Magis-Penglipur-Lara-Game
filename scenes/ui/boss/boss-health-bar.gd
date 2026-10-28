@@ -8,6 +8,8 @@ var boss: Boss
 @onready var announcement_timer: Timer = $AnnouncementTimer
 
 func _ready() -> void:
+	get_viewport().size_changed.connect(_layout_header)
+	_layout_header()
 	announcement_timer.timeout.connect(func(): announcement.text = "")
 
 func bind_boss(actor: Boss) -> void:
@@ -39,3 +41,14 @@ func _phase_changed(_index: int, phase: BossPhaseData) -> void:
 	announcement.text = phase.phase_name + " — phase transition"
 	announcement.modulate = phase.phase_colour
 	announcement_timer.start(maxf(phase.transition_duration, phase.transition_invincible_duration))
+
+func _layout_header() -> void:
+	# Keep the boss header clear of the player's stats and adjacent effect icons.
+	var width := get_viewport_rect().size.x
+	set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT)
+	if width >= 1000:
+		size = Vector2(minf(640,width-702),112)
+		position = Vector2(width-size.x-24,12)
+	else:
+		size = Vector2(minf(600,width-48),112)
+		position = Vector2(24,320 if width < 750 else 300)

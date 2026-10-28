@@ -1,0 +1,255 @@
+Godot Engine v4.7.2.stable.flathub.ed1daf0bf - https://godotengine.org
+
+WARNING: WorldManifest: DirAccess scan failed (likely exported build), using baked paths.
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _ready (res://autoloads/world-manifest.gd:15)
+─── WorldManifest: registered 35 scenes ───
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/abu-campus-entrance.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/abu-courtyard.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/dormitory/abu-dorm-room.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/dormitory/abu-dormitory-hallway.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/dueling-grounds-selection.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/dueling-grounds.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/dueling-grounds/dueling-selection.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/FLAC-courtyard.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/FLAC-entrance.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-one/FLAC-F1-central-hub.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-one/FLAC-F1-hallway.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-one/FLAC-F1-outside.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-one/FLAC-F1-receptionist-area.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-one/FLAC-F1-student-longue.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-three/FLAC-F3-central-hub.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-three/FLAC-F3-hallway-1.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-three/FLAC-F3-hallway-2-Science-Crafting.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-three/FLAC-F3-hallway-2.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-three/FLAC-F3-hallway-3.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-three/FLAC-F3-hallway-4.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-three/FLAC-F3-hallway-balcony.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-two/FLAC-F2-central-hub.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-two/FLAC-F2-hallway-1.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-two/FLAC-F2-hallway-2.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-two/FLAC-F2-hallway-3.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-two/FLAC-F2-hallway-4.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-two/FLAC-F2-hallway-balcony.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/spell-tree.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/story(legacy)/e-hailing.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/story(legacy)/missions-selection.tres
+  • res://data/worlds/hubs/chapters/chapter-1/subway-scene.tres
+  • res://data/worlds/hubs/chapters/prologue/yan-exam-tutorial.tres
+  • res://data/worlds/hubs/chapters/prologue/yan-prologue-house-entrance.tres
+  • res://data/worlds/hubs/the-echanted-forest(TEF)/deeper-forest/TEF-deeper-forest-area-east.tres
+  • res://data/worlds/hubs/the-echanted-forest(TEF)/deeper-forest/TEF-forest-entrance.tres
+─── WorldManifest: validating scene_ids ───
+WARNING:   ⚠ 'FLAC_F3_hallway_2_science_crafting' has uppercase letters
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _validate_scene_ids (res://autoloads/world-manifest.gd:58)
+         [1] _ready (res://autoloads/world-manifest.gd:24)
+  1 issue(s) found
+[LyricsOverlay] _ready called
+[LyricsOverlay] Label node found: true
+[LyricsOverlay] Lyrics enabled: true
+[LyricsOverlay] Connected to LyricsManager.lyric_changed
+WARNING: Camera2D overridden to physics process mode due to use of physics interpolation.
+     at: _update_process_callback (scene/2d/camera_2d.cpp:88)
+     GDScript backtrace (most recent call first):
+         [0] spawn_player_for_peer (res://autoloads/player-manager.gd:67)
+         [1] _deferred_setup (res://data/worlds/zone-root.gd:33)
+Phone enabled
+AppList node: AppList:<Control#262110449203>
+Screen node: PhoneBG:<Panel#262043340335>
+[HUD] goals_changed fired — 0 goal(s): []
+UI ready. Network_Manager is:Network_Manager:<Node#180858390106>
+Spawned player for peer:1at(220.0, 760.0)
+[HUD] goals_changed fired — 0 goal(s): []
+PASS New Game initializes and durably saves an isolated campaign
+PASS Player exists before restoration completes
+PASS New profile has clean quests, inventory and actual XP defaults
+PASS New profile has clean offers and academic state
+PASS No active effects leaves no HUD panel
+PASS HUD favors dangerous debuffs and counts independent buff stacks
+PASS HUD read-only entries cannot mutate authoritative timing
+PASS Refresh updates duration without duplicate stacks
+PASS Clearing debuffs retains buffs
+PASS Selective clear preserves opposite-classification stacks with the same key
+PASS Expiration removes the final icon immediately
+PASS Future effects use fallback icons and compact deterministic overflow
+PASS Repeated HUD updates reuse cached icon nodes
+PASS Direct healing-over-time application is classified as a buff
+PASS Hitbox healing status uses the same beneficial classification
+Global learned spell: Strike
+Equipped spell: Strike
+Global learned spell: Resonate
+Equipped spell: Resonate
+Global learned spell: Shatterwave
+Equipped spell: Shatterwave
+PASS Particle fixture uses authored shared-prefix Physics spells
+PASS Every valid prefix and completion emits once, independent of execution
+PASS Invalid and silenced inputs never emit success feedback
+PASS Stun blocks accepted-direction feedback
+PASS Modal pause intercepts valid-input feedback
+PASS Remote authority never produces the local accepted event
+PASS Valid CHAINED restart emits once without dropping its first key
+PASS Execution failure on mana/cooldown still confirms every accepted direction
+PASS Outside-stance input is ignored and rapid emission has a fixed six-particle pool
+[HUD] goals_changed fired — 0 goal(s): []
+[HUD] goals_changed fired — 2 goal(s): ["Haruan Hitam Cull", "Haruan: 0 / 8"]
+[HUD] goals_changed fired — 2 goal(s): ["Haruan Hitam Cull — Ready for hand-in", "Haruan: 8 / 8"]
+[HUD] goals_changed fired — 0 goal(s): []
+[HUD] goals_changed fired — 0 goal(s): []
+[HUD] goals_changed fired — 0 goal(s): []
+PASS Real reward transaction commits one coherent full-game autosave
+PASS Reward XP and claim are durable in autosave
+[HUD] goals_changed fired — 0 goal(s): []
+[HUD] goals_changed fired — 2 goal(s): ["Specimen: Haruan", "Mixed Fish Samples: 0 / 5"]
+[HUD] goals_changed fired — 2 goal(s): ["Specimen: Haruan", "Mixed Fish Samples: 0 / 5"]
+[HUD] goals_changed fired — 2 goal(s): ["Specimen: Haruan", "Mixed Fish Samples: 2 / 5"]
+[HUD] goals_changed fired — 2 goal(s): ["Specimen: Haruan", "Mixed Fish Samples: 3 / 5"]
+[HUD] goals_changed fired — 2 goal(s): ["Specimen: Haruan", "Mixed Fish Samples: 3 / 5"]
+PASS Existing inventory API stages equipped-item persistence
+[HUD] goals_changed fired — 2 goal(s): ["Specimen: Haruan", "Mixed Fish Samples: 3 / 5"]
+[HUD] goals_changed fired — 2 goal(s): ["Specimen: Haruan", "Mixed Fish Samples: 3 / 5"]
+PASS Checkpoint refuses a coordinate embedded in the ground
+PASS Checkpoint records a safe campaign coordinate
+PASS Manual save validates full player, academic, spell and quest state:
+PASS Slot metadata comes from real saved state
+PASS Manual and autosave destinations are separate
+PASS Repeated synchronous saves serialize without concurrent writes
+PASS Previous valid full snapshot is backed up
+PASS Arbitrary executable scene destinations are rejected
+PASS Fractional item quantities are rejected
+PASS Missing spell IDs fail safely
+PASS Dead snapshots are rejected
+PASS Save store restricts all full-game writes to fixed slot paths
+PASS Unsupported destination refuses restoration without replacing the live player
+PASS Damaged save refuses load without mutating progression
+PASS Damaged primary and recoverable backup are distinguished
+PASS Ordinary save preserves damaged diagnostic evidence
+[HUD] goals_changed fired — 2 goal(s): ["Specimen: Haruan", "Mixed Fish Samples: 3 / 5"]
+Phone disabled
+[HUD] goals_changed fired — 2 goal(s): ["Specimen: Haruan", "Mixed Fish Samples: 3 / 5"]
+UI ready. Network_Manager is:Network_Manager:<Node#180858390106>
+Spawned player for peer:1at(220.0, 760.0)
+[HUD] goals_changed fired — 2 goal(s): ["Specimen: Haruan", "Mixed Fish Samples: 3 / 5"]
+[HUD] goals_changed fired — 2 goal(s): ["Specimen: Haruan", "Mixed Fish Samples: 3 / 5"]
+PASS Explicit backup recovery restores the production campaign scene
+PASS Load clears temporary effects and restores control
+PASS Position restores only after production player initialization
+PASS Fixture repaired explicitly for fresh-process verification
+PASS Failed temporary write preserves the previous primary bytes
+PASS Oversized writes refuse before touching the previous primary
+PASS Legacy Quest V2 can be explicitly imported into an empty profile
+PASS Legacy import preserves claims, receipts and original file
+PASS Legacy missing spell equipment and academics use explicit safe defaults
+[HUD] goals_changed fired — 0 goal(s): []
+[HUD] goals_changed fired — 0 goal(s): []
+Phone enabled
+AppList node: AppList:<Control#296805733055>
+Screen node: PhoneBG:<Panel#296738624187>
+[HUD] goals_changed fired — 0 goal(s): []
+UI ready. Network_Manager is:Network_Manager:<Node#180858390106>
+Spawned player for peer:1at(220.0, 760.0)
+[HUD] goals_changed fired — 0 goal(s): []
+[HUD] goals_changed fired — 0 goal(s): []
+PASS Explicit New Game replacement succeeds after archiving the prior profile
+PASS Replacement starts clean and does not retain the old autosave
+[HUD] goals_changed fired — 0 goal(s): []
+[HUD] goals_changed fired — 0 goal(s): []
+Picked up key: key_default
+PASS Collecting an authored dungeon key writes its stable world flag
+PASS A collected key stays absent when its authored node is recreated
+PASS Multiplayer boundary fixture opens a local ephemeral peer
+PASS Multiplayer blocks local campaign saving and loading
+Phone enabled
+AppList node: AppList:<Control#316049198986>
+Screen node: PhoneBG:<Panel#315982090120>
+[HUD] goals_changed fired — 0 goal(s): []
+UI ready. Network_Manager is:Network_Manager:<Node#180858390106>
+ERROR: No multiplayer peer is assigned. Unable to get unique ID.
+   at: get_unique_id (modules/multiplayer/scene_multiplayer.cpp:531)
+   GDScript backtrace (most recent call first):
+       [0] @combat_mode_setter (res://components/characters/player/player.gd:21)
+       [1] _ready (res://components/characters/player/player.gd:140)
+       [2] _spawn_encounter (res://scenes/combat/boss-prototype-room.gd:90)
+       [3] _initialize (res://scenes/combat/boss-prototype-room.gd:70)
+[Boss] Entering phase 0: Denyut
+ERROR: No multiplayer peer is assigned. Unable to get unique ID.
+   at: get_unique_id (modules/multiplayer/scene_multiplayer.cpp:531)
+   GDScript backtrace (most recent call first):
+       [0] @dash_charges_setter (res://components/characters/player/player.gd:60)
+       [1] _handle_dash_timers (res://components/characters/player/player.gd:295)
+       [2] _physics_process (res://components/characters/player/player.gd:166)
+ERROR: No multiplayer peer is assigned. Unable to get unique ID.
+   at: get_unique_id (modules/multiplayer/scene_multiplayer.cpp:531)
+   GDScript backtrace (most recent call first):
+       [0] @dash_charges_setter (res://components/characters/player/player.gd:60)
+       [1] _handle_dash_timers (res://components/characters/player/player.gd:295)
+       [2] _physics_process (res://components/characters/player/player.gd:166)
+ERROR: No multiplayer peer is assigned. Unable to get unique ID.
+   at: get_unique_id (modules/multiplayer/scene_multiplayer.cpp:531)
+   GDScript backtrace (most recent call first):
+       [0] @dash_charges_setter (res://components/characters/player/player.gd:60)
+       [1] _handle_dash_timers (res://components/characters/player/player.gd:295)
+       [2] _physics_process (res://components/characters/player/player.gd:166)
+ERROR: No multiplayer peer is assigned. Unable to get unique ID.
+   at: get_unique_id (modules/multiplayer/scene_multiplayer.cpp:531)
+   GDScript backtrace (most recent call first):
+       [0] @dash_charges_setter (res://components/characters/player/player.gd:60)
+       [1] _handle_dash_timers (res://components/characters/player/player.gd:295)
+       [2] _physics_process (res://components/characters/player/player.gd:166)
+ERROR: No multiplayer peer is assigned. Unable to get unique ID.
+   at: get_unique_id (modules/multiplayer/scene_multiplayer.cpp:531)
+   GDScript backtrace (most recent call first):
+       [0] @dash_charges_setter (res://components/characters/player/player.gd:60)
+       [1] _handle_dash_timers (res://components/characters/player/player.gd:295)
+       [2] _physics_process (res://components/characters/player/player.gd:166)
+ERROR: No multiplayer peer is assigned. Unable to get unique ID.
+   at: get_unique_id (modules/multiplayer/scene_multiplayer.cpp:531)
+   GDScript backtrace (most recent call first):
+       [0] @dash_charges_setter (res://components/characters/player/player.gd:60)
+       [1] _handle_dash_timers (res://components/characters/player/player.gd:295)
+       [2] _physics_process (res://components/characters/player/player.gd:166)
+ERROR: No multiplayer peer is assigned. Unable to get unique ID.
+   at: get_unique_id (modules/multiplayer/scene_multiplayer.cpp:531)
+   GDScript backtrace (most recent call first):
+       [0] @dash_charges_setter (res://components/characters/player/player.gd:60)
+       [1] _handle_dash_timers (res://components/characters/player/player.gd:295)
+       [2] _physics_process (res://components/characters/player/player.gd:166)
+PASS Actual boss prototype training loadout cannot overwrite the campaign
+[HUD] goals_changed fired — 2 goal(s): ["Specimen: Haruan", "Mixed Fish Samples: 3 / 5"]
+Phone disabled
+[HUD] goals_changed fired — 2 goal(s): ["Specimen: Haruan", "Mixed Fish Samples: 3 / 5"]
+UI ready. Network_Manager is:Network_Manager:<Node#180858390106>
+ERROR: No multiplayer peer is assigned. Unable to get unique ID.
+   at: get_unique_id (modules/multiplayer/scene_multiplayer.cpp:531)
+   GDScript backtrace (most recent call first):
+       [0] @combat_mode_setter (res://components/characters/player/player.gd:21)
+       [1] _ready (res://components/characters/player/player.gd:140)
+       [2] spawn_player_for_peer (res://autoloads/player-manager.gd:70)
+       [3] spawn_player (res://autoloads/player-manager.gd:46)
+       [4] _deferred_setup (res://data/worlds/zone-root.gd:29)
+Spawned player for peer:1at(220.0, 760.0)
+[HUD] goals_changed fired — 2 goal(s): ["Specimen: Haruan", "Mixed Fish Samples: 3 / 5"]
+[HUD] goals_changed fired — 2 goal(s): ["Specimen: Haruan", "Mixed Fish Samples: 3 / 5"]
+ERROR: No multiplayer peer is assigned. Unable to get unique ID.
+   at: get_unique_id (modules/multiplayer/scene_multiplayer.cpp:531)
+   GDScript backtrace (most recent call first):
+       [0] @combat_mode_setter (res://components/characters/player/player.gd:21)
+       [1] <anonymous lambda> (res://components/characters/player/player.gd:135)
+       [2] @combat_mode_setter (res://autoloads/player-data.gd:133)
+       [3] apply_player (res://components/save/game-save-schema.gd:100)
+       [4] _apply (res://autoloads/save-manager.gd:255)
+       [5] _restore (res://autoloads/save-manager.gd:221)
+PASS Campaign can be restored after the standalone boss room
+COMBAT_FEEDBACK_SAVE_V1: 60 checks, 0 failures
+ERROR: No multiplayer peer is assigned. Unable to get unique ID.
+   at: get_unique_id (modules/multiplayer/scene_multiplayer.cpp:531)
+   GDScript backtrace (most recent call first):
+       [0] @dash_charges_setter (res://components/characters/player/player.gd:60)
+       [1] _handle_dash_timers (res://components/characters/player/player.gd:295)
+       [2] _physics_process (res://components/characters/player/player.gd:166)
+WARNING: 58 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 25 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

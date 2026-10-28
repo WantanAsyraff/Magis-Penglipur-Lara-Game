@@ -41,11 +41,12 @@ func _ready() -> void:
 	_save_timer.timeout.connect(save_game)
 	_bootstrap.call_deferred()
 func _bootstrap() -> void:
-	if persistence_enabled and FileAccess.file_exists(save_path): load_game()
+	# SaveManager owns profile selection. Legacy data is imported explicitly.
+	pass
 func authoritative() -> bool:
 	return SpellExecutor.is_authoritative(self)
 func _process(_delta: float) -> void:
-	if not authoritative(): return
+	if _restoring or not authoritative(): return
 	var now := Time.get_unix_time_from_system()
 	for instance in _active_instances.values():
 		if instance.status == QuestInstance.Status.ACTIVE and instance.quest_data.expires_after_seconds > 0 and now >= instance.accepted_at + instance.quest_data.expires_after_seconds:
@@ -93,7 +94,7 @@ func accept_quest(id: String, owner: String = "", decision_receipt: String = "")
 	changed(instance)
 	return true
 func publish(event: GameplayEvent) -> bool:
-	if not authoritative() or event == null or not event.valid(): return false
+	if _restoring or not authoritative() or event == null or not event.valid(): return false
 	var key := event.owner_id + "|" + event.event_id
 	if seen_events.has(key): return false
 	seen_events[key] = true
@@ -220,8 +221,14 @@ func _update_goals() -> void:
 			_quest_goal_lines.append("%s: %d / %d%s" % [obj.description, instance.objective_progress.get(obj.objective_id, 0), obj.required_amount, " (optional)" if obj.is_optional else ""])
 	Player_Global_Data.active_goals = keep + _quest_goal_lines
 func schedule_save() -> void:
+	var saves := get_node_or_null("/root/SaveManager")
+	if saves and (saves.active_profile > 0 or save_path == "user://quest-progress-v2.json"):
+		return # Full snapshots are coalesced at milestones and safe scene/checkpoint entry.
 	if persistence_enabled and not _restoring and authoritative() and _save_timer and _save_timer.is_stopped(): _save_timer.start()
 func save_game(path: String = "") -> bool:
+	var saves := get_node_or_null("/root/SaveManager")
+	if path.is_empty() and saves and (saves.active_profile > 0 or save_path == "user://quest-progress-v2.json"):
+		return saves.commit_reward() if _claiming else saves.save_active()
 	if not authoritative(): return false
 	if path.is_empty(): path = save_path
 	var payload := QuestSaveService.encode(self)
@@ -230,6 +237,9 @@ func save_game(path: String = "") -> bool:
 	save_finished.emit(success)
 	return success
 func load_game(path: String = "") -> bool:
+	if path.is_empty() and save_path == "user://quest-progress-v2.json":
+		last_error = "Select a profile in Load Game or import legacy progress first."
+		return false
 	if not authoritative() or _claiming: return false
 	if path.is_empty(): path = save_path
 	if not path.begins_with("user://") or path.contains("..") or not FileAccess.file_exists(path): return false
@@ -240,6 +250,15 @@ func load_game(path: String = "") -> bool:
 	if not value is Dictionary: return false
 	var staged := QuestSaveService.stage(self, value)
 	if staged.is_empty(): return false
+	apply_staged(staged)
+	drain_outbox()
+	for instance in _active_instances.values().duplicate():
+		if instance.status == QuestInstance.Status.HANDED_OFF: _continue_chain(instance)
+	changed()
+	return true
+
+func apply_staged(staged: Dictionary) -> void:
+	var was_restoring := _restoring
 	_restoring = true
 	_save_timer.stop()
 	live_offers.clear()
@@ -249,27 +268,26 @@ func load_game(path: String = "") -> bool:
 	_quest_active_count.clear()
 	Inventory_Manager.inventory = staged.inventory
 	Inventory_Manager.equipped = staged.equipment
-	Inventory_Manager.acquisition_receipts = value.acquisition_receipts.duplicate()
-	Inventory_Manager.max_slots = int(value.max_slots)
-	Player_Global_Data.player_exp = value.player_xp
-	Player_Global_Data.p_curr_ringgit = value.currency
-	Player_Global_Data.completed_quests.assign(value.completed_quests)
+	Inventory_Manager.acquisition_receipts = staged.data.acquisition_receipts.duplicate()
+	Inventory_Manager.max_slots = int(staged.data.max_slots)
+	Player_Global_Data.player_exp = staged.data.player_xp
+	Player_Global_Data.p_curr_ringgit = staged.data.currency
+	Player_Global_Data.completed_quests.assign(staged.data.completed_quests)
 	Player_Global_Data.learned_spells = staged.learned
-	reward_claims = value.claims.duplicate(true)
-	seen_events = value.seen_events.duplicate()
-	world_flags = value.world_flags.duplicate()
-	pending_events.assign(value.get("pending_events", []))
-	selected_instance_id = String(value.get("selected_quest", ""))
-	for instance in _active_instances.values():
-		if instance.status in [QuestInstance.Status.ACTIVE, QuestInstance.Status.COMPLETE]: QuestObjectiveEvaluator.reconcile_inventory(instance, Inventory_Manager.inventory)
-		_log_lifecycle(instance)
-	_restoring = false
-	drain_outbox()
-	for instance in _active_instances.values().duplicate():
-		if instance.status == QuestInstance.Status.HANDED_OFF: _continue_chain(instance)
-	changed()
+	reward_claims = staged.data.claims.duplicate(true)
+	seen_events = staged.data.seen_events.duplicate()
+	world_flags = staged.data.world_flags.duplicate()
+	pending_events.assign(staged.data.get("pending_events", []))
+	selected_instance_id = String(staged.data.get("selected_quest", ""))
+
+	offer_cooldowns.clear()
+	_restoring = was_restoring
+	_update_goals()
+	quests_changed.emit()
 	Player_Global_Data.spells_updated.emit()
-	return true
+	for slot in Inventory_Manager.equipped:
+		Inventory_Manager.equipment_changed.emit(slot, Inventory_Manager.equipped[slot])
+
 func publish_flag_event(id: String, value: bool, receipt: String = "") -> void:
 	var event := GameplayEvent.new(GameplayEvent.Type.WORLD_FLAG_CHANGED, id, 1, active_owner_id, receipt)
 	event.metadata.value = value

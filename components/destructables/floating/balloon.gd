@@ -12,6 +12,9 @@ var original_position: Vector2
 @onready var particles: GPUParticles2D = $GPUParticles2D
 
 func _ready() -> void:
+	if WorldPersistence.has_state(self,"broken"):
+		queue_free()
+		return
 	health = max_health
 	particles.emitting = false
 	particles.one_shot = true
@@ -28,6 +31,7 @@ func take_damage(amount: int) -> void:
 		break_object()
 
 func break_object() -> void:
+	if not respawnable: WorldPersistence.mark(self,"broken")
 	collision.disabled = true
 	sprite.visible = false
 	particles.emitting = true

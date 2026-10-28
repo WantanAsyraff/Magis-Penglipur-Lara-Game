@@ -1,0 +1,281 @@
+Godot Engine v4.7.2.stable.flathub.ed1daf0bf - https://godotengine.org
+
+WARNING: res://data/magis/spells/phys-force.tres:7 - ext_resource, invalid UID: uid://cnnad3qojgc2y - using text path instead: res://assets/temp/temp-mana.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://assets/custom-labels/ui-stats-label.tres:3 - ext_resource, invalid UID: uid://bid56dcwfjc8v - using text path instead: res://assets/font/Bitter/static/Bitter-Bold.ttf
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://scenes/ui/spell-combat-ui/repetoire.tscn:4 - ext_resource, invalid UID: uid://diiqo28q375lq - using text path instead: res://assets/ui/spells/RepetoireBook.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/NPCs/npc.tscn:4 - ext_resource, invalid UID: uid://doaygnck5qus5 - using text path instead: res://assets/temp/player-temp.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/platforms/temptilemap.tscn:3 - ext_resource, invalid UID: uid://157vauidtvr1 - using text path instead: res://assets/temp/platform.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/platforms/temptilemap.tscn:5 - ext_resource, invalid UID: uid://djldihdqsy2qq - using text path instead: res://assets/temp/classroom-temp1.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/platforms/temptilemap.tscn:6 - ext_resource, invalid UID: uid://clgvvrn3l1gqs - using text path instead: res://assets/temp/classroom-temp1-items.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/tilemaps/palleteTemp.tscn:3 - ext_resource, invalid UID: uid://cmrde1ocyibd0 - using text path instead: res://assets/temp/pallete.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/tilemaps/palleteTemp.tscn:4 - ext_resource, invalid UID: uid://clgvvrn3l1gqs - using text path instead: res://assets/temp/classroom-temp1-items.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/panels/tutorials/tutorial-panel.tscn:5 - ext_resource, invalid UID: uid://bid56dcwfjc8v - using text path instead: res://assets/font/Bitter/static/Bitter-Bold.ttf
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/NPCs/enemies/Enemy.tscn:12 - ext_resource, invalid UID: uid://caaqv80a8h88s - using text path instead: res://assets/temp/player-temp-left.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/NPCs/enemies/Enemy.tscn:14 - ext_resource, invalid UID: uid://bid56dcwfjc8v - using text path instead: res://assets/font/Bitter/static/Bitter-Bold.ttf
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/NPCs/enemies/zalam-manifestations/bunga/bunga.tscn:4 - ext_resource, invalid UID: uid://cdb2b3lesaux2 - using text path instead: res://assets/enemy/bunga-attack.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/NPCs/enemies/dummy/dummy-npc.tscn:3 - ext_resource, invalid UID: uid://yc3tgp66iwpq - using text path instead: res://assets/temp/dummy-temp.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] register_paths (res://autoloads/scene-registry.gd:32)
+         [1] _ready (res://autoloads/world-manifest.gd:18)
+WARNING: res://components/platforms/platform.tscn:3 - ext_resource, invalid UID: uid://157vauidtvr1 - using text path instead: res://assets/temp/platform.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] register_paths (res://autoloads/scene-registry.gd:32)
+         [1] _ready (res://autoloads/world-manifest.gd:18)
+WARNING: res://components/destructables/Box.tscn:4 - ext_resource, invalid UID: uid://cu6j36h4d1f3g - using text path instead: res://assets/temp/cratebox.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] register_paths (res://autoloads/scene-registry.gd:32)
+         [1] _ready (res://autoloads/world-manifest.gd:18)
+WARNING: res://scenes/spell-tree/spell-tree.tscn:8 - ext_resource, invalid UID: uid://bu1aqpqnok4e7 - using text path instead: res://assets/ui/spell-tree/field-title.svg
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] register_paths (res://autoloads/scene-registry.gd:32)
+         [1] _ready (res://autoloads/world-manifest.gd:18)
+─── WorldManifest: registered 35 scenes ───
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/abu-campus-entrance.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/abu-courtyard.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/dormitory/abu-dorm-room.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/dormitory/abu-dormitory-hallway.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/dueling-grounds-selection.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/dueling-grounds.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/dueling-grounds/dueling-selection.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/FLAC-courtyard.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/FLAC-entrance.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-one/FLAC-F1-central-hub.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-one/FLAC-F1-hallway.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-one/FLAC-F1-outside.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-one/FLAC-F1-receptionist-area.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-one/FLAC-F1-student-longue.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-three/FLAC-F3-central-hub.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-three/FLAC-F3-hallway-1.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-three/FLAC-F3-hallway-2-Science-Crafting.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-three/FLAC-F3-hallway-2.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-three/FLAC-F3-hallway-3.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-three/FLAC-F3-hallway-4.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-three/FLAC-F3-hallway-balcony.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-two/FLAC-F2-central-hub.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-two/FLAC-F2-hallway-1.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-two/FLAC-F2-hallway-3.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-two/FLAC-F2-hallway-4.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-two/FLAC-F2-hallway-balcony.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-two/FLAC-F2-hallway-2.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/spell-tree.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/story(legacy)/e-hailing.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/story(legacy)/missions-selection.tres
+  • res://data/worlds/hubs/chapters/chapter-1/subway-scene.tres
+  • res://data/worlds/hubs/chapters/prologue/yan-exam-tutorial.tres
+  • res://data/worlds/hubs/chapters/prologue/yan-prologue-house-entrance.tres
+  • res://data/worlds/hubs/the-echanted-forest(TEF)/deeper-forest/TEF-deeper-forest-area-east.tres
+  • res://data/worlds/hubs/the-echanted-forest(TEF)/deeper-forest/TEF-forest-entrance.tres
+─── WorldManifest: validating scene_ids ───
+WARNING:   ⚠ 'FLAC_F3_hallway_2_science_crafting' has uppercase letters
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _validate_scene_ids (res://autoloads/world-manifest.gd:58)
+         [1] _ready (res://autoloads/world-manifest.gd:24)
+  1 issue(s) found
+[LyricsOverlay] _ready called
+[LyricsOverlay] Label node found: true
+[LyricsOverlay] Lyrics enabled: true
+[LyricsOverlay] Connected to LyricsManager.lyric_changed
+PASS Fourteen valid registered quests
+PASS Faculty numeric compatibility retained
+PASS Exact XP/item rewards: quest_bakau_001
+PASS Exact prerequisites, targets and quantities: quest_bakau_001
+PASS Stable region/pool/hand-in: quest_bakau_001
+PASS Exact XP/item rewards: quest_bakau_002
+PASS Exact prerequisites, targets and quantities: quest_bakau_002
+PASS Stable region/pool/hand-in: quest_bakau_002
+PASS Exact XP/item rewards: quest_bakau_003
+PASS Exact prerequisites, targets and quantities: quest_bakau_003
+PASS Stable region/pool/hand-in: quest_bakau_003
+PASS Exact XP/item rewards: quest_bakau_004
+PASS Exact prerequisites, targets and quantities: quest_bakau_004
+PASS Stable region/pool/hand-in: quest_bakau_004
+PASS Exact XP/item rewards: quest_bakau_005
+PASS Exact prerequisites, targets and quantities: quest_bakau_005
+PASS Stable region/pool/hand-in: quest_bakau_005
+PASS Exact XP/item rewards: quest_bakau_006
+PASS Exact prerequisites, targets and quantities: quest_bakau_006
+PASS Stable region/pool/hand-in: quest_bakau_006
+PASS Exact XP/item rewards: quest_bakau_007
+PASS Exact prerequisites, targets and quantities: quest_bakau_007
+PASS Stable region/pool/hand-in: quest_bakau_007
+PASS Exact XP/item rewards: quest_bakau_008
+PASS Exact prerequisites, targets and quantities: quest_bakau_008
+PASS Stable region/pool/hand-in: quest_bakau_008
+PASS Exact XP/item rewards: quest_bakau_009
+PASS Exact prerequisites, targets and quantities: quest_bakau_009
+PASS Stable region/pool/hand-in: quest_bakau_009
+PASS Exact XP/item rewards: quest_bakau_010
+PASS Exact prerequisites, targets and quantities: quest_bakau_010
+PASS Stable region/pool/hand-in: quest_bakau_010
+PASS Valid master-sheet drop without invented recipe: drop_001
+PASS Valid master-sheet drop without invented recipe: drop_002
+PASS Valid master-sheet drop without invented recipe: drop_003
+PASS Valid master-sheet drop without invented recipe: drop_004
+PASS Valid master-sheet drop without invented recipe: drop_005
+PASS Valid master-sheet drop without invented recipe: drop_006
+PASS Valid master-sheet drop without invented recipe: drop_007
+PASS Valid master-sheet drop without invented recipe: drop_008
+PASS Valid master-sheet drop without invented recipe: drop_009
+PASS Valid master-sheet drop without invented recipe: drop_010
+PASS Valid master-sheet drop without invented recipe: drop_011
+PASS Valid master-sheet drop without invented recipe: drop_012
+PASS Valid master-sheet drop without invented recipe: drop_013
+PASS Canonical functional monster: Snakehead Murrel
+PASS Independent valid loot mapping: Snakehead Murrel
+PASS Canonical functional monster: Dragonfly / Pepatung
+PASS Independent valid loot mapping: Dragonfly / Pepatung
+PASS Canonical functional monster: Stone Crab / Ketam Batu
+PASS Independent valid loot mapping: Stone Crab / Ketam Batu
+PASS Canonical functional monster: Crocodile
+PASS Independent valid loot mapping: Crocodile
+PASS Board accepts unlocked quest: quest_bakau_001
+PASS Actual enemy/pickup events complete objectives: quest_bakau_001
+PASS Board hand-in delivers exact reward once: quest_bakau_001
+PASS Repeated hand-in cannot duplicate: quest_bakau_001
+PASS Board accepts unlocked quest: quest_bakau_002
+PASS Mixed fish acquisition accepts 2/1/2 combination
+PASS Actual enemy/pickup events complete objectives: quest_bakau_002
+PASS Board hand-in delivers exact reward once: quest_bakau_002
+PASS Repeated hand-in cannot duplicate: quest_bakau_002
+PASS Board accepts unlocked quest: quest_bakau_003
+PASS Actual enemy/pickup events complete objectives: quest_bakau_003
+PASS Board hand-in delivers exact reward once: quest_bakau_003
+PASS Repeated hand-in cannot duplicate: quest_bakau_003
+PASS Board accepts unlocked quest: quest_bakau_004
+PASS Confirmed specimen pickup: Dragonfly Wings
+PASS Confirmed specimen pickup: Dragonfly Antenna
+PASS Actual enemy/pickup events complete objectives: quest_bakau_004
+PASS Board hand-in delivers exact reward once: quest_bakau_004
+PASS Repeated hand-in cannot duplicate: quest_bakau_004
+PASS Board accepts unlocked quest: quest_bakau_005
+PASS Actual enemy/pickup events complete objectives: quest_bakau_005
+PASS Board hand-in delivers exact reward once: quest_bakau_005
+PASS Repeated hand-in cannot duplicate: quest_bakau_005
+PASS Board accepts unlocked quest: quest_bakau_006
+PASS Confirmed specimen pickup: Crab Shell
+PASS Confirmed specimen pickup: Crab Claw
+PASS Actual enemy/pickup events complete objectives: quest_bakau_006
+PASS Board hand-in delivers exact reward once: quest_bakau_006
+PASS Repeated hand-in cannot duplicate: quest_bakau_006
+PASS Board accepts unlocked quest: quest_bakau_007
+PASS Actual enemy/pickup events complete objectives: quest_bakau_007
+PASS Board hand-in delivers exact reward once: quest_bakau_007
+PASS Repeated hand-in cannot duplicate: quest_bakau_007
+PASS Board accepts unlocked quest: quest_bakau_008
+PASS Confirmed specimen pickup: Fish Meat
+PASS Confirmed specimen pickup: Dragonfly Scales
+PASS Confirmed specimen pickup: Crab Shell
+PASS Actual enemy/pickup events complete objectives: quest_bakau_008
+PASS Board hand-in delivers exact reward once: quest_bakau_008
+PASS Repeated hand-in cannot duplicate: quest_bakau_008
+PASS Board accepts unlocked quest: quest_bakau_009
+PASS Actual enemy/pickup events complete objectives: quest_bakau_009
+PASS Board hand-in delivers exact reward once: quest_bakau_009
+PASS Repeated hand-in cannot duplicate: quest_bakau_009
+PASS Board accepts unlocked quest: quest_bakau_010
+PASS Confirmed specimen pickup: Fish Bone
+PASS Confirmed specimen pickup: Dragonfly Antenna
+PASS Confirmed specimen pickup: Crab Claw
+PASS Actual enemy/pickup events complete objectives: quest_bakau_010
+PASS Board hand-in delivers exact reward once: quest_bakau_010
+PASS Repeated hand-in cannot duplicate: quest_bakau_010
+PASS All ten Bakau quests playable through real board/events/inventory
+PASS FLAC identity restored through NPC: defeat_flower_quest
+PASS FLAC objective events complete: defeat_flower_quest
+PASS FLAC NPC reward is centralized and once-only: defeat_flower_quest
+PASS FLAC identity restored through NPC: defeat_tree_quest
+PASS FLAC objective events complete: defeat_tree_quest
+PASS FLAC NPC reward is centralized and once-only: defeat_tree_quest
+PASS FLAC identity restored through NPC: gather_quest_leaves
+PASS FLAC objective events complete: gather_quest_leaves
+PASS FLAC NPC reward is centralized and once-only: gather_quest_leaves
+PASS FLAC identity restored through NPC: gather_quest_branches
+PASS FLAC objective events complete: gather_quest_branches
+PASS FLAC NPC reward is centralized and once-only: gather_quest_branches
+PASS One event cannot cascade through ordered objectives
+PASS Optional objective does not block completion
+PASS ANY objective group supports alternatives
+PASS ANY delivery group consumes only the selected completed alternative
+PASS Enemy IDs match exactly rather than by substring
+PASS One actual defeat advances both eligible quests once
+PASS Duplicate event receipt ignored
+PASS Current-held objectives reconcile on acceptance
+PASS Removing held items safely reopens readiness
+PASS Delivery consumes exact held requirement at claim
+PASS Full stack rejects pickup without progress
+PASS Partial stack reports only actual acquired quantity
+PASS Inventory receipt prevents duplicate pickup and quest credit
+PASS NPC release retains accepted quest association
+PASS Mixed collection completes after resumed interaction
+PASS Wrong hand-in NPC rejected
+PASS Full inventory leaves a recoverable pending reward
+PASS Pending reward succeeds after room is made
+PASS Versioned quest/inventory snapshot saves atomically
+PASS Save restores XP, inventory and quest state together
+PASS Reloaded claim marker prevents reward replay
+PASS Pickup receipts survive save/load
+PASS Unknown save version rejected without mutation
+PASS Unknown saved resource rejected without changing live state
+PASS Failed durable commit rolls back every reward mutation
+PASS Failed save leaves a claim that can be retried safely
+PASS Unprocessed durable event saved in outbox
+PASS Load replays durable outbox into objectives
+PASS Outbox receipt remains idempotent
+PASS Configured next-quest chain offers explicit decision after hand-in
+PASS Load resumes a chain interrupted immediately after durable reward commit
+PASS Actual casting, impact and status application publish quest events
+PASS NPC/dialogue/location/world events use the same evaluator
+PASS Other-player progress and reward claims stay isolated
+PASS Quest authority test client created
+PASS Client cannot forge quest progress or inventory acquisition
+PASS Malformed recovered event cannot manufacture a new replay receipt
+PASS Unknown target and objective cycle rejected
+PASS Independent guaranteed/zero rolls and quantity limits respected once
+PASS Loot spawns at actual world death location
+PASS Production dropped item can be acquired only once
+PASS Crab Stone is explicitly rarer than common shell
+PASS Actual source rolls can yield every mapped drop: Snakehead Murrel
+PASS Actual source rolls can yield every mapped drop: Dragonfly / Pepatung
+PASS Actual source rolls can yield every mapped drop: Stone Crab / Ketam Batu
+PASS Actual source rolls can yield every mapped drop: Crocodile
+PASS Explicit extra_drops bundle compatibility retained
+PASS Physical overlap and pickup delay acquire actual spawned loot
+PASS Cancelled real offer dialogue leaves quest unaccepted and movement restored
+PASS Cancelled ready dialogue leaves rewards unclaimed
+PASS Natural Dialogic timeline completion publishes exactly one completion event
+PASS Journal shows all quests and stable individual objective progress
+PASS Journal shows locked prerequisites and exact reward preview
+WARNING: Nodes with non-equal opposite anchors will have their size overridden after _ready().
+If you want to set size, change the anchors or consider using set_deferred().
+     at: _set_size (scene/gui/control.cpp:1519)
+     GDScript backtrace (most recent call first):
+         [0] run (res://tests/quest-pipeline.gd:522)
+         [1] start_direct_text (res://components/NPCs/dialogic-component.gd:43)
+         [2] end_timeline (res://addons/dialogic/Core/DialogicGameHandler.gd:273)
+         [3] clear (res://addons/dialogic/Core/DialogicGameHandler.gd:346)
+         [4] clean (res://addons/dialogic/Resources/timeline.gd:206)
+PASS Quest details wrap inside the available width
+PASS Quest and loot suite reached final assertion
+QUEST_PIPELINE: 172 checks, 0 failures
+WARNING: 58 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 25 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

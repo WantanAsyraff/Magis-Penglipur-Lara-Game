@@ -1,13 +1,18 @@
 # Quest gameplay events
 
+Current handbook entry: [authoring/architecture guide](authoring/quests.md). Schema defaults and current source remain authoritative; any dated test paragraphs below retain their original verification scope.
+
 `GameplayEvent` is a typed RefCounted envelope. Required fields are a valid enum type, nonempty event/owner/target identities and positive bounded quantity. New receipts default to a random 128-bit value. Replayed observations must reuse the original receipt. `source_instance_id`, `actor_id`, `tags` and `metadata` carry optional condition context; do not use display names as identity.
 
 ```gdscript
-var event := GameplayEvent.new(
-    GameplayEvent.Type.OBJECT_INTERACTED, "bakau_gate", 1,
-    GameplayEvent.owner_for(player), "lever:" + interaction_receipt)
-event.metadata["opened"] = true
-QuestManager.publish(event)
+extends Node
+# Call only from a confirmed, authoritative interaction; this is not an RPC.
+func publish_lever(player: Node2D, interaction_receipt: String) -> bool:
+    var event := GameplayEvent.new(
+        GameplayEvent.Type.OBJECT_INTERACTED, "bakau_gate", 1,
+        GameplayEvent.owner_for(player), "lever:" + interaction_receipt)
+    event.metadata["opened"] = true
+    return QuestManager.publish(event)
 ```
 
 Only trusted authority publishes gameplay state. Runtime hooks use `GameplayEvent.service("QuestManager").call("publish", event)` to avoid compile-time autoload/resource cycles. No network RPC accepts arbitrary client event dictionaries.

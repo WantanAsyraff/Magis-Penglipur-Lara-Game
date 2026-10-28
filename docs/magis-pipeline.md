@@ -1,6 +1,6 @@
 # Magis pipeline
 
-The pipeline preserves the eight main spell resources, their IDs, UIDs and incantations, and the existing projectile scenes. New definitions can use reusable effects; existing definitions are converted at runtime by `LegacySpellAdapter` without mutating the resources.
+Current authoring is maintained in [Spells](authoring/spells.md), [effects](authoring/spell-effects.md) and [the registration matrix](reference/content-registration-matrix.md). The expanded Physics curriculum retains the eight original spell identities and existing projectile compatibility. New definitions can use reusable effects; existing definitions are converted at runtime by `LegacySpellAdapter` without mutating the resources.
 
 ## Execution path
 
@@ -25,7 +25,7 @@ The Player inspector exposes `incantation_strategy`:
 | CONFIRMATION (opt-in) | O confirms the current exact match when leaving the stance. |
 | DELAYED | An ambiguous exact prefix waits 0.35 seconds; continuation replaces it. |
 
-P clears the sequence, cancels preparation/channeling and clears pending casts. O closes the stance; already accepted casts continue. Silence, stun, damage and death interrupt active preparation/channeling. UI reports queued/accepted matches before execution; completion and failure signals are available for richer presentation.
+P is the default clear_incantation binding and clears only the current sequence. cancel_casting separately cancels active preparation/channeling and pending casts; it has no default key and can be bound in Settings. O closes the stance; already accepted casts continue. Silence, stun, damage and death interrupt active preparation/channeling. UI reports queued/accepted matches before execution; completion and failure signals are available for richer presentation.
 
 ## Learning
 
@@ -55,7 +55,7 @@ Echo records only compatible successful simple payloads, uses a fresh 64-effect 
 
 Chained input does not wait for a second O press. Existing SpellData preparation, channel, recovery, cooldown, mana and authority rules still apply. Up to eight completed combos queue during an active cast; queued spells validate and pay mana when they start. A rejected prefix does not erase the resolver's continuation, so a cooling-down or unaffordable short spell cannot prevent an eligible longer spell. Invalid partial input still clears normally. A valid longer continuation takes priority over restarting from the root when both could match.
 
-`tests/player-combo-chains.tscn` runs 22 checks through the production Player: automatic completion, prefix continuations, independent follow-ups, queue order/payment, cooldown/mana rejection, equipment revalidation, cancellation/refund, optional confirmation and the 9999 XP / 400 HP defaults. The Physics runner includes it; packed quest verification repeats it from the exported game.
+`tests/player-combo-chains.tscn` exercises the production Player (see current run counts in its output): automatic completion, prefix continuations, independent follow-ups, queue order/payment, cooldown/mana rejection, equipment revalidation, cancellation/refund, optional confirmation and the 9999 XP / 400 HP defaults. The Physics runner includes it; packed quest verification repeats it from the exported game.
 
 ## Incantation Chain Assistant V1
 

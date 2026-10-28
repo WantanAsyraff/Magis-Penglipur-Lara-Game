@@ -1,5 +1,7 @@
 # Incantation input feedback
 
+Current handbook entry: [authoring/architecture guide](authoring/spells.md). Schema defaults and current source remain authoritative; any dated test paragraphs below retain their original verification scope.
+
 The input route remains `_unhandled_input → _process_incantation_inputs → _add_sequence → IncantationResolver.push → _cast_resolved`. `_add_sequence` verifies casting stance, local authority, alive state, pause, stun/silence, dialogue, phone and quest-offer interception, and `IncantationResolver.accepts(direction)`.
 
 After `push()` accepts the direction and before spell execution, Player emits `incantation_direction_accepted(direction: String)`. Its child `effects/incantation-input-particles.tscn` listens to this signal. Recognition and rendering remain separate from the cast queue and execution restrictions. Valid prefixes, exact completions, longer continuations and CHAINED restarts emit once. Mana/cooldown rejection of the completed spell does not retract accepted-input feedback. No prediction or invalid direction emits this signal.

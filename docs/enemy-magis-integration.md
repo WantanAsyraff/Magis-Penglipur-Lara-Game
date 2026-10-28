@@ -1,5 +1,7 @@
 # Enemy and Magis integration
 
+Current handbook entry: [authoring/architecture guide](architecture/combat-architecture.md). Schema defaults and current source remain authoritative; any dated test paragraphs below retain their original verification scope.
+
 Player input and enemy utility decisions converge on the same SpellCastingComponent. EnemyCombat owns an explicit EnemyAbilityData loadout and checks eligibility before submitting. Enemy.can_cast_spell authorizes only referenced spell resources. The casting component revalidates authority, statuses, resources, targets, mana and cooldowns. It handles preparation/channeling/costs and dispatches through the same SpellDelivery and SpellExecutor as the player.
 
 Ordinary attacks submit CombatRequest effects using SpellCastContext with a null spell. Source, direction, modifiers, effect budget, depth and authority remain meaningful. DamageEffect supports this context and uses an ordinary hit colour when no spell exists. No fake SpellData is needed for melee. Hitbox.receive_damage adds source attribution; the existing _apply_damage and receive_hit APIs remain callable. Enemy threat uses the source signal; old receive_hit callers without source information cannot identify a separate attacker and do not apply the defender's outgoing damage modifier. Outgoing damage scaling is separate from healing/echo magnitude scaling.

@@ -39,7 +39,7 @@ REQUIRED = {
  'NPCSpellcasterData':{'caster_id'},'BossPhaseData':{'enter_at_health_ratio','attacks'},
 }
 DORMANT = {
- 'SpellData':set('resonance_bonus off_archetype_penalty requires_archetype_match status_effects misfire_silence_duration chain_range chain_max_targets chain_damage_falloff equilibrium_bias cast_sound impact_sound'.split()),
+ 'SpellData':set('resonance_bonus off_archetype_penalty requires_archetype_match status_effects misfire_silence_duration chain_range chain_max_targets chain_damage_falloff equilibrium_bias cast_sound impact_sound explosive'.split()),
  'NPCSpellcasterData':set('race magis_archetype magis_comprehension portrait base_mana_shield low_mana_threshold aggression react_window cast_delay_min cast_delay_max combo_chance counter_chance drops_spell_on_defeat dropped_spell'.split()),
  'QuestData':{'auto_accept_next'},'ItemData':{'ringgit_value','is_sellable','quest_objective_ids'},
  'LootData':{'rarity'},'TutorialData':{'tutorial_title'},
@@ -149,7 +149,7 @@ PURPOSE = {
  'projectile_range':'Positive maximum travel range.',
  'projectile_damage':'Legacy DamageEffect amount when no explicit effect payload replaces it.',
  'piercing':'Projectile can continue after target contact while preserving per-target hit control.',
- 'explosive':'Projectile impact explosion configuration; see projectile consumer for actual radius behavior.',
+ 'explosive':'Retained nonnegative legacy tuning; impact AoE uses aoe_spell_radius, not this value.',
  'is_self_cast':'Legacy delivery override to SELF.',
  'heal_amount':'Legacy immediate healing amount.',
  'heal_over_time':'Legacy switch from immediate heal to hot payload.',

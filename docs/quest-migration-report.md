@@ -1,5 +1,7 @@
 # Quest Pipeline V2 migration report
 
+> Historical implementation/verification record. The body below preserves earlier design descriptions, commands and measurements; it is not a newly executed test or the current authoring contract. Use [the current guide](authoring/quests.md) and [Godot 4.7 workflow](developer-workflow.md). Current Player default is CHAINED with independent shared-prefix execution; the assistant now shows only valid next-direction icons. Save V1 supersedes earlier quest-only persistence limits.
+
 ## Initial audit
 
 Base: `2cb873c`, `refactor/enemy-pipeline-v2`; working branch: `refactor/quest-pipeline-v2`. Magis and Enemy V2 are implemented and tested. Existing local player, loot, Physics resource, vendor, project and world-scene changes are preserved and excluded from quest commits. Ancestor AGENTS.md requires scoped changes and verification; no justfile exists.

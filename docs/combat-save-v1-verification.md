@@ -1,5 +1,7 @@
 # Combat feedback and save V1 verification
 
+> Historical implementation/verification record. The body below preserves earlier design descriptions, commands and measurements; it is not a newly executed test or the current authoring contract. Use [the current guide](save-system-v1.md) and [Godot 4.7 workflow](developer-workflow.md). Current Player default is CHAINED with independent shared-prefix execution; the assistant now shows only valid next-direction icons. Save V1 supersedes earlier quest-only persistence limits.
+
 Verified 2026-10-28 (Asia/Kuching), using `4.7.2.stable.flathub.ed1daf0bf`, matching the project's 4.7 configuration. Branch starts at latest reviewed main `3c67362bc6bacbc845f60f5410e3be71e07dcfb8`. No engine downgrade or content/stat/reward/UID changes were made. Nothing was pushed or merged.
 
 ## Results

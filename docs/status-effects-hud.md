@@ -1,5 +1,7 @@
 # Status effects HUD
 
+Current handbook entry: [authoring/architecture guide](authoring/status-effects.md). Schema defaults and current source remain authoritative; any dated test paragraphs below retain their original verification scope.
+
 The camera's existing UI CanvasLayer owns `scenes/ui/status-effects/status-effects-hud.tscn`. The row anchors 24 px from the left and 18 px from the bottom. Eight cached 34 px icons have 5 px spacing; further groups use `+N`. Empty, dead, paused, phone-open, quest-offer and dialogue states hide the row. The repertoire remains at the bottom-right, and the Incantation Assistant is unchanged.
 
 `StatusEffectsHUD` binds only `Player_Manager.get_local_player().hitbox.effects`. Player_Manager.local_player_changed rebinds immediately after authoritative spawning; manager changes refresh the row immediately. A 10 Hz presentation update reads remaining times from `ActiveEffectManager.get_entries()` and detects replacement players. There is no independent duration countdown. Connections are disconnected on rebinding and tree exit. Nodes are reused; no icon reconstruction occurs during ticks.

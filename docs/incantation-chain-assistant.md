@@ -1,5 +1,7 @@
 # Incantation Chain Assistant V1
 
+> Historical implementation/verification record. The body below preserves earlier design descriptions, commands and measurements; it is not a newly executed test or the current authoring contract. Use [the current guide](authoring/spells.md) and [Godot 4.7 workflow](developer-workflow.md). Current Player default is CHAINED with independent shared-prefix execution; the assistant now shows only valid next-direction icons. Save V1 supersedes earlier quest-only persistence limits.
+
 Implemented on `feature/incantation-chain-assistant`, based on reviewed Quest/Enemy/Magis V2 commit `4423abf`. The working tree was clean before work began; no repository AGENTS.md was present. No spell resource, ID, UID, incantation, authored effect, or stat was changed. The base project declares Godot 4.7; verification used the installed Godot 4.7.2 Flatpak. Godot 4.6 compatibility was not separately verified.
 
 ## Preserved gameplay
@@ -43,7 +45,9 @@ The existing `state_changed`, `cast_failed`, `cast_completed`, boolean `request_
 
 New signal:
 
-```gdscript
+API signature (not a standalone executable script):
+
+```text
 request_status(request_id, chain_id, spell, status, reason)
 ```
 

@@ -1,5 +1,7 @@
 # Physics spell catalogue
 
+Current handbook entry: [authoring/architecture guide](authoring/spells.md). Schema defaults and current source remain authoritative; any dated test paragraphs below retain their original verification scope.
+
 All 42 entries are native SpellData resources registered in the export manifest and connected to exactly one subject. Every entry passed resource validation, unique-incantation resolution, and a production casting / mana / delivery check in `tests/physics-curriculum.tscn`. Focused assertions and manual visual procedures are described in the curriculum and interaction guides. Automated dispatch completion is not a claim of graphical playtesting.
 
 Scientific principles describe the inspiration. Creature-scale force, healing, fabricated matter, optical confinement, quantum and relativistic effects are fictional mana-powered extrapolations.

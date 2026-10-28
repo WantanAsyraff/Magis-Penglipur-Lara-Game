@@ -1,5 +1,7 @@
 # Migrating existing spells
 
+> Historical implementation/verification record. The body below preserves earlier design descriptions, commands and measurements; it is not a newly executed test or the current authoring contract. Use [the current guide](architecture/save-load-architecture.md) and [Godot 4.7 workflow](developer-workflow.md). Current Player default is CHAINED with independent shared-prefix execution; the assistant now shows only valid next-direction icons. Save V1 supersedes earlier quest-only persistence limits.
+
 Existing `.tres` and `.tscn` files retain their UIDs. `SpellData`, `subjectData`, `CourseData`, `SpellEffect`, `MagicProjectile`, `HitboxComponent` and Player's existing execution entry points remain. No legacy exported fields were deleted.
 
 ## Gradual migration

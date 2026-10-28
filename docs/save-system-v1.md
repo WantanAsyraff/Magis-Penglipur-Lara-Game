@@ -1,5 +1,7 @@
 # Campaign save system V1
 
+Current handbook entry: [authoring/architecture guide](architecture/save-load-architecture.md). Schema defaults and current source remain authoritative; any dated test paragraphs below retain their original verification scope.
+
 `SaveManager` coordinates the existing player, spell library, world/scene registry, Inventory_Manager and QuestManager. QuestSaveService still owns the single authoritative representation of quests, inventory, equipment, XP, currency, learned spells, claims, acquisition receipts, conversations, processed events and durable outbox. None of those values are duplicated elsewhere in the full-game payload.
 
 ## Profiles and schema

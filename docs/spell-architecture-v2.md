@@ -1,5 +1,7 @@
 # Spell architecture V2
 
+Current authoring: [spells/effects](authoring/spells.md), [full property reference](reference/resource-reference.md).
+
 ## Responsibilities
 
 | Class | Responsibility |
@@ -24,7 +26,7 @@
 
 `IDLE -> PREPARING -> [CHANNELING] -> EXECUTING -> RECOVERY -> IDLE`
 
-The upfront cost is reserved exactly once after validation. Cast speed buffs divide preparation time by `max(0.1, 1 + bonus)`. Channeling charges `mana_per_second` only for elapsed channel time, including partial final frames; the payload dispatches once on channel completion. Channeling does not repeatedly emit projectiles. Use a persistent delivery for repeated effects.
+The upfront cost is reserved exactly once after validation. Cast speed buffs divide preparation time by `max(0.1, 1 + bonus)`. Channeling charges `mana_per_second` only for elapsed channel time, including partial final frames; ordinary channel payload dispatches once on completion; opt-in live_channel begins supported area/beam/trap delivery at channel start and commits its upfront cost then. Channeling does not repeatedly emit projectiles. Use a persistent delivery for repeated effects.
 
 Cancellation or dispatch failure before successful execution refunds upfront mana. Spent channel mana is never refunded. Successful dispatch starts cooldown and consumes upfront mana permanently. A valid burst in an empty area still completes and costs mana. Cancelling recovery clears pending casts but does not undo delivered effects or their costs. Direct targets are checked again when preparation finishes.
 
@@ -56,6 +58,6 @@ Client cast request RPCs, server-side remote loadouts, replicated actor stats, p
 
 ## Remaining limits
 
-Existing experimental tether/chain balancing fields, resonance restrictions, the status_effects resource hook, on-hit proc IDs and misfire silence remain serialized but do not acquire new gameplay handlers in this change. Stat modifier effects store proc identifiers for future handlers. The shared execution budget bounds configured conditional/spawn chains; it does not implement the legacy tether targeting mechanic. Generic physical constructs have bounded lifetimes; other summon scenes still need their own AI and lifetime. Save integration must persist explicit completion and comprehension when a complete save system is added.
+Existing experimental tether/chain balancing fields, resonance restrictions, the status_effects resource hook, on-hit proc IDs and misfire silence remain serialized but do not acquire new gameplay handlers in this change. Stat modifier effects store proc identifiers for future handlers. The shared execution budget bounds configured conditional/spawn chains; it does not implement the legacy tether targeting mechanic. Generic physical constructs have bounded lifetimes; other summon scenes still need their own AI and lifetime. Save V1 now persists completed subjects, comprehension and ordered equipped spell IDs; see [Save architecture](architecture/save-load-architecture.md).
 
 The [Physics curriculum](physics-curriculum.md) extends this baseline with chains, triggers, projectile fields, reflection, bounded replay and opt-in live channels. Its documentation supersedes the original implementation limits for those mechanics; networking and save limitations still apply.

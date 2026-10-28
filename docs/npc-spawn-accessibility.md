@@ -1,5 +1,7 @@
 # NPC placement and interaction accessibility
 
+Current handbook entry: [authoring/architecture guide](authoring/npcs-and-dialogue.md). Schema defaults and current source remain authoritative; any dated test paragraphs below retain their original verification scope.
+
 ## Placement policy
 
 `NPCSpawnValidator` is a reusable Resource. RoomQuestManager exports a validator, `safe_spawn_markers` and `access_markers`. Marker positions represent desired feet positions; the validator projects downward onto collision layer 16, then places the body above that ground. The three FLAC F2 hallway rooms now contain authored safe and access markers and an explicit allowed region. Existing tile/furniture artwork and collision data are preserved.

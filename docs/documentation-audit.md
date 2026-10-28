@@ -27,7 +27,7 @@ No broken Markdown destination links were found in the initial 33-page audit. Ba
 
 ## Implementation defects / boundaries found, not changed
 
-- SpellData retains unused resonance/archetype restrictions, tether tuning, `status_effects`, misfire and proc metadata; new values do not create handlers.
+- SpellData retains unused resonance/archetype restrictions, tether tuning, `status_effects`, explosive tuning, misfire and proc metadata; new values do not create handlers.
 - Ability `weight` chooses the highest-weight usable ability; ordinary enemy utility AI is not random weighted selection. Boss attack weights are random within the eligible pool.
 - Quest `auto_accept_next` remains serialized but chains require explicit acceptance. Branch storage is not a branching dialogue editor.
 - Boss phases/attacks have no standalone `validate()` method. Test thresholds/order, finite nonnegative values and telegraph geometry manually and through the boss suite.

@@ -1,5 +1,7 @@
 # Physics spell interactions
 
+> Historical implementation/verification record. The body below preserves earlier design descriptions, commands and measurements; it is not a newly executed test or the current authoring contract. Use [the current guide](authoring/spell-effects.md) and [Godot 4.7 workflow](developer-workflow.md). Current Player default is CHAINED with independent shared-prefix execution; the assistant now shows only valid next-direction icons. Save V1 supersedes earlier quest-only persistence limits.
+
 Interactions use tagged statuses, explicit target capabilities and owned event hooks. No spell-name comparisons are used to implement combinations. `physics-curriculum.tscn` uses the real authored effect arrays and production dispatch; `spell-regression.tscn` retains validation, costs, status lifetimes, nested execution and authority tests.
 
 | Combination | Runtime rule | Automated assertion / manual reproduction |

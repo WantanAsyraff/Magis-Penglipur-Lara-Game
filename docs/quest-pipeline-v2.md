@@ -2,6 +2,8 @@
 
 Quest definitions live in `data/quests/`; runtime state lives in `QuestInstance`. Four original FLAC definitions and ten Bakau definitions load through `QuestRegistry`. Existing faculty numbers 0–5, objective numbers 0–3, resource UIDs, quest/objective IDs and FLAC rewards retain their meanings. Technology & Science is faculty 6.
 
+Current authoring: [quests](authoring/quests.md), [NPC/dialogue](authoring/npcs-and-dialogue.md).
+
 ## Flow and ownership
 
 ```
@@ -34,13 +36,13 @@ Reward item quantities are fixed and bundles are rejected by registry validation
 
 `QuestNPCComponent` preserves existing NPC dialogue assets as fallbacks and prefers the selected quest narrative for accurate objectives. Natural introductory Dialogic completion opens an explicit Accept/Decline card and leaves the quest AVAILABLE. The manager validates a single-use decision token; decline and dismissal remain distinct. Closing an offer/ready sequence does not accept/claim. `QuestBoard` is a reusable Area2D with NPC identity, region and database exports, acceptance, claim, tracking and optional researcher dialogue. It pauses gameplay while browsing. The Bakau field lab configures it with the Bakau database. The phone Quest app is an embedded messaging view of actual NPC conversations, decisions and read-only live quest cards. The in-world board catalogue retains discoverable/locked quest rows. Offers use the same explicit-decision card for FLAC and Bakau; history cannot accept or claim rewards. Layout uses scrolling containers and wrapping labels.
 
-Tracked goals update only the quest-owned goal lines, retaining nonquest lines. The journal preserves all active quests regardless of tracking selection. Pause-menu Save now invokes the supported quest/inventory snapshot service.
+Tracked goals update only the quest-owned goal lines, retaining nonquest lines. The journal preserves all active quests regardless of tracking selection. Pause-menu Save invokes SaveManager full-game persistence; QuestSaveService supplies its single authoritative quest/inventory/reward bundle.
 
 ## Export and limits
 
 Databases and explicit item/enemy manifests retain dependencies in exported packs; runtime does not scan resource folders. Registry loading is deferred through runtime resource paths to avoid GDScript cyclic compilation through spell scenes and autoload hooks. Add quests to databases and new enemy definitions to the enemy manifest. New drops on existing registered EnemyData load through loot references without a script change; standalone items use the item manifest.
 
-Authority gates, player attribution and owner isolation are implemented. Remote player inventory/reward storage, party sharing, RPC validation and synchronization are not implemented. The supported save is one active local owner. No position, scene, health, enemy population, transient world object, equipment-stat recomputation or full campaign restore is claimed. World flags are retained, but world scenes must apply them themselves. Event/acquisition receipt histories currently grow; production compaction needs an explicit retention policy. Timers are opt-in wall-clock expiry, not fresh-specimen simulation.
+Authority gates, player attribution and owner isolation are implemented. Remote player inventory/reward storage, party sharing, RPC validation and synchronization are not implemented. SaveManager supports three local profiles with separate manual/autosave files, restoring scene/position, vitals, academic state, spell equipment and this quest/inventory bundle. Enemy/loot populations and generic equipment-stat recomputation remain unsupported. Existing key/door/nonrespawning-prop adapters consume durable world flags; additional object types need explicit integration. See [Save V1](save-system-v1.md). Event/acquisition receipt histories currently grow; production compaction needs an explicit retention policy. Timers are opt-in wall-clock expiry, not fresh-specimen simulation.
 
 See [authoring](quest-authoring-guide.md), [events](quest-event-integration.md), [save format](quest-save-format.md), [test evidence](bakau-integration-tests.md), [migration](quest-migration-report.md) and the two catalogues.
 

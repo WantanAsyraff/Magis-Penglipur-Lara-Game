@@ -25,7 +25,7 @@ flatpak run org.godotengine.Godot --path .
 flatpak run org.godotengine.Godot --path . scenes/spell-testing/physics-curriculum-lab.tscn -- --quest-test-mode
 flatpak run org.godotengine.Godot --headless --path . tests/spell-regression.tscn -- --quest-test-mode
 python3 tools/validate-docs.py
-GODOT_COMMAND='flatpak run org.godotengine.Godot' python3 tools/validate-docs.py --check-gdscript
+GODOT_COMMAND='flatpak run org.godotengine.Godot' python3 tools/validate-docs.py --check-gdscript --check-resources
 ```
 
 The three `.gd` tools in tools/ extend **EditorScript**. Open one in Godot's Script editor and use File → Run (Ctrl+Shift+X). They are not command-line SceneTree scripts for `godot --script`. Spell baking rewrites data/magis/spell-manifest.gd; world baking rewrites autoloads/world-manifest-paths.gd. Review generated changes. There are no item/enemy/quest bake scripts.

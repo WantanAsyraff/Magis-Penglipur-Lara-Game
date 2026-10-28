@@ -1,5 +1,7 @@
 # Quest dialogue, offers and phone UI
 
+Current handbook entry: [authoring/architecture guide](authoring/npcs-and-dialogue.md). Schema defaults and current source remain authoritative; any dated test paragraphs below retain their original verification scope.
+
 ## One coordinated interaction
 
 An in-range focused NPC publishes interaction, runs the existing Dialogic introduction, then opens `quest-offer-dialog.tscn`. Natural introduction completion leaves the quest AVAILABLE. It never calls acceptance. Escape/interruption cancels the narrative without activating anything. Legacy `confirm_offer_complete()` is intentionally a no-op; the old `npc.gd` dialogue callback no longer accepts or grants rewards.

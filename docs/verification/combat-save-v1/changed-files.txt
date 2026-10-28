@@ -68,6 +68,7 @@ docs/verification/combat-save-v1/exported-pack-write.txt
 docs/verification/combat-save-v1/full-game-fresh-read.txt
 docs/verification/combat-save-v1/full-game-write-and-captures.txt
 docs/verification/combat-save-v1/incantation-assistant.txt
+docs/verification/combat-save-v1/load-menu-startup.txt
 docs/verification/combat-save-v1/pack-export.txt
 docs/verification/combat-save-v1/physics-curriculum.txt
 docs/verification/combat-save-v1/player-combo-chains.txt

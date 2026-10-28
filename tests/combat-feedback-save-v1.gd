@@ -113,6 +113,8 @@ func _write_process() -> void:
 	DirAccess.make_dir_absolute(SaveManager.path_for(PROFILE)+".tmp")
 	check(not SaveManager.save_active() and FileAccess.get_file_as_bytes(SaveManager.path_for(PROFILE)) == bytes,"Failed temporary write preserves the previous primary bytes")
 	DirAccess.remove_absolute(SaveManager.path_for(PROFILE)+".tmp")
+	var oversized := {"padding": "x".repeat(GameSaveStore.MAX_BYTES)}
+	check(GameSaveStore.write(SaveManager.path_for(PROFILE),oversized,true) != "" and FileAccess.get_file_as_bytes(SaveManager.path_for(PROFILE)) == bytes,"Oversized writes refuse before touching the previous primary")
 	# Legacy validation/import retains original bytes and all reward/event receipts.
 	var legacy_path := "user://quest-legacy-save-v1-test.json"
 	QuestSaveService.write_atomic(legacy_path,fixture.quest)

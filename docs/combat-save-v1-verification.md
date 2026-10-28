@@ -4,7 +4,7 @@ Verified 2026-10-28 (Asia/Kuching), using `4.7.2.stable.flathub.ed1daf0bf`, matc
 
 ## Results
 
-All listed commands exited 0. There were **1,024 source assertions with zero failures**, plus **79 exported-pack assertions with zero failures**. These totals count the rendered writer once, not repeated development runs. Final logs contain no script, parse or missing-resource errors.
+All listed commands exited 0. There were **1,025 source assertions with zero failures**, plus **80 exported-pack assertions with zero failures**. These totals count the rendered writer once, not repeated development runs. Final logs contain no script, parse or missing-resource errors.
 
 | Suite | Checks | Failures |
 | --- | ---: | ---: |
@@ -18,13 +18,13 @@ All listed commands exited 0. There were **1,024 source assertions with zero fai
 | Quest accessibility | 90 | 0 |
 | Spell equipment UI | 38 | 0 |
 | Quest persistence writer / fresh process reader | 4 / 7 | 0 |
-| New combat feedback/full-game writer and rendered captures | 59 | 0 |
+| New combat feedback/full-game writer and rendered captures | 60 | 0 |
 | New full-game fresh process reader | 20 | 0 |
-| Exported-pack new suite writer / fresh process reader | 59 / 20 | 0 |
+| Exported-pack new suite writer / fresh process reader | 60 / 20 | 0 |
 
-[Collected result lines](verification/combat-save-v1/results.txt) and [complete per-command logs](verification/combat-save-v1/) are committed. Editor import, startup and Web-preset PCK export succeeded. The exported pack loaded the production campaign, spell/curriculum/item Resources, menus, boss room and saved state in independent processes. Browser execution and browser storage durability were not tested.
+[Collected result lines](verification/combat-save-v1/results.txt) and [complete per-command logs](verification/combat-save-v1/) are committed (ANSI escapes and trailing whitespace normalized). Editor import, startup and Web-preset PCK export succeeded. The exported pack loaded the production campaign, spell/curriculum/item Resources, menus, boss room and saved state in independent processes. Browser execution and browser storage durability were not tested.
 
-The new writer exercises clean New Game and confirmed replacement, actual quest reward commits through the full autosave, academics, ordered spells, inventory/equipment/capacity, dungeon keys, world flags, stack/classification/selective clear, accepted input and execution rejection, checkpoint collision checks, malformed destinations/numbers/IDs/dead snapshots, corruption refusal, explicit backup recovery, failed temporary writes, repeated saves, legacy import, real prototype isolation and a real ephemeral network peer. The reader verifies scene/position/vitals/context, academic and spell state, equipment, conversations, tracked quests, exact XP/quantities, replay rejection, single-player instance count and death recovery after process restart.
+The new writer exercises clean New Game and confirmed replacement, actual quest reward commits through the full autosave, academics, ordered spells, inventory/equipment/capacity, dungeon keys, world flags, stack/classification/selective clear, accepted input and execution rejection, checkpoint collision checks, malformed destinations/numbers/IDs/dead snapshots, oversized writes, corruption refusal, explicit backup recovery, failed temporary writes, repeated saves, legacy import, real prototype isolation and a real ephemeral network peer. The reader verifies scene/position/vitals/context, academic and spell state, equipment, conversations, tracked quests, exact XP/quantities, replay rejection, single-player instance count and death recovery after process restart.
 
 ## Commands
 
@@ -89,7 +89,7 @@ These are scripted renderer fixtures: buff/debuff application, accepted input, s
 
 Shared-prefix chaining remains compatible: its trie and cast queue were not changed, and production combo/assistant suites pass. Quest reward amounts/definitions and exactly-once claims remain compatible through the same QuestRewardService rollback and QuestSaveService bundle. Enemy V2 passes 138 checks. The boss prototype passes 70 checks and the new suite enters the actual room to verify it cannot overwrite campaign data. Its encounter/retry implementation is unchanged.
 
-Feature commits: `d6854fe` (status HUD), `e927d95` (input particles), `9861783` (coordinated campaign saves). The final test/evidence commit follows these.
+Feature commits: `d6854fe` (status HUD), `e927d95` (input particles), `9861783` (coordinated campaign saves). Test/evidence commit: `dcdd863`; a final hardening commit bounds encoded file size and normalizes captured output.
 
 ## Remaining limits and baseline issues
 

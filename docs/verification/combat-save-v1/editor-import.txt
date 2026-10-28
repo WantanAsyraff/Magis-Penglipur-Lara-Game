@@ -36,67 +36,9 @@ WARNING: res://components/NPCs/enemies/zalam-manifestations/bunga/bunga.tscn:4 -
 [ DONE ] first_scan_filesystem
 
 [   0% ] update_scripts_classes | Started Registering global classes... (2 steps)
-[   0% ] update_scripts_classes | 
-[  33% ] update_scripts_classes | 
+[   0% ] update_scripts_classes |
+[  33% ] update_scripts_classes |
 [ DONE ] update_scripts_classes
-
-[   0% ] _update_scan_actions | Started Scanning actions... (22 steps)
-[   0% ] _update_scan_actions | 01-buffs-stacks-1280.png
-[   4% ] _update_scan_actions | 01-buffs-stacks-1920.png
-[   8% ] _update_scan_actions | 02-debuffs-1280.png
-[  13% ] _update_scan_actions | 02-debuffs-1920.png
-[  17% ] _update_scan_actions | 03-minimal-assistant-1280.png
-[  21% ] _update_scan_actions | 03-minimal-assistant-1920.png
-[  26% ] _update_scan_actions | 04-accepted-input-particles-1280.png
-[  30% ] _update_scan_actions | 04-accepted-input-particles-1920.png
-[  34% ] _update_scan_actions | 04b-particle-closeup-1280.png
-[  39% ] _update_scan_actions | 04b-particle-closeup-1920.png
-[  43% ] _update_scan_actions | 05-expired-1280.png
-[  47% ] _update_scan_actions | 05-expired-1920.png
-[  52% ] _update_scan_actions | 06-manual-save-confirmation-1280.png
-[  56% ] _update_scan_actions | 06-manual-save-confirmation-1920.png
-[  60% ] _update_scan_actions | 07-new-game-1280.png
-[  65% ] _update_scan_actions | 07-new-game-1920.png
-[  69% ] _update_scan_actions | 08-load-slots-1280.png
-[  73% ] _update_scan_actions | 08-load-slots-1920.png
-[  78% ] _update_scan_actions | 09-restored-scene-1280.png
-[  82% ] _update_scan_actions | 09-restored-scene-1920.png
-[  86% ] _update_scan_actions | 10-checkpoint-recovery-1280.png
-[  91% ] _update_scan_actions | 10-checkpoint-recovery-1920.png
-[ DONE ] _update_scan_actions
-
-[   0% ] reimport | Started (Re)Importing Assets (12 steps)
-[   0% ] reimport | Preparing files to reimport...
-[   7% ] reimport | Preparing files to reimport...
-[  15% ] reimport | Preparing files to reimport...
-[  23% ] reimport | Preparing files to reimport...
-[  30% ] reimport | Preparing files to reimport...
-[  38% ] reimport | Preparing files to reimport...
-[  46% ] reimport | Preparing files to reimport...
-[  53% ] reimport | Preparing files to reimport...
-[  61% ] reimport | Preparing files to reimport...
-[  69% ] reimport | Preparing files to reimport...
-[  76% ] reimport | Preparing files to reimport...
-[  84% ] reimport | Preparing files to reimport...
-[   0% ] reimport | Executing pre-reimport operations...
-[   0% ] reimport | 01-buffs-stacks-1280.png
-[   7% ] reimport | 01-buffs-stacks-1920.png
-[  15% ] reimport | 02-debuffs-1280.png
-[  23% ] reimport | 04-accepted-input-particles-1280.png
-[  30% ] reimport | 07-new-game-1280.png
-[  38% ] reimport | 07-new-game-1920.png
-[  46% ] reimport | 08-load-slots-1280.png
-[  53% ] reimport | 08-load-slots-1920.png
-[  61% ] reimport | 09-restored-scene-1280.png
-[  69% ] reimport | 09-restored-scene-1920.png
-[  76% ] reimport | 10-checkpoint-recovery-1280.png
-[  84% ] reimport | 10-checkpoint-recovery-1920.png
-[  92% ] reimport | Finalizing Asset Import...
-[ DONE ] reimport
-
-[   0% ] reimport | Started (Re)Importing Assets (12 steps)
-[   0% ] reimport | Executing post-reimport operations...
-[ DONE ] reimport
 
 [   0% ] loading_editor_layout | Started Loading editor (5 steps)
 [   0% ] loading_editor_layout | Loading editor layout...

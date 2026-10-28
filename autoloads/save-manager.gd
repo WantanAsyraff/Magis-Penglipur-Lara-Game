@@ -297,7 +297,7 @@ func new_game(profile: int, character_name: String, overwrite: bool = false) -> 
 	return success
 
 func _archive_profile(profile: int) -> bool:
-	var stamp := str(Time.get_ticks_usec())
+	var stamp := str(int(Time.get_unix_time_from_system()*1000000)) + "-" + Crypto.new().generate_random_bytes(4).hex_encode()
 	for kind in ["manual","auto"]:
 		for backup in [false,true]:
 			var path := path_for(profile,kind,backup)
@@ -340,6 +340,7 @@ func legacy_available() -> bool:
 	return FileAccess.file_exists("user://quest-progress-v2.json")
 
 func import_legacy(profile: int, source: String = "user://quest-progress-v2.json") -> bool:
+	if not _offline(): return _fail("Legacy import is available in single player only.")
 	if _test_mode:
 		if source != "user://quest-legacy-save-v1-test.json": return _fail("Use the isolated legacy fixture in tests.")
 	elif source != "user://quest-progress-v2.json": return _fail("Invalid legacy import source.")

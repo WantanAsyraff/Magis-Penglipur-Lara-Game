@@ -114,7 +114,13 @@ func _refresh() -> void:
 	var selected := SaveManager.inspect_slot(selected_profile,selected_kind)
 	details.text = "Profile %d · %s\n\n%s" % [selected_profile,selected_kind.capitalize(),_description(selected)]
 	if creating: details.text += "\n\nStarts with the authored new-game defaults. Replacing a profile archives its manual save and autosave."
-	action.disabled = not creating and selected.state != "valid"
+	var networked := not SaveManager._offline()
+	action.disabled = networked or (not creating and selected.state != "valid")
+	action.tooltip_text = "Campaign persistence is available in single player only." if networked else ""
+	recover.disabled = networked
+	recover.tooltip_text = action.tooltip_text
+	import_button.disabled = networked
+	import_button.tooltip_text = action.tooltip_text
 	recover.visible = not creating and SaveManager.inspect_slot(selected_profile,selected_kind,true).state == "valid"
 	remove.visible = not creating
 	remove.disabled = selected.state == "empty" and not recover.visible

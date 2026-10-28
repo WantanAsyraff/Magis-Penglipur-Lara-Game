@@ -1,15 +1,16 @@
 Godot 4.7.2.stable.flathub.ed1daf0bf
 Base: 3c67362bc6bacbc845f60f5410e3be71e07dcfb8
 2026-10-28, Asia/Kuching
+Logs normalize ANSI escapes and trailing whitespace.
 
 baseline-main-combo: PLAYER_COMBO_CHAINS: 23 checks, 0 failures
 boss-prototype: BOSS_PROTOTYPE: 70 checks, 0 failures
 enemy-pipeline: ENEMY_PIPELINE: 138 checks, 0 failures
 exported-pack-fresh-read: COMBAT_FEEDBACK_SAVE_V1: 20 checks, 0 failures
-exported-pack-write: COMBAT_FEEDBACK_SAVE_V1: 59 checks, 0 failures
+exported-pack-write: COMBAT_FEEDBACK_SAVE_V1: 60 checks, 0 failures
 full-game-fresh-read: COMBAT_FEEDBACK_SAVE_V1: 20 checks, 0 failures
 full-game-write-and-captures: SAVE_V1_PREVIEW: 22 actual renderer captures saved to res://docs/previews/combat-save-v1/
-full-game-write-and-captures: COMBAT_FEEDBACK_SAVE_V1: 59 checks, 0 failures
+full-game-write-and-captures: COMBAT_FEEDBACK_SAVE_V1: 60 checks, 0 failures
 incantation-assistant: INCANTATION_ASSISTANT: 60 checks, 0 failures
 physics-curriculum: PHYSICS_CURRICULUM: 272 checks, 0 failures
 player-combo-chains: PLAYER_COMBO_CHAINS: 23 checks, 0 failures
@@ -20,6 +21,7 @@ quest-pipeline: QUEST_PIPELINE: 172 checks, 0 failures
 spell-equipment-ui: SPELL_EQUIPMENT_UI: 38 checks, 0 failures
 spell-regression: SPELL_REGRESSION: 71 checks, 0 failures
 
-All test process exits: 0. Editor import, startup, pack export: exit 0.
+Source assertions: 1025, 0 failures. Exported-pack assertions: 80, 0 failures.
+All test process exits: 0. Editor import, startup, load-menu startup, pack export: exit 0.
 No script/parse/missing-resource errors in final evidence logs.
 The existing 25-resource shutdown leak remains; unchanged main reproduces it.

@@ -26,6 +26,7 @@ static func write(path: String, data: Dictionary, previous_valid: bool) -> Strin
 	# Stale temporary files are never promoted. A new complete write replaces them.
 	var payload := JSON.stringify(data)
 	var envelope := JSON.stringify({"payload": payload, "sha256": payload.sha256_text()})
+	if envelope.to_utf8_buffer().size() > MAX_BYTES: return "Save exceeds the supported 32 MB size limit."
 	var file := FileAccess.open(path + ".tmp", FileAccess.WRITE)
 	if file == null: return "Cannot open temporary save: " + error_string(FileAccess.get_open_error())
 	file.store_string(envelope)

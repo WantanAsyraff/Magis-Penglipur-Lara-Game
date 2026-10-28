@@ -159,7 +159,7 @@ PASS Resource-driven portrait/objectives/reward icons: quest_bakau_009
 PASS Explicit native offer accepts shipped quest: quest_bakau_009
 PASS Resource-driven portrait/objectives/reward icons: quest_bakau_010
 PASS Explicit native offer accepts shipped quest: quest_bakau_010
-WARNING: Nodes with non-equal opposite anchors will have their size overridden after _ready(). 
+WARNING: Nodes with non-equal opposite anchors will have their size overridden after _ready().
 If you want to set size, change the anchors or consider using set_deferred().
      at: _set_size (scene/gui/control.cpp:1519)
      GDScript backtrace (most recent call first):

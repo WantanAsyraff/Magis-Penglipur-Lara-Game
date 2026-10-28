@@ -263,7 +263,7 @@ PASS Cancelled ready dialogue leaves rewards unclaimed
 PASS Natural Dialogic timeline completion publishes exactly one completion event
 PASS Journal shows all quests and stable individual objective progress
 PASS Journal shows locked prerequisites and exact reward preview
-WARNING: Nodes with non-equal opposite anchors will have their size overridden after _ready(). 
+WARNING: Nodes with non-equal opposite anchors will have their size overridden after _ready().
 If you want to set size, change the anchors or consider using set_deferred().
      at: _set_size (scene/gui/control.cpp:1519)
      GDScript backtrace (most recent call first):

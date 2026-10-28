@@ -80,8 +80,8 @@ PASS Scene load creates exactly one campaign player
 PASS Death cannot overwrite a valid manual checkpoint
 [HUD] goals_changed fired — 0 goal(s): []
 Phone enabled
-AppList node: AppList:<Control#274206822604>
-Screen node: PhoneBG:<Panel#274139713736>
+AppList node: AppList:<Control#274307485900>
+Screen node: PhoneBG:<Panel#274240377032>
 [HUD] goals_changed fired — 0 goal(s): []
 UI ready. Network_Manager is:Network_Manager:<Node#180858390106>
 Spawned player for peer:1at(220.0, 760.0)

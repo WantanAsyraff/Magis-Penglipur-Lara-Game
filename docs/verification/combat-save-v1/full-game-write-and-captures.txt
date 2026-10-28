@@ -105,8 +105,8 @@ WARNING: Camera2D overridden to physics process mode due to use of physics inter
          [0] spawn_player_for_peer (res://autoloads/player-manager.gd:67)
          [1] _deferred_setup (res://data/worlds/zone-root.gd:33)
 Phone enabled
-AppList node: AppList:<Control#281421024765>
-Screen node: PhoneBG:<Panel#281353915897>
+AppList node: AppList:<Control#281588796925>
+Screen node: PhoneBG:<Panel#281521688057>
 [HUD] goals_changed fired — 0 goal(s): []
 UI ready. Network_Manager is:Network_Manager:<Node#192803767900>
 Spawned player for peer:1at(220.0, 760.0)
@@ -160,7 +160,7 @@ PASS Existing inventory API stages equipped-item persistence
 [HUD] goals_changed fired — 2 goal(s): ["Specimen: Haruan", "Mixed Fish Samples: 3 / 5"]
 PASS Checkpoint refuses a coordinate embedded in the ground
 PASS Checkpoint records a safe campaign coordinate
-PASS Manual save validates full player, academic, spell and quest state: 
+PASS Manual save validates full player, academic, spell and quest state:
 PASS Slot metadata comes from real saved state
 PASS Manual and autosave destinations are separate
 PASS Repeated synchronous saves serialize without concurrent writes
@@ -186,14 +186,15 @@ PASS Load clears temporary effects and restores control
 PASS Position restores only after production player initialization
 PASS Fixture repaired explicitly for fresh-process verification
 PASS Failed temporary write preserves the previous primary bytes
+PASS Oversized writes refuse before touching the previous primary
 PASS Legacy Quest V2 can be explicitly imported into an empty profile
 PASS Legacy import preserves claims, receipts and original file
 PASS Legacy missing spell equipment and academics use explicit safe defaults
 [HUD] goals_changed fired — 0 goal(s): []
 [HUD] goals_changed fired — 0 goal(s): []
 Phone enabled
-AppList node: AppList:<Control#316049199739>
-Screen node: PhoneBG:<Panel#315982090871>
+AppList node: AppList:<Control#316250526331>
+Screen node: PhoneBG:<Panel#316183417463>
 [HUD] goals_changed fired — 0 goal(s): []
 UI ready. Network_Manager is:Network_Manager:<Node#192803767900>
 Spawned player for peer:1at(220.0, 760.0)
@@ -204,7 +205,7 @@ PASS Replacement starts clean and does not retain the old autosave
 WARNING: res://components/dungeon/key/key.tscn:4 - ext_resource, invalid UID: uid://cu6j36h4d1f3g - using text path instead: res://assets/temp/cratebox.png
      at: load (scene/resources/resource_format_text.cpp:501)
      GDScript backtrace (most recent call first):
-         [0] _write_process (res://tests/combat-feedback-save-v1.gd:132)
+         [0] _write_process (res://tests/combat-feedback-save-v1.gd:134)
          [1] new_game (res://autoloads/save-manager.gd:297)
          [2] _restore (res://autoloads/save-manager.gd:250)
 [HUD] goals_changed fired — 0 goal(s): []
@@ -217,10 +218,10 @@ PASS Multiplayer blocks local campaign saving and loading
 WARNING: res://components/NPCs/enemies/boss/boss.tscn:5 - ext_resource, invalid UID: uid://bqbot7ncx7r8f - using text path instead: res://assets/temp/player-temp-right.png
      at: load (scene/resources/resource_format_text.cpp:501)
      GDScript backtrace (most recent call first):
-         [0] _write_process (res://tests/combat-feedback-save-v1.gd:153)
+         [0] _write_process (res://tests/combat-feedback-save-v1.gd:155)
 Phone enabled
-AppList node: AppList:<Control#336232189771>
-Screen node: PhoneBG:<Panel#336165080800>
+AppList node: AppList:<Control#336467070795>
+Screen node: PhoneBG:<Panel#336399961824>
 [HUD] goals_changed fired — 0 goal(s): []
 UI ready. Network_Manager is:Network_Manager:<Node#192803767900>
 ERROR: No multiplayer peer is assigned. Unable to get unique ID.
@@ -366,8 +367,8 @@ ERROR: No multiplayer peer is assigned. Unable to get unique ID.
        [5] _restore (res://autoloads/save-manager.gd:221)
 [HUD] goals_changed fired — 0 goal(s): []
 Phone enabled
-AppList node: AppList:<Control#394969223583>
-Screen node: PhoneBG:<Panel#394902114828>
+AppList node: AppList:<Control#395975856543>
+Screen node: PhoneBG:<Panel#395908747788>
 [HUD] goals_changed fired — 0 goal(s): []
 UI ready. Network_Manager is:Network_Manager:<Node#192803767900>
 ERROR: No multiplayer peer is assigned. Unable to get unique ID.
@@ -454,8 +455,8 @@ ERROR: No multiplayer peer is assigned. Unable to get unique ID.
        [5] _restore (res://autoloads/save-manager.gd:221)
 [HUD] goals_changed fired — 0 goal(s): []
 Phone enabled
-AppList node: AppList:<Control#438556430114>
-Screen node: PhoneBG:<Panel#438489321246>
+AppList node: AppList:<Control#439965716258>
+Screen node: PhoneBG:<Panel#439898607390>
 [HUD] goals_changed fired — 0 goal(s): []
 UI ready. Network_Manager is:Network_Manager:<Node#192803767900>
 ERROR: No multiplayer peer is assigned. Unable to get unique ID.
@@ -483,7 +484,7 @@ ERROR: No multiplayer peer is assigned. Unable to get unique ID.
 [HUD] goals_changed fired — 0 goal(s): []
 [HUD] goals_changed fired — 0 goal(s): []
 SAVE_V1_PREVIEW: 22 actual renderer captures saved to res://docs/previews/combat-save-v1/
-COMBAT_FEEDBACK_SAVE_V1: 59 checks, 0 failures
+COMBAT_FEEDBACK_SAVE_V1: 60 checks, 0 failures
 WARNING: 58 ObjectDB instances were leaked at exit (run with `--verbose` for details).
    at: cleanup (core/object/object.cpp:2536)
 ERROR: 25 resources still in use at exit (run with --verbose for details).

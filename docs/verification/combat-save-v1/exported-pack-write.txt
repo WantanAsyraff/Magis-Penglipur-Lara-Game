@@ -57,8 +57,8 @@ WARNING: Camera2D overridden to physics process mode due to use of physics inter
          [0] spawn_player_for_peer (res://autoloads/player-manager.gd:67)
          [1] _deferred_setup (res://data/worlds/zone-root.gd:33)
 Phone enabled
-AppList node: AppList:<Control#262009785907>
-Screen node: PhoneBG:<Panel#261942677039>
+AppList node: AppList:<Control#262110449203>
+Screen node: PhoneBG:<Panel#262043340335>
 [HUD] goals_changed fired — 0 goal(s): []
 UI ready. Network_Manager is:Network_Manager:<Node#180858390106>
 Spawned player for peer:1at(220.0, 760.0)
@@ -112,7 +112,7 @@ PASS Existing inventory API stages equipped-item persistence
 [HUD] goals_changed fired — 2 goal(s): ["Specimen: Haruan", "Mixed Fish Samples: 3 / 5"]
 PASS Checkpoint refuses a coordinate embedded in the ground
 PASS Checkpoint records a safe campaign coordinate
-PASS Manual save validates full player, academic, spell and quest state: 
+PASS Manual save validates full player, academic, spell and quest state:
 PASS Slot metadata comes from real saved state
 PASS Manual and autosave destinations are separate
 PASS Repeated synchronous saves serialize without concurrent writes
@@ -138,14 +138,15 @@ PASS Load clears temporary effects and restores control
 PASS Position restores only after production player initialization
 PASS Fixture repaired explicitly for fresh-process verification
 PASS Failed temporary write preserves the previous primary bytes
+PASS Oversized writes refuse before touching the previous primary
 PASS Legacy Quest V2 can be explicitly imported into an empty profile
 PASS Legacy import preserves claims, receipts and original file
 PASS Legacy missing spell equipment and academics use explicit safe defaults
 [HUD] goals_changed fired — 0 goal(s): []
 [HUD] goals_changed fired — 0 goal(s): []
 Phone enabled
-AppList node: AppList:<Control#296671515327>
-Screen node: PhoneBG:<Panel#296604406459>
+AppList node: AppList:<Control#296805733055>
+Screen node: PhoneBG:<Panel#296738624187>
 [HUD] goals_changed fired — 0 goal(s): []
 UI ready. Network_Manager is:Network_Manager:<Node#180858390106>
 Spawned player for peer:1at(220.0, 760.0)
@@ -161,8 +162,8 @@ PASS A collected key stays absent when its authored node is recreated
 PASS Multiplayer boundary fixture opens a local ephemeral peer
 PASS Multiplayer blocks local campaign saving and loading
 Phone enabled
-AppList node: AppList:<Control#315881426826>
-Screen node: PhoneBG:<Panel#315814317960>
+AppList node: AppList:<Control#316049198986>
+Screen node: PhoneBG:<Panel#315982090120>
 [HUD] goals_changed fired — 0 goal(s): []
 UI ready. Network_Manager is:Network_Manager:<Node#180858390106>
 ERROR: No multiplayer peer is assigned. Unable to get unique ID.
@@ -241,7 +242,7 @@ ERROR: No multiplayer peer is assigned. Unable to get unique ID.
        [4] _apply (res://autoloads/save-manager.gd:255)
        [5] _restore (res://autoloads/save-manager.gd:221)
 PASS Campaign can be restored after the standalone boss room
-COMBAT_FEEDBACK_SAVE_V1: 59 checks, 0 failures
+COMBAT_FEEDBACK_SAVE_V1: 60 checks, 0 failures
 ERROR: No multiplayer peer is assigned. Unable to get unique ID.
    at: get_unique_id (modules/multiplayer/scene_multiplayer.cpp:531)
    GDScript backtrace (most recent call first):

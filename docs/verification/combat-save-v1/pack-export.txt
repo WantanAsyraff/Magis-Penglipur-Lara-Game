@@ -35,62 +35,6 @@ WARNING: res://components/NPCs/enemies/zalam-manifestations/bunga/bunga.tscn:4 -
 [  83% ] first_scan_filesystem | Starting file scan...
 [ DONE ] first_scan_filesystem
 
-[   0% ] _update_scan_actions | Started Scanning actions... (22 steps)
-[   0% ] _update_scan_actions | 01-buffs-stacks-1280.png
-[   4% ] _update_scan_actions | 01-buffs-stacks-1920.png
-[   8% ] _update_scan_actions | 02-debuffs-1280.png
-[  13% ] _update_scan_actions | 02-debuffs-1920.png
-[  17% ] _update_scan_actions | 03-minimal-assistant-1280.png
-[  21% ] _update_scan_actions | 03-minimal-assistant-1920.png
-[  26% ] _update_scan_actions | 04-accepted-input-particles-1280.png
-[  30% ] _update_scan_actions | 04-accepted-input-particles-1920.png
-[  34% ] _update_scan_actions | 04b-particle-closeup-1280.png
-[  39% ] _update_scan_actions | 04b-particle-closeup-1920.png
-[  43% ] _update_scan_actions | 05-expired-1280.png
-[  47% ] _update_scan_actions | 05-expired-1920.png
-[  52% ] _update_scan_actions | 06-manual-save-confirmation-1280.png
-[  56% ] _update_scan_actions | 06-manual-save-confirmation-1920.png
-[  60% ] _update_scan_actions | 07-new-game-1280.png
-[  65% ] _update_scan_actions | 07-new-game-1920.png
-[  69% ] _update_scan_actions | 08-load-slots-1280.png
-[  73% ] _update_scan_actions | 08-load-slots-1920.png
-[  78% ] _update_scan_actions | 09-restored-scene-1280.png
-[  82% ] _update_scan_actions | 09-restored-scene-1920.png
-[  86% ] _update_scan_actions | 10-checkpoint-recovery-1280.png
-[  91% ] _update_scan_actions | 10-checkpoint-recovery-1920.png
-[ DONE ] _update_scan_actions
-
-[   0% ] reimport | Started (Re)Importing Assets (11 steps)
-[   0% ] reimport | Preparing files to reimport...
-[   8% ] reimport | Preparing files to reimport...
-[  16% ] reimport | Preparing files to reimport...
-[  25% ] reimport | Preparing files to reimport...
-[  33% ] reimport | Preparing files to reimport...
-[  41% ] reimport | Preparing files to reimport...
-[  50% ] reimport | Preparing files to reimport...
-[  58% ] reimport | Preparing files to reimport...
-[  66% ] reimport | Preparing files to reimport...
-[  75% ] reimport | Preparing files to reimport...
-[  83% ] reimport | Preparing files to reimport...
-[   0% ] reimport | Executing pre-reimport operations...
-[   0% ] reimport | 01-buffs-stacks-1280.png
-[   8% ] reimport | 01-buffs-stacks-1920.png
-[  16% ] reimport | 02-debuffs-1280.png
-[  25% ] reimport | 07-new-game-1280.png
-[  33% ] reimport | 07-new-game-1920.png
-[  41% ] reimport | 08-load-slots-1280.png
-[  50% ] reimport | 08-load-slots-1920.png
-[  58% ] reimport | 09-restored-scene-1280.png
-[  66% ] reimport | 09-restored-scene-1920.png
-[  75% ] reimport | 10-checkpoint-recovery-1280.png
-[  83% ] reimport | 10-checkpoint-recovery-1920.png
-[  91% ] reimport | Finalizing Asset Import...
-[ DONE ] reimport
-
-[   0% ] reimport | Started (Re)Importing Assets (11 steps)
-[   0% ] reimport | Executing post-reimport operations...
-[ DONE ] reimport
-
 [   0% ] savepack | Started Packing (102 steps)
 [   1% ] savepack | Storing File: res://addons/dialogic/Core/DialogicGameHandler.gdc
 [   1% ] savepack | Storing File: res://addons/dialogic/Core/DialogicResourceUtil.gdc

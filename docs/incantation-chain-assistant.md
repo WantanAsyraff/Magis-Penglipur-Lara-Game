@@ -138,3 +138,7 @@ Limits: existing project ObjectDB/resource-in-use shutdown diagnostics and the u
 - HUD: assistant, repertoire, and spell-slot scripts/scenes under `scenes/ui/spell-combat-ui/`.
 - Verification: `tests/incantation-assistant.gd/.tscn`, updated `tests/player-combo-chains.gd`, `tools/test-physics.py`, rendered preview script/scene under `scenes/spell-testing/`, and the lab's corrected clear/cancel help text. New scripts include engine-generated UID files.
 - Documentation: this document, Magis pipeline/report updates, and ten actual renderer PNGs under `docs/previews/incantation-assistant/`.
+
+## Combat feedback V1
+
+The assistant still renders only valid next-direction icons. The separate [status HUD](status-effects-hud.md) anchors bottom-left, while [accepted-input particles](incantation-input-feedback.md) originate on the player. Neither changes trie prediction, incantations or independent shared-prefix execution. Assistant mode and keybindings remain separate from character saves.

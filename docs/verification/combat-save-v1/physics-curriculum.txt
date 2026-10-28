@@ -1,0 +1,414 @@
+Godot Engine v4.7.2.stable.flathub.ed1daf0bf - https://godotengine.org
+
+WARNING: res://data/magis/spells/phys-force.tres:7 - ext_resource, invalid UID: uid://cnnad3qojgc2y - using text path instead: res://assets/temp/temp-mana.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://assets/custom-labels/ui-stats-label.tres:3 - ext_resource, invalid UID: uid://bid56dcwfjc8v - using text path instead: res://assets/font/Bitter/static/Bitter-Bold.ttf
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://scenes/ui/spell-combat-ui/repetoire.tscn:4 - ext_resource, invalid UID: uid://diiqo28q375lq - using text path instead: res://assets/ui/spells/RepetoireBook.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/NPCs/npc.tscn:4 - ext_resource, invalid UID: uid://doaygnck5qus5 - using text path instead: res://assets/temp/player-temp.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/platforms/temptilemap.tscn:3 - ext_resource, invalid UID: uid://157vauidtvr1 - using text path instead: res://assets/temp/platform.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/platforms/temptilemap.tscn:5 - ext_resource, invalid UID: uid://djldihdqsy2qq - using text path instead: res://assets/temp/classroom-temp1.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/platforms/temptilemap.tscn:6 - ext_resource, invalid UID: uid://clgvvrn3l1gqs - using text path instead: res://assets/temp/classroom-temp1-items.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/tilemaps/palleteTemp.tscn:3 - ext_resource, invalid UID: uid://cmrde1ocyibd0 - using text path instead: res://assets/temp/pallete.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/tilemaps/palleteTemp.tscn:4 - ext_resource, invalid UID: uid://clgvvrn3l1gqs - using text path instead: res://assets/temp/classroom-temp1-items.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/panels/tutorials/tutorial-panel.tscn:5 - ext_resource, invalid UID: uid://bid56dcwfjc8v - using text path instead: res://assets/font/Bitter/static/Bitter-Bold.ttf
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/NPCs/enemies/Enemy.tscn:12 - ext_resource, invalid UID: uid://caaqv80a8h88s - using text path instead: res://assets/temp/player-temp-left.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/NPCs/enemies/Enemy.tscn:14 - ext_resource, invalid UID: uid://bid56dcwfjc8v - using text path instead: res://assets/font/Bitter/static/Bitter-Bold.ttf
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/NPCs/enemies/zalam-manifestations/bunga/bunga.tscn:4 - ext_resource, invalid UID: uid://cdb2b3lesaux2 - using text path instead: res://assets/enemy/bunga-attack.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/NPCs/enemies/dummy/dummy-npc.tscn:3 - ext_resource, invalid UID: uid://yc3tgp66iwpq - using text path instead: res://assets/temp/dummy-temp.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] register_paths (res://autoloads/scene-registry.gd:32)
+         [1] _ready (res://autoloads/world-manifest.gd:18)
+WARNING: res://components/platforms/platform.tscn:3 - ext_resource, invalid UID: uid://157vauidtvr1 - using text path instead: res://assets/temp/platform.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] register_paths (res://autoloads/scene-registry.gd:32)
+         [1] _ready (res://autoloads/world-manifest.gd:18)
+WARNING: res://components/destructables/Box.tscn:4 - ext_resource, invalid UID: uid://cu6j36h4d1f3g - using text path instead: res://assets/temp/cratebox.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] register_paths (res://autoloads/scene-registry.gd:32)
+         [1] _ready (res://autoloads/world-manifest.gd:18)
+WARNING: res://scenes/spell-tree/spell-tree.tscn:8 - ext_resource, invalid UID: uid://bu1aqpqnok4e7 - using text path instead: res://assets/ui/spell-tree/field-title.svg
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] register_paths (res://autoloads/scene-registry.gd:32)
+         [1] _ready (res://autoloads/world-manifest.gd:18)
+─── WorldManifest: registered 35 scenes ───
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/abu-campus-entrance.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/abu-courtyard.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/dormitory/abu-dorm-room.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/dormitory/abu-dormitory-hallway.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/dueling-grounds-selection.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/dueling-grounds.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/dueling-grounds/dueling-selection.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/FLAC-courtyard.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/FLAC-entrance.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-one/FLAC-F1-central-hub.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-one/FLAC-F1-hallway.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-one/FLAC-F1-outside.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-one/FLAC-F1-receptionist-area.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-one/FLAC-F1-student-longue.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-three/FLAC-F3-central-hub.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-three/FLAC-F3-hallway-1.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-three/FLAC-F3-hallway-2-Science-Crafting.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-three/FLAC-F3-hallway-2.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-three/FLAC-F3-hallway-3.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-three/FLAC-F3-hallway-4.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-three/FLAC-F3-hallway-balcony.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-two/FLAC-F2-central-hub.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-two/FLAC-F2-hallway-1.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-two/FLAC-F2-hallway-3.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-two/FLAC-F2-hallway-4.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-two/FLAC-F2-hallway-balcony.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-two/FLAC-F2-hallway-2.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/spell-tree.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/story(legacy)/e-hailing.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/story(legacy)/missions-selection.tres
+  • res://data/worlds/hubs/chapters/chapter-1/subway-scene.tres
+  • res://data/worlds/hubs/chapters/prologue/yan-exam-tutorial.tres
+  • res://data/worlds/hubs/chapters/prologue/yan-prologue-house-entrance.tres
+  • res://data/worlds/hubs/the-echanted-forest(TEF)/deeper-forest/TEF-deeper-forest-area-east.tres
+  • res://data/worlds/hubs/the-echanted-forest(TEF)/deeper-forest/TEF-forest-entrance.tres
+─── WorldManifest: validating scene_ids ───
+WARNING:   ⚠ 'FLAC_F3_hallway_2_science_crafting' has uppercase letters
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _validate_scene_ids (res://autoloads/world-manifest.gd:58)
+         [1] _ready (res://autoloads/world-manifest.gd:24)
+  1 issue(s) found
+[LyricsOverlay] _ready called
+[LyricsOverlay] Label node found: true
+[LyricsOverlay] Lyrics enabled: true
+[LyricsOverlay] Connected to LyricsManager.lyric_changed
+PASS 12 subjects form a valid prerequisite DAG
+PASS unique valid resource: Force
+PASS unique incantation: Force
+PASS confirmation resolves without prefix casts: Force
+PASS unique valid resource: Strike
+PASS unique incantation: Strike
+PASS confirmation resolves without prefix casts: Strike
+PASS unique valid resource: Crash
+PASS unique incantation: Crash
+PASS confirmation resolves without prefix casts: Crash
+PASS unique valid resource: Resonate
+PASS unique incantation: Resonate
+PASS confirmation resolves without prefix casts: Resonate
+PASS unique valid resource: Shatterwave
+PASS unique incantation: Shatterwave
+PASS confirmation resolves without prefix casts: Shatterwave
+PASS unique valid resource: Collapse
+PASS unique incantation: Collapse
+PASS confirmation resolves without prefix casts: Collapse
+PASS unique valid resource: Terminal
+PASS unique incantation: Terminal
+PASS confirmation resolves without prefix casts: Terminal
+PASS unique valid resource: Vector Reversal
+PASS unique incantation: Vector Reversal
+PASS confirmation resolves without prefix casts: Vector Reversal
+PASS unique valid resource: Inertia Vault
+PASS unique incantation: Inertia Vault
+PASS confirmation resolves without prefix casts: Inertia Vault
+PASS unique valid resource: Impact Prism
+PASS unique incantation: Impact Prism
+PASS confirmation resolves without prefix casts: Impact Prism
+PASS unique valid resource: Momentum Anchor
+PASS unique incantation: Momentum Anchor
+PASS confirmation resolves without prefix casts: Momentum Anchor
+PASS unique valid resource: Angular Vortex
+PASS unique incantation: Angular Vortex
+PASS confirmation resolves without prefix casts: Angular Vortex
+PASS unique valid resource: Torque Lock
+PASS unique incantation: Torque Lock
+PASS confirmation resolves without prefix casts: Torque Lock
+PASS unique valid resource: Gyroscopic Shield
+PASS unique incantation: Gyroscopic Shield
+PASS confirmation resolves without prefix casts: Gyroscopic Shield
+PASS unique valid resource: Kinetic Chill
+PASS unique incantation: Kinetic Chill
+PASS confirmation resolves without prefix casts: Kinetic Chill
+PASS unique valid resource: Thermal Bloom
+PASS unique incantation: Thermal Bloom
+PASS confirmation resolves without prefix casts: Thermal Bloom
+PASS unique valid resource: Entropy Leak
+PASS unique incantation: Entropy Leak
+PASS confirmation resolves without prefix casts: Entropy Leak
+PASS unique valid resource: Heat Engine
+PASS unique incantation: Heat Engine
+PASS confirmation resolves without prefix casts: Heat Engine
+PASS unique valid resource: Static Arc
+PASS unique incantation: Static Arc
+PASS confirmation resolves without prefix casts: Static Arc
+PASS unique valid resource: Faraday Cage
+PASS unique incantation: Faraday Cage
+PASS confirmation resolves without prefix casts: Faraday Cage
+PASS unique valid resource: Magnetic Tether
+PASS unique incantation: Magnetic Tether
+PASS confirmation resolves without prefix casts: Magnetic Tether
+PASS unique valid resource: Induction Grid
+PASS unique incantation: Induction Grid
+PASS confirmation resolves without prefix casts: Induction Grid
+PASS unique valid resource: Refraction Beam
+PASS unique incantation: Refraction Beam
+PASS confirmation resolves without prefix casts: Refraction Beam
+PASS unique valid resource: Total Internal Reflection
+PASS unique incantation: Total Internal Reflection
+PASS confirmation resolves without prefix casts: Total Internal Reflection
+PASS unique valid resource: Prism Split
+PASS unique incantation: Prism Split
+PASS confirmation resolves without prefix casts: Prism Split
+PASS unique valid resource: Optical Trap
+PASS unique incantation: Optical Trap
+PASS confirmation resolves without prefix casts: Optical Trap
+PASS unique valid resource: Pressure Jet
+PASS unique incantation: Pressure Jet
+PASS confirmation resolves without prefix casts: Pressure Jet
+PASS unique valid resource: Buoyancy Field
+PASS unique incantation: Buoyancy Field
+PASS confirmation resolves without prefix casts: Buoyancy Field
+PASS unique valid resource: Vortex Well
+PASS unique incantation: Vortex Well
+PASS confirmation resolves without prefix casts: Vortex Well
+PASS unique valid resource: Elastic Barrier
+PASS unique incantation: Elastic Barrier
+PASS confirmation resolves without prefix casts: Elastic Barrier
+PASS unique valid resource: Brittle Fracture
+PASS unique incantation: Brittle Fracture
+PASS confirmation resolves without prefix casts: Brittle Fracture
+PASS unique valid resource: Structural Fabrication
+PASS unique incantation: Structural Fabrication
+PASS confirmation resolves without prefix casts: Structural Fabrication
+PASS unique valid resource: Resonance Threshold
+PASS unique incantation: Resonance Threshold
+PASS confirmation resolves without prefix casts: Resonance Threshold
+PASS unique valid resource: Sonic Pulse
+PASS unique incantation: Sonic Pulse
+PASS confirmation resolves without prefix casts: Sonic Pulse
+PASS unique valid resource: Harmonic Stabilization
+PASS unique incantation: Harmonic Stabilization
+PASS confirmation resolves without prefix casts: Harmonic Stabilization
+PASS unique valid resource: Phase Cancellation
+PASS unique incantation: Phase Cancellation
+PASS confirmation resolves without prefix casts: Phase Cancellation
+PASS unique valid resource: Tunneling Step
+PASS unique incantation: Tunneling Step
+PASS confirmation resolves without prefix casts: Tunneling Step
+PASS unique valid resource: Probabilistic Echo
+PASS unique incantation: Probabilistic Echo
+PASS confirmation resolves without prefix casts: Probabilistic Echo
+PASS unique valid resource: Decoherence Trap
+PASS unique incantation: Decoherence Trap
+PASS confirmation resolves without prefix casts: Decoherence Trap
+PASS unique valid resource: Gravitational Lens
+PASS unique incantation: Gravitational Lens
+PASS confirmation resolves without prefix casts: Gravitational Lens
+PASS unique valid resource: Gravitational Well
+PASS unique incantation: Gravitational Well
+PASS confirmation resolves without prefix casts: Gravitational Well
+PASS unique valid resource: Time Dilation Zone
+PASS unique incantation: Time Dilation Zone
+PASS confirmation resolves without prefix casts: Time Dilation Zone
+PASS 42 spells are connected once each
+PASS legacy path retained: phys-force
+PASS legacy path retained: phys-strike
+PASS legacy path retained: phys-crash
+PASS legacy path retained: phys-resonate
+PASS legacy path retained: phys-shatterwave
+PASS legacy path retained: phys-collapse
+PASS legacy path retained: phys-terminal
+PASS legacy path retained: thermal-kinetic
+PASS production cast completes and spends mana: Force
+PASS production cast completes and spends mana: Strike
+PASS production cast completes and spends mana: Crash
+PASS production cast completes and spends mana: Resonate
+PASS production cast completes and spends mana: Shatterwave
+PASS production cast completes and spends mana: Collapse
+PASS production cast completes and spends mana: Terminal
+PASS production cast completes and spends mana: Vector Reversal
+PASS production cast completes and spends mana: Inertia Vault
+PASS production cast completes and spends mana: Impact Prism
+PASS production cast completes and spends mana: Momentum Anchor
+PASS production cast completes and spends mana: Angular Vortex
+PASS production cast completes and spends mana: Torque Lock
+PASS production cast completes and spends mana: Gyroscopic Shield
+PASS production cast completes and spends mana: Kinetic Chill
+PASS production cast completes and spends mana: Thermal Bloom
+PASS production cast completes and spends mana: Entropy Leak
+PASS production cast completes and spends mana: Heat Engine
+PASS production cast completes and spends mana: Static Arc
+PASS production cast completes and spends mana: Faraday Cage
+PASS production cast completes and spends mana: Magnetic Tether
+PASS production cast completes and spends mana: Induction Grid
+PASS production cast completes and spends mana: Refraction Beam
+PASS production cast completes and spends mana: Total Internal Reflection
+PASS production cast completes and spends mana: Prism Split
+PASS production cast completes and spends mana: Optical Trap
+PASS production cast completes and spends mana: Pressure Jet
+PASS production cast completes and spends mana: Buoyancy Field
+PASS production cast completes and spends mana: Vortex Well
+PASS production cast completes and spends mana: Elastic Barrier
+PASS production cast completes and spends mana: Brittle Fracture
+PASS production cast completes and spends mana: Structural Fabrication
+PASS production cast completes and spends mana: Resonance Threshold
+PASS production cast completes and spends mana: Sonic Pulse
+PASS production cast completes and spends mana: Harmonic Stabilization
+PASS production cast completes and spends mana: Phase Cancellation
+PASS production cast completes and spends mana: Tunneling Step
+PASS production cast completes and spends mana: Probabilistic Echo
+PASS production cast completes and spends mana: Decoherence Trap
+PASS production cast completes and spends mana: Gravitational Lens
+PASS production cast completes and spends mana: Gravitational Well
+PASS production cast completes and spends mana: Time Dilation Zone
+PASS Resonate independently stacks
+PASS Resonate -> Shatterwave consumes status and amplifies
+PASS Chill -> Bloom thermal shock consumes cooling
+PASS Brittle -> Crash structural amplification
+PASS Tether charges and attracts explicitly magnetic target
+PASS Static Arc charged bonus and exactly three additional targets
+PASS Nonmagnetic target receives magical charge without attraction
+PASS Threshold fires once on third impact
+PASS Threshold does not recursively repeat
+PASS Impact Prism reacts to a damaging hit
+PASS Reversal transfers heading, owner and collision mask
+PASS Reversed projectile damages original team
+PASS Lens changes projectile trajectory
+PASS Dilation locally slows actors and projectiles
+PASS Projectile speed recovers outside dilation
+PASS Phase Cancellation cancels eligible wave projectile
+PASS Harmonic healing and selected status removal
+PASS Heat Engine grants reusable stat buffs
+PASS Stat buffs expire
+PASS Pressure Jet emits force during channel
+PASS Live channel charges elapsed mana
+PASS Sonic Pulse interrupts channel without refunding delivered payload
+PASS Echo repeats half-damage Force once and preserves eligible history
+PASS Echo without history fails safely and refunds
+PASS Area/trap actually executes: phys-thermal-bloom
+PASS Area/trap cleanup: phys-thermal-bloom
+PASS Area/trap actually executes: phys-induction-grid
+PASS Area/trap cleanup: phys-induction-grid
+PASS Area/trap actually executes: phys-decoherence-trap
+PASS Area/trap cleanup: phys-decoherence-trap
+PASS Construct has configured geometry: phys-gyroscopic-shield
+PASS Construct expires: phys-gyroscopic-shield
+PASS Construct has configured geometry: phys-faraday-cage
+PASS Construct expires: phys-faraday-cage
+PASS Construct has configured geometry: phys-elastic-barrier
+PASS Construct expires: phys-elastic-barrier
+PASS Construct has configured geometry: phys-structural-fabrication
+PASS Construct expires: phys-structural-fabrication
+PASS Construct has configured geometry: phys-total-internal-reflection
+PASS Construct expires: phys-total-internal-reflection
+PASS Teleport rejects obstructed swept path
+PASS Terrain occludes beam damage
+PASS Configured optical interface turns beam
+PASS Teleport succeeds in open space
+PASS Prism Split emits three bounded paths
+PASS Direct target fails safely without target
+PASS Cast state remains isolated
+PASS Inertia Vault physically traverses despite controller velocity replacement
+PASS Gravity grouping and thermal zone compose without combined spell code
+PASS Gyroscopic construct physically intercepts hostile projectile
+PASS Fabricated platform blocks body motion
+PASS Overlapping solid construct is rejected
+PASS Optical shield returns beam with defending team ownership
+Global learned spell: Force
+Global learned spell: Strike
+Global learned spell: Crash
+PASS Progression purchases PHY-001
+PASS Completed subject never charges twice: PHY-001
+Global learned spell: Resonate
+Global learned spell: Shatterwave
+Global learned spell: Collapse
+Global learned spell: Terminal
+PASS Progression purchases PHY-002
+PASS Completed subject never charges twice: PHY-002
+Global learned spell: Vector Reversal
+Global learned spell: Inertia Vault
+Global learned spell: Impact Prism
+Global learned spell: Momentum Anchor
+PASS Progression purchases PHY-003
+PASS Completed subject never charges twice: PHY-003
+Global learned spell: Angular Vortex
+Global learned spell: Torque Lock
+Global learned spell: Gyroscopic Shield
+PASS Progression purchases PHY-004
+PASS Completed subject never charges twice: PHY-004
+Global learned spell: Kinetic Chill
+Global learned spell: Thermal Bloom
+Global learned spell: Entropy Leak
+Global learned spell: Heat Engine
+PASS Progression purchases PHY-005
+PASS Completed subject never charges twice: PHY-005
+Global learned spell: Static Arc
+Global learned spell: Faraday Cage
+Global learned spell: Magnetic Tether
+Global learned spell: Induction Grid
+PASS Progression purchases PHY-006
+PASS Completed subject never charges twice: PHY-006
+Global learned spell: Refraction Beam
+Global learned spell: Total Internal Reflection
+Global learned spell: Prism Split
+Global learned spell: Optical Trap
+PASS Progression purchases PHY-007
+PASS Completed subject never charges twice: PHY-007
+Global learned spell: Pressure Jet
+Global learned spell: Buoyancy Field
+Global learned spell: Vortex Well
+PASS Progression purchases PHY-008
+PASS Completed subject never charges twice: PHY-008
+Global learned spell: Elastic Barrier
+Global learned spell: Brittle Fracture
+Global learned spell: Structural Fabrication
+Global learned spell: Resonance Threshold
+PASS Progression purchases PHY-009
+PASS Completed subject never charges twice: PHY-009
+Global learned spell: Sonic Pulse
+Global learned spell: Harmonic Stabilization
+Global learned spell: Phase Cancellation
+PASS Progression purchases PHY-010
+PASS Completed subject never charges twice: PHY-010
+Global learned spell: Tunneling Step
+Global learned spell: Probabilistic Echo
+Global learned spell: Decoherence Trap
+PASS Progression purchases PHY-011
+PASS Completed subject never charges twice: PHY-011
+Global learned spell: Gravitational Lens
+Global learned spell: Gravitational Well
+Global learned spell: Time Dilation Zone
+PASS Progression purchases PHY-012
+PASS Completed subject never charges twice: PHY-012
+PASS All twelve subjects have explicit completion
+PASS Persistent slot 0 accepted
+PASS Persistent slot 1 accepted
+PASS Persistent slot 2 accepted
+PASS Persistent slot 3 accepted
+PASS Persistent slot 4 accepted
+PASS Persistent slot 5 accepted
+PASS Persistent slot 6 accepted
+PASS Persistent slot 7 accepted
+PASS Persistent slot 8 accepted
+PASS Persistent slot 9 accepted
+PASS Persistent slot 10 accepted
+PASS Persistent slot 11 accepted
+PASS Thirteenth persistent node rejected
+PASS Invalid live delivery configuration rejected
+PASS Production spell tree builds twelve nodes and scroll bounds
+PASS Curriculum suite reached its final assertion
+PHYSICS_CURRICULUM: 272 checks, 0 failures
+WARNING: 58 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 25 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

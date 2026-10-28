@@ -1,0 +1,156 @@
+Godot Engine v4.7.2.stable.flathub.ed1daf0bf - https://godotengine.org
+
+WARNING: res://data/magis/spells/phys-force.tres:7 - ext_resource, invalid UID: uid://cnnad3qojgc2y - using text path instead: res://assets/temp/temp-mana.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://assets/custom-labels/ui-stats-label.tres:3 - ext_resource, invalid UID: uid://bid56dcwfjc8v - using text path instead: res://assets/font/Bitter/static/Bitter-Bold.ttf
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://scenes/ui/spell-combat-ui/repetoire.tscn:4 - ext_resource, invalid UID: uid://diiqo28q375lq - using text path instead: res://assets/ui/spells/RepetoireBook.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/NPCs/npc.tscn:4 - ext_resource, invalid UID: uid://doaygnck5qus5 - using text path instead: res://assets/temp/player-temp.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/platforms/temptilemap.tscn:3 - ext_resource, invalid UID: uid://157vauidtvr1 - using text path instead: res://assets/temp/platform.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/platforms/temptilemap.tscn:5 - ext_resource, invalid UID: uid://djldihdqsy2qq - using text path instead: res://assets/temp/classroom-temp1.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/platforms/temptilemap.tscn:6 - ext_resource, invalid UID: uid://clgvvrn3l1gqs - using text path instead: res://assets/temp/classroom-temp1-items.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/tilemaps/palleteTemp.tscn:3 - ext_resource, invalid UID: uid://cmrde1ocyibd0 - using text path instead: res://assets/temp/pallete.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/tilemaps/palleteTemp.tscn:4 - ext_resource, invalid UID: uid://clgvvrn3l1gqs - using text path instead: res://assets/temp/classroom-temp1-items.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/panels/tutorials/tutorial-panel.tscn:5 - ext_resource, invalid UID: uid://bid56dcwfjc8v - using text path instead: res://assets/font/Bitter/static/Bitter-Bold.ttf
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/NPCs/enemies/Enemy.tscn:12 - ext_resource, invalid UID: uid://caaqv80a8h88s - using text path instead: res://assets/temp/player-temp-left.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/NPCs/enemies/Enemy.tscn:14 - ext_resource, invalid UID: uid://bid56dcwfjc8v - using text path instead: res://assets/font/Bitter/static/Bitter-Bold.ttf
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/NPCs/enemies/zalam-manifestations/bunga/bunga.tscn:4 - ext_resource, invalid UID: uid://cdb2b3lesaux2 - using text path instead: res://assets/enemy/bunga-attack.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/NPCs/enemies/dummy/dummy-npc.tscn:3 - ext_resource, invalid UID: uid://yc3tgp66iwpq - using text path instead: res://assets/temp/dummy-temp.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] register_paths (res://autoloads/scene-registry.gd:32)
+         [1] _ready (res://autoloads/world-manifest.gd:18)
+WARNING: res://components/platforms/platform.tscn:3 - ext_resource, invalid UID: uid://157vauidtvr1 - using text path instead: res://assets/temp/platform.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] register_paths (res://autoloads/scene-registry.gd:32)
+         [1] _ready (res://autoloads/world-manifest.gd:18)
+WARNING: res://components/destructables/Box.tscn:4 - ext_resource, invalid UID: uid://cu6j36h4d1f3g - using text path instead: res://assets/temp/cratebox.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] register_paths (res://autoloads/scene-registry.gd:32)
+         [1] _ready (res://autoloads/world-manifest.gd:18)
+WARNING: res://scenes/spell-tree/spell-tree.tscn:8 - ext_resource, invalid UID: uid://bu1aqpqnok4e7 - using text path instead: res://assets/ui/spell-tree/field-title.svg
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] register_paths (res://autoloads/scene-registry.gd:32)
+         [1] _ready (res://autoloads/world-manifest.gd:18)
+─── WorldManifest: registered 35 scenes ───
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/abu-campus-entrance.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/abu-courtyard.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/dormitory/abu-dorm-room.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/dormitory/abu-dormitory-hallway.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/dueling-grounds-selection.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/dueling-grounds.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/dueling-grounds/dueling-selection.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/FLAC-courtyard.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/FLAC-entrance.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-one/FLAC-F1-central-hub.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-one/FLAC-F1-hallway.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-one/FLAC-F1-outside.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-one/FLAC-F1-receptionist-area.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-one/FLAC-F1-student-longue.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-three/FLAC-F3-central-hub.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-three/FLAC-F3-hallway-1.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-three/FLAC-F3-hallway-2-Science-Crafting.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-three/FLAC-F3-hallway-2.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-three/FLAC-F3-hallway-3.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-three/FLAC-F3-hallway-4.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-three/FLAC-F3-hallway-balcony.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-two/FLAC-F2-central-hub.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-two/FLAC-F2-hallway-1.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-two/FLAC-F2-hallway-3.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-two/FLAC-F2-hallway-4.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-two/FLAC-F2-hallway-balcony.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-two/FLAC-F2-hallway-2.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/spell-tree.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/story(legacy)/e-hailing.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/story(legacy)/missions-selection.tres
+  • res://data/worlds/hubs/chapters/chapter-1/subway-scene.tres
+  • res://data/worlds/hubs/chapters/prologue/yan-exam-tutorial.tres
+  • res://data/worlds/hubs/chapters/prologue/yan-prologue-house-entrance.tres
+  • res://data/worlds/hubs/the-echanted-forest(TEF)/deeper-forest/TEF-deeper-forest-area-east.tres
+  • res://data/worlds/hubs/the-echanted-forest(TEF)/deeper-forest/TEF-forest-entrance.tres
+─── WorldManifest: validating scene_ids ───
+WARNING:   ⚠ 'FLAC_F3_hallway_2_science_crafting' has uppercase letters
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _validate_scene_ids (res://autoloads/world-manifest.gd:58)
+         [1] _ready (res://autoloads/world-manifest.gd:24)
+  1 issue(s) found
+[LyricsOverlay] _ready called
+[LyricsOverlay] Label node found: true
+[LyricsOverlay] Lyrics enabled: true
+[LyricsOverlay] Connected to LyricsManager.lyric_changed
+PASS Player starts with 9999 XP
+PASS Player starts at four times health, 400/400
+WARNING: Camera2D overridden to physics process mode due to use of physics interpolation.
+     at: _update_process_callback (scene/2d/camera_2d.cpp:88)
+     GDScript backtrace (most recent call first):
+         [0] _ready (res://tests/player-combo-chains.gd:32)
+Phone enabled
+AppList node: AppList:<Control#269140102613>
+Screen node: PhoneBG:<Panel#269072993745>
+[HUD] goals_changed fired — 0 goal(s): []
+UI ready. Network_Manager is:Network_Manager:<Node#192921208410>
+PASS Production player defaults to chained auto-casting
+PASS An incomplete combo never casts
+[HUD] goals_changed fired — 0 goal(s): []
+[HUD] goals_changed fired — 0 goal(s): []
+PASS Final arrow triggers the production cast without confirmation
+PASS Completed prefix retains its longer-combo continuation
+[HUD] goals_changed fired — 0 goal(s): []
+[HUD] goals_changed fired — 0 goal(s): []
+PASS Longer combo also casts once when completed
+[HUD] goals_changed fired — 0 goal(s): []
+[HUD] goals_changed fired — 0 goal(s): []
+PASS Another full combo casts without closing stance
+[HUD] goals_changed fired — 0 goal(s): []
+[HUD] goals_changed fired — 0 goal(s): []
+PASS An independent combo keeps its first arrow after a completed prefix
+[HUD] goals_changed fired — 0 goal(s): []
+[HUD] goals_changed fired — 0 goal(s): []
+PASS Independent follow-up combo completes normally
+PASS Cooling-down prefix does not erase the path to a longer combo
+[HUD] goals_changed fired — 0 goal(s): []
+[HUD] goals_changed fired — 0 goal(s): []
+PASS Available longer combo survives its prefix's cooldown rejection
+PASS Fast completed combos queue while the first spell prepares
+PASS Pending combos do not precharge mana
+[HUD] goals_changed fired — 0 goal(s): []
+[HUD] goals_changed fired — 0 goal(s): []
+[HUD] goals_changed fired — 0 goal(s): []
+[HUD] goals_changed fired — 0 goal(s): []
+[HUD] goals_changed fired — 0 goal(s): []
+[HUD] goals_changed fired — 0 goal(s): []
+PASS Queued combo chain dispatches once each in input order
+PASS Each queued spell pays mana when it starts
+[HUD] goals_changed fired — 0 goal(s): []
+[HUD] goals_changed fired — 0 goal(s): []
+[HUD] goals_changed fired — 0 goal(s): []
+[HUD] goals_changed fired — 0 goal(s): []
+PASS Unequipped pending spell is rejected without dropping the next queued combo
+[HUD] goals_changed fired — 0 goal(s): []
+[HUD] goals_changed fired — 0 goal(s): []
+PASS Unaffordable prefix cannot block an affordable longer combo
+PASS Clear preserves accepted requests and their upfront payment
+PASS Explicit cancellation clears queue and refunds preparation
+PASS A partial mistyped combo cannot silently restart another spell
+PASS Explicit confirmation mode remains available
+PASS Damage and healing respect the new 400 HP cap
+PLAYER_COMBO_CHAINS: 23 checks, 0 failures
+WARNING: 58 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 25 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

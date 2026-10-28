@@ -38,3 +38,10 @@ When a subsystem becomes stable, give it its own file and link it from here.
 - [Authoring guide](spell-authoring-guide.md)
 - [Migration guide](spell-migration-guide.md)
 - [Implementation and verification report](spell-pipeline-v2-report.md)
+
+## Combat feedback and campaign persistence
+
+- [Status effects HUD](status-effects-hud.md)
+- [Accepted incantation feedback](incantation-input-feedback.md)
+- [Save system V1](save-system-v1.md)
+- [Verification and rendered evidence](combat-save-v1-verification.md)

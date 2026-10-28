@@ -1,0 +1,269 @@
+Godot Engine v4.7.2.stable.flathub.ed1daf0bf - https://godotengine.org
+
+WARNING: res://data/magis/spells/phys-force.tres:7 - ext_resource, invalid UID: uid://cnnad3qojgc2y - using text path instead: res://assets/temp/temp-mana.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://assets/custom-labels/ui-stats-label.tres:3 - ext_resource, invalid UID: uid://bid56dcwfjc8v - using text path instead: res://assets/font/Bitter/static/Bitter-Bold.ttf
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://scenes/ui/spell-combat-ui/repetoire.tscn:4 - ext_resource, invalid UID: uid://diiqo28q375lq - using text path instead: res://assets/ui/spells/RepetoireBook.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/NPCs/npc.tscn:4 - ext_resource, invalid UID: uid://doaygnck5qus5 - using text path instead: res://assets/temp/player-temp.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/platforms/temptilemap.tscn:3 - ext_resource, invalid UID: uid://157vauidtvr1 - using text path instead: res://assets/temp/platform.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/platforms/temptilemap.tscn:5 - ext_resource, invalid UID: uid://djldihdqsy2qq - using text path instead: res://assets/temp/classroom-temp1.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/platforms/temptilemap.tscn:6 - ext_resource, invalid UID: uid://clgvvrn3l1gqs - using text path instead: res://assets/temp/classroom-temp1-items.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/tilemaps/palleteTemp.tscn:3 - ext_resource, invalid UID: uid://cmrde1ocyibd0 - using text path instead: res://assets/temp/pallete.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/tilemaps/palleteTemp.tscn:4 - ext_resource, invalid UID: uid://clgvvrn3l1gqs - using text path instead: res://assets/temp/classroom-temp1-items.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/panels/tutorials/tutorial-panel.tscn:5 - ext_resource, invalid UID: uid://bid56dcwfjc8v - using text path instead: res://assets/font/Bitter/static/Bitter-Bold.ttf
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/NPCs/enemies/Enemy.tscn:12 - ext_resource, invalid UID: uid://caaqv80a8h88s - using text path instead: res://assets/temp/player-temp-left.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/NPCs/enemies/Enemy.tscn:14 - ext_resource, invalid UID: uid://bid56dcwfjc8v - using text path instead: res://assets/font/Bitter/static/Bitter-Bold.ttf
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/NPCs/enemies/zalam-manifestations/bunga/bunga.tscn:4 - ext_resource, invalid UID: uid://cdb2b3lesaux2 - using text path instead: res://assets/enemy/bunga-attack.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/NPCs/enemies/dummy/dummy-npc.tscn:3 - ext_resource, invalid UID: uid://yc3tgp66iwpq - using text path instead: res://assets/temp/dummy-temp.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] register_paths (res://autoloads/scene-registry.gd:32)
+         [1] _ready (res://autoloads/world-manifest.gd:18)
+WARNING: res://components/platforms/platform.tscn:3 - ext_resource, invalid UID: uid://157vauidtvr1 - using text path instead: res://assets/temp/platform.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] register_paths (res://autoloads/scene-registry.gd:32)
+         [1] _ready (res://autoloads/world-manifest.gd:18)
+WARNING: res://components/destructables/Box.tscn:4 - ext_resource, invalid UID: uid://cu6j36h4d1f3g - using text path instead: res://assets/temp/cratebox.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] register_paths (res://autoloads/scene-registry.gd:32)
+         [1] _ready (res://autoloads/world-manifest.gd:18)
+WARNING: res://scenes/spell-tree/spell-tree.tscn:8 - ext_resource, invalid UID: uid://bu1aqpqnok4e7 - using text path instead: res://assets/ui/spell-tree/field-title.svg
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] register_paths (res://autoloads/scene-registry.gd:32)
+         [1] _ready (res://autoloads/world-manifest.gd:18)
+─── WorldManifest: registered 35 scenes ───
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/abu-campus-entrance.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/abu-courtyard.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/dormitory/abu-dorm-room.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/dormitory/abu-dormitory-hallway.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/dueling-grounds-selection.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/dueling-grounds.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/dueling-grounds/dueling-selection.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/FLAC-courtyard.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/FLAC-entrance.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-one/FLAC-F1-central-hub.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-one/FLAC-F1-hallway.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-one/FLAC-F1-outside.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-one/FLAC-F1-receptionist-area.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-one/FLAC-F1-student-longue.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-three/FLAC-F3-central-hub.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-three/FLAC-F3-hallway-1.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-three/FLAC-F3-hallway-2-Science-Crafting.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-three/FLAC-F3-hallway-2.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-three/FLAC-F3-hallway-3.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-three/FLAC-F3-hallway-4.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-three/FLAC-F3-hallway-balcony.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-two/FLAC-F2-central-hub.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-two/FLAC-F2-hallway-1.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-two/FLAC-F2-hallway-3.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-two/FLAC-F2-hallway-4.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-two/FLAC-F2-hallway-balcony.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-two/FLAC-F2-hallway-2.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/spell-tree.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/story(legacy)/e-hailing.tres
+  • res://data/worlds/hubs/akademi-bintang-utama(ABU)/story(legacy)/missions-selection.tres
+  • res://data/worlds/hubs/chapters/chapter-1/subway-scene.tres
+  • res://data/worlds/hubs/chapters/prologue/yan-exam-tutorial.tres
+  • res://data/worlds/hubs/chapters/prologue/yan-prologue-house-entrance.tres
+  • res://data/worlds/hubs/the-echanted-forest(TEF)/deeper-forest/TEF-deeper-forest-area-east.tres
+  • res://data/worlds/hubs/the-echanted-forest(TEF)/deeper-forest/TEF-forest-entrance.tres
+─── WorldManifest: validating scene_ids ───
+WARNING:   ⚠ 'FLAC_F3_hallway_2_science_crafting' has uppercase letters
+     at: push_warning (core/variant/variant_utility.cpp:1033)
+     GDScript backtrace (most recent call first):
+         [0] _validate_scene_ids (res://autoloads/world-manifest.gd:58)
+         [1] _ready (res://autoloads/world-manifest.gd:24)
+  1 issue(s) found
+[LyricsOverlay] _ready called
+[LyricsOverlay] Label node found: true
+[LyricsOverlay] Lyrics enabled: true
+[LyricsOverlay] Connected to LyricsManager.lyric_changed
+PASS Valid unique EnemyData: pohon
+PASS Valid unique EnemyData: bunga
+PASS Valid unique EnemyData: training-guardian
+PASS Fourteen actions configured in profile: aggressive-melee
+PASS Fourteen actions configured in profile: defensive-ranged
+PASS Fourteen actions configured in profile: balanced-fighter
+PASS Fourteen actions configured in profile: cautious-spellcaster
+PASS Fourteen actions configured in profile: support-oriented
+PASS Fourteen actions configured in profile: heavy-guardian
+PASS Pohon preserved identity, health and speeds
+PASS Bunga migrated with original melee plus ranged/defensive additions
+PASS Both share AI and Magis casting implementations
+PASS Cooldowns, memory and statuses are instance-local
+PASS Shared definitions remain immutable
+PASS Aggressive profile commits to melee at close range
+PASS Same loadout with defensive profile retreats instead
+PASS Decision cadence prevents per-frame switching
+PASS Nearest eligible target selected; neutral ignored
+PASS Threat can prioritize another player
+PASS LOS blocked; last seen point retained without wall tracking
+PASS Target forgotten after memory expires
+PASS Target reacquired after occlusion clears
+PASS Deleted targets rejected safely
+PASS Eligible NPC outside player group can be perceived
+PASS Allied override and neutral relations are explicit
+PASS Melee windup does not apply immediate damage
+PASS Melee resolves eight damage through shared hitbox without a spell cast
+PASS Ability cooldown prevents repeated attacks
+PASS Melee available when cooldown ends
+PASS Melee revalidates range after windup
+PASS Executor supports non-magical context without fake SpellData
+PASS Pohon accepts configured Branch Projectile
+PASS Enemy projectile starts with correct origin and hostile mask
+PASS Enemy projectile movement initialized
+PASS Projectile ignores its caster
+PASS Projectile executes impact and cleans up
+PASS Enemy cannot use a spell outside its loadout
+PASS No-mana actor rejects a mana-costing ability
+PASS Shared casting reserves enemy mana
+PASS Silence cancels preparation and refunds undelivered mana
+PASS Stun blocks attacks
+PASS Control status expires
+PASS Configured status immunity applies to legacy and modular APIs
+PASS Partial resistance shortens status lifetime
+PASS Enemy shared execution: Force
+PASS Enemy shared execution: Strike
+PASS Enemy shared execution: Crash
+PASS Enemy shared execution: Resonate
+PASS Enemy shared execution: Shatterwave
+PASS Enemy shared execution: Collapse
+PASS Enemy shared execution: Terminal
+PASS Enemy shared execution: Vector Reversal
+PASS Enemy shared execution: Inertia Vault
+PASS Enemy shared execution: Impact Prism
+PASS Enemy shared execution: Momentum Anchor
+PASS Enemy shared execution: Angular Vortex
+PASS Enemy shared execution: Torque Lock
+PASS Enemy shared execution: Gyroscopic Shield
+PASS Enemy shared execution: Kinetic Chill
+PASS Enemy shared execution: Thermal Bloom
+PASS Enemy shared execution: Entropy Leak
+PASS Enemy shared execution: Heat Engine
+PASS Enemy shared execution: Static Arc
+PASS Enemy shared execution: Faraday Cage
+PASS Enemy shared execution: Magnetic Tether
+PASS Enemy shared execution: Induction Grid
+PASS Enemy shared execution: Refraction Beam
+PASS Enemy shared execution: Total Internal Reflection
+PASS Enemy shared execution: Prism Split
+PASS Enemy shared execution: Optical Trap
+PASS Enemy shared execution: Pressure Jet
+PASS Enemy shared execution: Buoyancy Field
+PASS Enemy shared execution: Vortex Well
+PASS Enemy shared execution: Elastic Barrier
+PASS Enemy shared execution: Brittle Fracture
+PASS Enemy shared execution: Structural Fabrication
+PASS Enemy shared execution: Resonance Threshold
+PASS Enemy shared execution: Sonic Pulse
+PASS Enemy shared execution: Harmonic Stabilization
+PASS Enemy shared execution: Phase Cancellation
+PASS Enemy shared execution: Tunneling Step
+PASS Enemy shared execution: Probabilistic Echo
+PASS Enemy shared execution: Decoherence Trap
+PASS Enemy shared execution: Gravitational Lens
+PASS Enemy shared execution: Gravitational Well
+PASS Enemy shared execution: Time Dilation Zone
+PASS Death event emitted exactly once
+PASS Quest kill recorded exactly once
+PASS Configured experience granted once
+PASS Guaranteed loot spawned once before enemy cleanup
+PASS Death cleans owned entities and active statuses
+PASS Spawner reserves a single pending population slot
+PASS Spawner initializes scene at world point under transformed parent
+PASS Death immediately releases active spawn tracking
+PASS One-shot spawner does not respawn a defeated enemy
+PASS Spawner reserves a single pending population slot
+PASS Spawner initializes scene at world point under transformed parent
+PASS Death immediately releases active spawn tracking
+PASS One-shot spawner does not respawn a defeated enemy
+PASS Spawn inside solid geometry rejected
+PASS Stopping cancels queued spawns safely
+PASS SpawnData definition override creates resource-only third enemy
+PASS Respawn-enabled pool replaces defeated instance
+PASS NPCSpellcasterData adapts without resource mutation
+WARNING: res://data/magis/legacy-enemy-spells/viscous-drag.tres:5 - ext_resource, invalid UID: uid://cnnad3qojgc2y - using text path instead: res://assets/temp/temp-mana.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] run (res://tests/enemy-pipeline.gd:347)
+         [1] frames (res://tests/enemy-pipeline.gd:54)
+PASS Restored boss reference: attack1
+WARNING: res://data/magis/legacy-enemy-spells/thermal-siphon.tres:6 - ext_resource, invalid UID: uid://cnnad3qojgc2y - using text path instead: res://assets/temp/temp-mana.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] run (res://tests/enemy-pipeline.gd:347)
+         [1] frames (res://tests/enemy-pipeline.gd:54)
+PASS Restored boss reference: attack2
+WARNING: res://data/magis/legacy-enemy-spells/viscous-drag.tres:5 - ext_resource, invalid UID: uid://cnnad3qojgc2y - using text path instead: res://assets/temp/temp-mana.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] run (res://tests/enemy-pipeline.gd:347)
+         [1] frames (res://tests/enemy-pipeline.gd:54)
+WARNING: res://data/magis/legacy-enemy-spells/thermal-siphon.tres:6 - ext_resource, invalid UID: uid://cnnad3qojgc2y - using text path instead: res://assets/temp/temp-mana.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] run (res://tests/enemy-pipeline.gd:347)
+         [1] frames (res://tests/enemy-pipeline.gd:54)
+PASS Restored boss reference: phase-test
+PASS Training dummy public damage API preserved
+WARNING: res://components/NPCs/enemies/boss/boss.tscn:5 - ext_resource, invalid UID: uid://bqbot7ncx7r8f - using text path instead: res://assets/temp/player-temp-right.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+     GDScript backtrace (most recent call first):
+         [0] run (res://tests/enemy-pipeline.gd:370)
+         [1] frames (res://tests/enemy-pipeline.gd:54)
+[Boss] Entering phase 0: Phase 1
+PASS Boss melee shares ordinary combat resolution
+PASS Boss burst uses shared casting and initializes every projectile
+[Boss] Spawned minion at: (80.0, 0.0)
+[Boss] Spawned minion at: (-80.0, 0.0)
+PASS Boss summons remain configurable and owned
+PASS Boss area slam resolves shared damage after warning
+PASS Boss dash retains its shared contact strike
+PASS Cancelled boss windup cannot apply a late hit
+[Boss] Took 60.0 damage — HP: 40.0/100.0
+[Boss] Entering phase 1: Phase 1
+PASS Boss health threshold changes phase and mitigation
+[Boss] Took 998.0 damage — HP: 0.0/100.0
+PASS Boss death resolves once
+PASS Boss death cleans its projectiles and minions
+PASS Chase intent executes movement toward visible target
+PASS Memory movement executes intent 2
+PASS Memory movement executes intent 10
+PASS Preferred range approaches distant target
+PASS Preferred range holds within tolerance
+PASS Low-health flee moves away from threat
+PASS Recovery waits for configured mana regeneration without inventing healing
+PASS Defend action executes configured repulse ability
+PASS Cast action selects an available configured spell
+PASS Recovery uses shared healing when healing is in the loadout
+PASS Summon action dispatches configured shared summon delivery
+PASS Outgoing damage multiplier applies to shared attacks
+PASS Legacy stat views reflect configured mitigation
+PASS Outgoing multiplier leaves healing and incoming legacy damage unchanged
+PASS Patrol runs on a real floor with no targets
+PASS Patrol respects the same slow modifiers as chase
+PASS Idle intent halts movement without a target
+PASS Authority-test client created
+PASS Client cannot simulate perception, AI or damage
+PASS Client cannot launch enemy ability
+PASS Enemy suite reached its final assertion
+ENEMY_PIPELINE: 138 checks, 0 failures
+WARNING: 58 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 25 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

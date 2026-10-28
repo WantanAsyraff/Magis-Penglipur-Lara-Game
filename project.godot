@@ -37,6 +37,7 @@ Inventory_Manager="*res://autoloads/inventory-manager.gd"
 LyricsManager="*res://system/lyrics/lyrics-manager.gd"
 LyricsOverlay="*res://system/lyrics/lyrics-overlay-ui.tscn"
 Crafting_Context="*res://autoloads/crafting-context.gd"
+SaveManager="*res://autoloads/save-manager.gd"
 
 [dialogic]
 

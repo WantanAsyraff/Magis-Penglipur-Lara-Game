@@ -43,3 +43,6 @@ By the end of this scene is the school entrance with the Pak Guard at the gate.
 - Yan's SPM combat tutorial (Teaches core combat)
 "
 label_settings = ExtResource("3_r5ue3")
+
+[node name="PlayerSpawn" type="Marker2D" parent="World/GameComponents/SpawnPoints"]
+position = Vector2(220, 760)

@@ -1,6 +1,6 @@
 # Quest save format v2
 
-The supported file is `user://quest-progress-v2.json`, version 2, for `QuestManager.active_owner_id` (default `local`). Deferred startup restores an existing matching snapshot. Quest/inventory mutations schedule a short 0.25-second coalesced save; hand-in requires a synchronous durable snapshot before reward signals. Pause-menu Save and field-lab F9/F10 call the same service. `--quest-test-mode` disables automatic persistence/bootstrap, so regression suites do not modify the real play save; explicit regression saves use separate filenames.
+Quest V2 is now the authoritative subsystem bundle embedded in [full-game schema V1](save-system-v1.md). `user://quest-progress-v2.json` is a legacy import source, not an automatic startup load or production write destination. SaveManager owns profile selection and Pause-menu Save. Hand-in still requires a synchronous durable snapshot before reward signals; in a campaign this commits one full-game autosave through the existing reward transaction. Explicit isolated Quest V2 test paths retain the partial-format API and 0.25-second test save scheduling. `--quest-test-mode` disables automatic persistence/bootstrap, so regression suites do not modify the real play save; explicit regression saves use separate filenames.
 
 ## Payload
 
@@ -27,7 +27,7 @@ On load, inventory/held objectives reconcile; durable outbox events replay using
 
 ## Supported boundary
 
-This is quest, inventory and reward progression persistence, not a whole-world save. It does not restore scene/position, health, enemies/dropped objects, arbitrary NPC movement, world-object presentation, equipped spell slots or derived equipment stats. World scenes must consume restored flags. Remote player inventories and network persistence are not supplied. Starting with a different owner rejects the local file. There was no prior gameplay save schema to migrate; the existing completed-quest list is retained in the bundle. Future item/quest retirement needs explicit schema migration; unknown IDs currently reject a snapshot.
+This inner bundle represents quest, inventory and reward progression. The full-game envelope now supplies player, academic, equipment, scene, checkpoint and world-object restoration; see [Save system V1](save-system-v1.md). It does not restore scene/position, health, enemies/dropped objects, arbitrary NPC movement, world-object presentation, equipped spell slots or derived equipment stats. World scenes must consume restored flags. Remote player inventories and network persistence are not supplied. Starting with a different owner rejects the local file. There was no prior gameplay save schema to migrate; the existing completed-quest list is retained in the bundle. Future item/quest retirement needs explicit schema migration; unknown IDs currently reject a snapshot.
 
 Receipt/claim histories are retained without compaction. Do not prune them independently of world-drop lifetime and persistence guarantees.
 

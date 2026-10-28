@@ -26,6 +26,7 @@ func _ready() -> void:
 	interact_area.body_entered.connect(_on_interact_area_body_entered)
 	interact_area.body_exited.connect(_on_interact_area_body_exited)
 	_setup_prompt()
+	if WorldPersistence.has_state(self,"open"): _restore_open()
 
 func _setup_prompt() -> void:
 	_prompt_label = Label.new()
@@ -69,7 +70,16 @@ func _consume_key() -> void:
 	keys.erase(key_id)
 	Player_Global_Data.set_meta("keys", keys)
 
+func _restore_open() -> void:
+	_is_open = true
+	_prompt_label.visible = false
+	if destroy_on_open: queue_free()
+	else:
+		collision.set_deferred("disabled",true)
+		if sprite and sprite.sprite_frames and sprite.sprite_frames.has_animation("open"): sprite.play("open")
+
 func _open_door() -> void:
+	WorldPersistence.mark(self,"open")
 	_is_open = true
 	_consume_key()
 	_prompt_label.visible = false

@@ -17,6 +17,7 @@ func valid_item(item: ItemData) -> bool:
 func can_add_item(item: ItemData, qty: int = 1) -> bool:
 	return valid_item(item) and qty > 0 and (inventory.has(item.item_id) or inventory.size() < max_slots) and get_item_quantity(item.item_id) + qty <= (item.max_stack if item.is_stackable else 1)
 func add_item(item: ItemData, qty: int = 1, receipt: String = "", owner: String = "") -> int:
+	if QuestManager._restoring: return 0
 	if not SpellExecutor.is_authoritative(self) or not valid_item(item) or qty <= 0: return 0
 	if owner.is_empty(): owner = QuestManager.active_owner_id
 	if owner != QuestManager.active_owner_id or (not receipt.is_empty() and acquisition_receipts.has(receipt)): return 0

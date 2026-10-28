@@ -1,5 +1,1 @@
-# continue-menu.gd
-extends Control
-
-func _on_back_button_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/ui/menus/intro-menus/main-menu.tscn")
+extends "res://scenes/ui/menus/intro-menus/save-slot-menu.gd"

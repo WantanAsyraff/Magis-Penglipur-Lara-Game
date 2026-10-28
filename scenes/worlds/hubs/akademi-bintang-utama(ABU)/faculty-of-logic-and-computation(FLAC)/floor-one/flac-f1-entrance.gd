@@ -2,6 +2,10 @@ extends Node2D
 
 
 func _ready() -> void:
+	if SaveManager.loading: return
+	begin_intro()
+
+func begin_intro() -> void:
 	Player_Global_Data.p_moveable = false
 	Player_Global_Data.phone_visible = false
 	

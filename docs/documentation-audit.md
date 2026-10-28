@@ -16,13 +16,14 @@ This audit uses the local `feature/combat-feedback-status-hud-save-v1` state at 
 | Quest pipeline/save/conversation text claims only partial saves, repair-on-load/coalesced legacy persistence | `QuestManager.apply_staged`, `schedule_save`, `SaveManager._restore` | Explain embedded Quest V2 bundle, explicit import, milestone autosaves and controlled outbox recovery |
 | WorldManifest warning refers to an underscore-named bake script that does not exist | Actual tool is `tools/bake-world-manifest.gd` | Document exact hyphenated tool; record code-message defect without modifying it |
 | Assuming folder discovery applies to every Resource | Spell library editor scan; manual enemy/item/presentation manifests; hardcoded quest database list | Add explicit registration matrix and export lifecycle |
+| P described as clearing and cancelling casts | project.godot binds P to clear_incantation; cancel_casting events are empty; Player methods are separate | Correct current control guidance and document Settings binding |
 | No complete property inventory or dormant-field distinction | Every first-party Resource schema and runtime consumer audit | Generate schema-checked reference; document dormant fields explicitly |
 | Crafting could be mistaken for hardcoded recipes or a RecipeData class | ItemData ingredient/qty fields; CraftingRoom.available_recipes | Document actual Resource-based ItemData recipes and missing equipment/shop semantics |
 | Academic “classes” could imply a character-class Resource | Player identity strings only; no character-class Resource schema | Distinguish subjects, identity labels and GDScript class_name |
 | Additional typed placement Resource absent from requested list | `components/NPCs/npc-spawn-validator.gd` extends Resource | Include NPCSpawnValidator, ElevatorFloor and legacy NPCSpellcasterData |
 | Historical 4.6 commands/counts look like current setup instructions | Earlier implementation/migration reports | Add historical notices; retain original evidence and link current workflow |
 
-No broken Markdown destination links were found in the initial 35-page audit. Bare code paths and claims still required source reconciliation; a valid hyperlink does not establish a correct instruction.
+No broken Markdown destination links were found in the initial 33-page audit. Bare code paths and claims still required source reconciliation; a valid hyperlink does not establish a correct instruction.
 
 ## Implementation defects / boundaries found, not changed
 
@@ -35,6 +36,7 @@ No broken Markdown destination links were found in the initial 35-page audit. Ba
 - NPCSpawnValidator is a conservative grounded walking/approach check, not a navigation or jump planner. Training Guardian defaults must be read from the current Resource, not historical prose.
 - SceneData.default_spawn_marker is consumed by elevator selection; ZoneRoot's ordinary fallback searches PlayerSpawn. Portal overrides should be explicit.
 - Crafting directly commits an inventory plan; it does not trigger pickup-based health/mana/XP/spell effects. A crafting room is not itself a supported campaign save destination.
+- The listed low-grade mana-vile recipe has no ingredient references; the current inventory plan therefore allows an input-free output when capacity permits. Medium/high-grade recipes have explicit inputs. No balance change is made.
 - CraftingUI directly assigns the validated inventory plan without a separate server-authority gate in its craft callback; it must not be exposed as an authorized multiplayer crafting service without extending that boundary. No gameplay fix is made here.
 - No generic character-class, RecipeData, persistent timed-effect or multiplayer campaign-save system exists.
 

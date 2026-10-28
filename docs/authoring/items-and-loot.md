@@ -33,6 +33,8 @@
 
 Inventory_Manager supports WEAPON/OFFHAND/ROBE/ACCESSORY_1/ACCESSORY_2 slots and atomic swap plans. equip_item requires actual inventory quantity, moves one item into the slot and returns the previous item only if capacity permits. There are no ItemData attack/armor attribute fields or universal slot restrictions/stat recomputation. Do not document an armor bonus that has no schema or consumer. Inventory UI and stat presentation are not a character equipment build system.
 
+ItemType.KEY_ITEM is a category label; the separate dungeon Key/LockedDoor scenes use matching key_id and Player_Global_Data key metadata, not an automatic inventory-item-to-door link. Save V1 persists that existing key possession and world collection/open flags.
+
 Pickup health/mana/XP/spell effects occur on accepted pickup and are scaled by acquired quantity where applicable. Direct add_item, reward inventory transactions and crafting do not replay those pickup effects. Consumable item_type does not consume a stack on button press through an absent generic use API. New explicit use/shop/gear-stat behavior requires code and transaction tests.
 
 ## Validation and checklist

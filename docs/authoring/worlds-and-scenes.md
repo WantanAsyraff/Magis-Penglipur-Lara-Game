@@ -18,7 +18,7 @@
 
 ## Spawn and save contract
 
-ZoneRoot searches a pending next_spawn_marker first, then PlayerSpawn, then last_player_position, finally (0,0) with warning. It does not generally read SceneData.default_spawn_marker itself. A named explicit portal override avoids relying on the wrong default behavior. Missing arrival markers can silently fall back after warning, so inspect the actual final player coordinate.
+ZoneRoot searches a pending next_spawn_marker first, then PlayerSpawn, then last_player_position, finally (0,0) with warning. It does not generally read SceneData.default_spawn_marker itself. A named explicit portal override avoids relying on the wrong default behavior. Missing arrival markers can silently fall back after warning, so inspect the actual final player coordinate. Returning from a UI room does not guarantee the exact old coordinate: a found explicit/default marker takes precedence over last_player_position. Use explicit arrival markers for a deliberate return policy; full-save load restores its staged coordinate after initialization instead.
 
 SaveManager accepts only registered campaign scenes whose root uses the exact ZoneRoot script. A custom subclass/root controller needs a reviewed persistence extension; merely registering a UI room does not make it saveable. Ordinary load waits for existing scene/player initialization, applies saved position after readiness and uses a validated PlayerSpawn fallback for solid overlap. On safe scene entry, a usable PlayerSpawn can become a checkpoint. Place `components/save/checkpoint.tscn` for explicit local-player checkpoints; its Respawn marker must be clear, grounded within 240 world units and away from hazards.
 

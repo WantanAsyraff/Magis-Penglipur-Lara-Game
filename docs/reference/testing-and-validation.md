@@ -69,3 +69,19 @@ Use an actual test/scene referencing your newly authored data too; existing suit
 `python3 tools/validate-docs.py` validates local Markdown destinations/anchors, concrete res:// source paths, complete first-party Resource-to-guide coverage and generated property-reference drift. `--write-reference` intentionally rewrites that generated reference; review it. `--check-gdscript` compiles executable gdscript fences by loading them in a normal project scene with its autoload context, without calling their example functions. `--check-resources` loads example tres fences and introspects Resource exported fields against the source inventory. Use `GODOT_COMMAND='flatpak run org.godotengine.Godot'` for the local installation.
 
 Neither static links nor schema introspection proves prose semantics, UI accessibility, balance, narrative completeness, multiplayer synchronization, physical world reachability or power-loss durability. Those require source review, focused behavior tests and actual play/rendered evidence. The [audit](../documentation-audit.md) records unsupported/partially implemented boundaries instead of turning them into fictional workflows.
+
+## Environmental Interactions V1
+
+The [environment validation report](environment-validation.md) records actual per-suite counts, native screenshots and limits. Source scenes cover physical F interaction, R selection and incantation key events, real projectiles, fluid conservation, buoyancy/current, crate contact, platform riding, turret damage and emergency cutoff. Separate processes exercise existing SaveManager world-flag persistence.
+
+```bash
+flatpak run org.godotengine.Godot --headless --path . tests/environment-interactions.tscn -- --quest-test-mode
+flatpak run org.godotengine.Godot --headless --path . tests/environment-lab-gameplay.tscn -- --quest-test-mode
+flatpak run org.godotengine.Godot --headless --path . tests/environment-prologue.tscn -- --quest-test-mode
+flatpak run org.godotengine.Godot --headless --path . tests/environment-persistence.tscn -- --quest-test-mode
+flatpak run org.godotengine.Godot --headless --path . tests/environment-persistence.tscn -- --quest-test-mode --read-environment-save
+flatpak run org.godotengine.Godot --path . scenes/environment-testing/environment-interactions-lab.tscn -- --capture-environment --720
+flatpak run org.godotengine.Godot --path . scenes/environment-testing/environment-interactions-lab.tscn -- --capture-environment
+```
+
+The persistence writer/reader use test-prefixed profile 1 and must run in order, without another profile-1 fixture. The reader deletes the fixture slots. Capture commands require a real display and write sixteen Godot-rendered PNGs per resolution. They drive physical inputs and simulation; they are not substitutes for human balance/accessibility testing. For exported coverage, substitute the PCK commands above and run the three environment suites plus the persistence pair against that pack. No campaign save files are changed by these test-prefixed commands.

@@ -39,3 +39,16 @@ Inspect the actual definition and Remote Inspector before changing shared contro
 | Tutorial never opens | Invocation path missing, has_tutorial false, empty data or quest-route mismatch | TutorialComponent setup and nonquest dialogue callback | Assign real data/panel, use actual try_show integration, test Close/Escape restores control | authoring/tutorials.md |
 
 Paths abbreviated in the last column are resolved by their canonical guide and [registration/property reference](content-registration-matrix.md). See the [audit findings](../documentation-audit.md) for code defects and unsupported extension points deliberately not changed by this documentation task.
+
+## Environmental mechanisms
+
+- No projectile hit: enable receiver collision; give it an EnvironmentalTarget child and use R device targeting. Q lists hostiles.
+- No linked output: paths are relative to the sending root; use the named port, list every AND/OR input source, and check power/unlock/enable separately.
+- Tap/pump does nothing: assign distinct source and destination tanks, provide supply, open every listed valve, and check source volume/destination capacity.
+- Drain stays blocked: the authored debris must be broken or moved beyond the channel width. Its internal volume backpressures a full blocked source.
+- Wrong F target: space controls farther apart and approach the closest one; a single event intentionally selects one eligible NPC/prop.
+- Platform waits: check enable/power, dwell timer, waypoint count and static terrain clearance. Power interruption holds its position.
+- Artwork does not animate: verify configured animation names and a child named AnimationPlayer; missing state animation falls back to idle.
+- State fails to persist: use a stable root path under a registered campaign ZoneRoot, active profile and persistent flag; laboratory timers, water and platforms intentionally reset.
+
+See [environment authoring](../authoring/environmental-interactions.md) for Inspector recipes.

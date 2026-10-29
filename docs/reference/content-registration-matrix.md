@@ -46,3 +46,7 @@ Creating a `.tres` does not universally register it. Reference-only dependencies
 - [tools/validate-docs.py](../../tools/validate-docs.py): documentation-only link/path/schema/snippet checks; does not validate newly authored gameplay semantics or alter manifests.
 
 IDs and retained references must match in source **and export**. Keep UID/path changes visible in review; see [content evolution](../architecture/save-load-architecture.md). A Resource can be directly spawnable but still unknown to quest/save registries.
+
+## Environmental devices
+
+Environmental scenes are directly instanced, not registered as enemies or campaign scene destinations. Shared configurations live in `res://data/environment/`; the five new Resource classes are included in the generated [Resource reference](resource-reference.md). See [environment authoring](../authoring/environmental-interactions.md). Neutral targets use EnvironmentalTarget and shared Hitbox/SpellExecutor; they do not publish enemy quest kills. The standalone lab is intentionally excluded from Scene_Registry and campaign saving. Prologue addon scenes are authored children of existing registered ZoneRoots.

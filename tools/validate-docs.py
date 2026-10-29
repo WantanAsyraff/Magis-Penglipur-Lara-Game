@@ -17,6 +17,7 @@ from urllib.parse import unquote
 ROOT = Path(__file__).resolve().parents[1]
 REFERENCE = ROOT / 'docs/reference/resource-reference.md'
 GUIDES = {
+ 'InteractionRule':'environmental-interactions', 'EnvironmentLink':'environmental-interactions', 'EnvironmentDeviceData':'environmental-interactions', 'EnvironmentVisualData':'environmental-interactions', 'MovingPlatformData':'environmental-interactions',
  'FieldData':'fields','CourseData':'courses-and-subjects','subjectData':'courses-and-subjects',
  'SpellData':'spells','SpellEffectDefinition':'spell-effects','EnemyData':'enemies',
  'EnemyStatsData':'enemies','EnemyPerceptionData':'enemies','EnemyAIProfile':'enemy-ai',

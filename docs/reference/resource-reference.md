@@ -246,6 +246,89 @@ Source: [data/npc/enemies/enemy-stats-data.gd](../../data/npc/enemies/enemy-stat
 | `knockback_resistance` | `float` | 0–1 fractional reduction of knockback. | Conditional/optional | `0` | `@export_range(0, 1)`; see guide for runtime constraints. | [enemy-stats-component](../../components/NPCs/enemies/enemy-stats-component.gd) |
 | `status_resistances` | `Dictionary[String, float]` | Status key → 0–1 duration resistance; 1 refuses application through apply_status. | Conditional/optional | `{}` | `@export`; see guide for runtime constraints. | [enemy-stats-component](../../components/NPCs/enemies/enemy-stats-component.gd) |
 
+## EnvironmentDeviceData
+
+Source: [data/environment/environment-device-data.gd](../../data/environment/environment-device-data.gd). Base: `Resource`. [Canonical authoring and validation](../authoring/environmental-interactions.md).
+
+Enum `Kind`: `SWITCH`, `FUSE`, `LIGHT`, `GATE`, `VALVE`, `PUMP`, `TANK`, `FAN`, `DRAIN`, `PLATE`, `RECEIVER`, `TURRET`, `BREAKABLE`, `RELAY`, `LEVER`.
+Enum `Logic`: `NONE`, `AND`, `OR`.
+Enum `PlateMode`: `HOLD`, `TOGGLE`, `ONE_SHOT`, `TIMED`.
+
+| Property | Type | Purpose | Required? | Default | Validation / notes | Consumer/source evidence |
+| --- | --- | --- | --- | --- | --- | --- |
+| `device_name` | `String` | Human-readable authored name for this definition. | Conditional/optional | `"Mechanism"` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-device-data.gd) |
+| `kind` | `Kind` | Exact enum selects supported action/ability/attack implementation. | Conditional/optional | `Kind.SWITCH` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-device-data.gd) |
+| `visual` | `EnvironmentVisualData` | Authored visual; see canonical guide and consumers for its supported use. | Conditional/optional | `Godot type default` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-device-data.gd) |
+| `rule` | `InteractionRule` | Authored rule; see canonical guide and consumers for its supported use. | Conditional/optional | `Godot type default` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-device-data.gd) |
+| `size` | `Vector2` | Authored size; see canonical guide and consumers for its supported use. | Conditional/optional | `Vector2(80,80)` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-device-data.gd) |
+| `interaction_radius` | `float` | Authored interaction radius; see canonical guide and consumers for its supported use. | Conditional/optional | `200.0` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-device-data.gd) |
+| `manual_interaction` | `bool` | Authored manual interaction; see canonical guide and consumers for its supported use. | Conditional/optional | `true` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-device-data.gd) |
+| `initial_enabled` | `bool` | Authored initial enabled; see canonical guide and consumers for its supported use. | Conditional/optional | `false` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-device-data.gd) |
+| `initial_power` | `bool` | Authored initial power; see canonical guide and consumers for its supported use. | Conditional/optional | `true` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-device-data.gd) |
+| `logic` | `Logic` | Authored logic; see canonical guide and consumers for its supported use. | Conditional/optional | `Logic.NONE` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-device-data.gd) |
+| `persistent` | `bool` | Authored persistent; see canonical guide and consumers for its supported use. | Conditional/optional | `false` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-device-data.gd) |
+| `key_id` | `String` | Stable authored identifier; match parent/registry/event references exactly. | Conditional/optional | `""` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-device-data.gd) |
+| `consume_key` | `bool` | Authored consume key; see canonical guide and consumers for its supported use. | Conditional/optional | `true` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-device-data.gd) |
+| `activation_seconds` | `float` | Authored activation seconds; see canonical guide and consumers for its supported use. | Conditional/optional | `0.0` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-device-data.gd) |
+| `auto_close` | `float` | Authored auto close; see canonical guide and consumers for its supported use. | Conditional/optional | `0.0` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-device-data.gd) |
+| `max_health` | `float` | Positive starting/max HP; runtime HP is not written into the Resource. | Conditional/optional | `80.0` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-device-data.gd) |
+| `respawn_seconds` | `float` | Authored respawn seconds; see canonical guide and consumers for its supported use. | Conditional/optional | `0.0` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-device-data.gd) |
+| `capabilities` | `Array[StringName]` | Authored capabilities; see canonical guide and consumers for its supported use. | Conditional/optional | `[]` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-device-data.gd) |
+| `loot` | `Array[LootData]` | Independent LootData entries consumed once per authoritative death. | Conditional/optional | `[]` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-device-data.gd) |
+| `capacity` | `float` | Authored capacity; see canonical guide and consumers for its supported use. | Conditional/optional | `100.0` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-device-data.gd) |
+| `initial_volume` | `float` | Authored initial volume; see canonical guide and consumers for its supported use. | Conditional/optional | `0.0` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-device-data.gd) |
+| `flow_rate` | `float` | Authored flow rate; see canonical guide and consumers for its supported use. | Conditional/optional | `15.0` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-device-data.gd) |
+| `valve_opening` | `float` | Authored valve opening; see canonical guide and consumers for its supported use. | Conditional/optional | `1.0` | `@export_range(0,1)`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-device-data.gd) |
+| `minimum_weight` | `float` | Authored minimum weight; see canonical guide and consumers for its supported use. | Conditional/optional | `40.0` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-device-data.gd) |
+| `player_weight` | `float` | Authored player weight; see canonical guide and consumers for its supported use. | Conditional/optional | `70.0` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-device-data.gd) |
+| `activation_delay` | `float` | Authored activation delay; see canonical guide and consumers for its supported use. | Conditional/optional | `0.15` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-device-data.gd) |
+| `deactivation_delay` | `float` | Authored deactivation delay; see canonical guide and consumers for its supported use. | Conditional/optional | `0.15` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-device-data.gd) |
+| `plate_mode` | `PlateMode` | Authored plate mode; see canonical guide and consumers for its supported use. | Conditional/optional | `PlateMode.HOLD` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-device-data.gd) |
+| `fan_speed` | `float` | Authored fan speed; see canonical guide and consumers for its supported use. | Conditional/optional | `6.0` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-device-data.gd) |
+| `fan_acceleration` | `float` | Authored fan acceleration; see canonical guide and consumers for its supported use. | Conditional/optional | `6.0` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-device-data.gd) |
+| `airflow` | `Vector2` | Authored airflow; see canonical guide and consumers for its supported use. | Conditional/optional | `Vector2(100,-25)` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-device-data.gd) |
+| `airflow_enabled` | `bool` | Authored airflow enabled; see canonical guide and consumers for its supported use. | Conditional/optional | `false` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-device-data.gd) |
+| `player_airflow` | `bool` | Authored player airflow; see canonical guide and consumers for its supported use. | Conditional/optional | `false` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-device-data.gd) |
+| `airflow_max_mass` | `float` | Authored airflow max mass; see canonical guide and consumers for its supported use. | Conditional/optional | `15.0` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-device-data.gd) |
+| `turret_spell` | `SpellData` | Authored turret spell; see canonical guide and consumers for its supported use. | Conditional/optional | `Godot type default` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-device-data.gd) |
+| `attack_range` | `float` | Authored attack range; see canonical guide and consumers for its supported use. | Conditional/optional | `800.0` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-device-data.gd) |
+| `warning_seconds` | `float` | Authored warning seconds; see canonical guide and consumers for its supported use. | Conditional/optional | `0.7` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-device-data.gd) |
+| `firing_interval` | `float` | Authored firing interval; see canonical guide and consumers for its supported use. | Conditional/optional | `2.0` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-device-data.gd) |
+| `outgoing_damage` | `float` | Authored outgoing damage; see canonical guide and consumers for its supported use. | Conditional/optional | `1.0` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-device-data.gd) |
+| `training_nonlethal` | `bool` | Authored training nonlethal; see canonical guide and consumers for its supported use. | Conditional/optional | `true` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-device-data.gd) |
+| `destructible` | `bool` | Authored destructible; see canonical guide and consumers for its supported use. | Conditional/optional | `true` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-device-data.gd) |
+
+## EnvironmentLink
+
+Source: [data/environment/environment-link.gd](../../data/environment/environment-link.gd). Base: `Resource`. [Canonical authoring and validation](../authoring/environmental-interactions.md).
+
+Enum `Port`: `POWER`, `ENABLE`, `INPUT`, `UNLOCK`.
+
+| Property | Type | Purpose | Required? | Default | Validation / notes | Consumer/source evidence |
+| --- | --- | --- | --- | --- | --- | --- |
+| `target` | `NodePath` | Authored target; see canonical guide and consumers for its supported use. | Conditional/optional | `Godot type default` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-link.gd) |
+| `port` | `Port` | Authored port; see canonical guide and consumers for its supported use. | Conditional/optional | `Port.POWER` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-link.gd) |
+| `inverted` | `bool` | Authored inverted; see canonical guide and consumers for its supported use. | Conditional/optional | `false` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-link.gd) |
+
+## EnvironmentVisualData
+
+Source: [data/environment/environment-visual-data.gd](../../data/environment/environment-visual-data.gd). Base: `Resource`. [Canonical authoring and validation](../authoring/environmental-interactions.md).
+
+| Property | Type | Purpose | Required? | Default | Validation / notes | Consumer/source evidence |
+| --- | --- | --- | --- | --- | --- | --- |
+| `texture` | `Texture2D` | Optional presentation only. Gameplay collision and timing remain on the prop. | Conditional/optional | `Godot type default` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-visual-data.gd) |
+| `frames` | `SpriteFrames` | Authored frames; see canonical guide and consumers for its supported use. | Conditional/optional | `Godot type default` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-visual-data.gd) |
+| `visual_scene` | `PackedScene` | Optional appearance-only Node2D; preserve shared gameplay shell. | Conditional/optional | `Godot type default` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-visual-data.gd) |
+| `offset` | `Vector2` | Finite spawn offset relative to target. | Conditional/optional | `Vector2.ZERO` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-visual-data.gd) |
+| `scale` | `Vector2` | Authored scale; see canonical guide and consumers for its supported use. | Conditional/optional | `Vector2.ONE` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-visual-data.gd) |
+| `tint` | `Color` | Authored tint; see canonical guide and consumers for its supported use. | Conditional/optional | `Color(0.32,0.72,0.69)` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-visual-data.gd) |
+| `activate_sound` | `AudioStream` | Authored activate sound; see canonical guide and consumers for its supported use. | Conditional/optional | `Godot type default` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-visual-data.gd) |
+| `deactivate_sound` | `AudioStream` | Authored deactivate sound; see canonical guide and consumers for its supported use. | Conditional/optional | `Godot type default` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-visual-data.gd) |
+| `particles` | `PackedScene` | Authored particles; see canonical guide and consumers for its supported use. | Conditional/optional | `Godot type default` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-visual-data.gd) |
+| `idle_animation` | `StringName` | Authored idle animation; see canonical guide and consumers for its supported use. | Conditional/optional | `&"idle"` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-visual-data.gd) |
+| `active_animation` | `StringName` | Authored active animation; see canonical guide and consumers for its supported use. | Conditional/optional | `&"active"` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-visual-data.gd) |
+| `broken_animation` | `StringName` | Authored broken animation; see canonical guide and consumers for its supported use. | Conditional/optional | `&"broken"` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/environment-visual-data.gd) |
+
 ## FieldData
 
 Source: [data/Resources/ilmu/field.gd](../../data/Resources/ilmu/field.gd). Base: `Resource`. [Canonical authoring and validation](../authoring/fields.md).
@@ -266,6 +349,23 @@ Source: [data/Resources/spell-effects/heal-effect.gd](../../data/Resources/spell
 | `amount` | `float` | Payload magnitude; exact stat/damage/heal/chain semantics are in the effect guide. | Conditional/optional | `0.0` | `@export`; see guide for runtime constraints. | [validate / execute](../../data/Resources/spell-effects/heal-effect.gd) |
 | `duration` | `float` | Effect/trigger lifetime in seconds; validate per subclass. | Conditional/optional | `0.0` | `@export`; see guide for runtime constraints. | [validate / execute](../../data/Resources/spell-effects/heal-effect.gd) |
 | `tick_interval` | `float` | Periodic interval; effect validators require at least .05 seconds. | Conditional/optional | `1.0` | `@export`; see guide for runtime constraints. | [validate / execute](../../data/Resources/spell-effects/heal-effect.gd) |
+
+## InteractionRule
+
+Source: [data/environment/interaction-rule.gd](../../data/environment/interaction-rule.gd). Base: `Resource`. [Canonical authoring and validation](../authoring/environmental-interactions.md).
+
+Enum `Event`: `INTERACT`, `ENTER`, `EXIT`, `CONTACT`, `PRESSURE`, `SPELL`, `DAMAGE`, `STATUS`, `IMPULSE`, `PROJECTILE`, `SIGNAL`.
+
+| Property | Type | Purpose | Required? | Default | Validation / notes | Consumer/source evidence |
+| --- | --- | --- | --- | --- | --- | --- |
+| `event` | `Event` | Authored event; see canonical guide and consumers for its supported use. | Conditional/optional | `Event.INTERACT` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/interaction-rule.gd) |
+| `effect_kind` | `String` | Authored effect kind; see canonical guide and consumers for its supported use. | Conditional/optional | `"Any"` | `@export_enum("Any", "Damage", "Status", "Impulse", "Healing")`; see guide for runtime constraints. | [Schema / methods](../../data/environment/interaction-rule.gd) |
+| `required_status` | `StringName` | Required status key on target. | Conditional/optional | `&""` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/interaction-rule.gd) |
+| `required_capability` | `StringName` | Authored required capability; see canonical guide and consumers for its supported use. | Conditional/optional | `&""` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/interaction-rule.gd) |
+| `required_hits` | `int` | Authored required hits; see canonical guide and consumers for its supported use. | Conditional/optional | `1` | `@export_range(1,100)`; see guide for runtime constraints. | [Schema / methods](../../data/environment/interaction-rule.gd) |
+| `required_charge` | `float` | Authored required charge; see canonical guide and consumers for its supported use. | Conditional/optional | `0.0` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/interaction-rule.gd) |
+| `minimum_magnitude` | `float` | Authored minimum magnitude; see canonical guide and consumers for its supported use. | Conditional/optional | `0.0` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/interaction-rule.gd) |
+| `reset_after_activation` | `bool` | Authored reset after activation; see canonical guide and consumers for its supported use. | Conditional/optional | `false` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/interaction-rule.gd) |
 
 ## InterruptEffect
 
@@ -339,6 +439,22 @@ Source: [data/Resources/spell-effects/modify-stat-effect.gd](../../data/Resource
 | `stacking` | `ActiveEffectManager.StackPolicy` | REFRESH/REPLACE/STACK/IGNORE; manager counts independent entries. | Conditional/optional | `ActiveEffectManager.StackPolicy.REFRESH` | `@export`; see guide for runtime constraints. | [validate / execute](../../data/Resources/spell-effects/modify-stat-effect.gd) |
 | `max_stacks` | `int` | Maximum independent stacks; configured policies and manager cap apply. | Conditional/optional | `1` | `@export_range(1, 32)`; see guide for runtime constraints. | [validate / execute](../../data/Resources/spell-effects/modify-stat-effect.gd) |
 | `on_hit_proc_id` | `String` | Stored proc metadata; no generic on-hit proc dispatcher is implemented. | Conditional/optional | `""` | `@export`; see guide for runtime constraints. | [validate / execute](../../data/Resources/spell-effects/modify-stat-effect.gd) |
+
+## MovingPlatformData
+
+Source: [data/environment/moving-platform-data.gd](../../data/environment/moving-platform-data.gd). Base: `Resource`. [Canonical authoring and validation](../authoring/environmental-interactions.md).
+
+Enum `Route`: `LOOP`, `PING_PONG`, `ONE_SHOT`.
+
+| Property | Type | Purpose | Required? | Default | Validation / notes | Consumer/source evidence |
+| --- | --- | --- | --- | --- | --- | --- |
+| `size` | `Vector2` | Authored size; see canonical guide and consumers for its supported use. | Conditional/optional | `Vector2(180,24)` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/moving-platform-data.gd) |
+| `speed` | `float` | Authored speed; see canonical guide and consumers for its supported use. | Conditional/optional | `120.0` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/moving-platform-data.gd) |
+| `wait_seconds` | `float` | Authored wait seconds; see canonical guide and consumers for its supported use. | Conditional/optional | `0.5` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/moving-platform-data.gd) |
+| `route` | `Route` | Authored route; see canonical guide and consumers for its supported use. | Conditional/optional | `Route.PING_PONG` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/moving-platform-data.gd) |
+| `initially_enabled` | `bool` | Authored initially enabled; see canonical guide and consumers for its supported use. | Conditional/optional | `false` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/moving-platform-data.gd) |
+| `initially_powered` | `bool` | Authored initially powered; see canonical guide and consumers for its supported use. | Conditional/optional | `true` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/moving-platform-data.gd) |
+| `visual` | `EnvironmentVisualData` | Authored visual; see canonical guide and consumers for its supported use. | Conditional/optional | `Godot type default` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/environment/moving-platform-data.gd) |
 
 ## NPCPresentation
 

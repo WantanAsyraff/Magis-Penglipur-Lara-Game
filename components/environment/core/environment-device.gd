@@ -15,6 +15,8 @@ signal volume_changed(volume: float)
 @export var water_volume: NodePath
 @export var blocking_debris: NodePath
 @export var timeline: String = ""
+var _initializing := true
+var _was_active := false
 var actuator: InteractionActuator
 var receiver: InteractionReceiver
 var visual: InteractionVisual
@@ -98,6 +100,7 @@ func _ready() -> void:
 		elif WorldPersistence.has_state(self,"activated"):
 			actuator.enabled = true; actuator.unlocked = true
 	_state_changed(actuator.effective())
+	_initializing = false
 	actuator.call_deferred("publish_initial")
 func interact() -> void:
 	if not data.manual_interaction or not SpellExecutor.is_authoritative(self) or get_meta("combat_dead",false): return
@@ -115,9 +118,11 @@ func _trigger() -> void:
 	else: actuator.toggle()
 	if actuator.enabled:
 		_timer = maxf(data.activation_seconds,data.auto_close)
-		if data.persistent and not SaveManager.loading: WorldPersistence.mark(self,"activated")
 		if not timeline.is_empty() and not SaveManager.loading and Dialogic.current_timeline == null: Dialogic.start(timeline)
 func _state_changed(value: bool) -> void:
+	var just_activated := value and not _was_active
+	_was_active = value
+	if just_activated and not _initializing and data.persistent and not SaveManager.loading: WorldPersistence.mark(self,"activated")
 	if value: _timer = maxf(data.activation_seconds,data.auto_close)
 	visual.present(value,&"broken" if get_meta("combat_dead",false) else (&"blocked" if blocked else &""))
 	if data.kind == EnvironmentDeviceData.Kind.GATE: collision.set_deferred("disabled",value or get_meta("combat_dead",false))

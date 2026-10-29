@@ -31,6 +31,7 @@ func _ready() -> void:
 		if not _ui_open and not _triggered and SpellExecutor.is_authoritative(self): _open_ui())
 	if enter_label:
 		enter_label.modulate.a = 0.0
+		enter_label.text = _detector._prompt_text()+" · Use lift"
 # -------------------------
 # INPUT
 # -------------------------

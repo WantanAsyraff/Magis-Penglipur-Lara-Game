@@ -26,7 +26,7 @@ size = Vector2(914, 441)
 [node name="LockedDoor" type="StaticBody2D" unique_id=850129219]
 physics_material_override = SubResource("PhysicsMaterial_uhror")
 script = ExtResource("1_uhror")
-prompt_unlocked_text = "Press [E] to open"
+prompt_unlocked_text = "Open"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=350642807]
 position = Vector2(-0.054130778, -30.991919)

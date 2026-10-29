@@ -14,7 +14,7 @@ static func chill(lab: EnvironmentLab, prop: Node2D) -> void:
 	lab.player.environment_target.clear(); lab.player.global_position = prop.global_position+Vector2(-180,0); lab.player.velocity = Vector2.ZERO
 	await frames(lab,4); press(lab,KEY_R); tap(lab,KEY_O)
 	for direction in lab.LOADOUT[0].spell_incantation: press(lab,{"up":KEY_I,"down":KEY_K,"left":KEY_J,"right":KEY_L}[direction])
-	tap(lab,KEY_O,false); await frames(lab,100); press(lab,KEY_O)
+	tap(lab,KEY_O,false); await frames(lab,120); press(lab,KEY_O)
 static func shot(lab: EnvironmentLab, folder: String, name_: String) -> void:
 	await frames(lab,5); await RenderingServer.frame_post_draw
 	var result := lab.get_viewport().get_texture().get_image().save_png(folder+name_+".png")

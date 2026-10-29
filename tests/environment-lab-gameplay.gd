@@ -26,7 +26,11 @@ func chill(target: Node2D) -> void:
 	for direction in lab.LOADOUT[0].spell_incantation:
 		tap({"up":KEY_I,"down":KEY_K,"left":KEY_J,"right":KEY_L}[direction])
 	key(KEY_O,false)
-	await frames(100); tap(KEY_O)
+	await frames(120)
+	for i in 120:
+		if lab.player.casting.cooldowns.get(lab.LOADOUT[0].spell_id,0) <= 0 and lab.player.casting.state == SpellCastingComponent.State.IDLE: break
+		await frames(1)
+	tap(KEY_O)
 func _ready() -> void:
 	await get_tree().process_frame
 	var learned := Player_Global_Data.learned_spells.duplicate(); var equipped := Player_Global_Data.equipped_spells.duplicate()
@@ -81,8 +85,14 @@ func _ready() -> void:
 	check(platform.global_position.is_equal_approx(held),"Power loss holds platform halfway through travel")
 	platform.actuator.receive(true,EnvironmentLink.Port.POWER); await frames(30)
 	check(not platform.global_position.is_equal_approx(held),"Restoring power resumes the interrupted route")
+	lab.visit(11); await chill(prop(11,"ReceiverA"))
+	check(not prop(11,"Relay").actuator.output,"A single real receiver hit cannot satisfy the two-input practical circuit")
+	await chill(prop(11,"ReceiverB"))
+	check(prop(11,"Relay").actuator.output and prop(11,"Door").actuator.output,"Two physical incantations satisfy AND and open the linked gate")
 	lab.visit(9); await use(9,"Start")
 	place(prop(9,"Turret").global_position+Vector2(-400,0)); await frames(40)
+	tap(KEY_Q)
+	check(lab.player.target_lock.locked_target == prop(9,"Turret") and lab.player.environment_target.current() == null,"Physical Q still selects a genuine hostile turret and leaves device mode")
 	var hp := Player_Global_Data.p_curr_health
 	await frames(100)
 	check(prop(9,"Turret").shots_fired > 0 and Player_Global_Data.p_curr_health < hp,"Puzzle D: turret warning leads to actual projectile damage")

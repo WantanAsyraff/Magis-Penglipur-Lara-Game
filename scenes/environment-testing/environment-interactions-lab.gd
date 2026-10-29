@@ -31,6 +31,8 @@ func _initialize() -> void:
 	player = load("res://scenes/combat/boss-prototype-player.tscn").instantiate()
 	player.training_spells.assign(LOADOUT); player.set_meta("quest_owner_id","")
 	player.position = Vector2(150,400); add_child(player)
+	# Player scene defaults run setters during instantiation; apply the lab context afterward.
+	Player_Global_Data.combat_mode = true
 	Player_Manager.players[Player_Manager.get_local_peer_id()] = player
 	player.camera.get_node("UI").scale = Vector2(.55,.55)
 	player.camera.enabled = false; player.camera.overworldUI.hide(); player.camera.combatUI.show()

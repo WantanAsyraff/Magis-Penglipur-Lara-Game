@@ -9,7 +9,7 @@ extends StaticBody2D
 @export var key_id: String = "key_default"
 
 @export var prompt_locked_text: String = "Locked. Find the key."
-@export var prompt_unlocked_text: String = "Press [F] to open"
+@export var prompt_unlocked_text: String = "Open"
 
 ## If true, the door is removed when opened. If false, it plays an open animation and disables collision.
 @export var destroy_on_open: bool = false

@@ -9,7 +9,7 @@ extends Area2D
 ## Must match the key_id expected by the LockedDoor this key opens.
 @export var key_id: String = "key_default"
 
-@export var prompt_text: String = "Press [F] to pick up"
+@export var prompt_text: String = "Take key"
 
 var _detector: DetectionComponent
 var _player_nearby: Node = null
@@ -23,7 +23,7 @@ func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
 	_setup_prompt()
-	_detector = DetectionComponent.new(); _detector.requires_area_overlap = true; add_child(_detector)
+	_detector = DetectionComponent.new(); _detector.requires_area_overlap = true; _detector.interact_label_text = prompt_text; add_child(_detector)
 	_detector.interacted.connect(func():
 		if SpellExecutor.is_authoritative(self): _pick_up())
 

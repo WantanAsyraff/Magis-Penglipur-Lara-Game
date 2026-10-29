@@ -478,13 +478,13 @@ func _cast_resolved(spell: SpellData) -> void:
 	var targets: Array[Node2D] = []
 	var delivery := LegacySpellAdapter.delivery_for(spell)
 	var selected := target_lock.locked_target
-	if is_instance_valid(selected) and spell.targeting != SpellData.Targeting.ALLIES and delivery not in [SpellData.Delivery.SELF,SpellData.Delivery.SUMMON]:
+	if is_instance_valid(selected) and target_lock.eligible(selected) and spell.targeting != SpellData.Targeting.ALLIES and delivery not in [SpellData.Delivery.SELF,SpellData.Delivery.SUMMON]:
 		targets.append(selected)
 	elif delivery == SpellData.Delivery.DIRECT_TARGET:
 		var targeting_context := SpellCastContext.new(self,spell)
 		targeting_context.direction = aim
 		var target := SpellDelivery.pick_target(targeting_context)
-		if target: targets.append(target)
+		if target and target_lock.eligible(target): targets.append(target)
 	if incantation_strategy == IncantationResolver.Strategy.CHAINED:
 		accepted = casting.enqueue_cast(spell, global_position, aim, targets, incantation_chain_id)
 	else:

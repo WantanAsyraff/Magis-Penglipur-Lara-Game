@@ -93,7 +93,9 @@ func water_devices() -> void:
 	pump.source_tank = pump.get_path_to(source); pump.destination_tank = pump.get_path_to(destination); pump.valves = [pump.get_path_to(valve)]
 	valve.interact(); pump._physics_process(1)
 	check(destination.volume == 0,"Unpowered pump cannot transfer")
-	pump.actuator.receive(true,EnvironmentLink.Port.POWER); pump._physics_process(1)
+	pump.actuator.receive(true,EnvironmentLink.Port.POWER); valve.data.valve_opening = .5; pump._physics_process(1)
+	check(destination.volume == 7.5,"Partially opened valves limit real transfer rate")
+	valve.data.valve_opening = 1; pump._physics_process(.5)
 	check(destination.volume == 15 and source.volume == 65,"Pump transfers actual source volume")
 	check(source.volume+destination.volume == 80,"Water volume is conserved")
 	valve.interact(); pump._physics_process(1)
@@ -239,3 +241,11 @@ func authoring_and_delivery() -> void:
 	check(breakable.collision.disabled,"Destructible damage removes its real blocking collision")
 	breakable._physics_process(.3); await get_tree().physics_frame; await get_tree().physics_frame
 	check(not breakable.get_meta("combat_dead",false) and not breakable.collision.disabled,"Configured transient breakables respawn with restored collision and health")
+
+	reset_box()
+	var magic_switch: EnvironmentDevice = spawn_prop("light-switch",Vector2(180,0),{"rule":load("res://data/environment/cooled-rule.tres")})
+	await get_tree().physics_frame; await get_tree().physics_frame
+	var switch_context := SpellCastContext.new(player,chill); switch_context.direction = Vector2.RIGHT; switch_context.source_position = player.global_position
+	SpellDelivery.dispatch(switch_context)
+	for i in 30: await get_tree().physics_frame
+	check(magic_switch.actuator.output,"A configured Magis switch enables its hit collider and responds to a real projectile")

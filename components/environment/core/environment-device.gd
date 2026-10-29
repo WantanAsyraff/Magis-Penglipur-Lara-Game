@@ -163,7 +163,9 @@ func reset(propagate: bool = true) -> void:
 	var motion := get_node_or_null("SpellMotionImpulse")
 	if motion: motion.queue_free()
 	receiver.reset(); hitbox.clear_all_effects(); actuator.inputs.clear(); actuator.configure(data)
-	collision.set_deferred("disabled",data.kind not in [EnvironmentDeviceData.Kind.GATE,EnvironmentDeviceData.Kind.BREAKABLE,EnvironmentDeviceData.Kind.TURRET,EnvironmentDeviceData.Kind.TANK,EnvironmentDeviceData.Kind.RECEIVER])
+	var target := get_node_or_null("EnvironmentalTarget") as EnvironmentalTarget
+	var solid := data.kind in [EnvironmentDeviceData.Kind.GATE,EnvironmentDeviceData.Kind.BREAKABLE,EnvironmentDeviceData.Kind.TURRET,EnvironmentDeviceData.Kind.TANK]
+	collision.set_deferred("disabled",not (solid or (target and target.targetable)))
 	_stop_turret(); CombatLifecycle.cleanup(self)
 	_sync_water()
 	_state_changed(actuator.output)

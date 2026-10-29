@@ -10,6 +10,7 @@ var _origin := Vector2.ZERO
 func _ready() -> void:
 	_origin = position
 	collision_layer = 16; collision_mask = 17
+
 	set_meta("faction_id",&"neutral"); set_meta("spell_team",&"neutral")
 	set_meta("structural",true); set_meta("magnetic",true)
 	var collision := CollisionShape2D.new(); var rect := RectangleShape2D.new(); rect.size = Vector2(64,64); collision.shape = rect; add_child(collision)
@@ -35,3 +36,10 @@ func reset() -> void:
 	health = max_health; set_meta("combat_dead",false); collision_layer = 16; collision_mask = 17; freeze = false
 	if visual: visual.present(false)
 	reset_physics_interpolation()
+
+func push_from_player(player: Player) -> void:
+	if get_meta("combat_dead",false) or not SpellExecutor.is_authoritative(player) or not Player_Global_Data.p_moveable or mass > 80: return
+	var direction := Input.get_axis("move_left","move_right")
+	if direction*(global_position.x-player.global_position.x) > 0 and absf(linear_velocity.x) < 240:
+		var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity",980)
+		apply_central_force(Vector2(direction*mass*(gravity+1600),0))

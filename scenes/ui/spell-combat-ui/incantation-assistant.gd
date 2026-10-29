@@ -38,6 +38,7 @@ func bind_player(actor: Player) -> void:
 	_refresh()
 
 func _refresh() -> void:
+	if not is_inside_tree(): return
 	if not is_instance_valid(player):
 		hide()
 		return

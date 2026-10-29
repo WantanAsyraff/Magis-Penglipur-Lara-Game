@@ -1,0 +1,1390 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://data/environment/environment-device-data.gd" id="cfg"]
+[ext_resource type="Script" path="res://data/environment/environment-link.gd" id="link"]
+[ext_resource type="Script" path="res://data/environment/environment-visual-data.gd" id="art"]
+[ext_resource type="PackedScene" path="res://components/environment/light-switch.tscn" id="light-switch"]
+[ext_resource type="PackedScene" path="res://components/environment/fuse-box.tscn" id="fuse-box"]
+[ext_resource type="PackedScene" path="res://components/environment/lamp.tscn" id="lamp"]
+[ext_resource type="PackedScene" path="res://components/environment/powered-gate.tscn" id="powered-gate"]
+[ext_resource type="PackedScene" path="res://components/environment/keyed-door.tscn" id="keyed-door"]
+[ext_resource type="PackedScene" path="res://components/environment/water-valve.tscn" id="water-valve"]
+[ext_resource type="PackedScene" path="res://components/environment/water-tap.tscn" id="water-tap"]
+[ext_resource type="PackedScene" path="res://components/environment/water-pump.tscn" id="water-pump"]
+[ext_resource type="PackedScene" path="res://components/environment/water-tank.tscn" id="water-tank"]
+[ext_resource type="PackedScene" path="res://components/environment/ceiling-fan.tscn" id="ceiling-fan"]
+[ext_resource type="PackedScene" path="res://components/environment/drainage-channel.tscn" id="drainage-channel"]
+[ext_resource type="PackedScene" path="res://components/environment/pressure-switch.tscn" id="pressure-switch"]
+[ext_resource type="PackedScene" path="res://components/environment/magis-receiver.tscn" id="magis-receiver"]
+[ext_resource type="PackedScene" path="res://components/environment/training-turret.tscn" id="training-turret"]
+[ext_resource type="PackedScene" path="res://components/environment/magis-breakable.tscn" id="magis-breakable"]
+[ext_resource type="PackedScene" path="res://components/environment/electrical-relay.tscn" id="electrical-relay"]
+[ext_resource type="PackedScene" path="res://components/environment/lever.tscn" id="lever"]
+[ext_resource type="PackedScene" path="res://components/environment/moving-platform.tscn" id="moving-platform"]
+[ext_resource type="PackedScene" path="res://components/environment/water-volume.tscn" id="water-volume"]
+[ext_resource type="PackedScene" path="res://components/environment/floating-crate.tscn" id="floating-crate"]
+[ext_resource type="Resource" path="res://data/environment/cooled-rule.tres" id="cooled"]
+[ext_resource type="Resource" path="res://data/environment/spell-rule.tres" id="spell"]
+[ext_resource type="Resource" path="res://data/environment/training-bolt.tres" id="bolt"]
+[ext_resource type="Script" path="res://scenes/environment-testing/lab-key-pedestal.gd" id="key"]
+
+[sub_resource type="Resource" id="art"]
+script = ExtResource("art")
+tint = Color(0.3,0.85,0.8,1)
+
+[sub_resource type="RectangleShape2D" id="shape1"]
+size = Vector2(1800,50)
+
+[sub_resource type="RectangleShape2D" id="shape2"]
+size = Vector2(40,450)
+
+[sub_resource type="RectangleShape2D" id="shape3"]
+size = Vector2(40,450)
+
+[sub_resource type="RectangleShape2D" id="shape4"]
+size = Vector2(1800,50)
+
+[sub_resource type="RectangleShape2D" id="shape5"]
+size = Vector2(40,450)
+
+[sub_resource type="RectangleShape2D" id="shape6"]
+size = Vector2(40,450)
+
+[sub_resource type="RectangleShape2D" id="shape7"]
+size = Vector2(1800,50)
+
+[sub_resource type="RectangleShape2D" id="shape8"]
+size = Vector2(40,450)
+
+[sub_resource type="RectangleShape2D" id="shape9"]
+size = Vector2(40,450)
+
+[sub_resource type="RectangleShape2D" id="shape10"]
+size = Vector2(1800,50)
+
+[sub_resource type="RectangleShape2D" id="shape11"]
+size = Vector2(40,450)
+
+[sub_resource type="RectangleShape2D" id="shape12"]
+size = Vector2(40,450)
+
+[sub_resource type="RectangleShape2D" id="shape13"]
+size = Vector2(1800,50)
+
+[sub_resource type="RectangleShape2D" id="shape14"]
+size = Vector2(40,450)
+
+[sub_resource type="RectangleShape2D" id="shape15"]
+size = Vector2(40,450)
+
+[sub_resource type="RectangleShape2D" id="shape16"]
+size = Vector2(1800,50)
+
+[sub_resource type="RectangleShape2D" id="shape17"]
+size = Vector2(40,450)
+
+[sub_resource type="RectangleShape2D" id="shape18"]
+size = Vector2(40,450)
+
+[sub_resource type="RectangleShape2D" id="shape19"]
+size = Vector2(1800,50)
+
+[sub_resource type="RectangleShape2D" id="shape20"]
+size = Vector2(40,450)
+
+[sub_resource type="RectangleShape2D" id="shape21"]
+size = Vector2(40,450)
+
+[sub_resource type="RectangleShape2D" id="shape22"]
+size = Vector2(1800,50)
+
+[sub_resource type="RectangleShape2D" id="shape23"]
+size = Vector2(40,450)
+
+[sub_resource type="RectangleShape2D" id="shape24"]
+size = Vector2(40,450)
+
+[sub_resource type="RectangleShape2D" id="shape25"]
+size = Vector2(1800,50)
+
+[sub_resource type="RectangleShape2D" id="shape26"]
+size = Vector2(40,450)
+
+[sub_resource type="RectangleShape2D" id="shape27"]
+size = Vector2(40,450)
+
+[sub_resource type="RectangleShape2D" id="shape28"]
+size = Vector2(1800,50)
+
+[sub_resource type="RectangleShape2D" id="shape29"]
+size = Vector2(40,450)
+
+[sub_resource type="RectangleShape2D" id="shape30"]
+size = Vector2(40,450)
+
+[sub_resource type="RectangleShape2D" id="shape31"]
+size = Vector2(1800,50)
+
+[sub_resource type="RectangleShape2D" id="shape32"]
+size = Vector2(40,450)
+
+[sub_resource type="RectangleShape2D" id="shape33"]
+size = Vector2(40,450)
+
+[sub_resource type="RectangleShape2D" id="shape34"]
+size = Vector2(1800,50)
+
+[sub_resource type="RectangleShape2D" id="shape35"]
+size = Vector2(40,450)
+
+[sub_resource type="RectangleShape2D" id="shape36"]
+size = Vector2(40,450)
+
+[sub_resource type="Resource" id="cfg37"]
+script = ExtResource("cfg")
+visual = SubResource("art")
+kind = 1
+device_name = "Kotak fius"
+
+[sub_resource type="Resource" id="link38"]
+script = ExtResource("link")
+target = NodePath("../Switch")
+port = 0
+inverted = false
+
+[sub_resource type="Resource" id="cfg39"]
+script = ExtResource("cfg")
+visual = SubResource("art")
+kind = 0
+device_name = "Suis lampu"
+size = Vector2(60,80)
+initial_power = false
+
+[sub_resource type="Resource" id="link40"]
+script = ExtResource("link")
+target = NodePath("../Lamp")
+port = 0
+inverted = false
+
+[sub_resource type="Resource" id="cfg41"]
+script = ExtResource("cfg")
+visual = SubResource("art")
+kind = 2
+device_name = "Lampu"
+initial_enabled = true
+
+[sub_resource type="Resource" id="cfg42"]
+script = ExtResource("cfg")
+visual = SubResource("art")
+kind = 1
+device_name = "Kotak fius"
+
+[sub_resource type="Resource" id="link43"]
+script = ExtResource("link")
+target = NodePath("../Switch")
+port = 0
+inverted = false
+
+[sub_resource type="Resource" id="cfg44"]
+script = ExtResource("cfg")
+visual = SubResource("art")
+kind = 0
+device_name = "Suis lampu"
+size = Vector2(60,80)
+initial_power = false
+
+[sub_resource type="Resource" id="link45"]
+script = ExtResource("link")
+target = NodePath("../Door")
+port = 1
+inverted = false
+
+[sub_resource type="Resource" id="cfg46"]
+script = ExtResource("cfg")
+visual = SubResource("art")
+kind = 3
+device_name = "Pagar"
+initial_enabled = false
+logic = 0
+size = Vector2(36,240)
+
+[sub_resource type="Resource" id="cfg47"]
+script = ExtResource("cfg")
+visual = SubResource("art")
+kind = 3
+device_name = "Pintu berkunci"
+key_id = "environment-lab-key"
+persistent = true
+size = Vector2(36,240)
+
+[sub_resource type="Resource" id="cfg48"]
+script = ExtResource("cfg")
+visual = SubResource("art")
+kind = 6
+device_name = "Tangki air"
+size = Vector2(150,150)
+initial_enabled = true
+initial_volume = 80.0
+
+[sub_resource type="Resource" id="cfg49"]
+script = ExtResource("cfg")
+visual = SubResource("art")
+kind = 6
+device_name = "Tangki air"
+size = Vector2(150,150)
+initial_enabled = true
+initial_volume = 0.0
+
+[sub_resource type="Resource" id="cfg50"]
+script = ExtResource("cfg")
+visual = SubResource("art")
+kind = 4
+device_name = "Paip air"
+size = Vector2(70,70)
+
+[sub_resource type="Resource" id="cfg51"]
+script = ExtResource("cfg")
+visual = SubResource("art")
+kind = 4
+device_name = "Injap air"
+
+[sub_resource type="Resource" id="link52"]
+script = ExtResource("link")
+target = NodePath("../Tap")
+port = 1
+inverted = false
+
+[sub_resource type="Resource" id="cfg53"]
+script = ExtResource("cfg")
+visual = SubResource("art")
+kind = 6
+device_name = "Tangki air"
+size = Vector2(150,150)
+initial_enabled = true
+initial_volume = 100.0
+
+[sub_resource type="Resource" id="cfg54"]
+script = ExtResource("cfg")
+visual = SubResource("art")
+kind = 6
+device_name = "Tangki air"
+size = Vector2(150,150)
+initial_enabled = true
+initial_volume = 0.0
+
+[sub_resource type="Resource" id="cfg55"]
+script = ExtResource("cfg")
+visual = SubResource("art")
+kind = 0
+device_name = "Suis lampu"
+size = Vector2(60,80)
+
+[sub_resource type="Resource" id="link56"]
+script = ExtResource("link")
+target = NodePath("../Pump")
+port = 0
+inverted = false
+
+[sub_resource type="Resource" id="cfg57"]
+script = ExtResource("cfg")
+visual = SubResource("art")
+kind = 5
+device_name = "Pam air"
+initial_enabled = true
+initial_power = false
+
+[sub_resource type="Resource" id="cfg58"]
+script = ExtResource("cfg")
+visual = SubResource("art")
+kind = 4
+device_name = "Injap air"
+
+[sub_resource type="Resource" id="cfg61"]
+script = ExtResource("cfg")
+visual = SubResource("art")
+kind = 9
+device_name = "Plat tekanan"
+size = Vector2(160,18)
+minimum_weight = 40.0
+
+[sub_resource type="Resource" id="link62"]
+script = ExtResource("link")
+target = NodePath("../Door")
+port = 1
+inverted = false
+
+[sub_resource type="RectangleShape2D" id="shape63"]
+size = Vector2(20,300)
+
+[sub_resource type="Resource" id="cfg64"]
+script = ExtResource("cfg")
+visual = SubResource("art")
+kind = 3
+device_name = "Pagar"
+initial_enabled = false
+logic = 0
+size = Vector2(36,240)
+
+[sub_resource type="Resource" id="cfg65"]
+script = ExtResource("cfg")
+visual = SubResource("art")
+kind = 0
+device_name = "Suis lampu"
+size = Vector2(60,80)
+
+[sub_resource type="Resource" id="link66"]
+script = ExtResource("link")
+target = NodePath("../Fan")
+port = 0
+inverted = false
+
+[sub_resource type="Resource" id="cfg67"]
+script = ExtResource("cfg")
+visual = SubResource("art")
+kind = 7
+device_name = "Kipas siling"
+initial_enabled = true
+size = Vector2(110,80)
+airflow_enabled = true
+initial_power = false
+airflow = Vector2(6000,-10000)
+
+[sub_resource type="Resource" id="cfg69"]
+script = ExtResource("cfg")
+visual = SubResource("art")
+kind = 6
+device_name = "Tangki air"
+size = Vector2(150,150)
+initial_enabled = true
+initial_volume = 100.0
+
+[sub_resource type="Resource" id="cfg70"]
+script = ExtResource("cfg")
+visual = SubResource("art")
+kind = 6
+device_name = "Tangki air"
+size = Vector2(150,150)
+initial_enabled = true
+initial_volume = 0.0
+
+[sub_resource type="Resource" id="cfg71"]
+script = ExtResource("cfg")
+visual = SubResource("art")
+kind = 8
+device_name = "Longkang"
+size = Vector2(180,70)
+initial_enabled = true
+flow_rate = 20.0
+
+[sub_resource type="Resource" id="cfg72"]
+script = ExtResource("cfg")
+visual = SubResource("art")
+kind = 12
+device_name = "Longkang obstruction"
+max_health = 20.0
+size = Vector2(100,140)
+capabilities = Array[StringName]([&"structural", &"magnetic", &"coolable", &"conductive", &"impulse-reactive"])
+
+[sub_resource type="Resource" id="cfg73"]
+script = ExtResource("cfg")
+visual = SubResource("art")
+kind = 9
+device_name = "Plat tekanan"
+size = Vector2(140,18)
+minimum_weight = 40.0
+
+[sub_resource type="Resource" id="link74"]
+script = ExtResource("link")
+target = NodePath("../Door")
+port = 1
+inverted = false
+
+[sub_resource type="Resource" id="cfg77"]
+script = ExtResource("cfg")
+visual = SubResource("art")
+kind = 3
+device_name = "Pagar"
+initial_enabled = false
+logic = 0
+size = Vector2(36,240)
+
+[sub_resource type="Resource" id="cfg78"]
+script = ExtResource("cfg")
+visual = SubResource("art")
+kind = 10
+rule = ExtResource("cooled")
+device_name = "Penerima Magis"
+size = Vector2(80,110)
+
+[sub_resource type="Resource" id="link79"]
+script = ExtResource("link")
+target = NodePath("../Relay")
+port = 2
+inverted = false
+
+[sub_resource type="Resource" id="cfg80"]
+script = ExtResource("cfg")
+visual = SubResource("art")
+kind = 13
+device_name = "Geganti"
+initial_enabled = true
+logic = 1
+
+[sub_resource type="Resource" id="link81"]
+script = ExtResource("link")
+target = NodePath("../Platform")
+port = 1
+inverted = false
+
+[sub_resource type="RectangleShape2D" id="shape83"]
+size = Vector2(250,24)
+
+[sub_resource type="Resource" id="cfg84"]
+script = ExtResource("cfg")
+visual = SubResource("art")
+kind = 0
+device_name = "Suis lampu"
+size = Vector2(60,80)
+
+[sub_resource type="Resource" id="link85"]
+script = ExtResource("link")
+target = NodePath("../Turret")
+port = 0
+inverted = false
+
+[sub_resource type="Resource" id="cfg86"]
+script = ExtResource("cfg")
+visual = SubResource("art")
+kind = 0
+device_name = "Emergency power cut"
+size = Vector2(60,80)
+
+[sub_resource type="Resource" id="link87"]
+script = ExtResource("link")
+target = NodePath("../Turret")
+port = 1
+inverted = true
+
+[sub_resource type="Resource" id="cfg88"]
+script = ExtResource("cfg")
+visual = SubResource("art")
+kind = 11
+turret_spell = ExtResource("bolt")
+device_name = "Mesin latihan"
+initial_enabled = true
+size = Vector2(70,100)
+capabilities = Array[StringName]([&"structural", &"magnetic"])
+initial_power = false
+attack_range = 1200.0
+
+[sub_resource type="Resource" id="cfg89"]
+script = ExtResource("cfg")
+visual = SubResource("art")
+kind = 12
+device_name = "Penghadang retak"
+max_health = 25.0
+size = Vector2(100,180)
+capabilities = Array[StringName]([&"structural", &"magnetic", &"coolable", &"conductive", &"impulse-reactive"])
+respawn_seconds = 12.0
+
+[sub_resource type="Resource" id="cfg90"]
+script = ExtResource("cfg")
+visual = SubResource("art")
+kind = 10
+rule = ExtResource("cooled")
+device_name = "Penerima Magis"
+size = Vector2(80,110)
+
+[sub_resource type="Resource" id="link91"]
+script = ExtResource("link")
+target = NodePath("../Relay")
+port = 2
+inverted = false
+
+[sub_resource type="Resource" id="cfg92"]
+script = ExtResource("cfg")
+visual = SubResource("art")
+kind = 10
+rule = ExtResource("cooled")
+device_name = "Penerima Magis"
+size = Vector2(80,110)
+
+[sub_resource type="Resource" id="link93"]
+script = ExtResource("link")
+target = NodePath("../Relay")
+port = 2
+inverted = false
+
+[sub_resource type="Resource" id="cfg94"]
+script = ExtResource("cfg")
+visual = SubResource("art")
+kind = 13
+device_name = "Geganti"
+initial_enabled = true
+logic = 1
+
+[sub_resource type="Resource" id="link95"]
+script = ExtResource("link")
+target = NodePath("../Door")
+port = 1
+inverted = false
+
+[sub_resource type="Resource" id="cfg96"]
+script = ExtResource("cfg")
+visual = SubResource("art")
+kind = 3
+device_name = "Pagar"
+initial_enabled = false
+logic = 0
+size = Vector2(36,240)
+
+[sub_resource type="Resource" id="cfg97"]
+script = ExtResource("cfg")
+visual = SubResource("art")
+kind = 0
+device_name = "Suis lampu"
+size = Vector2(60,80)
+
+[sub_resource type="Resource" id="link98"]
+script = ExtResource("link")
+target = NodePath("../Platform")
+port = 1
+inverted = false
+
+[sub_resource type="RectangleShape2D" id="shape100"]
+size = Vector2(280,24)
+
+[node name="Stations" type="Node2D"]
+
+[node name="Station01" type="Node2D" parent="."]
+position = Vector2(0,0)
+
+[node name="Title" type="Label" parent="Station01"]
+position = Vector2(80,50)
+text = "01   Electric light / Suis lampu"
+theme_override_font_sizes/font_size = 32
+
+[node name="Instructions" type="Label" parent="Station01"]
+position = Vector2(80,110)
+text = "F at fuse, then F at switch. Cut either to extinguish the lamp."
+theme_override_font_sizes/font_size = 20
+
+[node name="Floor" type="StaticBody2D" parent="Station01"]
+position = Vector2(900,525)
+collision_layer = 16
+collision_mask = 0
+
+[node name="Collision" type="CollisionShape2D" parent="Station01/Floor"]
+shape = SubResource("shape1")
+
+[node name="Surface" type="Polygon2D" parent="Station01/Floor"]
+polygon = PackedVector2Array(-900.0,-25.0,900.0,-25.0,900.0,25.0,-900.0,25.0)
+color = Color(0.13,0.19,0.24,1)
+
+[node name="LeftWall" type="StaticBody2D" parent="Station01"]
+position = Vector2(-20,300)
+collision_layer = 16
+collision_mask = 0
+
+[node name="Collision" type="CollisionShape2D" parent="Station01/LeftWall"]
+shape = SubResource("shape2")
+
+[node name="Surface" type="Polygon2D" parent="Station01/LeftWall"]
+polygon = PackedVector2Array(-20.0,-225.0,20.0,-225.0,20.0,225.0,-20.0,225.0)
+color = Color(0.13,0.19,0.24,1)
+
+[node name="RightWall" type="StaticBody2D" parent="Station01"]
+position = Vector2(1820,300)
+collision_layer = 16
+collision_mask = 0
+
+[node name="Collision" type="CollisionShape2D" parent="Station01/RightWall"]
+shape = SubResource("shape3")
+
+[node name="Surface" type="Polygon2D" parent="Station01/RightWall"]
+polygon = PackedVector2Array(-20.0,-225.0,20.0,-225.0,20.0,225.0,-20.0,225.0)
+color = Color(0.13,0.19,0.24,1)
+
+[node name="Station02" type="Node2D" parent="."]
+position = Vector2(2000,0)
+
+[node name="Title" type="Label" parent="Station02"]
+position = Vector2(80,50)
+text = "02   Pagar / Power restoration"
+theme_override_font_sizes/font_size = 32
+
+[node name="Instructions" type="Label" parent="Station02"]
+position = Vector2(80,110)
+text = "PUZZLE A: Fuse → switch → door. F at the key pedestal unlocks the padlock."
+theme_override_font_sizes/font_size = 20
+
+[node name="Floor" type="StaticBody2D" parent="Station02"]
+position = Vector2(900,525)
+collision_layer = 16
+collision_mask = 0
+
+[node name="Collision" type="CollisionShape2D" parent="Station02/Floor"]
+shape = SubResource("shape4")
+
+[node name="Surface" type="Polygon2D" parent="Station02/Floor"]
+polygon = PackedVector2Array(-900.0,-25.0,900.0,-25.0,900.0,25.0,-900.0,25.0)
+color = Color(0.13,0.19,0.24,1)
+
+[node name="LeftWall" type="StaticBody2D" parent="Station02"]
+position = Vector2(-20,300)
+collision_layer = 16
+collision_mask = 0
+
+[node name="Collision" type="CollisionShape2D" parent="Station02/LeftWall"]
+shape = SubResource("shape5")
+
+[node name="Surface" type="Polygon2D" parent="Station02/LeftWall"]
+polygon = PackedVector2Array(-20.0,-225.0,20.0,-225.0,20.0,225.0,-20.0,225.0)
+color = Color(0.13,0.19,0.24,1)
+
+[node name="RightWall" type="StaticBody2D" parent="Station02"]
+position = Vector2(1820,300)
+collision_layer = 16
+collision_mask = 0
+
+[node name="Collision" type="CollisionShape2D" parent="Station02/RightWall"]
+shape = SubResource("shape6")
+
+[node name="Surface" type="Polygon2D" parent="Station02/RightWall"]
+polygon = PackedVector2Array(-20.0,-225.0,20.0,-225.0,20.0,225.0,-20.0,225.0)
+color = Color(0.13,0.19,0.24,1)
+
+[node name="Station03" type="Node2D" parent="."]
+position = Vector2(4000,0)
+
+[node name="Title" type="Label" parent="Station03"]
+position = Vector2(80,50)
+text = "03   Tap and valve / Paip air"
+theme_override_font_sizes/font_size = 32
+
+[node name="Instructions" type="Label" parent="Station03"]
+position = Vector2(80,110)
+text = "F opens the source tap and outlet valve. Watch the measured tank fill."
+theme_override_font_sizes/font_size = 20
+
+[node name="Floor" type="StaticBody2D" parent="Station03"]
+position = Vector2(900,525)
+collision_layer = 16
+collision_mask = 0
+
+[node name="Collision" type="CollisionShape2D" parent="Station03/Floor"]
+shape = SubResource("shape7")
+
+[node name="Surface" type="Polygon2D" parent="Station03/Floor"]
+polygon = PackedVector2Array(-900.0,-25.0,900.0,-25.0,900.0,25.0,-900.0,25.0)
+color = Color(0.13,0.19,0.24,1)
+
+[node name="LeftWall" type="StaticBody2D" parent="Station03"]
+position = Vector2(-20,300)
+collision_layer = 16
+collision_mask = 0
+
+[node name="Collision" type="CollisionShape2D" parent="Station03/LeftWall"]
+shape = SubResource("shape8")
+
+[node name="Surface" type="Polygon2D" parent="Station03/LeftWall"]
+polygon = PackedVector2Array(-20.0,-225.0,20.0,-225.0,20.0,225.0,-20.0,225.0)
+color = Color(0.13,0.19,0.24,1)
+
+[node name="RightWall" type="StaticBody2D" parent="Station03"]
+position = Vector2(1820,300)
+collision_layer = 16
+collision_mask = 0
+
+[node name="Collision" type="CollisionShape2D" parent="Station03/RightWall"]
+shape = SubResource("shape9")
+
+[node name="Surface" type="Polygon2D" parent="Station03/RightWall"]
+polygon = PackedVector2Array(-20.0,-225.0,20.0,-225.0,20.0,225.0,-20.0,225.0)
+color = Color(0.13,0.19,0.24,1)
+
+[node name="Station04" type="Node2D" parent="."]
+position = Vector2(6000,0)
+
+[node name="Title" type="Label" parent="Station04"]
+position = Vector2(80,50)
+text = "04   Water supply / Tangki air"
+theme_override_font_sizes/font_size = 32
+
+[node name="Instructions" type="Label" parent="Station04"]
+position = Vector2(80,110)
+text = "PUZZLE B: F pump power, F valve. Rising water floats the crate to the elevated plate."
+theme_override_font_sizes/font_size = 20
+
+[node name="Floor" type="StaticBody2D" parent="Station04"]
+position = Vector2(900,525)
+collision_layer = 16
+collision_mask = 0
+
+[node name="Collision" type="CollisionShape2D" parent="Station04/Floor"]
+shape = SubResource("shape10")
+
+[node name="Surface" type="Polygon2D" parent="Station04/Floor"]
+polygon = PackedVector2Array(-900.0,-25.0,900.0,-25.0,900.0,25.0,-900.0,25.0)
+color = Color(0.13,0.19,0.24,1)
+
+[node name="LeftWall" type="StaticBody2D" parent="Station04"]
+position = Vector2(-20,300)
+collision_layer = 16
+collision_mask = 0
+
+[node name="Collision" type="CollisionShape2D" parent="Station04/LeftWall"]
+shape = SubResource("shape11")
+
+[node name="Surface" type="Polygon2D" parent="Station04/LeftWall"]
+polygon = PackedVector2Array(-20.0,-225.0,20.0,-225.0,20.0,225.0,-20.0,225.0)
+color = Color(0.13,0.19,0.24,1)
+
+[node name="RightWall" type="StaticBody2D" parent="Station04"]
+position = Vector2(1820,300)
+collision_layer = 16
+collision_mask = 0
+
+[node name="Collision" type="CollisionShape2D" parent="Station04/RightWall"]
+shape = SubResource("shape12")
+
+[node name="Surface" type="Polygon2D" parent="Station04/RightWall"]
+polygon = PackedVector2Array(-20.0,-225.0,20.0,-225.0,20.0,225.0,-20.0,225.0)
+color = Color(0.13,0.19,0.24,1)
+
+[node name="Station05" type="Node2D" parent="."]
+position = Vector2(0,1200)
+
+[node name="Title" type="Label" parent="Station05"]
+position = Vector2(80,50)
+text = "05   Ceiling fan / Kipas siling"
+theme_override_font_sizes/font_size = 32
+
+[node name="Instructions" type="Label" parent="Station05"]
+position = Vector2(80,110)
+text = "F toggles fan power. Light objects move in the airflow; the player stays grounded."
+theme_override_font_sizes/font_size = 20
+
+[node name="Floor" type="StaticBody2D" parent="Station05"]
+position = Vector2(900,525)
+collision_layer = 16
+collision_mask = 0
+
+[node name="Collision" type="CollisionShape2D" parent="Station05/Floor"]
+shape = SubResource("shape13")
+
+[node name="Surface" type="Polygon2D" parent="Station05/Floor"]
+polygon = PackedVector2Array(-900.0,-25.0,900.0,-25.0,900.0,25.0,-900.0,25.0)
+color = Color(0.13,0.19,0.24,1)
+
+[node name="LeftWall" type="StaticBody2D" parent="Station05"]
+position = Vector2(-20,300)
+collision_layer = 16
+collision_mask = 0
+
+[node name="Collision" type="CollisionShape2D" parent="Station05/LeftWall"]
+shape = SubResource("shape14")
+
+[node name="Surface" type="Polygon2D" parent="Station05/LeftWall"]
+polygon = PackedVector2Array(-20.0,-225.0,20.0,-225.0,20.0,225.0,-20.0,225.0)
+color = Color(0.13,0.19,0.24,1)
+
+[node name="RightWall" type="StaticBody2D" parent="Station05"]
+position = Vector2(1820,300)
+collision_layer = 16
+collision_mask = 0
+
+[node name="Collision" type="CollisionShape2D" parent="Station05/RightWall"]
+shape = SubResource("shape15")
+
+[node name="Surface" type="Polygon2D" parent="Station05/RightWall"]
+polygon = PackedVector2Array(-20.0,-225.0,20.0,-225.0,20.0,225.0,-20.0,225.0)
+color = Color(0.13,0.19,0.24,1)
+
+[node name="Station06" type="Node2D" parent="."]
+position = Vector2(2000,1200)
+
+[node name="Title" type="Label" parent="Station06"]
+position = Vector2(80,50)
+text = "06   Drainage / Longkang"
+theme_override_font_sizes/font_size = 32
+
+[node name="Instructions" type="Label" parent="Station06"]
+position = Vector2(80,110)
+text = "Break the obstruction using equipped Magis. Backed-up water drains downstream."
+theme_override_font_sizes/font_size = 20
+
+[node name="Floor" type="StaticBody2D" parent="Station06"]
+position = Vector2(900,525)
+collision_layer = 16
+collision_mask = 0
+
+[node name="Collision" type="CollisionShape2D" parent="Station06/Floor"]
+shape = SubResource("shape16")
+
+[node name="Surface" type="Polygon2D" parent="Station06/Floor"]
+polygon = PackedVector2Array(-900.0,-25.0,900.0,-25.0,900.0,25.0,-900.0,25.0)
+color = Color(0.13,0.19,0.24,1)
+
+[node name="LeftWall" type="StaticBody2D" parent="Station06"]
+position = Vector2(-20,300)
+collision_layer = 16
+collision_mask = 0
+
+[node name="Collision" type="CollisionShape2D" parent="Station06/LeftWall"]
+shape = SubResource("shape17")
+
+[node name="Surface" type="Polygon2D" parent="Station06/LeftWall"]
+polygon = PackedVector2Array(-20.0,-225.0,20.0,-225.0,20.0,225.0,-20.0,225.0)
+color = Color(0.13,0.19,0.24,1)
+
+[node name="RightWall" type="StaticBody2D" parent="Station06"]
+position = Vector2(1820,300)
+collision_layer = 16
+collision_mask = 0
+
+[node name="Collision" type="CollisionShape2D" parent="Station06/RightWall"]
+shape = SubResource("shape18")
+
+[node name="Surface" type="Polygon2D" parent="Station06/RightWall"]
+polygon = PackedVector2Array(-20.0,-225.0,20.0,-225.0,20.0,225.0,-20.0,225.0)
+color = Color(0.13,0.19,0.24,1)
+
+[node name="Station07" type="Node2D" parent="."]
+position = Vector2(4000,1200)
+
+[node name="Title" type="Label" parent="Station07"]
+position = Vector2(80,50)
+text = "07   Weighted plate / Plat tekanan"
+theme_override_font_sizes/font_size = 32
+
+[node name="Instructions" type="Label" parent="Station07"]
+position = Vector2(80,110)
+text = "Push the heavy crate onto the plate by walking into it. Light crate is insufficient."
+theme_override_font_sizes/font_size = 20
+
+[node name="Floor" type="StaticBody2D" parent="Station07"]
+position = Vector2(900,525)
+collision_layer = 16
+collision_mask = 0
+
+[node name="Collision" type="CollisionShape2D" parent="Station07/Floor"]
+shape = SubResource("shape19")
+
+[node name="Surface" type="Polygon2D" parent="Station07/Floor"]
+polygon = PackedVector2Array(-900.0,-25.0,900.0,-25.0,900.0,25.0,-900.0,25.0)
+color = Color(0.13,0.19,0.24,1)
+
+[node name="LeftWall" type="StaticBody2D" parent="Station07"]
+position = Vector2(-20,300)
+collision_layer = 16
+collision_mask = 0
+
+[node name="Collision" type="CollisionShape2D" parent="Station07/LeftWall"]
+shape = SubResource("shape20")
+
+[node name="Surface" type="Polygon2D" parent="Station07/LeftWall"]
+polygon = PackedVector2Array(-20.0,-225.0,20.0,-225.0,20.0,225.0,-20.0,225.0)
+color = Color(0.13,0.19,0.24,1)
+
+[node name="RightWall" type="StaticBody2D" parent="Station07"]
+position = Vector2(1820,300)
+collision_layer = 16
+collision_mask = 0
+
+[node name="Collision" type="CollisionShape2D" parent="Station07/RightWall"]
+shape = SubResource("shape21")
+
+[node name="Surface" type="Polygon2D" parent="Station07/RightWall"]
+polygon = PackedVector2Array(-20.0,-225.0,20.0,-225.0,20.0,225.0,-20.0,225.0)
+color = Color(0.13,0.19,0.24,1)
+
+[node name="Station08" type="Node2D" parent="."]
+position = Vector2(6000,1200)
+
+[node name="Title" type="Label" parent="Station08"]
+position = Vector2(80,50)
+text = "08   Magis practical / Kinetic Chill"
+theme_override_font_sizes/font_size = 32
+
+[node name="Instructions" type="Label" parent="Station08"]
+position = Vector2(80,110)
+text = "PUZZLE C: R selects receiver. O enters casting; type Kinetic Chill. Ride the lift."
+theme_override_font_sizes/font_size = 20
+
+[node name="Floor" type="StaticBody2D" parent="Station08"]
+position = Vector2(900,525)
+collision_layer = 16
+collision_mask = 0
+
+[node name="Collision" type="CollisionShape2D" parent="Station08/Floor"]
+shape = SubResource("shape22")
+
+[node name="Surface" type="Polygon2D" parent="Station08/Floor"]
+polygon = PackedVector2Array(-900.0,-25.0,900.0,-25.0,900.0,25.0,-900.0,25.0)
+color = Color(0.13,0.19,0.24,1)
+
+[node name="LeftWall" type="StaticBody2D" parent="Station08"]
+position = Vector2(-20,300)
+collision_layer = 16
+collision_mask = 0
+
+[node name="Collision" type="CollisionShape2D" parent="Station08/LeftWall"]
+shape = SubResource("shape23")
+
+[node name="Surface" type="Polygon2D" parent="Station08/LeftWall"]
+polygon = PackedVector2Array(-20.0,-225.0,20.0,-225.0,20.0,225.0,-20.0,225.0)
+color = Color(0.13,0.19,0.24,1)
+
+[node name="RightWall" type="StaticBody2D" parent="Station08"]
+position = Vector2(1820,300)
+collision_layer = 16
+collision_mask = 0
+
+[node name="Collision" type="CollisionShape2D" parent="Station08/RightWall"]
+shape = SubResource("shape24")
+
+[node name="Surface" type="Polygon2D" parent="Station08/RightWall"]
+polygon = PackedVector2Array(-20.0,-225.0,20.0,-225.0,20.0,225.0,-20.0,225.0)
+color = Color(0.13,0.19,0.24,1)
+
+[node name="Station09" type="Node2D" parent="."]
+position = Vector2(0,2400)
+
+[node name="Title" type="Label" parent="Station09"]
+position = Vector2(80,50)
+text = "09   Training turret / Mesin latihan"
+theme_override_font_sizes/font_size = 32
+
+[node name="Instructions" type="Label" parent="Station09"]
+position = Vector2(80,110)
+text = "PUZZLE D: F starts nonlethal training. Avoid shots; F at the second switch cuts power."
+theme_override_font_sizes/font_size = 20
+
+[node name="Floor" type="StaticBody2D" parent="Station09"]
+position = Vector2(900,525)
+collision_layer = 16
+collision_mask = 0
+
+[node name="Collision" type="CollisionShape2D" parent="Station09/Floor"]
+shape = SubResource("shape25")
+
+[node name="Surface" type="Polygon2D" parent="Station09/Floor"]
+polygon = PackedVector2Array(-900.0,-25.0,900.0,-25.0,900.0,25.0,-900.0,25.0)
+color = Color(0.13,0.19,0.24,1)
+
+[node name="LeftWall" type="StaticBody2D" parent="Station09"]
+position = Vector2(-20,300)
+collision_layer = 16
+collision_mask = 0
+
+[node name="Collision" type="CollisionShape2D" parent="Station09/LeftWall"]
+shape = SubResource("shape26")
+
+[node name="Surface" type="Polygon2D" parent="Station09/LeftWall"]
+polygon = PackedVector2Array(-20.0,-225.0,20.0,-225.0,20.0,225.0,-20.0,225.0)
+color = Color(0.13,0.19,0.24,1)
+
+[node name="RightWall" type="StaticBody2D" parent="Station09"]
+position = Vector2(1820,300)
+collision_layer = 16
+collision_mask = 0
+
+[node name="Collision" type="CollisionShape2D" parent="Station09/RightWall"]
+shape = SubResource("shape27")
+
+[node name="Surface" type="Polygon2D" parent="Station09/RightWall"]
+polygon = PackedVector2Array(-20.0,-225.0,20.0,-225.0,20.0,225.0,-20.0,225.0)
+color = Color(0.13,0.19,0.24,1)
+
+[node name="Station10" type="Node2D" parent="."]
+position = Vector2(2000,2400)
+
+[node name="Title" type="Label" parent="Station10"]
+position = Vector2(80,50)
+text = "10   Breakable obstacle / Halangan"
+theme_override_font_sizes/font_size = 32
+
+[node name="Instructions" type="Label" parent="Station10"]
+position = Vector2(80,110)
+text = "R selects the barrier. Cast equipped damage spells until collision breaks."
+theme_override_font_sizes/font_size = 20
+
+[node name="Floor" type="StaticBody2D" parent="Station10"]
+position = Vector2(900,525)
+collision_layer = 16
+collision_mask = 0
+
+[node name="Collision" type="CollisionShape2D" parent="Station10/Floor"]
+shape = SubResource("shape28")
+
+[node name="Surface" type="Polygon2D" parent="Station10/Floor"]
+polygon = PackedVector2Array(-900.0,-25.0,900.0,-25.0,900.0,25.0,-900.0,25.0)
+color = Color(0.13,0.19,0.24,1)
+
+[node name="LeftWall" type="StaticBody2D" parent="Station10"]
+position = Vector2(-20,300)
+collision_layer = 16
+collision_mask = 0
+
+[node name="Collision" type="CollisionShape2D" parent="Station10/LeftWall"]
+shape = SubResource("shape29")
+
+[node name="Surface" type="Polygon2D" parent="Station10/LeftWall"]
+polygon = PackedVector2Array(-20.0,-225.0,20.0,-225.0,20.0,225.0,-20.0,225.0)
+color = Color(0.13,0.19,0.24,1)
+
+[node name="RightWall" type="StaticBody2D" parent="Station10"]
+position = Vector2(1820,300)
+collision_layer = 16
+collision_mask = 0
+
+[node name="Collision" type="CollisionShape2D" parent="Station10/RightWall"]
+shape = SubResource("shape30")
+
+[node name="Surface" type="Polygon2D" parent="Station10/RightWall"]
+polygon = PackedVector2Array(-20.0,-225.0,20.0,-225.0,20.0,225.0,-20.0,225.0)
+color = Color(0.13,0.19,0.24,1)
+
+[node name="Station11" type="Node2D" parent="."]
+position = Vector2(4000,2400)
+
+[node name="Title" type="Label" parent="Station11"]
+position = Vector2(80,50)
+text = "11   AND relay / Geganti"
+theme_override_font_sizes/font_size = 32
+
+[node name="Instructions" type="Label" parent="Station11"]
+position = Vector2(80,110)
+text = "R selects either receiver. Chill both to satisfy AND and open the gate."
+theme_override_font_sizes/font_size = 20
+
+[node name="Floor" type="StaticBody2D" parent="Station11"]
+position = Vector2(900,525)
+collision_layer = 16
+collision_mask = 0
+
+[node name="Collision" type="CollisionShape2D" parent="Station11/Floor"]
+shape = SubResource("shape31")
+
+[node name="Surface" type="Polygon2D" parent="Station11/Floor"]
+polygon = PackedVector2Array(-900.0,-25.0,900.0,-25.0,900.0,25.0,-900.0,25.0)
+color = Color(0.13,0.19,0.24,1)
+
+[node name="LeftWall" type="StaticBody2D" parent="Station11"]
+position = Vector2(-20,300)
+collision_layer = 16
+collision_mask = 0
+
+[node name="Collision" type="CollisionShape2D" parent="Station11/LeftWall"]
+shape = SubResource("shape32")
+
+[node name="Surface" type="Polygon2D" parent="Station11/LeftWall"]
+polygon = PackedVector2Array(-20.0,-225.0,20.0,-225.0,20.0,225.0,-20.0,225.0)
+color = Color(0.13,0.19,0.24,1)
+
+[node name="RightWall" type="StaticBody2D" parent="Station11"]
+position = Vector2(1820,300)
+collision_layer = 16
+collision_mask = 0
+
+[node name="Collision" type="CollisionShape2D" parent="Station11/RightWall"]
+shape = SubResource("shape33")
+
+[node name="Surface" type="Polygon2D" parent="Station11/RightWall"]
+polygon = PackedVector2Array(-20.0,-225.0,20.0,-225.0,20.0,225.0,-20.0,225.0)
+color = Color(0.13,0.19,0.24,1)
+
+[node name="Station12" type="Node2D" parent="."]
+position = Vector2(6000,2400)
+
+[node name="Title" type="Label" parent="Station12"]
+position = Vector2(80,50)
+text = "12   Utility lift / Pelantar"
+theme_override_font_sizes/font_size = 32
+
+[node name="Instructions" type="Label" parent="Station12"]
+position = Vector2(80,110)
+text = "F starts the lift. Jump aboard. F cuts power; F again resumes from the held position."
+theme_override_font_sizes/font_size = 20
+
+[node name="Floor" type="StaticBody2D" parent="Station12"]
+position = Vector2(900,525)
+collision_layer = 16
+collision_mask = 0
+
+[node name="Collision" type="CollisionShape2D" parent="Station12/Floor"]
+shape = SubResource("shape34")
+
+[node name="Surface" type="Polygon2D" parent="Station12/Floor"]
+polygon = PackedVector2Array(-900.0,-25.0,900.0,-25.0,900.0,25.0,-900.0,25.0)
+color = Color(0.13,0.19,0.24,1)
+
+[node name="LeftWall" type="StaticBody2D" parent="Station12"]
+position = Vector2(-20,300)
+collision_layer = 16
+collision_mask = 0
+
+[node name="Collision" type="CollisionShape2D" parent="Station12/LeftWall"]
+shape = SubResource("shape35")
+
+[node name="Surface" type="Polygon2D" parent="Station12/LeftWall"]
+polygon = PackedVector2Array(-20.0,-225.0,20.0,-225.0,20.0,225.0,-20.0,225.0)
+color = Color(0.13,0.19,0.24,1)
+
+[node name="RightWall" type="StaticBody2D" parent="Station12"]
+position = Vector2(1820,300)
+collision_layer = 16
+collision_mask = 0
+
+[node name="Collision" type="CollisionShape2D" parent="Station12/RightWall"]
+shape = SubResource("shape36")
+
+[node name="Surface" type="Polygon2D" parent="Station12/RightWall"]
+polygon = PackedVector2Array(-20.0,-225.0,20.0,-225.0,20.0,225.0,-20.0,225.0)
+color = Color(0.13,0.19,0.24,1)
+
+[node name="Fuse" parent="Station01" instance=ExtResource("fuse-box")]
+position = Vector2(320,400)
+data = SubResource("cfg37")
+links = Array[ExtResource("link")]([SubResource("link38")])
+
+[node name="Switch" parent="Station01" instance=ExtResource("light-switch")]
+position = Vector2(640,400)
+data = SubResource("cfg39")
+links = Array[ExtResource("link")]([SubResource("link40")])
+
+[node name="Lamp" parent="Station01" instance=ExtResource("lamp")]
+position = Vector2(1050,300)
+data = SubResource("cfg41")
+
+[node name="Fuse" parent="Station02" instance=ExtResource("fuse-box")]
+position = Vector2(300,400)
+data = SubResource("cfg42")
+links = Array[ExtResource("link")]([SubResource("link43")])
+
+[node name="Switch" parent="Station02" instance=ExtResource("light-switch")]
+position = Vector2(600,400)
+data = SubResource("cfg44")
+links = Array[ExtResource("link")]([SubResource("link45")])
+
+[node name="Door" parent="Station02" instance=ExtResource("powered-gate")]
+position = Vector2(1020,380)
+data = SubResource("cfg46")
+
+[node name="KeyedDoor" parent="Station02" instance=ExtResource("keyed-door")]
+position = Vector2(1460,380)
+data = SubResource("cfg47")
+
+[node name="KeyPedestal" type="Node2D" parent="Station02"]
+position = Vector2(1250,420)
+script = ExtResource("key")
+
+[node name="Source" parent="Station03" instance=ExtResource("water-tank")]
+position = Vector2(260,405)
+data = SubResource("cfg48")
+
+[node name="Destination" parent="Station03" instance=ExtResource("water-tank")]
+position = Vector2(1200,405)
+data = SubResource("cfg49")
+
+[node name="Tap" parent="Station03" instance=ExtResource("water-tap")]
+position = Vector2(560,400)
+data = SubResource("cfg50")
+source_tank = NodePath("../Source")
+destination_tank = NodePath("../Destination")
+valves = Array[NodePath]([NodePath("../Valve")])
+
+[node name="Valve" parent="Station03" instance=ExtResource("water-valve")]
+position = Vector2(850,400)
+data = SubResource("cfg51")
+links = Array[ExtResource("link")]([SubResource("link52")])
+
+[node name="Source" parent="Station04" instance=ExtResource("water-tank")]
+position = Vector2(260,405)
+data = SubResource("cfg53")
+
+[node name="Destination" parent="Station04" instance=ExtResource("water-tank")]
+position = Vector2(1660,405)
+data = SubResource("cfg54")
+water_volume = NodePath("../Pool")
+
+[node name="Power" parent="Station04" instance=ExtResource("light-switch")]
+position = Vector2(480,400)
+data = SubResource("cfg55")
+links = Array[ExtResource("link")]([SubResource("link56")])
+
+[node name="Pump" parent="Station04" instance=ExtResource("water-pump")]
+position = Vector2(680,400)
+data = SubResource("cfg57")
+source_tank = NodePath("../Source")
+destination_tank = NodePath("../Destination")
+valves = Array[NodePath]([NodePath("../Valve")])
+
+[node name="Valve" parent="Station04" instance=ExtResource("water-valve")]
+position = Vector2(860,400)
+data = SubResource("cfg58")
+
+[node name="Pool" parent="Station04" instance=ExtResource("water-volume")]
+position = Vector2(1160,350)
+region = Vector2(500,280)
+fill = 0.0
+current = Vector2(200,0)
+
+[node name="Crate" parent="Station04" instance=ExtResource("floating-crate")]
+position = Vector2(1010,460)
+
+[node name="Plate" parent="Station04" instance=ExtResource("pressure-switch")]
+position = Vector2(1330,260)
+data = SubResource("cfg61")
+links = Array[ExtResource("link")]([SubResource("link62")])
+
+[node name="PoolStop" type="StaticBody2D" parent="Station04"]
+position = Vector2(1420,350)
+collision_layer = 16
+collision_mask = 0
+
+[node name="Collision" type="CollisionShape2D" parent="Station04/PoolStop"]
+shape = SubResource("shape63")
+
+[node name="Surface" type="Polygon2D" parent="Station04/PoolStop"]
+polygon = PackedVector2Array(-10.0,-150.0,10.0,-150.0,10.0,150.0,-10.0,150.0)
+color = Color(0.13,0.19,0.24,1)
+
+[node name="Door" parent="Station04" instance=ExtResource("powered-gate")]
+position = Vector2(1510,380)
+data = SubResource("cfg64")
+
+[node name="Power" parent="Station05" instance=ExtResource("light-switch")]
+position = Vector2(350,400)
+data = SubResource("cfg65")
+links = Array[ExtResource("link")]([SubResource("link66")])
+
+[node name="Fan" parent="Station05" instance=ExtResource("ceiling-fan")]
+position = Vector2(850,200)
+data = SubResource("cfg67")
+
+[node name="LightCrate" parent="Station05" instance=ExtResource("floating-crate")]
+position = Vector2(850,460)
+mass = 5.0
+
+[node name="Source" parent="Station06" instance=ExtResource("water-tank")]
+position = Vector2(300,405)
+data = SubResource("cfg69")
+
+[node name="Destination" parent="Station06" instance=ExtResource("water-tank")]
+position = Vector2(1400,405)
+data = SubResource("cfg70")
+
+[node name="Drain" parent="Station06" instance=ExtResource("drainage-channel")]
+position = Vector2(900,440)
+data = SubResource("cfg71")
+source_tank = NodePath("../Source")
+destination_tank = NodePath("../Destination")
+blocking_debris = NodePath("../Debris")
+
+[node name="Debris" parent="Station06" instance=ExtResource("magis-breakable")]
+position = Vector2(900,430)
+data = SubResource("cfg72")
+
+[node name="Plate" parent="Station07" instance=ExtResource("pressure-switch")]
+position = Vector2(1000,490)
+data = SubResource("cfg73")
+links = Array[ExtResource("link")]([SubResource("link74")])
+
+[node name="Crate" parent="Station07" instance=ExtResource("floating-crate")]
+position = Vector2(700,460)
+
+[node name="LightCrate" parent="Station07" instance=ExtResource("floating-crate")]
+position = Vector2(400,460)
+mass = 10.0
+
+[node name="Door" parent="Station07" instance=ExtResource("powered-gate")]
+position = Vector2(1500,380)
+data = SubResource("cfg77")
+
+[node name="Receiver" parent="Station08" instance=ExtResource("magis-receiver")]
+position = Vector2(550,400)
+data = SubResource("cfg78")
+links = Array[ExtResource("link")]([SubResource("link79")])
+
+[node name="Relay" parent="Station08" instance=ExtResource("electrical-relay")]
+position = Vector2(850,400)
+data = SubResource("cfg80")
+input_sources = Array[NodePath]([NodePath("../Receiver")])
+links = Array[ExtResource("link")]([SubResource("link81")])
+
+[node name="Platform" parent="Station08" instance=ExtResource("moving-platform")]
+position = Vector2(1180,480)
+waypoints = PackedVector2Array(0,0,0,-200,280,-200)
+
+[node name="Landing" type="StaticBody2D" parent="Station08"]
+position = Vector2(1540,290)
+collision_layer = 16
+collision_mask = 0
+
+[node name="Collision" type="CollisionShape2D" parent="Station08/Landing"]
+shape = SubResource("shape83")
+
+[node name="Surface" type="Polygon2D" parent="Station08/Landing"]
+polygon = PackedVector2Array(-125.0,-12.0,125.0,-12.0,125.0,12.0,-125.0,12.0)
+color = Color(0.13,0.19,0.24,1)
+
+[node name="Start" parent="Station09" instance=ExtResource("light-switch")]
+position = Vector2(300,400)
+data = SubResource("cfg84")
+links = Array[ExtResource("link")]([SubResource("link85")])
+
+[node name="Disable" parent="Station09" instance=ExtResource("light-switch")]
+position = Vector2(850,400)
+data = SubResource("cfg86")
+links = Array[ExtResource("link")]([SubResource("link87")])
+
+[node name="Turret" parent="Station09" instance=ExtResource("training-turret")]
+position = Vector2(1350,400)
+data = SubResource("cfg88")
+
+[node name="Barrier" parent="Station10" instance=ExtResource("magis-breakable")]
+position = Vector2(850,410)
+data = SubResource("cfg89")
+
+[node name="ReceiverA" parent="Station11" instance=ExtResource("magis-receiver")]
+position = Vector2(400,400)
+data = SubResource("cfg90")
+links = Array[ExtResource("link")]([SubResource("link91")])
+
+[node name="ReceiverB" parent="Station11" instance=ExtResource("magis-receiver")]
+position = Vector2(800,400)
+data = SubResource("cfg92")
+links = Array[ExtResource("link")]([SubResource("link93")])
+
+[node name="Relay" parent="Station11" instance=ExtResource("electrical-relay")]
+position = Vector2(1100,400)
+data = SubResource("cfg94")
+input_sources = Array[NodePath]([NodePath("../ReceiverA"),NodePath("../ReceiverB")])
+links = Array[ExtResource("link")]([SubResource("link95")])
+
+[node name="Door" parent="Station11" instance=ExtResource("powered-gate")]
+position = Vector2(1500,380)
+data = SubResource("cfg96")
+
+[node name="Power" parent="Station12" instance=ExtResource("light-switch")]
+position = Vector2(400,400)
+data = SubResource("cfg97")
+links = Array[ExtResource("link")]([SubResource("link98")])
+
+[node name="Platform" parent="Station12" instance=ExtResource("moving-platform")]
+position = Vector2(900,480)
+waypoints = PackedVector2Array(0,0,0,-220,450,-220)
+
+[node name="Landing" type="StaticBody2D" parent="Station12"]
+position = Vector2(1520,270)
+collision_layer = 16
+collision_mask = 0
+
+[node name="Collision" type="CollisionShape2D" parent="Station12/Landing"]
+shape = SubResource("shape100")
+
+[node name="Surface" type="Polygon2D" parent="Station12/Landing"]
+polygon = PackedVector2Array(-140.0,-12.0,140.0,-12.0,140.0,12.0,-140.0,12.0)
+color = Color(0.13,0.19,0.24,1)

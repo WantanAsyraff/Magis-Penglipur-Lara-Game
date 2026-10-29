@@ -14,6 +14,7 @@ func _ready() -> void:
 	_populate_grid()
 
 func _on_casting_changed(casting: bool) -> void:
+	if not is_inside_tree(): return
 	if tween:
 		tween.kill()
 

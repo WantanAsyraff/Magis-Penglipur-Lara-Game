@@ -55,6 +55,7 @@ func validate() -> PackedStringArray:
 		if training_nonlethal:
 			for effect in LegacySpellAdapter.effects_for(turret_spell):
 				if not (effect is DamageEffect or effect is KnockbackEffect or effect is VectorEffect): errors.append("Nonlethal training uses direct damage/impulse effects only")
+	if not is_finite(valve_opening) or valve_opening < 0 or valve_opening > 1 or not airflow.is_finite(): errors.append("Invalid valve opening or airflow")
 	if rule: errors.append_array(rule.validate())
 	if visual: errors.append_array(visual.validate())
 	return errors

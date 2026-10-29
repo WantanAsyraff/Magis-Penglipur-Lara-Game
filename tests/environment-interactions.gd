@@ -40,6 +40,7 @@ func _ready() -> void:
 	await water_devices()
 	await pressure_and_magis()
 	await hazards_and_motion()
+	await authoring_and_delivery()
 	print("ENVIRONMENT_INTERACTIONS: %d checks, %d failures" % [checks,failures])
 	get_tree().quit(1 if failures else 0)
 func electrical() -> void:
@@ -106,7 +107,7 @@ func water_devices() -> void:
 	destination.take_water(100); drain._physics_process(1)
 	check(drain.blocked and destination.volume == 0,"Debris blocks drainage")
 	debris.hitbox.receive_damage(100,player); drain._physics_process(1)
-	check(not drain.blocked and destination.volume == 20 and source.volume == 44,"Breaking debris restores conserved downstream flow")
+	check(not drain.blocked and destination.volume == 20 and source.volume+drain.volume+destination.volume == 64,"Breaking debris restores conserved downstream flow")
 	var water: WaterVolume2D = spawn_prop("water-volume",Vector2(4000,0))
 	destination.water_volume = destination.get_path_to(water); destination.add_water(30)
 	check(is_equal_approx(water.fill,.5),"Tank volume drives a real water surface")
@@ -180,3 +181,60 @@ func hazards_and_motion() -> void:
 	platform.actuator.receive(true,EnvironmentLink.Port.POWER); platform._physics_process(.5)
 	await get_tree().physics_frame; await get_tree().physics_frame
 	check(platform.position.y < position_mid.y,"Restored power resumes from the held position")
+
+func authoring_and_delivery() -> void:
+	reset_box(); player.position = Vector2.ZERO
+	var receiver: EnvironmentDevice = spawn_prop("magis-receiver",Vector2(180,0))
+	var chill: SpellData = load("res://data/magis/spells/thermal-kinetic.tres")
+	receiver.receiver.rule = load("res://data/environment/three-hit-rule.tres")
+	for i in 2: SpellExecutor.new().execute(SpellCastContext.new(player,chill),receiver)
+	check(not receiver.actuator.output and receiver.receiver.hits == 2,"Hit-count receiver counts distinct casts rather than individual payload effects")
+	SpellExecutor.new().execute(SpellCastContext.new(player,chill),receiver)
+	check(receiver.actuator.output,"Third qualifying cast activates configured hit-count receiver")
+	receiver.reset(); receiver.receiver.rule = load("res://data/environment/charge-rule.tres")
+	var charge_rule := receiver.receiver.rule
+	charge_rule = charge_rule.duplicate(); charge_rule.required_charge = 24; receiver.receiver.rule = charge_rule
+	SpellExecutor.new().execute(SpellCastContext.new(player,chill),receiver)
+	check(not receiver.actuator.output,"Charge receiver waits for sufficient authored mana energy")
+	SpellExecutor.new().execute(SpellCastContext.new(player,chill),receiver)
+	check(receiver.actuator.output and receiver.receiver.charge == 24,"Independent casts accumulate charge without duplicating payloads")
+	receiver.reset(); receiver.receiver.rule = load("res://data/environment/cooled-rule.tres")
+	var direct := chill.duplicate(true); direct.delivery = SpellData.Delivery.DIRECT_TARGET
+	var context := SpellCastContext.new(player,direct); context.targets.assign([receiver])
+	check(SpellDelivery.dispatch(context) and receiver.actuator.output,"Direct-target delivery reaches an explicit neutral environmental receiver")
+	receiver.reset(); receiver.receiver.rule = load("res://data/environment/cooled-rule.tres")
+	var area := chill.duplicate(true); area.delivery = SpellData.Delivery.AREA_BURST; area.aoe_spell_radius = 300
+	check(SpellDelivery.apply_area(SpellCastContext.new(player,area),player.global_position) and receiver.actuator.output,"Area delivery uses shared Hitbox group for environmental effects")
+	receiver.reset(); receiver.receiver.rule = load("res://data/environment/cooled-rule.tres")
+	var beam := chill.duplicate(true); beam.delivery = SpellData.Delivery.BEAM; beam.target_range = 500; beam.beam_width = 60
+	check(SpellDelivery.apply_area(SpellCastContext.new(player,beam),player.global_position,true) and receiver.actuator.output,"Beam delivery reaches neutral receivers through the existing executor")
+	receiver.reset(); receiver.receiver.rule = load("res://data/environment/cooled-rule.tres")
+	receiver.hitbox.apply_status("cooled",3,{},"prior-cast",ActiveEffectManager.StackPolicy.REFRESH,1)
+	var slow := ApplyStatusEffect.new(); slow.status = "slow"; slow.magnitude = .5
+	var unrelated := chill.duplicate(true); unrelated.effects.assign([slow])
+	SpellExecutor.new().execute(SpellCastContext.new(player,unrelated),receiver)
+	check(not receiver.actuator.output,"A stale cooled status cannot make a different incoming status satisfy the rule")
+	var collision_before := receiver.collision.shape
+	var cfg := receiver.data.duplicate(true)
+	cfg.visual = EnvironmentVisualData.new(); cfg.visual.texture = GradientTexture2D.new()
+	receiver.visual.configure(cfg)
+	check(receiver.visual._art is Sprite2D,"Texture2D swaps the procedural placeholder through Inspector data")
+	var frames_ := SpriteFrames.new(); frames_.rename_animation(&"default",&"idle")
+	cfg.visual.texture = null; cfg.visual.frames = frames_
+	receiver.visual.configure(cfg); receiver.visual.present(true)
+	check(receiver.visual._art is AnimatedSprite2D and receiver.visual._art.animation == &"idle","Missing active SpriteFrames animation falls back to idle")
+	var root := Node2D.new(); root.name = "CustomVisual"
+	var animator := AnimationPlayer.new(); animator.name = "AnimationPlayer"; root.add_child(animator); animator.owner = root
+	var library := AnimationLibrary.new(); var idle := Animation.new(); idle.length = 1; library.add_animation(&"idle",idle); animator.add_animation_library(&"",library)
+	var packed := PackedScene.new(); packed.pack(root); root.free()
+	cfg.visual.frames = null; cfg.visual.visual_scene = packed
+	receiver.visual.configure(cfg); receiver.visual.present(true)
+	check(receiver.visual._art.name == "CustomVisual" and receiver.visual._art.get_node("AnimationPlayer").current_animation == "idle","Custom PackedScene and AnimationPlayer support missing-animation fallback")
+	check(receiver.collision.shape == collision_before,"Replacing artwork preserves gameplay collision")
+	var bad := EnvironmentDeviceData.new(); bad.valve_opening = NAN
+	check(not bad.validate().is_empty(),"Invalid nonfinite valve configuration fails validation")
+	var breakable: EnvironmentDevice = spawn_prop("magis-breakable",Vector2(1000,0),{"respawn_seconds":.2})
+	breakable.hitbox.receive_damage(999,player); await get_tree().physics_frame; await get_tree().physics_frame
+	check(breakable.collision.disabled,"Destructible damage removes its real blocking collision")
+	breakable._physics_process(.3); await get_tree().physics_frame; await get_tree().physics_frame
+	check(not breakable.get_meta("combat_dead",false) and not breakable.collision.disabled,"Configured transient breakables respawn with restored collision and health")

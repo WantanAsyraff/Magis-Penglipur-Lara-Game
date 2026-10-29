@@ -13,6 +13,9 @@ signal player_exited(player: Player)
 var _shape: CollisionShape2D
 var _players: Array[Player] = []
 func _ready() -> void:
+	if not region.is_finite() or region.x <= 0 or region.y <= 0 or not current.is_finite() or not is_finite(buoyancy) or not is_finite(drag) or buoyancy < 0 or drag < 0:
+		push_error("Water requires a positive region and finite nonnegative forces"); set_physics_process(false); return
+	fill = clampf(fill,0,1) if is_finite(fill) else 0
 	collision_layer = 0; collision_mask = 17
 	_shape = CollisionShape2D.new(); var rect := RectangleShape2D.new(); rect.size = region; _shape.shape = rect; add_child(_shape)
 	body_entered.connect(_entered); body_exited.connect(_exited)

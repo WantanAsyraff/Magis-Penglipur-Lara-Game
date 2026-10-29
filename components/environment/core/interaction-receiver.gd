@@ -34,6 +34,7 @@ func receive_spell(context: SpellCastContext, effect: SpellEffectDefinition) -> 
 	if rule.event == InteractionRule.Event.IMPULSE and kind != "Impulse": return
 	if rule.event == InteractionRule.Event.PROJECTILE and LegacySpellAdapter.delivery_for(context.spell) != SpellData.Delivery.PROJECTILE: return
 	if rule.required_status != &"":
+		if not effect is ApplyStatusEffect or effect.status != String(rule.required_status): return
 		var hitbox := get_parent().get_node_or_null("HitboxComponent") as HitboxComponent
 		if hitbox == null or not hitbox.effects.has(String(rule.required_status)): return
 	if magnitude < rule.minimum_magnitude: return
@@ -48,4 +49,5 @@ func _accept(energy: float) -> void:
 	if hits >= rule.required_hits and charge >= rule.required_charge:
 		completed = true
 		activated.emit()
-		if rule.reset_after_activation: reset()
+		if rule.reset_after_activation:
+			hits = 0; charge = 0; completed = false

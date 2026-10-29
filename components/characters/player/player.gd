@@ -210,6 +210,9 @@ func _physics_process(delta: float) -> void:
 		_handle_movement()
 
 	move_and_slide()
+	for index in get_slide_collision_count():
+		var body := get_slide_collision(index).get_collider()
+		if body is EnvironmentCrate: body.push_from_player(self)
 
 func _handle_movement() -> void:
 	var current_speed := (SPEED + hitbox.effects.magnitude("buff_speed")) * (1.0 - hitbox.get_slow_factor())

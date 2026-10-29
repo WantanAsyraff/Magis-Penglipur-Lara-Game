@@ -43,7 +43,13 @@ func _physics_process(delta: float) -> void:
 	if actuator == null or not actuator.output or not SpellExecutor.is_authoritative(self): return
 	if _wait > 0: _wait -= delta; return
 	var destination := _origin+_points[_next]
-	position = position.move_toward(destination,data.speed*delta)
+	var next_position := position.move_toward(destination,data.speed*delta)
+	var query := PhysicsShapeQueryParameters2D.new()
+	var shape := RectangleShape2D.new(); shape.size = (data.size-Vector2(2,2)).max(Vector2.ONE)
+	query.shape = shape; query.transform = Transform2D(global_rotation,get_parent().to_global(next_position)); query.collision_mask = 16; query.exclude = [get_rid()]
+	for contact in get_world_2d().direct_space_state.intersect_shape(query):
+		if not contact.collider is RigidBody2D: return
+	position = next_position
 	if position.distance_to(destination) > .01: return
 	_wait = data.wait_seconds
 	if data.route == MovingPlatformData.Route.ONE_SHOT and _next == _points.size()-1:

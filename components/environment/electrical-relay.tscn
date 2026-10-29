@@ -1,6 +1,11 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3]
 [ext_resource type="Script" path="res://components/environment/core/environment-device.gd" id="script"]
 [ext_resource type="Resource" path="res://data/environment/electrical-relay.tres" id="data"]
+[ext_resource type="Script" path="res://components/environment/core/interaction-visual.gd" id="preview"]
 [node name="ElectricalRelay" type="CharacterBody2D"]
 script = ExtResource("script")
 data = ExtResource("data")
+
+[node name="Visual" type="Node2D" parent="."]
+script = ExtResource("preview")
+device = ExtResource("data")

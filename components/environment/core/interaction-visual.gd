@@ -1,6 +1,11 @@
+@tool
 class_name InteractionVisual extends Node2D
 var data: EnvironmentVisualData
-var device: EnvironmentDeviceData
+@export var device: EnvironmentDeviceData
+@export var preview_active := false
+func _ready() -> void:
+	if Engine.is_editor_hint() and device:
+		configure(device); present(preview_active)
 var active := false
 var state: StringName = &"inactive"
 var level := 0.0
@@ -9,6 +14,9 @@ var _configured := false
 var _art: Node2D
 var _audio: AudioStreamPlayer2D
 func configure(config: EnvironmentDeviceData) -> void:
+	if is_instance_valid(_art): _art.free()
+	if is_instance_valid(_audio): _audio.free()
+	_art = null; _configured = false
 	device = config
 	data = config.visual if config.visual else EnvironmentVisualData.new()
 	position = data.offset
@@ -37,8 +45,12 @@ func present(value: bool, override_state: StringName = &"") -> void:
 		if not _art.sprite_frames.has_animation(animation): animation = data.idle_animation
 		if _art.sprite_frames.has_animation(animation): _art.play(animation)
 	if _art:
+		_art.modulate = data.tint if active else data.tint.darkened(.4)
+		if state == &"broken": _art.modulate = Color(.4,.3,.3)
 		var animator := _art.get_node_or_null("AnimationPlayer") as AnimationPlayer
-		if animator and animator.has_animation(animation): animator.play(animation)
+		if animator:
+			if not animator.has_animation(animation): animation = data.idle_animation
+			if animator.has_animation(animation): animator.play(animation)
 	if was != active and is_inside_tree():
 		_audio.stream = data.activate_sound if active else data.deactivate_sound
 		if _audio.stream: _audio.play()
@@ -54,6 +66,7 @@ func _draw() -> void:
 	var tint := data.tint if active else data.tint.darkened(.65)
 	if state == &"broken": tint = Color(.36,.27,.24)
 	elif state == &"damaged": tint = Color(.8,.5,.26)
+	elif state == &"blocked": tint = Color(1,.65,.15)
 	elif state == &"warning": tint = Color(1,.4,.2)
 	draw_rect(rect,Color(.06,.09,.12,.96))
 	draw_rect(rect,tint,false,3)

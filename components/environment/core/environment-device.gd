@@ -2,6 +2,7 @@ class_name EnvironmentDevice extends CharacterBody2D
 signal activated(active: bool)
 signal broken
 signal full
+signal overflow
 signal empty
 signal volume_changed(volume: float)
 @export var data: EnvironmentDeviceData
@@ -37,6 +38,7 @@ var turret_target: Node2D
 var shots_fired := 0
 var _shot_timer := 0.0
 var _shot_epoch := 0
+var _overflowing := false
 func _ready() -> void:
 	if data == null: data = EnvironmentDeviceData.new()
 	var errors := data.validate()
@@ -52,7 +54,10 @@ func _ready() -> void:
 	actuator = InteractionActuator.new(); actuator.name = "Actuator"; add_child(actuator)
 	actuator.links = links; actuator.input_sources = input_sources
 	actuator.configure(data)
-	visual = InteractionVisual.new(); visual.name = "Visual"; add_child(visual); visual.configure(data)
+	visual = get_node_or_null("Visual") as InteractionVisual
+	if visual == null:
+		visual = InteractionVisual.new(); visual.name = "Visual"; add_child(visual)
+	visual.configure(data)
 	hitbox = HitboxComponent.new(); hitbox.name = "HitboxComponent"; add_child(hitbox)
 	hitbox.has_mana = false
 	hitbox.receives_knockback = data.kind == EnvironmentDeviceData.Kind.BREAKABLE
@@ -64,7 +69,7 @@ func _ready() -> void:
 	receiver = InteractionReceiver.new(); receiver.name = "InteractionReceiver"; add_child(receiver)
 	receiver.rule = data.rule
 	receiver.activated.connect(_trigger)
-	hitbox.knocked_back.connect(func(impulse): receiver.receive_event(InteractionRule.Event.IMPULSE,impulse.length()))
+	hitbox.knocked_back.connect(_impulse)
 	receiver.progress.connect(func(_hits,_charge): visual.present(actuator.output,&"charging"))
 	var caption := Label.new(); caption.name = "Caption"; caption.text = data.device_name; caption.position = Vector2(-data.size.x/2,data.size.y/2+8); caption.add_theme_font_size_override("font_size",16); add_child(caption)
 	var prompt := Label.new(); prompt.name = "InteractLabel"; prompt.position = Vector2(-100,-data.size.y/2-32); prompt.hide(); add_child(prompt)
@@ -122,6 +127,13 @@ func _state_changed(value: bool) -> void:
 			if light: light.enabled = value
 	if data.kind == EnvironmentDeviceData.Kind.TURRET and not value: _stop_turret()
 	activated.emit(value)
+func _impulse(impulse: Vector2) -> void:
+	receiver.receive_event(InteractionRule.Event.IMPULSE,impulse.length())
+	if data.kind != EnvironmentDeviceData.Kind.BREAKABLE or get_meta("combat_dead",false): return
+	var motion := get_node_or_null("SpellMotionImpulse") as SpellMotionImpulse
+	if motion == null:
+		motion = SpellMotionImpulse.new(); motion.name = "SpellMotionImpulse"; add_child(motion)
+	motion.impulse = (motion.impulse+impulse).limit_length(1000); motion.remaining = .25
 func _damage(amount: float) -> void:
 	if not SpellExecutor.is_authoritative(self) or get_meta("combat_dead",false): return
 	if data.kind not in [EnvironmentDeviceData.Kind.BREAKABLE,EnvironmentDeviceData.Kind.TURRET] or not data.destructible: return
@@ -148,7 +160,9 @@ func reset(propagate: bool = true) -> void:
 	health = data.max_health
 	volume = clampf(data.initial_volume,0,data.capacity)
 	blocked = false; speed = 0; _timer = 0; _press_time = 0; _release_time = 0; _pressed = false; _fired_once = false
-	receiver.reset(); actuator.inputs.clear(); actuator.configure(data)
+	var motion := get_node_or_null("SpellMotionImpulse")
+	if motion: motion.queue_free()
+	receiver.reset(); hitbox.clear_all_effects(); actuator.inputs.clear(); actuator.configure(data)
 	collision.set_deferred("disabled",data.kind not in [EnvironmentDeviceData.Kind.GATE,EnvironmentDeviceData.Kind.BREAKABLE,EnvironmentDeviceData.Kind.TURRET,EnvironmentDeviceData.Kind.TANK,EnvironmentDeviceData.Kind.RECEIVER])
 	_stop_turret(); CombatLifecycle.cleanup(self)
 	_sync_water()
@@ -179,13 +193,22 @@ func _transfer(delta: float) -> void:
 	var source := get_node_or_null(source_tank) as EnvironmentDevice if not source_tank.is_empty() else null
 	var destination := get_node_or_null(destination_tank) as EnvironmentDevice if not destination_tank.is_empty() else null
 	if source == null or destination == null or source == destination: return
-	var opening := 1.0
+	var opening := data.valve_opening if data.kind == EnvironmentDeviceData.Kind.VALVE else 1.0
 	for path in valves:
 		var valve := get_node_or_null(path) as EnvironmentDevice
 		if valve == null or not valve.actuator.output: return
 		opening = minf(opening,valve.data.valve_opening)
 	var amount := minf(data.flow_rate*delta*opening,minf(source.volume,destination.data.capacity-destination.volume))
 	if amount > 0: destination.add_water(source.take_water(amount))
+func _drain(delta: float) -> void:
+	var source := get_node_or_null(source_tank) as EnvironmentDevice if not source_tank.is_empty() else null
+	var destination := get_node_or_null(destination_tank) as EnvironmentDevice if not destination_tank.is_empty() else null
+	if source == null or destination == null or source == self or destination == self or source == destination: return
+	add_water(source.take_water(minf(data.flow_rate*delta,data.capacity-volume)))
+	if not blocked: destination.add_water(take_water(minf(data.flow_rate*delta,destination.data.capacity-destination.volume)))
+	var overflowing := blocked and volume >= data.capacity
+	if overflowing and not _overflowing: overflow.emit()
+	_overflowing = overflowing
 func _entered(body: Node2D) -> void:
 	if not (body is Player or body is RigidBody2D or (body is CharacterBody2D and body.get_meta("spell_team",&"") == &"enemy")): return
 	_bodies[body.get_instance_id()] = weakref(body)
@@ -233,7 +256,7 @@ func _physics_process(delta: float) -> void:
 		EnvironmentDeviceData.Kind.DRAIN:
 			var debris := get_node_or_null(blocking_debris) if not blocking_debris.is_empty() else null
 			blocked = is_instance_valid(debris) and not debris.get_meta("combat_dead",false) and (debris as Node2D).global_position.distance_to(global_position) < data.size.x
-			if actuator.output and not blocked: _transfer(delta)
+			if actuator.output: _drain(delta)
 			visual.present(actuator.output,&"blocked" if blocked else &"")
 		EnvironmentDeviceData.Kind.FAN:
 			speed = move_toward(speed,data.fan_speed if actuator.output else 0,data.fan_acceleration*delta)
@@ -242,7 +265,9 @@ func _physics_process(delta: float) -> void:
 				for body in sensor.get_overlapping_bodies():
 					if body is RigidBody2D and body.mass <= data.airflow_max_mass: body.apply_central_force(data.airflow*body.mass)
 					elif body is Player and data.player_airflow: body.velocity += data.airflow*delta
-		EnvironmentDeviceData.Kind.VALVE: visual.angle += delta*6 if actuator.output else 0
+		EnvironmentDeviceData.Kind.VALVE:
+			visual.angle += delta*6 if actuator.output else 0
+			if actuator.output: _transfer(delta)
 		EnvironmentDeviceData.Kind.TURRET: _turret(delta)
 	var caption := get_node_or_null("Caption") as Label
 	if caption:

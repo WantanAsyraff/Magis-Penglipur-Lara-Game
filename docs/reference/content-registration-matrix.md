@@ -22,7 +22,7 @@ Creating a `.tres` does not universally register it. Reference-only dependencies
 | Legacy caster / NPCSpellcasterData | Existing data/npc/ content | Enemy.legacy_spellcaster through EnemyDefinitionAdapter | Resulting EnemyData validation; dormant fields documented | Direct referenced definition; prefer V2 for new content |
 | Boss phase / BossPhaseData | data/npc/enemies/boss/<content>/ | Boss.phases ordered array | No standalone validator; boss tests + author review | Boss scene references phase Resources |
 | Boss attack / BossAttackData | Same boss content directory | BossPhaseData.attacks weighted pools | No standalone validator; kind-specific scene/spell/geometry tests | Phase references attacks/dependencies |
-| Item / ItemData | data/items/ | ItemManifest.ITEMS/LEGACY_LOOT OR loot/extras of a manifest-registered EnemyData | QuestRegistry identity/max_stack, inventory checks | Explicit manifest or registered enemy loot dependency |
+| Item / ItemData | data/items/ | ItemManifest.ITEMS/LEGACY_LOOT OR loot/extras of a manifest-registered EnemyData | ItemData.validate, QuestRegistry identity/max_stack, canonical manager action checks | Explicit manifest or registered enemy loot dependency |
 | Loot / LootData | data/loot/ | EnemyData.loot, legacy loot table or fixed quest reward | validate(); fixed reward restrictions in QuestRegistry | Referenced parent; no independent loot scan |
 | Crafting recipe / ItemData | Output item Resource | CraftingRoom.available_recipes; ingredient_1..3/qty_1..3 | Inventory plan and actual UI/capacity tests | Room/output/input refs, plus item registration for saves |
 | Quest / QuestData | data/quests/ faculty/content directories | QuestDatabase.quests; QuestRegistry currently loads FLAC and Bakau paths only | QuestRegistry cross-reference/cycle/group/reward checks | Existing DB array or explicit new DB path in registry |
@@ -46,3 +46,7 @@ Creating a `.tres` does not universally register it. Reference-only dependencies
 - [tools/validate-docs.py](../../tools/validate-docs.py): documentation-only link/path/schema/snippet checks; does not validate newly authored gameplay semantics or alter manifests.
 
 IDs and retained references must match in source **and export**. Keep UID/path changes visible in review; see [content evolution](../architecture/save-load-architecture.md). A Resource can be directly spawnable but still unknown to quest/save registries.
+
+## Inventory V2 and story contracts
+
+Item use/equipment behavior is authored on the existing registered ItemData (see [inventory and items](../authoring/inventory-and-items.md)). There is no second UI catalogue. CutsceneSequence Resources under data/story/ are assigned directly to an owning scene controller; its timeline/style/spell references must be reachable. validate checks identity and actual timeline/style types; CutsceneFlow also checks canonical spell registration and a live owner. An authored terminal signal and explicit opt-in are required; see [cutscene skipping](../authoring/cutscene-skipping.md).

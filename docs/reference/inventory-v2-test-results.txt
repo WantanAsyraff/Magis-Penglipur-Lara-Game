@@ -1,0 +1,127 @@
+Inventory V2 / authored cutscene verification — 2026-10-29 Asia/Kuching
+Engine: Godot 4.7.2.stable.flathub.ed1daf0bf
+All gameplay suites use --quest-test-mode. Assertions and process shutdown are reported separately.
+Source: --path . tests/<suite>.tscn; native UI uses scenes/inventory-testing/inventory-v2-preview.tscn.
+Pack: --main-pack /home/wantansirap/.cache/magis-inventory-check/inventory.pck tests/<suite>.tscn.
+See inventory-v2-validation.md and testing-and-validation.md for complete invocation flags.
+
+mpl-final-core-v2.log: process exit 0
+INVENTORY_V2: 52 checks, 0 failures
+
+mpl-final-skip28b.log: process exit 134
+CUTSCENE_SKIP: 28 checks, 0 failures
+
+mpl-final-save-write2.log: process exit 134
+INVENTORY_V2_SAVE: 8 checks, 0 failures
+
+mpl-final-save-read2.log: process exit 0
+INVENTORY_V2_SAVE: 10 checks, 0 failures
+
+mpl-final-720-v3.log: process exit 134
+GAMEPAD_HARDWARE: []
+INVENTORY_V2_GAMEPLAY: 36 checks, 0 failures
+
+mpl-final-1080-v3.log: process exit 134
+GAMEPAD_HARDWARE: []
+INVENTORY_V2_GAMEPLAY: 36 checks, 0 failures
+
+mpl-final-world720-v2.log: process exit 134
+PROLOGUE_INVENTORY_INTEGRATION: 22 checks, 0 failures
+
+mpl-final-world1080-v2.log: process exit 134
+PROLOGUE_INVENTORY_INTEGRATION: 22 checks, 0 failures
+
+mpl-final-quest-pipeline.log: process exit 0
+QUEST_PIPELINE: 172 checks, 0 failures
+
+mpl-final-quest-accessibility.log: process exit 0
+QUEST_ACCESSIBILITY: 90 checks, 0 failures
+
+mpl-final-quest-write.log: process exit 0
+QUEST_PERSISTENCE: 4 checks, 0 failures
+
+mpl-final-quest-read.log: process exit 0
+QUEST_PERSISTENCE: 7 checks, 0 failures
+
+mpl-final-fullsave-write.log: process exit 0
+COMBAT_FEEDBACK_SAVE_V1: 60 checks, 0 failures
+
+mpl-final-fullsave-read.log: process exit 0
+COMBAT_FEEDBACK_SAVE_V1: 20 checks, 0 failures
+
+mpl-final-equipment.log: process exit 0
+SPELL_EQUIPMENT_UI: 38 checks, 0 failures
+
+mpl-final-spell-regression.log: process exit 0
+SPELL_REGRESSION: 71 checks, 0 failures
+
+mpl-final-live-spell-audit.log: process exit 0
+LIVE_SPELL_AUDIT: 46 checks, 0 failures
+
+mpl-final-player-combo-chains.log: process exit 0
+PLAYER_COMBO_CHAINS: 23 checks, 0 failures
+
+mpl-final-incantation-assistant.log: process exit 0
+INCANTATION_ASSISTANT: 60 checks, 0 failures
+
+mpl-final-enemy-pipeline.log: process exit 0
+ENEMY_PIPELINE: 138 checks, 0 failures
+
+mpl-final-boss-prototype.log: process exit 0
+BOSS_PROTOTYPE: 70 checks, 0 failures
+
+mpl-final-target-lock-and-hud.log: process exit 0
+TARGET_LOCK_HUD: 37 checks, 0 failures
+
+mpl-final-target-lock-stability.log: process exit 0
+TARGET_LOCK_STABILITY: 13 checks, 0 failures
+
+mpl-final-physics-curriculum.log: process exit 0
+PHYSICS_CURRICULUM: 272 checks, 0 failures
+
+mpl-final-npc-world-boot-1.log: process exit 0
+NPC_WORLD_BOOT: 4 checks, 0 failures
+
+mpl-final-npc-world-boot-2.log: process exit 0
+NPC_WORLD_BOOT: 4 checks, 0 failures
+
+mpl-final-npc-world-boot-3.log: process exit 0
+NPC_WORLD_BOOT: 4 checks, 0 failures
+
+mpl-final-pack-inventory-v2.log: process exit 0
+INVENTORY_V2: 52 checks, 0 failures
+
+mpl-final-pack-cutscene-skip.log: process exit 134
+CUTSCENE_SKIP: 28 checks, 0 failures
+
+mpl-final-pack-inventory-v2-save-write.log: process exit 134
+INVENTORY_V2_SAVE: 8 checks, 0 failures
+
+mpl-final-pack-inventory-v2-save-read.log: process exit 0
+INVENTORY_V2_SAVE: 10 checks, 0 failures
+
+mpl-final-pack-prologue-inventory-integration.log: process exit 134
+PROLOGUE_INVENTORY_INTEGRATION: 20 checks, 0 failures
+
+Baseline isolation: pristine b9ecee6 archive, editor import, direct Dialogic start/end/quit fixture.
+mpl-baseline-dialogue-exit2.log: process exit 134, same shutdown abort without new feature code.
+No GDScript errors in the final assertion runs. Existing UID/world-ID warnings remain.
+Non-dialogue runs retain the existing 58 ObjectDB / 25 resources-in-use shutdown diagnostic.
+Import/export retain the existing 2 ObjectDB shutdown warning.
+Physical gamepad: none connected; manual hardware verification pending.
+
+mpl-final-import2.log: process exit 0
+
+mpl-final-export2.log: process exit 0
+
+mpl-final-docs2.log: process exit 0
+DOCS: 77 Markdown files, 1168 local link/path checks, 43 Resource classes, 422 exported properties
+GDSCRIPT_REFERENCE_VALIDATION: 2 executable snippets, 0 failures
+RESOURCE_REFERENCE_VALIDATION: 43 classes, 422 properties, 2 examples, 0 failures
+DOCUMENTATION_VALIDATION: 0 errors
+
+Final handbook validation (mpl-final-docs3.log, exit 0):
+DOCS: 77 Markdown files, 1170 local link/path checks, 43 Resource classes, 422 exported properties
+GDSCRIPT_REFERENCE_VALIDATION: 2 executable snippets, 0 failures
+RESOURCE_REFERENCE_VALIDATION: 43 classes, 422 properties, 2 examples, 0 failures
+DOCUMENTATION_VALIDATION: 0 errors

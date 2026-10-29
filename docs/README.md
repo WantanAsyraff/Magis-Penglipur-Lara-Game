@@ -35,3 +35,5 @@ Start with [getting started](getting-started.md), then follow the [three content
 ## Existing detailed references and historical evidence
 
 The historical implementation/migration reports and their logs/screenshots remain intact. Use [the audited document inventory](documentation-audit.md#coverage-and-evidence) to locate every prior page, including Physics/Bakau catalogues, NPC accessibility, spell/enemy/quest internals and boss delivery evidence. Their test counts describe their recorded runs, not a new verification on every documentation edit. Current authoring starts in this handbook.
+
+Inventory V2: [items and transactions](authoring/inventory-and-items.md), [interface and controls](authoring/inventory-ui.md), [authored cutscene skipping](authoring/cutscene-skipping.md).

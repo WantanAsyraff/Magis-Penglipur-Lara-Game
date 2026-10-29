@@ -69,3 +69,20 @@ Use an actual test/scene referencing your newly authored data too; existing suit
 `python3 tools/validate-docs.py` validates local Markdown destinations/anchors, concrete res:// source paths, complete first-party Resource-to-guide coverage and generated property-reference drift. `--write-reference` intentionally rewrites that generated reference; review it. `--check-gdscript` compiles executable gdscript fences by loading them in a normal project scene with its autoload context, without calling their example functions. `--check-resources` loads example tres fences and introspects Resource exported fields against the source inventory. Use `GODOT_COMMAND='flatpak run org.godotengine.Godot'` for the local installation.
 
 Neither static links nor schema introspection proves prose semantics, UI accessibility, balance, narrative completeness, multiplayer synchronization, physical world reachability or power-loss durability. Those require source review, focused behavior tests and actual play/rendered evidence. The [audit](../documentation-audit.md) records unsupported/partially implemented boundaries instead of turning them into fictional workflows.
+
+## Inventory V2 and authored skipping
+
+Run these from the project root with the same Godot command above, always passing --quest-test-mode:
+
+```bash
+flatpak run org.godotengine.Godot --headless --path . tests/inventory-v2.tscn -- --quest-test-mode
+flatpak run org.godotengine.Godot --headless --path . tests/cutscene-skip.tscn -- --quest-test-mode
+flatpak run org.godotengine.Godot --headless --path . tests/inventory-v2-save.tscn -- --quest-test-mode
+flatpak run org.godotengine.Godot --headless --path . tests/inventory-v2-save.tscn -- --quest-test-mode --read-inventory-save
+flatpak run org.godotengine.Godot --path . scenes/inventory-testing/inventory-v2-preview.tscn -- --quest-test-mode --capture-inventory --720
+flatpak run org.godotengine.Godot --path . scenes/inventory-testing/inventory-v2-preview.tscn -- --quest-test-mode --capture-inventory
+flatpak run org.godotengine.Godot --path . tests/prologue-inventory-integration.tscn -- --quest-test-mode --capture-prologue --720
+flatpak run org.godotengine.Godot --path . tests/prologue-inventory-integration.tscn -- --quest-test-mode --capture-prologue
+```
+
+The inventory save writer uses test-prefixed profiles 1/2; run its reader immediately afterward and do not overlap other shared-profile fixtures. Captures go into docs/previews/inventory-v2/ at the actual viewport resolution. The native fixture injects real mouse/gamepad events through Godot, exercises Control drag/drop and includes UI screenshot checks; this does not substitute for physical-controller hardware testing. See [delivery evidence and limitations](inventory-v2-validation.md) for actual results and engine shutdown diagnostics.

@@ -89,6 +89,7 @@ func _ready() -> void:
 	player._update_aim_direction()
 	check(player.target_lock.locked_target == near, "Death reacquires the closest eligible target")
 	near.position = Vector2(2200,0)
+	player.target_lock._physics_process(PlayerTargetLock.LOSS_GRACE)
 	player._update_aim_direction()
 	check(player.target_lock.locked_target == far, "Leaving lock range reacquires another enemy")
 	far.hide()
@@ -105,6 +106,7 @@ func _ready() -> void:
 	wall.add_child(shape)
 	add_child(wall)
 	await get_tree().physics_frame
+	player.target_lock._physics_process(PlayerTargetLock.LOSS_GRACE)
 	player._update_aim_direction()
 	check(player.target_lock.locked_target == null, "Terrain blocks auto-lock and Q candidates")
 	wall.free()

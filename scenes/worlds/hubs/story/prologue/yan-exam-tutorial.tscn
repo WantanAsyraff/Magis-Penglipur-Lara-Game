@@ -5,6 +5,8 @@
 [ext_resource type="PackedScene" uid="uid://c5a41lx0gq8be" path="res://scenes/transitioners/zone-portal/zone-portal.tscn" id="3_0y2d4"]
 [ext_resource type="Texture2D" uid="uid://bolc3oh3vk38l" path="res://assets/temp/temp-bgs/prologue-art-lvl-1.png" id="3_csl8p"]
 
+[ext_resource type="Script" path="res://components/environment/core/optional-environment-loader.gd" id="environment"]
+
 [node name="WorldTemplate" unique_id=426960778 instance=ExtResource("1_plcv3")]
 
 [node name="World" parent="." index="1" unique_id=442689472]
@@ -25,3 +27,7 @@ spawn_marker_override = "FromPostPrologueMarker"
 
 [node name="PlayerSpawn" type="Marker2D" parent="World/GameComponents/SpawnPoints" parent_id_path=PackedInt32Array(1598029619) index="0" unique_id=1736311650]
 position = Vector2(23, 440)
+
+[node name="Environment" type="Node2D" parent="World/GameComponents"]
+script = ExtResource("environment")
+environment_scene = "res://scenes/environment-testing/school-environment.tscn"

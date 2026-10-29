@@ -1,0 +1,193 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://data/environment/environment-device-data.gd" id="cfg"]
+[ext_resource type="Script" path="res://data/environment/environment-link.gd" id="link"]
+[ext_resource type="Script" path="res://data/environment/environment-visual-data.gd" id="art"]
+[ext_resource type="PackedScene" path="res://components/environment/light-switch.tscn" id="light-switch"]
+[ext_resource type="PackedScene" path="res://components/environment/lamp.tscn" id="lamp"]
+[ext_resource type="PackedScene" path="res://components/environment/powered-gate.tscn" id="powered-gate"]
+[ext_resource type="PackedScene" path="res://components/environment/pressure-switch.tscn" id="pressure-switch"]
+[ext_resource type="PackedScene" path="res://components/environment/magis-receiver.tscn" id="magis-receiver"]
+[ext_resource type="PackedScene" path="res://components/environment/training-turret.tscn" id="training-turret"]
+[ext_resource type="PackedScene" path="res://components/environment/magis-breakable.tscn" id="magis-breakable"]
+[ext_resource type="PackedScene" path="res://components/environment/electrical-relay.tscn" id="electrical-relay"]
+[ext_resource type="PackedScene" path="res://components/environment/moving-platform.tscn" id="moving-platform"]
+[ext_resource type="PackedScene" path="res://components/environment/floating-crate.tscn" id="floating-crate"]
+[ext_resource type="Resource" path="res://data/environment/cooled-rule.tres" id="cooled"]
+[ext_resource type="Resource" path="res://data/environment/training-bolt.tres" id="bolt"]
+
+[sub_resource type="Resource" id="art"]
+script = ExtResource("art")
+tint = Color(0.3,0.85,0.8,1)
+
+[sub_resource type="Resource" id="cfg116"]
+script = ExtResource("cfg")
+visual = SubResource("art")
+kind = 10
+rule = ExtResource("cooled")
+device_name = "Penerima Magis"
+size = Vector2(80,110)
+
+[sub_resource type="Resource" id="link117"]
+script = ExtResource("link")
+target = NodePath("../Relay")
+port = 2
+inverted = false
+
+[sub_resource type="Resource" id="cfg118"]
+script = ExtResource("cfg")
+visual = SubResource("art")
+kind = 13
+device_name = "Geganti"
+initial_enabled = true
+logic = 1
+
+[sub_resource type="Resource" id="link119"]
+script = ExtResource("link")
+target = NodePath("../Platform")
+port = 1
+inverted = false
+
+[sub_resource type="Resource" id="link120"]
+script = ExtResource("link")
+target = NodePath("../LabGate")
+port = 1
+inverted = false
+
+[sub_resource type="Resource" id="cfg122"]
+script = ExtResource("cfg")
+visual = SubResource("art")
+kind = 3
+device_name = "Pagar"
+initial_enabled = false
+logic = 0
+size = Vector2(36,140)
+
+[sub_resource type="Resource" id="cfg123"]
+script = ExtResource("cfg")
+visual = SubResource("art")
+kind = 12
+device_name = "Optional practice barrier"
+max_health = 25.0
+size = Vector2(70,80)
+capabilities = Array[StringName]([&"structural", &"magnetic", &"coolable", &"conductive", &"impulse-reactive"])
+persistent = true
+
+[sub_resource type="Resource" id="cfg124"]
+script = ExtResource("cfg")
+visual = SubResource("art")
+kind = 9
+device_name = "Plat tekanan"
+size = Vector2(140,18)
+minimum_weight = 40.0
+
+[sub_resource type="Resource" id="link125"]
+script = ExtResource("link")
+target = NodePath("../Indicator")
+port = 0
+inverted = false
+
+[sub_resource type="Resource" id="cfg127"]
+script = ExtResource("cfg")
+visual = SubResource("art")
+kind = 2
+device_name = "Lampu"
+initial_enabled = true
+initial_power = false
+
+[sub_resource type="Resource" id="cfg128"]
+script = ExtResource("cfg")
+visual = SubResource("art")
+kind = 0
+device_name = "Optional nonlethal training"
+size = Vector2(60,80)
+
+[sub_resource type="Resource" id="link129"]
+script = ExtResource("link")
+target = NodePath("../Turret")
+port = 0
+inverted = false
+
+[sub_resource type="Resource" id="cfg130"]
+script = ExtResource("cfg")
+visual = SubResource("art")
+kind = 0
+device_name = "Emergency stop"
+size = Vector2(60,80)
+
+[sub_resource type="Resource" id="link131"]
+script = ExtResource("link")
+target = NodePath("../Turret")
+port = 1
+inverted = true
+
+[sub_resource type="Resource" id="cfg132"]
+script = ExtResource("cfg")
+visual = SubResource("art")
+kind = 11
+turret_spell = ExtResource("bolt")
+device_name = "Mesin latihan"
+initial_enabled = true
+size = Vector2(70,100)
+capabilities = Array[StringName]([&"structural", &"magnetic"])
+initial_power = false
+attack_range = 650.0
+training_nonlethal = true
+warning_seconds = 1.2
+firing_interval = 3.0
+
+[node name="school-environment" type="Node2D"]
+
+[node name="ChillTarget" parent="." instance=ExtResource("magis-receiver")]
+position = Vector2(1850,560)
+data = SubResource("cfg116")
+links = Array[ExtResource("link")]([SubResource("link117")])
+
+[node name="Relay" parent="." instance=ExtResource("electrical-relay")]
+position = Vector2(2200,650)
+data = SubResource("cfg118")
+input_sources = Array[NodePath]([NodePath("../ChillTarget")])
+links = Array[ExtResource("link")]([SubResource("link119"), SubResource("link120")])
+
+[node name="Platform" parent="." instance=ExtResource("moving-platform")]
+position = Vector2(2550,620)
+waypoints = PackedVector2Array(0,0,0,-160,230,-160)
+
+[node name="LabGate" parent="." instance=ExtResource("powered-gate")]
+position = Vector2(2900,540)
+data = SubResource("cfg122")
+
+[node name="PracticeBarrier" parent="." instance=ExtResource("magis-breakable")]
+position = Vector2(3300,610)
+data = SubResource("cfg123")
+
+[node name="Plate" parent="." instance=ExtResource("pressure-switch")]
+position = Vector2(3850,885)
+data = SubResource("cfg124")
+links = Array[ExtResource("link")]([SubResource("link125")])
+
+[node name="Crate" parent="." instance=ExtResource("floating-crate")]
+position = Vector2(3650,850)
+
+[node name="Indicator" parent="." instance=ExtResource("lamp")]
+position = Vector2(4050,650)
+data = SubResource("cfg127")
+
+[node name="StartTraining" parent="." instance=ExtResource("light-switch")]
+position = Vector2(4700,810)
+data = SubResource("cfg128")
+links = Array[ExtResource("link")]([SubResource("link129")])
+
+[node name="EmergencyCut" parent="." instance=ExtResource("light-switch")]
+position = Vector2(5000,810)
+data = SubResource("cfg130")
+links = Array[ExtResource("link")]([SubResource("link131")])
+
+[node name="Turret" parent="." instance=ExtResource("training-turret")]
+position = Vector2(5500,600)
+data = SubResource("cfg132")
+
+[node name="OptionalLabel" type="Label" parent="."]
+position = Vector2(1640,510)
+text = "Optional practical equipment · Kinetic Chill (R to select) · Main route stays below"
+theme_override_font_sizes/font_size = 24

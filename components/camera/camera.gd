@@ -7,6 +7,7 @@ extends Camera2D
 
 func _ready() -> void:
 	add_to_group("camera")
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_ON
 	position_smoothing_enabled = true
 	position_smoothing_speed = 10.0
@@ -23,7 +24,7 @@ func _process(_delta: float) -> void:
 # PAUSE
 # -------------------------
 func _handle_pause_input() -> void:
-	if SaveManager.loading: return
+	if SaveManager.loading or (ModalService.blocks_world_pause() and ModalService.holder != self): return
 	if not Input.is_action_just_pressed("paused"):
 		return
 	_toggle_pause()
@@ -31,13 +32,14 @@ func _handle_pause_input() -> void:
 func _toggle_pause() -> void:
 	if not is_inside_tree():
 		return
-	get_tree().paused = !get_tree().paused
+	if ModalService.holder == self: ModalService.release(self)
+	elif not ModalService.acquire(self): return
 	_refresh_ui_visibility()
 
 func unpause() -> void:
 	if not is_inside_tree():
 		return
-	get_tree().paused = false
+	if not ModalService.release(self): return
 	_refresh_ui_visibility()
 
 func _refresh_ui_visibility() -> void:

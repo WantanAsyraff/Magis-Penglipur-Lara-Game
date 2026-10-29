@@ -157,7 +157,7 @@ func _restore(staged: Dictionary, profile: int) -> bool:
 	# Keep the prior scene and its players alive until the destination has initialized.
 	var old_scene := get_tree().current_scene
 	var old_players := Player_Manager.players.duplicate()
-	var old_quest := QuestSaveService.stage(QuestManager,QuestSaveService.encode(QuestManager))
+	var old_quest := QuestSaveService.stage(QuestManager,QuestSaveService.encode(QuestManager),false)
 	var old_player := GameSaveSchema.capture_player()
 	var old_equipped := Player_Global_Data.equipped_spells.duplicate()
 	var old_combat := Player_Global_Data.combat_mode
@@ -165,6 +165,8 @@ func _restore(staged: Dictionary, profile: int) -> bool:
 	var old_position := Player_Manager.last_player_position
 	var old_profile := active_profile
 	var old_ready := session_ready
+	InventoryOverlay.close(); CutsceneFlow.dismiss_recap()
+	if is_instance_valid(ModalService.holder): ModalService.release(ModalService.holder)
 	loading = true
 	session_ready = false
 	_autosave_pending = false

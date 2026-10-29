@@ -17,6 +17,12 @@ const ROW_SCENE := preload("res://scenes/ui/menus/bind-list.tscn")
 # A non-empty group string inserts a separator label above that row.
 # -------------------------
 const ACTIONS: Array = [
+ ["inventory_toggle","Inventory","Inventory & Story"],
+ ["inventory_favorite","Favorite item",""],
+ ["inventory_previous_tab","Previous inventory tab",""],
+ ["inventory_next_tab","Next inventory tab",""],
+ ["inventory_search","Search inventory",""],
+ ["cutscene_skip","Hold to skip story",""],
 	# ── Movement ──────────────────────────────────────────────
 	["move_left",           "Move Left",            "Movement"],
 	["move_right",          "Move Right",           ""],
@@ -84,7 +90,9 @@ func _input(event: InputEvent) -> void:
 
 	# Apply the new binding
 	var action := _listening_row.action_name
+	var controller_events := InputMap.action_get_events(action).filter(func(binding): return not binding is InputEventKey)
 	InputMap.action_erase_events(action)
+	for binding in controller_events: InputMap.action_add_event(action,binding)
 	var new_event := InputEventKey.new()
 	new_event.keycode = key_event.keycode
 	InputMap.action_add_event(action, new_event)

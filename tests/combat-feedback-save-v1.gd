@@ -47,11 +47,11 @@ func _write_process() -> void:
 	var second := QuestManager.offer_quest("quest_bakau_002","bakau_field_researcher")
 	QuestManager.decide_offer(QuestManager.present_offer(second.instance_id,"bakau_field_researcher"),"accept")
 	Inventory_Manager.pickup(QuestManager.registry.items.drop_001,2,"full-save-pickup")
-	# Exercise the existing equipment map using a registered item; no item definitions change.
-	var equipment_item: ItemData = QuestManager.registry.items.drop_002
+	# Exercise actual compatible equipment using the registered robe definition.
+	var equipment_item: ItemData = QuestManager.registry.items.equipment_student_lab_robe
 	Inventory_Manager.add_item(equipment_item,1,"equipment-fixture")
-	Inventory_Manager.equip_item(equipment_item,Inventory_Manager.SlotType.ACCESSORY_1)
-	check(Inventory_Manager.get_equipped(Inventory_Manager.SlotType.ACCESSORY_1) == equipment_item,"Existing inventory API stages equipped-item persistence")
+	Inventory_Manager.equip_item(equipment_item,Inventory_Manager.SlotType.ROBE)
+	check(Inventory_Manager.get_equipped(Inventory_Manager.SlotType.ROBE) == equipment_item,"Existing inventory API stages equipped-item persistence")
 	QuestManager.select_quest(second.instance_id)
 	QuestManager.mark_conversation_read("bakau_field_researcher")
 	QuestManager.set_world_flag("save_test_gate",true)
@@ -147,9 +147,10 @@ func _write_process() -> void:
 	var network_error := peer.create_server(0)
 	check(network_error == OK,"Multiplayer boundary fixture opens a local ephemeral peer")
 	if network_error == OK:
+		var previous_peer := multiplayer.multiplayer_peer
 		multiplayer.multiplayer_peer = peer
 		check(not SaveManager.save_active() and not await SaveManager.load_slot(PROFILE),"Multiplayer blocks local campaign saving and loading")
-		multiplayer.multiplayer_peer = null
+		multiplayer.multiplayer_peer = previous_peer
 		peer.close()
 	var campaign_bytes := FileAccess.get_file_as_bytes(SaveManager.path_for(PROFILE))
 	get_tree().change_scene_to_file("res://scenes/combat/boss-prototype-room.tscn")
@@ -258,7 +259,7 @@ func _read_process() -> void:
 	check(Player_Global_Data.equipped_spells.size() == 3 and Player_Global_Data.learned_spells.size() == 3,"Fresh process resolves learned and ordered equipped Resources through spell IDs")
 	check(Player_Global_Data.player_exp == 120 and Inventory_Manager.get_item_quantity("craft_cons_001") == 2,"Fresh process restores exact reward XP and inventory quantity")
 	check(Player_Global_Data.get_meta("keys",[]) == ["regression_key"] and Inventory_Manager.max_slots == 80,"Dungeon keys and inventory capacity survive restart")
-	check(Inventory_Manager.get_equipped(Inventory_Manager.SlotType.ACCESSORY_1).item_id == "drop_002","Fresh process restores equipped item Resources in their slots")
+	check(Inventory_Manager.get_equipped(Inventory_Manager.SlotType.ROBE).item_id == "equipment_student_lab_robe","Fresh process restores equipped item Resources in their slots")
 	check(QuestManager.world_flags.get("save_test_gate",false),"Fresh process restores durable world flags")
 	check(Inventory_Manager.pickup(QuestManager.registry.items.drop_001,2,"full-save-pickup") == 0,"Fresh process rejects replayed acquisition receipt")
 	var claimed: QuestInstance

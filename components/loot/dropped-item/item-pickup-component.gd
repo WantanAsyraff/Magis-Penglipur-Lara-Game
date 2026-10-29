@@ -8,6 +8,7 @@ func init_component(parent: DroppedItem) -> void:
 	_parent_item.modulate.a = .5
 func _physics_process(delta: float) -> void:
 	if _is_collectible or not is_instance_valid(_parent_item): return
+	if not _parent_item.player_drop_id.is_empty() and not _parent_item.drop_armed: return
 	_elapsed += delta
 	if _elapsed >= .2: _make_collectible()
 func _make_collectible() -> void:

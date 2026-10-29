@@ -1,19 +1,6 @@
 extends Node2D
-
-# Progress of the game's tutorial here
-
+@export var sequence: CutsceneSequence = preload("res://data/story/school-entrance.tres")
 func _ready() -> void:
-	if SaveManager.loading: return
-	begin_intro()
-
+	if not SaveManager.loading: begin_intro()
 func begin_intro() -> void:
-	Player_Global_Data.p_moveable = false
-	Player_Global_Data.phone_visible = false
-	
-	Dialogic.start("spm-school-entrance")
-	await Dialogic.timeline_ended
-	
-	Player_Global_Data.p_moveable = true
-	Player_Global_Data.combat_mode = true
-	Player_Global_Data.add_spell(preload("res://data/magis/spells/thermal-kinetic.tres"))
-	Player_Global_Data.equip_spell(preload("res://data/magis/spells/thermal-kinetic.tres"))
+	CutsceneFlow.play(self,sequence)

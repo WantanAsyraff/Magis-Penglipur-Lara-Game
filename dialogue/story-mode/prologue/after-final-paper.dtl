@@ -88,3 +88,4 @@ yan (default): (I’ll be the first spellcaster in the family. But I’ll have t
 (... I’m gonna miss everyone…)
 leave yan
 End of Prologue.
+[signal arg="story:completed:prologue.after_final_paper"]

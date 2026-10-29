@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+[ext_resource type="Script" path="res://data/items/item-data.gd" id="1"]
+[resource]
+script = ExtResource("1")
+item_id = "equipment_student_lab_robe"
+item_name = "Student Laboratory Robe"
+item_type = 1
+description = "A practical school laboratory robe. Compatible with the robe slot; no additional combat modifiers are authored."
+is_stackable = false
+max_stack = 1
+equipment_slots = 4
+use_behavior = 3
+ringgit_value = 18.0

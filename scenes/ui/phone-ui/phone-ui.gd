@@ -26,7 +26,7 @@ func _ready():
 		print("Phone disabled")
 
 func _unhandled_input(event):
-	if QuestOfferDialog.is_open() or Dialogic.current_timeline != null: return
+	if QuestOfferDialog.is_open() or Dialogic.current_timeline != null or is_instance_valid(ModalService.holder): return
 	if event.is_action_pressed("open_phone"):
 		phone_selected = !phone_selected
 		_animate_phone()
@@ -46,11 +46,13 @@ func _animate_phone():
 		.set_ease(Tween.EASE_OUT)
 
 func _on_app_opened(app_resource: PackedScene):
-	if QuestOfferDialog.is_open() or Dialogic.current_timeline != null: return
+	if QuestOfferDialog.is_open() or Dialogic.current_timeline != null or is_instance_valid(ModalService.holder): return
 	if current_app_node:
 		return
 
 
+	if app_resource.resource_path == "res://scenes/ui/inventory/inventory-ui.tscn":
+		phone_selected = false; _animate_phone(); InventoryOverlay.open(); return
 	current_app_node = app_resource.instantiate()
 	%PhoneBG.add_child(current_app_node)
 	current_app_node.visible = true

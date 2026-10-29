@@ -11,8 +11,12 @@ func execute(context: SpellCastContext, target: Node2D) -> bool:
 	var hitbox := target.get_node_or_null("HitboxComponent") as HitboxComponent
 	var bonus: float = context.modifiers.get("damage", 0.0)
 	if hitbox:
-		hitbox.receive_damage(maxf(amount * float(context.modifiers.get("scale", 1.0)) * float(context.modifiers.get("damage_multiplier", 1.0)) + bonus, 0.0), context.caster)
+		var damage := maxf(amount * float(context.modifiers.get("scale",1.0)) * float(context.modifiers.get("damage_multiplier",1.0)) + bonus,0.0)
+		if context.modifiers.get("nonlethal",false) and target is Player:
+			var cap := maxf(0,float(Player_Global_Data.p_curr_health)-1)
+			damage = minf(damage,cap/maxf(.001,hitbox.damage_multiplier)+hitbox.damage_reduction+hitbox.effects.magnitude("buff_defense"))
+		hitbox.receive_damage(damage,context.caster)
 	else:
-		target.take_damage(int(maxf(amount * float(context.modifiers.get("scale", 1.0)) * float(context.modifiers.get("damage_multiplier", 1.0)) + bonus, 0.0)))
-	SpellFeedback.flash(target, (context.spell.spell_colour if context.spell else Color.ORANGE))
+		target.take_damage(int(maxf(amount * float(context.modifiers.get("scale",1.0)) * float(context.modifiers.get("damage_multiplier",1.0)) + bonus,0.0)))
+	SpellFeedback.flash(target,(context.spell.spell_colour if context.spell else Color.ORANGE))
 	return true

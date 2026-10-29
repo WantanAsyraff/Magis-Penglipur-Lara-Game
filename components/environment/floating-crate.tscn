@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3]
+[ext_resource type="Script" path="res://components/environment/destructibles/floating-crate.gd" id="script"]
+[node name="FloatingCrate" type="RigidBody2D"]
+script = ExtResource("script")
+mass = 50.0

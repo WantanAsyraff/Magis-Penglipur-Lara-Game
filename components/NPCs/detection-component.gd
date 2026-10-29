@@ -2,7 +2,8 @@ class_name DetectionComponent extends Node
 signal player_entered
 signal player_exited
 signal interacted
-@export var interact_label_text: String = "E  to interact"
+@export var interact_label_text: String = "Interact"
+@export var requires_area_overlap: bool = false
 @export var interaction_radius: float = 250
 @export_flags_2d_physics var obstruction_mask: int = 16
 var _area: Area2D
@@ -11,9 +12,10 @@ var is_player_in_range: bool = false
 func _ready() -> void:
 	add_to_group("npc_interaction")
 	_area = get_parent() as Area2D if get_parent() is Area2D else get_parent().get_node_or_null("Area2D")
+	if _area == null: _area = get_parent().get_node_or_null("InteractArea")
 	_label = get_parent().get_node_or_null("InteractLabel")
 	if _label:
-		_label.text = interact_label_text
+		_label.text = _prompt_text()
 		_label.z_index = 100
 		_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	if _area:
@@ -23,6 +25,7 @@ func available(player: Node2D) -> bool:
 	if not is_instance_valid(player) or not is_inside_tree() or get_tree().paused or QuestOfferDialog.is_open() or Dialogic.current_timeline != null or not Player_Global_Data.p_moveable: return false
 	for phone in get_tree().get_nodes_in_group("phone_ui"):
 		if phone.phone_selected: return false
+	if requires_area_overlap and not is_player_in_range: return false
 	var npc := get_parent() as Node2D
 	if npc.global_position.distance_to(player.global_position) > interaction_radius: return false
 	var exclude: Array[RID] = []
@@ -59,4 +62,11 @@ func _on_area_2d_body_exited(body: Node2D) -> void:
 	player_exited.emit()
 func set_label_text(text: String) -> void:
 	interact_label_text = text
-	if _label: _label.text = text
+	if _label: _label.text = _prompt_text()
+
+func _prompt_text() -> String:
+	var events := InputMap.action_get_events("interact")
+	var key := "F"
+	if not events.is_empty() and events[0] is InputEventKey:
+		key = OS.get_keycode_string(events[0].physical_keycode if events[0].physical_keycode else events[0].keycode)
+	return key+" · "+interact_label_text

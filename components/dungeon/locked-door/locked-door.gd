@@ -18,6 +18,7 @@ extends StaticBody2D
 @onready var collision: CollisionShape2D = $CollisionShape2D
 @onready var interact_area: Area2D = $InteractArea
 
+var _detector: DetectionComponent
 var _player_nearby: Node = null
 var _is_open: bool = false
 var _prompt_label: Label = null
@@ -27,10 +28,14 @@ func _ready() -> void:
 	interact_area.body_entered.connect(_on_interact_area_body_entered)
 	interact_area.body_exited.connect(_on_interact_area_body_exited)
 	_setup_prompt()
+	_detector = DetectionComponent.new(); _detector.requires_area_overlap = true; add_child(_detector)
+	_detector.interacted.connect(func():
+		if not _is_open and _player_has_key() and SpellExecutor.is_authoritative(self): _open_door())
 	if WorldPersistence.has_state(self,"open"): _restore_open()
 
 func _setup_prompt() -> void:
 	_prompt_label = Label.new()
+	_prompt_label.name = "InteractLabel"
 	_prompt_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_prompt_label.position = Vector2(-80, -56)
 	_prompt_label.visible = false
@@ -41,10 +46,8 @@ func _process(_delta: float) -> void:
 		return
 
 	# Update prompt text based on whether player has the key
-	_prompt_label.text = prompt_unlocked_text if _player_has_key() else prompt_locked_text
-
-	if Input.is_action_just_pressed("interact") and _player_has_key():
-		_open_door()
+	_detector.set_label_text(prompt_unlocked_text if _player_has_key() else prompt_locked_text)
+	_prompt_label.visible = DetectionComponent.focused(get_tree()) == _detector
 
 func _on_interact_area_body_entered(body: Node) -> void:
 	if not body.is_in_group("player"):
@@ -59,17 +62,10 @@ func _on_interact_area_body_exited(body: Node) -> void:
 	_prompt_label.visible = false
 
 func _player_has_key() -> bool:
-	if not Player_Global_Data.has_meta("keys"):
-		return false
-	var keys: Array = Player_Global_Data.get_meta("keys")
-	return keys.has(key_id)
+	return WorldKeyAccess.has_key(key_id)
 
 func _consume_key() -> void:
-	if not Player_Global_Data.has_meta("keys"):
-		return
-	var keys: Array = Player_Global_Data.get_meta("keys")
-	keys.erase(key_id)
-	Player_Global_Data.set_meta("keys", keys)
+	WorldKeyAccess.consume(key_id)
 
 func _restore_open() -> void:
 	_is_open = true

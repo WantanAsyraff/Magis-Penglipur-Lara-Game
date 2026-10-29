@@ -15,8 +15,13 @@ static func execute_effects(context: SpellCastContext, target: Node2D, definitio
 			break
 		context.remaining_effect_budget -= 1
 		if effect != null and effect.validate().is_empty() and effect.accepts(target):
-			if effect.execute(context, target):
+			var receiver := target.get_node_or_null("InteractionReceiver") as InteractionReceiver
+			if receiver: receiver.begin_spell()
+			var succeeded := effect.execute(context,target)
+			if is_instance_valid(receiver): receiver.end_spell()
+			if succeeded:
 				applied = true
+				if receiver: receiver.receive_spell(context,effect)
 				QuestEventHooks.hit(context, target)
 				if on_success.is_valid() and is_instance_valid(target):
 					on_success.call(context.cast_id, target, effect)

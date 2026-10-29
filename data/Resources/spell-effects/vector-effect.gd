@@ -5,10 +5,19 @@ enum Mode { IMPULSE, ATTRACT, ORBIT, DAMP, LIFT }
 @export var strength: float = 180.0
 @export var capability: StringName = &""
 func accepts(target: Node2D) -> bool:
-	return target is CharacterBody2D and (capability == &"" or target.has_meta(capability))
+	return (target is CharacterBody2D or target is RigidBody2D) and (capability == &"" or target.has_meta(capability))
 func validate() -> PackedStringArray:
 	return PackedStringArray(["Invalid vector strength"]) if not is_finite(strength) or strength < 0 or strength > 2000 else PackedStringArray()
 func execute(context: SpellCastContext, target: Node2D) -> bool:
+	if target is RigidBody2D:
+		var radial := (context.source_position-target.global_position).normalized()
+		match mode:
+			Mode.IMPULSE: target.apply_central_impulse(context.direction*strength*target.mass)
+			Mode.ATTRACT: target.apply_central_impulse(radial*strength*target.mass)
+			Mode.ORBIT: target.apply_central_impulse((radial+radial.orthogonal())*strength*target.mass)
+			Mode.DAMP: target.linear_velocity *= clampf(1-strength,0,1)
+			Mode.LIFT: target.apply_central_impulse(Vector2(0,-strength)*target.mass)
+		return true
 	var body := target as CharacterBody2D
 	var before := body.velocity
 	var radial := (context.source_position - body.global_position).normalized()

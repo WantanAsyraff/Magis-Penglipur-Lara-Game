@@ -107,6 +107,8 @@ static func apply_area(context: SpellCastContext, position: Vector2, beam: bool 
 static func can_target(context: SpellCastContext, target: Node2D) -> bool:
 	if not is_instance_valid(target):
 		return false
+	var environmental := target.get_node_or_null("EnvironmentalTarget") as EnvironmentalTarget
+	if environmental: return environmental.can_receive(context)
 	var relation := CombatFactions.relation(context.caster, target)
 	if target.get_meta("combat_dead", false) or target.is_queued_for_deletion(): return false
 	var ally := relation > 0

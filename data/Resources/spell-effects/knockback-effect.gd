@@ -5,5 +5,6 @@ func validate() -> PackedStringArray:
 func execute(context: SpellCastContext, target: Node2D) -> bool:
 	var h: HitboxComponent = target.get_node("HitboxComponent")
 	if h.receives_knockback:
-		h._apply_knockback(context.direction, force)
+		if target is RigidBody2D: target.apply_central_impulse(context.direction*force*target.mass)
+		else: h._apply_knockback(context.direction, force)
 	return true

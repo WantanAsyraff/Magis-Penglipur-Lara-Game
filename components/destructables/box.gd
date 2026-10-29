@@ -25,7 +25,7 @@ func take_damage(amount: int) -> void:
 func break_object() -> void:
 	WorldPersistence.mark(self,"broken")
 	# stop interacting with the world
-	collision.disabled = true
+	collision.set_deferred("disabled",true)
 	sprite.visible = false
 
 	# play break effect

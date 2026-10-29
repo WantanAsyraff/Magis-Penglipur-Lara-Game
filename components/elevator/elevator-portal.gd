@@ -17,6 +17,7 @@ extends Area2D
 # -------------------------
 # STATE
 # -------------------------
+var _detector: DetectionComponent
 var _player_in_area: bool = false
 var _ui_open: bool = false
 var _triggered: bool = false
@@ -25,15 +26,16 @@ var _triggered: bool = false
 # -------------------------
 func _ready() -> void:
 	add_to_group("world_interaction")
+	_detector = DetectionComponent.new(); _detector.requires_area_overlap = true; add_child(_detector)
+	_detector.interacted.connect(func():
+		if not _ui_open and not _triggered and SpellExecutor.is_authoritative(self): _open_ui())
 	if enter_label:
 		enter_label.modulate.a = 0.0
 # -------------------------
 # INPUT
 # -------------------------
 func _process(_delta: float) -> void:
-	if _player_in_area and not _ui_open and not _triggered:
-		if Input.is_action_just_pressed("interact"):
-			_open_ui()
+	if enter_label and _detector: enter_label.visible = _player_in_area and DetectionComponent.focused(get_tree()) == _detector
 # -------------------------
 # LABEL
 # -------------------------

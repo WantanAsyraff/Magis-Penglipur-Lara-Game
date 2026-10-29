@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="EnvironmentDeviceData" load_steps=4 format=3]
+[ext_resource type="Script" path="res://data/environment/environment-device-data.gd" id="data"]
+[ext_resource type="Script" path="res://data/environment/environment-visual-data.gd" id="visual"]
+[sub_resource type="Resource" id="art"]
+script = ExtResource("visual")
+tint = Color(0.5, 0.8, 0.55, 1)
+[resource]
+script = ExtResource("data")
+visual = SubResource("art")
+kind = 8
+device_name = "Longkang"
+size = Vector2(180,70)
+initial_enabled = true
+flow_rate = 20.0

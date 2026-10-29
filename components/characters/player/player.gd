@@ -107,12 +107,16 @@ var _parry_active: bool  = false
 # -------------------------
 # BOOTSTRAP
 # -------------------------
+var environment_target: PlayerEnvironmentTarget
+var water_movement: PlayerWaterMovement
 var target_lock: PlayerTargetLock
 var pushback: PlayerPushback
 
 func _ready() -> void:
 	add_to_group("player")
 	PlayerEnemyCollision.configure(self)
+	environment_target = PlayerEnvironmentTarget.new(); add_child(environment_target)
+	water_movement = PlayerWaterMovement.new(); add_child(water_movement)
 	target_lock = PlayerTargetLock.new()
 	add_child(target_lock)
 	pushback = PlayerPushback.new()
@@ -182,6 +186,7 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 		return
 
+	if water_movement.step(delta): return
 	if not Player_Global_Data.p_moveable:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		if not is_on_floor():
@@ -367,7 +372,10 @@ func _regen_mana(delta: float) -> void:
 func _unhandled_input(_event: InputEvent) -> void:
 	if multiplayer.has_multiplayer_peer() and not is_multiplayer_authority():
 		return
+	if _event.is_action_pressed("environment_target") and not _event.is_echo():
+		environment_target.cycle(); _update_aim_direction(); get_viewport().set_input_as_handled(); return
 	if _event.is_action_pressed("cycle_target") and not _event.is_echo():
+		environment_target.clear()
 		if target_lock.can_cycle():
 			target_lock.refresh()
 			target_lock.cycle_target()
@@ -389,7 +397,7 @@ func _unhandled_input(_event: InputEvent) -> void:
 			stop_label.visible = _stop_moving_locked
 
 	# Casting and target switching remain available when movement is stopped.
-	if combat_mode:
+	if combat_mode or is_instance_valid(environment_target.current()):
 		if _event.is_action_pressed("start_incantation") and not _event.is_echo():
 			if hitbox.is_silenced():
 				spell_label.text = "Silenced!"
@@ -477,14 +485,15 @@ func _cast_resolved(spell: SpellData) -> void:
 	var aim := castMarker.position.normalized()
 	var targets: Array[Node2D] = []
 	var delivery := LegacySpellAdapter.delivery_for(spell)
-	var selected := target_lock.locked_target
-	if is_instance_valid(selected) and target_lock.eligible(selected) and spell.targeting != SpellData.Targeting.ALLIES and delivery not in [SpellData.Delivery.SELF,SpellData.Delivery.SUMMON]:
+	var selected := environment_target.current()
+	if not is_instance_valid(selected): selected = target_lock.locked_target
+	if is_instance_valid(selected) and (target_lock.eligible(selected) or environment_target.eligible(selected)) and spell.targeting != SpellData.Targeting.ALLIES and delivery not in [SpellData.Delivery.SELF,SpellData.Delivery.SUMMON]:
 		targets.append(selected)
 	elif delivery == SpellData.Delivery.DIRECT_TARGET:
 		var targeting_context := SpellCastContext.new(self,spell)
 		targeting_context.direction = aim
 		var target := SpellDelivery.pick_target(targeting_context)
-		if target and target_lock.eligible(target): targets.append(target)
+		if target and (target_lock.eligible(target) or environment_target.eligible(target)): targets.append(target)
 	if incantation_strategy == IncantationResolver.Strategy.CHAINED:
 		accepted = casting.enqueue_cast(spell, global_position, aim, targets, incantation_chain_id)
 	else:
@@ -698,6 +707,10 @@ func _on_status_expired(effect_name: String) -> void:
 # AIM
 # -------------------------
 func _update_aim_direction() -> void:
+	if environment_target and is_instance_valid(environment_target.current()):
+		var point := SpellDelivery.target_bounds(environment_target.current()).get_center()-global_position
+		if not point.is_zero_approx(): castMarker.position = point.normalized()*120
+		return
 	if target_lock:
 		target_lock.refresh()
 		if is_instance_valid(target_lock.locked_target):
@@ -709,7 +722,7 @@ func _update_aim_direction() -> void:
 
 func aim_locked_cast(context: SpellCastContext) -> void:
 	# Each queued request retains its selected enemy, while tracking its movement through preparation.
-	if context.targets.is_empty() or not target_lock.eligible(context.targets[0]): return
+	if context.targets.is_empty() or not (target_lock.eligible(context.targets[0]) or environment_target.eligible(context.targets[0])): return
 	var point := PlayerTargetLock.aim_point(context.targets[0])
 	var heading := point - global_position
 	if heading.is_zero_approx(): return

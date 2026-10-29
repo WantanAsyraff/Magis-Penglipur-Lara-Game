@@ -1,0 +1,6 @@
+[gd_scene load_steps=3 format=3]
+[ext_resource type="Script" path="res://components/environment/core/environment-device.gd" id="script"]
+[ext_resource type="Resource" path="res://data/environment/fuse-box.tres" id="data"]
+[node name="FuseBox" type="CharacterBody2D"]
+script = ExtResource("script")
+data = ExtResource("data")

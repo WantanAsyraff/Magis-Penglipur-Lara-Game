@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="EnvironmentDeviceData" load_steps=4 format=3]
+[ext_resource type="Script" path="res://data/environment/environment-device-data.gd" id="data"]
+[ext_resource type="Script" path="res://data/environment/environment-visual-data.gd" id="visual"]
+[sub_resource type="Resource" id="art"]
+script = ExtResource("visual")
+tint = Color(0.85, 0.72, 0.35, 1)
+[resource]
+script = ExtResource("data")
+visual = SubResource("art")
+kind = 0
+device_name = "Suis lampu"
+size = Vector2(60,80)

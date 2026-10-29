@@ -1,0 +1,6 @@
+[gd_scene load_steps=3 format=3]
+[ext_resource type="Script" path="res://components/environment/mechanisms/moving-platform.gd" id="script"]
+[ext_resource type="Resource" path="res://data/environment/moving-platform.tres" id="data"]
+[node name="MovingPlatform" type="AnimatableBody2D"]
+script = ExtResource("script")
+data = ExtResource("data")

@@ -11,6 +11,7 @@ extends Area2D
 
 @export var prompt_text: String = "Press [F] to pick up"
 
+var _detector: DetectionComponent
 var _player_nearby: Node = null
 var _prompt_label: Label = null
 
@@ -22,9 +23,13 @@ func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
 	_setup_prompt()
+	_detector = DetectionComponent.new(); _detector.requires_area_overlap = true; add_child(_detector)
+	_detector.interacted.connect(func():
+		if SpellExecutor.is_authoritative(self): _pick_up())
 
 func _setup_prompt() -> void:
 	_prompt_label = Label.new()
+	_prompt_label.name = "InteractLabel"
 	_prompt_label.text = prompt_text
 	_prompt_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_prompt_label.position = Vector2(-60, -48)
@@ -32,8 +37,7 @@ func _setup_prompt() -> void:
 	add_child(_prompt_label)
 
 func _process(_delta: float) -> void:
-	if _player_nearby and Input.is_action_just_pressed("interact"):
-		_pick_up()
+	if _detector and _prompt_label: _prompt_label.visible = DetectionComponent.focused(get_tree()) == _detector
 
 func _on_body_entered(body: Node) -> void:
 	if not body.is_in_group("player"):

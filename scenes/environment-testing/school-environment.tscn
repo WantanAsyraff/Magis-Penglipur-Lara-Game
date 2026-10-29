@@ -58,6 +58,7 @@ inverted = false
 script = ExtResource("cfg")
 visual = SubResource("art")
 kind = 3
+manual_interaction = false
 device_name = "Pagar"
 initial_enabled = false
 logic = 0

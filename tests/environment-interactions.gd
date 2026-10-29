@@ -56,6 +56,7 @@ func electrical() -> void:
 	fuse.interact(); check(not lamp.actuator.output and toggle.actuator.enabled,"Fuse cuts output without erasing switch position")
 	fuse.interact(); toggle.interact(); check(not lamp.actuator.output,"Switch can deactivate downstream light")
 	var gate: EnvironmentDevice = spawn_prop("powered-gate",Vector2(1000,0),{"logic":EnvironmentDeviceData.Logic.NONE,"initial_enabled":false})
+	gate.interact(); check(not gate.actuator.output,"Powered gates cannot bypass their circuit through ordinary interaction")
 	connect_devices(toggle,gate,EnvironmentLink.Port.ENABLE)
 	toggle.interact()
 	await get_tree().physics_frame

@@ -119,6 +119,7 @@ flow_rate = 20.0
 script = ExtResource("cfg")
 visual = SubResource("art")
 kind = 3
+manual_interaction = false
 device_name = "Pagar"
 initial_enabled = true
 logic = 0

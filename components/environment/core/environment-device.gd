@@ -73,7 +73,7 @@ func _ready() -> void:
 	receiver.progress.connect(func(_hits,_charge): visual.present(actuator.output,&"charging"))
 	var caption := Label.new(); caption.name = "Caption"; caption.text = data.device_name; caption.position = Vector2(-data.size.x/2,data.size.y/2+8); caption.add_theme_font_size_override("font_size",16); add_child(caption)
 	var prompt := Label.new(); prompt.name = "InteractLabel"; prompt.position = Vector2(-100,-data.size.y/2-32); prompt.hide(); add_child(prompt)
-	if data.kind in [EnvironmentDeviceData.Kind.SWITCH,EnvironmentDeviceData.Kind.FUSE,EnvironmentDeviceData.Kind.LEVER,EnvironmentDeviceData.Kind.VALVE,EnvironmentDeviceData.Kind.PUMP,EnvironmentDeviceData.Kind.GATE]:
+	if data.manual_interaction and data.kind in [EnvironmentDeviceData.Kind.SWITCH,EnvironmentDeviceData.Kind.FUSE,EnvironmentDeviceData.Kind.LEVER,EnvironmentDeviceData.Kind.VALVE,EnvironmentDeviceData.Kind.PUMP,EnvironmentDeviceData.Kind.GATE]:
 		detector = DetectionComponent.new(); detector.interaction_radius = data.interaction_radius; detector.interact_label_text = "Interact · "+data.device_name; add_child(detector); detector.interacted.connect(interact)
 	if data.kind in [EnvironmentDeviceData.Kind.PLATE,EnvironmentDeviceData.Kind.FAN] or (data.rule and data.rule.event in [InteractionRule.Event.ENTER,InteractionRule.Event.EXIT,InteractionRule.Event.CONTACT]):
 		sensor = Area2D.new(); sensor.name = "Sensor"; sensor.collision_mask = 17; sensor.collision_layer = 0
@@ -100,7 +100,7 @@ func _ready() -> void:
 	_state_changed(actuator.effective())
 	actuator.call_deferred("publish_initial")
 func interact() -> void:
-	if not SpellExecutor.is_authoritative(self) or get_meta("combat_dead",false): return
+	if not data.manual_interaction or not SpellExecutor.is_authoritative(self) or get_meta("combat_dead",false): return
 	if data.kind == EnvironmentDeviceData.Kind.GATE and not actuator.unlocked:
 		if not WorldKeyAccess.has_key(data.key_id): return
 		if data.consume_key: WorldKeyAccess.consume(data.key_id)
@@ -264,7 +264,11 @@ func _physics_process(delta: float) -> void:
 			if actuator.output and data.airflow_enabled and sensor:
 				for body in sensor.get_overlapping_bodies():
 					if body is RigidBody2D and body.mass <= data.airflow_max_mass: body.apply_central_force(data.airflow*body.mass)
-					elif body is Player and data.player_airflow: body.velocity += data.airflow*delta
+					elif body is Player and data.player_airflow:
+						var motion := body.get_node_or_null("SpellMotionImpulse") as SpellMotionImpulse
+						if motion == null:
+							motion = SpellMotionImpulse.new(); motion.name = "SpellMotionImpulse"; body.add_child(motion)
+						motion.impulse = (motion.impulse+data.airflow*delta).limit_length(1000); motion.remaining = .1
 		EnvironmentDeviceData.Kind.VALVE:
 			visual.angle += delta*6 if actuator.output else 0
 			if actuator.output: _transfer(delta)

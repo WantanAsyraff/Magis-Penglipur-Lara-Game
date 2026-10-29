@@ -8,6 +8,7 @@ enum PlateMode { HOLD, TOGGLE, ONE_SHOT, TIMED }
 @export var rule: InteractionRule
 @export var size: Vector2 = Vector2(80,80)
 @export var interaction_radius: float = 200.0
+@export var manual_interaction: bool = true
 @export var initial_enabled: bool = false
 @export var initial_power: bool = true
 @export var logic: Logic = Logic.NONE

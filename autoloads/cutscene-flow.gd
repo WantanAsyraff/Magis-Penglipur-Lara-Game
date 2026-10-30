@@ -29,7 +29,7 @@ func _ready() -> void:
 	_build_ui()
 func _build_ui() -> void:
 	layer = CanvasLayer.new(); layer.layer = 110; add_child(layer)
-	var panel := VBoxContainer.new(); panel.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT); panel.offset_left = -350; panel.offset_right = -36; panel.offset_top = -96; panel.offset_bottom = -24; layer.add_child(panel)
+	var panel := VBoxContainer.new(); panel.mouse_filter = Control.MOUSE_FILTER_IGNORE; panel.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT); panel.offset_left = -350; panel.offset_right = -36; panel.offset_top = -96; panel.offset_bottom = -24; layer.add_child(panel)
 	skip_button = Button.new(); skip_button.text = "F1 / R3 · Hold to skip  ››"; skip_button.theme = load("res://assets/styles/inventory-theme.tres"); panel.add_child(skip_button)
 	skip_button.button_down.connect(func(): _mouse_holding = true)
 	skip_button.button_up.connect(func(): _mouse_holding = false; elapsed = 0)

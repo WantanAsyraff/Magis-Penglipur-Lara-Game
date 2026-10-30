@@ -288,6 +288,7 @@ func run() -> void:
 	Player_Global_Data.phone_visible=true
 	add_child(phone)
 	var original_scene := get_tree().current_scene
+	phone._set_open(true,false)
 	phone._on_app_opened(load("res://scenes/ui/quest-ui/quest-ui.tscn"))
 	check(phone.current_app_node is QuestUI and get_tree().current_scene==original_scene,"Phone opens messages inline without scene transition")
 	phone.current_app_node._back()
@@ -392,7 +393,7 @@ func captures() -> void:
 	canvas.add_child(phone)
 	phone.set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT)
 	phone.position=Vector2(600,100)
-	phone.phone_selected=true
+	phone._set_open(true,false)
 	phone._on_app_opened(load("res://scenes/ui/quest-ui/quest-ui.tscn"))
 	await shot("08-embedded-phone-app")
 	canvas.free()

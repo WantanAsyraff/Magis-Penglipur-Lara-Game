@@ -6,13 +6,11 @@ var _phone_open: bool = false
 func _process(_delta: float) -> void:
 	if multiplayer.has_multiplayer_peer() and not get_parent().is_multiplayer_authority():
 		return
+	_phone_open = false
+	for phone in get_tree().get_nodes_in_group("phone_ui"):
+		if phone.phone_selected and phone.is_visible_in_tree(): _phone_open = true
 	_update_flip()
 	_update_animations()
-func _unhandled_input(event: InputEvent) -> void:
-	if multiplayer.has_multiplayer_peer() and not get_parent().is_multiplayer_authority():
-		return
-	if event.is_action_pressed("open_phone") and not Player_Global_Data.combat_mode:
-		_phone_open = not _phone_open
 func _update_flip() -> void:
 	var dir := Input.get_axis("move_left", "move_right")
 	if dir < 0:

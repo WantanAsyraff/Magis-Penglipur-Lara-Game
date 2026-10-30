@@ -16,3 +16,5 @@ Start with the [three self-contained exercises](content-authoring-quickstart.md)
 | Legacy spellcaster, lyrics and other scene data | [Additional systems](additional-systems.md) |
 
 Use the [complete property reference](../reference/resource-reference.md) for defaults and Inspector enum/range hints, the [registration matrix](../reference/content-registration-matrix.md) for discovery/export, and [troubleshooting](../reference/troubleshooting.md) for symptoms and fixes. Completion includes actual reachable gameplay, validation, exported references and save compatibility, not just a `.tres` file that can be opened.
+
+Inventory V2: [items and transactions](inventory-and-items.md), [phone crate app and controls](inventory-ui.md).

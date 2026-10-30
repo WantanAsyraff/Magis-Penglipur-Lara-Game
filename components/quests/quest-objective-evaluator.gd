@@ -32,6 +32,7 @@ static func evaluate(instance: QuestInstance, event: GameplayEvent) -> Array[Str
 	for obj in eligible:
 		if obj.type == QuestObjectiveData.ObjectiveType.COLLECT_ITEM and obj.collection_mode != QuestObjectiveData.CollectionMode.CUMULATIVE: continue
 		if instance.status == QuestInstance.Status.COMPLETE and not obj.is_optional: continue
+		if event.metadata.get("inventory_transfer",false) and obj.type == QuestObjectiveData.ObjectiveType.COLLECT_ITEM: continue
 		if matches(obj, event):
 			var before := int(instance.objective_progress.get(obj.objective_id, 0))
 			instance.objective_progress[obj.objective_id] = mini(obj.required_amount, before + event.quantity)

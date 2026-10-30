@@ -16,8 +16,8 @@ static func encode(manager: Node) -> Dictionary:
 	var learned: Array[String] = []
 	for spell in Player_Global_Data.learned_spells:
 		if GameplayEvent.service("Spell_Library").call("get_spell_by_id", spell.spell_id): learned.append(spell.spell_id)
-	return {"version": VERSION, "conversations": manager.conversations.to_dict(), "owner_id": manager.active_owner_id, "instances": instances, "completed_quests": Player_Global_Data.completed_quests.duplicate(), "claims": manager.reward_claims.duplicate(true), "seen_events": manager.seen_events.duplicate(), "selected_quest": manager.selected_instance_id, "world_flags": manager.world_flags.duplicate(), "pending_events": manager.pending_events.duplicate(true), "inventory": inventory, "equipment": equipment, "acquisition_receipts": Inventory_Manager.acquisition_receipts.duplicate(), "max_slots": Inventory_Manager.max_slots, "player_xp": Player_Global_Data.player_exp, "currency": Player_Global_Data.p_curr_ringgit, "learned_spells": learned}
-static func stage(manager: Node, data: Dictionary) -> Dictionary:
+	return {"version": VERSION, "conversations": manager.conversations.to_dict(), "owner_id": manager.active_owner_id, "instances": instances, "completed_quests": Player_Global_Data.completed_quests.duplicate(), "claims": manager.reward_claims.duplicate(true), "seen_events": manager.seen_events.duplicate(), "selected_quest": manager.selected_instance_id, "world_flags": manager.world_flags.duplicate(), "pending_events": manager.pending_events.duplicate(true), "inventory": inventory, "equipment": equipment, "favorites": Inventory_Manager.favorites.keys(), "drop_escrow": Inventory_Manager.drop_escrow.duplicate(true), "acquisition_receipts": Inventory_Manager.acquisition_receipts.duplicate(), "max_slots": Inventory_Manager.max_slots, "player_xp": Player_Global_Data.player_exp, "currency": Player_Global_Data.p_curr_ringgit, "learned_spells": learned}
+static func stage(manager: Node, data: Dictionary, return_drops: bool = true) -> Dictionary:
 	if data.get("version", 0) != VERSION or data.get("owner_id", "") != manager.active_owner_id: return {}
 	for key in ["instances", "inventory", "completed_quests", "learned_spells"]:
 		if not data.get(key) is Array: return {}
@@ -41,11 +41,32 @@ static func stage(manager: Node, data: Dictionary) -> Dictionary:
 	for entry in data.inventory:
 		if not entry is Dictionary: return {}
 		var id := String(entry.get("item_id", ""))
+		if not GameSaveSchema.valid_number(entry.get("quantity"),1,1000000,true): return {}
 		var qty := int(entry.get("quantity", 0))
 		if not manager.registry.items.has(id) or staged_inventory.has(id): return {}
 		var item: ItemData = manager.registry.items[id]
 		if qty < 1 or qty > (item.max_stack if item.is_stackable else 1): return {}
 		staged_inventory[id] = {"data": item, "quantity": qty}
+	var favorites: Variant = data.get("favorites",[])
+	if not favorites is Array or favorites.size() > manager.registry.items.size(): return {}
+	var favorite_ids := {}
+	for id in favorites:
+		if not id is String or not manager.registry.items.has(id) or favorite_ids.has(id): return {}
+		favorite_ids[id] = true
+	var escrow: Variant = data.get("drop_escrow",{})
+	if not escrow is Dictionary or escrow.size() > 10000: return {}
+	var combined := staged_inventory.duplicate(true)
+	for token in escrow:
+		var row: Variant = escrow[token]
+		if not token is String or token.length() != 32 or not token.is_valid_hex_number(false) or not row is Dictionary: return {}
+		if not row.get("item_id") is String or not manager.registry.items.has(row.item_id) or not GameSaveSchema.valid_number(row.get("quantity"),1,1000000,true): return {}
+		var item: ItemData = manager.registry.items[row.item_id]
+		if item.item_type in [ItemData.ItemType.KEY_ITEM,ItemData.ItemType.QUEST_ITEM] or not item.can_drop: return {}
+		var total := int(combined.get(item.item_id,{}).get("quantity",0))+int(row.quantity)
+		if total > (item.max_stack if item.is_stackable else 1): return {}
+		combined[item.item_id] = {"data":item,"quantity":total}
+	if combined.size() > max_slots: return {}
+	if return_drops: staged_inventory = combined
 	if staged_inventory.size() > max_slots: return {}
 	if not data.get("pending_events", []) is Array: return {}
 	for row in data.get("pending_events", []):
@@ -85,16 +106,21 @@ static func stage(manager: Node, data: Dictionary) -> Dictionary:
 		instance._despawn_time = float(row.get("despawn_time", -1))
 		instances[instance.instance_id] = instance
 	var equipment := {}
+	for key in data.equipment:
+		if key not in ["0","1","2","3","4"] or not data.equipment[key] is String: return {}
 	for slot in Inventory_Manager.SlotType.values():
 		var id := String(data.equipment.get(str(slot), ""))
 		if not id.is_empty() and not manager.registry.items.has(id): return {}
-		equipment[slot] = manager.registry.items.get(id)
+		var item: ItemData = manager.registry.items.get(id)
+		# Preserve unspecified legacy equipment; reject explicit incompatible slot data.
+		if item and item.equipment_slots != 0 and not item.supports_slot(slot): return {}
+		equipment[slot] = item
 	var learned: Array[SpellData] = []
 	for id in data.learned_spells:
 		var spell: SpellData = GameplayEvent.service("Spell_Library").call("get_spell_by_id", String(id))
 		if spell == null: return {}
 		learned.append(spell)
-	return {"conversations": conversations, "instances": instances, "inventory": staged_inventory, "equipment": equipment, "learned": learned, "data": data}
+	return {"favorites":favorite_ids, "drop_escrow":{} if return_drops else escrow.duplicate(true), "conversations": conversations, "instances": instances, "inventory": staged_inventory, "equipment": equipment, "learned": learned, "data": data}
 static func write_atomic(path: String, data: Dictionary) -> bool:
 	if data.is_empty() or not path.begins_with("user://") or path.contains("..") or path.length() > 512: return false
 	var temp := path + ".tmp"

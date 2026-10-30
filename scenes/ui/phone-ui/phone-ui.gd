@@ -6,6 +6,7 @@ extends Control
 @export var up_pos: Vector2 = Vector2(1388,450)
 @export var down_pos: Vector2 = Vector2(1388,1000)
 @export var edge_margin: float = 24.0
+@export_range(32,160) var preview_height: float = 80.0
 var current_app_node: Control = null
 var _available := false
 var _slide: Tween
@@ -18,10 +19,9 @@ func _ready() -> void:
 		if child is App: child.app_pressed.connect(_on_app_opened)
 	get_viewport().size_changed.connect(_fit_to_viewport)
 	_fit_to_viewport()
-	var launcher_layer := CanvasLayer.new(); launcher_layer.layer = 6; add_child(launcher_layer)
-	launcher = Button.new(); launcher.text = "F · Phone"; launcher_layer.add_child(launcher)
-	launcher.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT)
-	launcher.offset_left = -160; launcher.offset_top = -56; launcher.offset_right = -24; launcher.offset_bottom = -18
+	# The resting preview is the actual phone, rather than a separate HUD button.
+	launcher = Button.new(); launcher.flat = true; launcher.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	add_child(launcher); launcher.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	launcher.pressed.connect(func(): if _can_open(): _set_open(true))
 	_sync_availability()
 
@@ -48,7 +48,7 @@ func _sync_availability() -> void:
 		launcher.visible = allowed and not phone_selected
 		for binding in InputMap.action_get_events("open_phone"):
 			if binding is InputEventKey:
-				launcher.text = OS.get_keycode_string(binding.physical_keycode if binding.physical_keycode else binding.keycode)+" · Phone"; break
+				launcher.tooltip_text = OS.get_keycode_string(binding.physical_keycode if binding.physical_keycode else binding.keycode)+" · Phone"; break
 
 func _fit_to_viewport() -> void:
 	var viewport_size := get_viewport().get_visible_rect().size
@@ -57,7 +57,7 @@ func _fit_to_viewport() -> void:
 	var fit := minf(1.0,minf((viewport_size.x-edge_margin*2)/size.x,(viewport_size.y-edge_margin*2)/size.y))
 	scale = Vector2.ONE*maxf(.1,fit)
 	up_pos = Vector2(viewport_size.x-size.x*scale.x-edge_margin,viewport_size.y-size.y*scale.y-edge_margin)
-	down_pos = Vector2(up_pos.x,viewport_size.y+edge_margin)
+	down_pos = Vector2(up_pos.x,viewport_size.y-preview_height*scale.y)
 	if _slide: _slide.kill()
 	position = up_pos if phone_selected else down_pos
 

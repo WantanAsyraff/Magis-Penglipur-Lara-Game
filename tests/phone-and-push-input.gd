@@ -108,7 +108,9 @@ func actual_overworld() -> void:
 	for i in 120: await get_tree().process_frame
 	var phone := get_tree().get_first_node_in_group("phone_ui")
 	check(Player_Manager.get_local_player() != null and phone != null,"Actual FLAC overworld initializes its player and phone")
-	check(phone.launcher.visible and phone.launcher.text == "F · Phone","Actual overworld shows a visible F phone button")
+	var viewport_rect := get_viewport().get_visible_rect()
+	var preview: Rect2 = phone.screen.get_global_rect().intersection(viewport_rect)
+	check(phone.launcher.visible and preview.size.y > 30 and preview.size.y < 150,"Closed overworld phone keeps its original small resting preview")
 	if DisplayServer.get_name() != "headless":
 		await RenderingServer.frame_post_draw
 		get_viewport().get_texture().get_image().save_png("res://docs/previews/phone-overworld-closed.png")
@@ -119,10 +121,31 @@ func actual_overworld() -> void:
 		await RenderingServer.frame_post_draw
 		get_viewport().get_texture().get_image().save_png("res://docs/previews/phone-overworld-open.png")
 	tap(KEY_F); await settle()
-	check(not phone.phone_selected and phone.launcher.visible,"F closes the phone and restores its visible launcher")
-	var at: Vector2 = phone.launcher.get_global_rect().get_center()
+	check(not phone.phone_selected and phone.launcher.visible,"F closes the phone back to its resting preview")
+	var at: Vector2 = phone.launcher.get_global_rect().intersection(get_viewport().get_visible_rect()).get_center()
 	for down in [true,false]:
 		var click := InputEventMouseButton.new(); click.position = at; click.global_position = at; click.button_index = MOUSE_BUTTON_LEFT; click.pressed = down
 		get_viewport().push_input(click,true)
 	await settle()
-	check(phone.phone_selected,"Clicking the visible Phone button opens the same phone")
+	check(phone.phone_selected,"Clicking the resting phone preview opens the phone")
+
+	await get_tree().create_timer(.35).timeout
+	var crate: App = phone.app_list.get_node("Inventory")
+	check(not crate.fullscreen,"Crate app routes through the phone instead of switching world scenes")
+	Inventory_Manager.add_item(QuestManager.registry.items.drop_001,2)
+	var scene_before := get_tree().current_scene
+	var world_before := Player_Manager.get_local_player().global_position
+	at = crate.get_global_rect().get_center()
+	for down in [true,false]:
+		var click := InputEventMouseButton.new(); click.position = at; click.global_position = at; click.button_index = MOUSE_BUTTON_LEFT; click.pressed = down
+		get_viewport().push_input(click,true)
+	await get_tree().create_timer(.35).timeout
+	var overlay := get_node_or_null("/root/InventoryOverlay")
+	check(overlay != null and is_instance_valid(overlay.ui) and overlay.ui.visible,"Clicking the actual crate icon opens Inventory V2")
+	check(get_tree().paused and get_tree().current_scene == scene_before and Player_Manager.get_local_player().global_position == world_before,"Crate inventory pauses the same overworld and player in place")
+	if DisplayServer.get_name() != "headless" and overlay != null and is_instance_valid(overlay.ui):
+		await RenderingServer.frame_post_draw
+		get_viewport().get_texture().get_image().save_png("res://docs/previews/phone-crate-inventory.png")
+	if overlay: overlay.close()
+	await settle()
+	check(not get_tree().paused and not phone.phone_selected,"Closing inventory resumes gameplay with the phone at rest")

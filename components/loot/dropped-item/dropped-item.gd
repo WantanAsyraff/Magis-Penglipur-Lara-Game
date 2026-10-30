@@ -7,6 +7,9 @@ extends CharacterBody2D
 
 var loot_data: LootData
 var pickup_id: String = ""
+var player_drop_id := ""
+var drop_armed := false
+var _drop_age := 0.0
 var loot_owner_id: String = ""
 var _part: int = 0
 var _collecting: bool = false
@@ -34,6 +37,11 @@ func _setup_from_data() -> void:
 		gpu_particles.modulate = loot_data.rarity_color
 
 func _physics_process(delta: float) -> void:
+	if not player_drop_id.is_empty():
+		if not SaveManager.loading and not Inventory_Manager.drop_escrow.has(player_drop_id): queue_free(); return
+		_drop_age += delta
+		var player := Player_Manager.get_local_player() as Node2D
+		if is_instance_valid(player) and _drop_age >= .8 and player.global_position.distance_to(global_position) > 500: drop_armed = true
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 	move_and_slide()
@@ -47,6 +55,11 @@ func pickup(actor: Node2D = null) -> int:
 	if _collecting or is_queued_for_deletion() or not SpellExecutor.is_authoritative(self) or quantity <= 0 or loot_data == null or loot_data.item == null: return 0
 	var owner := GameplayEvent.owner_for(actor) if actor else QuestManager.active_owner_id
 	if owner.is_empty() or owner != QuestManager.active_owner_id or (not loot_owner_id.is_empty() and loot_owner_id != owner): return 0
+	if not player_drop_id.is_empty():
+		if not drop_armed: return 0
+		var returned := Inventory_Manager.reclaim_drop(player_drop_id)
+		if returned > 0: quantity = 0; queue_free()
+		return returned
 	_collecting = true
 	var acquired := Inventory_Manager.pickup(loot_data.item, quantity, "pickup:" + pickup_id + ":" + str(_part), owner)
 	if acquired > 0:
@@ -55,3 +68,6 @@ func pickup(actor: Node2D = null) -> int:
 		if quantity == 0: queue_free()
 	_collecting = false
 	return acquired
+
+func _exit_tree() -> void:
+	if not player_drop_id.is_empty(): Inventory_Manager.reclaim_drop(player_drop_id)

@@ -266,10 +266,14 @@ func apply_staged(staged: Dictionary) -> void:
 	_active_instances = staged.instances
 	_npc_instance_map.clear()
 	_quest_active_count.clear()
+	Inventory_Manager.favorites = staged.get("favorites",{}).duplicate()
+	Inventory_Manager.drop_escrow = staged.get("drop_escrow",{}).duplicate(true)
 	Inventory_Manager.inventory = staged.inventory
+	for instance in staged.instances.values(): QuestObjectiveEvaluator.reconcile_inventory(instance,Inventory_Manager.inventory)
 	Inventory_Manager.equipped = staged.equipment
 	Inventory_Manager.acquisition_receipts = staged.data.acquisition_receipts.duplicate()
 	Inventory_Manager.max_slots = int(staged.data.max_slots)
+	Inventory_Manager.preferences_changed.emit()
 	Player_Global_Data.player_exp = staged.data.player_xp
 	Player_Global_Data.p_curr_ringgit = staged.data.currency
 	Player_Global_Data.completed_quests.assign(staged.data.completed_quests)

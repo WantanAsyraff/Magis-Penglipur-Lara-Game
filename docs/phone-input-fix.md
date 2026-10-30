@@ -6,7 +6,9 @@ The phone used to live under the overworld-only HUD. Combat hid that parent whil
 
 The phone is now a sibling of the combat/overworld HUDs in the production camera. It tracks story availability, dialogue, pause, restoration and modal ownership, clears selection/focus when disabled, suspends cached app input while closed and reconnects correctly after story unlocks. All apps connect independently of initial availability. Layout and animation endpoints fit the actual viewport; repeated toggles cancel the old tween. The phone animation reads the actual menu state instead of maintaining an independent key toggle.
 
-Existing key bindings are preserved. The environmental-interactions worktree now uses B for phone, E for interactions (F remains an alternative) and E for contextual pushback. The main-based inventory-v2 worktree uses F for phone, E for interactions and E for contextual pushback. In the latter, nearby interactions retain priority over pushing. Tests read configured phone/interaction keys and inject physical E for pushback.
+Both worktrees now use **F for phone** and **E for NPC/object interactions**. Nearby interactions take priority over E pushback. F is no longer an alternative interaction key, avoiding conflicts with the phone. A visible, clickable F · Phone button sits at the bottom-right while the phone is closed; its hint follows keyboard rebinding. Stop and restart an existing play session after changing project input mappings.
+
+The --actual-overworld fixture loads the production FLAC hallway, injects physical F to open/close the phone, checks onscreen bounds and clicks the actual launcher. Native verification: 6 checks / 0 failures. Captures: docs/previews/phone-overworld-closed.png and phone-overworld-open.png.
 
 Verification:
 

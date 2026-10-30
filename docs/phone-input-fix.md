@@ -6,11 +6,11 @@ The phone used to live under the overworld-only HUD. Combat hid that parent whil
 
 The phone is now a sibling of the combat/overworld HUDs in the production camera. It tracks story availability, dialogue, pause, restoration and modal ownership, clears selection/focus when disabled, suspends cached app input while closed and reconnects correctly after story unlocks. All apps connect independently of initial availability. Layout and animation endpoints fit the actual viewport; repeated toggles cancel the old tween. The phone animation reads the actual menu state instead of maintaining an independent key toggle.
 
-Existing key bindings are preserved. The environmental-interactions worktree currently uses B for phone, F for interactions and E for pushback. The main-based inventory-v2 worktree uses F for phone, E for interactions and E for contextual pushback. In the latter, nearby interactions retain priority over pushing. Tests read configured phone/interaction keys and inject physical E for pushback.
+Existing key bindings are preserved. The environmental-interactions worktree now uses B for phone, E for interactions (F remains an alternative) and E for contextual pushback. The main-based inventory-v2 worktree uses F for phone, E for interactions and E for contextual pushback. In the latter, nearby interactions retain priority over pushing. Tests read configured phone/interaction keys and inject physical E for pushback.
 
 Verification:
 
-- tests/phone-and-push-input.tscn: 20 checks / 0 failures on environmental-interactions; 22 / 0 on inventory-v2 (adds inventory modal handoff).
+- tests/phone-and-push-input.tscn: 21 checks / 0 failures on environmental-interactions; 23 / 0 on inventory-v2 (adds inventory modal handoff).
 - Native renderer run: 22 / 0 including viewport-fit checks at 1280×720 and 1920×1080. Images are in docs/previews/phone-input-1280x720.png and phone-input-1920x1080.png.
 - live-spell-audit: 46 / 0; target-lock-and-hud: 37 / 0; target-lock-stability: 13 / 0; NPC world boot 1: 4 / 0.
 - environment-interactions: 83 / 0; quest-accessibility: 90 / 0 on the active environmental branch.

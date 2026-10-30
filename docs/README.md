@@ -41,3 +41,5 @@ The historical implementation/migration reports and their logs/screenshots remai
 - [Mechanisms, rules, collision and persistence](authoring/environmental-interactions.md)
 - [Sprites, animation, audio and visual replacements](authoring/environmental-visuals-and-animations.md)
 - [Lab puzzles and optional prologue placement](authoring/environmental-puzzles.md)
+
+[Profile and music app screens](profile-and-music-ui.md): updated layouts, phone routing and playback verification.

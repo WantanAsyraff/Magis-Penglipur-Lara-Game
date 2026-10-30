@@ -113,7 +113,7 @@ offset_right = -0.088012695
 offset_bottom = 0.17999268
 icon = ExtResource("10_6ol8v")
 newApp = ExtResource("11_g58nx")
-fullscreen = true
+fullscreen = false
 
 [node name="Inventory" parent="AppList" unique_id=1351634617 instance=ExtResource("1_qb4dd")]
 clip_contents = true
@@ -143,4 +143,4 @@ offset_right = 122.84799
 offset_bottom = 0.17999268
 icon = ExtResource("14_pv8gh")
 newApp = ExtResource("15_v8ayx")
-fullscreen = true
+fullscreen = false

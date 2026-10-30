@@ -92,6 +92,12 @@ func _on_app_opened(app_resource: PackedScene) -> void:
 	var overlay := get_node_or_null("/root/InventoryOverlay")
 	if overlay != null and app_resource.resource_path == "res://scenes/ui/inventory/inventory-ui.tscn":
 		_set_open(false); overlay.open(); return
+	if app_resource.resource_path in ["res://scenes/ui/player-stats-ui/player-stats-ui.tscn","res://scenes/ui/music-ui/music-selection-ui.tscn"]:
+		_set_open(false)
+		var page := load("res://scenes/ui/phone-ui/phone-app-overlay.gd").new() as CanvasLayer
+		get_tree().root.add_child(page)
+		if not page.present(app_resource): _set_open(true)
+		return
 	current_app_node = app_resource.instantiate()
 	screen.add_child(current_app_node)
 	current_app_node.visible = true

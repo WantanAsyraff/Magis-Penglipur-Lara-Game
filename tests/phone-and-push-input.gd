@@ -21,6 +21,9 @@ func _ready() -> void:
 	await settle()
 	if "--quest-test-mode" not in OS.get_cmdline_user_args(): get_tree().quit(2); return
 	QuestManager.persistence_enabled = false
+	if "--actual-overworld" in OS.get_cmdline_user_args():
+		await actual_overworld()
+		print("PHONE_OVERWORLD: %d checks, %d failures" % [checks,failures]); get_tree().quit(1 if failures else 0); return
 	Player_Global_Data.p_moveable = true; Player_Global_Data.phone_visible = false; Player_Global_Data.combat_mode = false
 	player = load("res://components/characters/player/player.tscn").instantiate(); add_child(player)
 	Player_Manager.players[Player_Manager.get_local_peer_id()] = player; player.set_physics_process(false)
@@ -96,3 +99,30 @@ func _ready() -> void:
 			await RenderingServer.frame_post_draw
 			get_viewport().get_texture().get_image().save_png("res://docs/previews/phone-input-%dx%d.png" % [resolution.x,resolution.y])
 	print("PHONE_AND_PUSH_INPUT: %d checks, %d failures" % [checks,failures]); get_tree().quit(1 if failures else 0)
+
+func actual_overworld() -> void:
+	Player_Global_Data.phone_visible = true; Player_Global_Data.p_moveable = true
+	get_window().size = Vector2i(1280,720); get_window().content_scale_size = Vector2i(1280,720)
+	var world := load("res://scenes/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-two/FLAC-F2-hallway-room-1.tscn").instantiate() as Node
+	add_child(world)
+	for i in 120: await get_tree().process_frame
+	var phone := get_tree().get_first_node_in_group("phone_ui")
+	check(Player_Manager.get_local_player() != null and phone != null,"Actual FLAC overworld initializes its player and phone")
+	check(phone.launcher.visible and phone.launcher.text == "F · Phone","Actual overworld shows a visible F phone button")
+	if DisplayServer.get_name() != "headless":
+		await RenderingServer.frame_post_draw
+		get_viewport().get_texture().get_image().save_png("res://docs/previews/phone-overworld-closed.png")
+	tap(KEY_F); await get_tree().create_timer(.4).timeout
+	check(phone.phone_selected and phone.is_visible_in_tree(),"Physical F opens the phone in the actual FLAC overworld")
+	check(get_viewport().get_visible_rect().encloses(phone.screen.get_global_rect()),"Actual overworld phone is fully onscreen")
+	if DisplayServer.get_name() != "headless":
+		await RenderingServer.frame_post_draw
+		get_viewport().get_texture().get_image().save_png("res://docs/previews/phone-overworld-open.png")
+	tap(KEY_F); await settle()
+	check(not phone.phone_selected and phone.launcher.visible,"F closes the phone and restores its visible launcher")
+	var at: Vector2 = phone.launcher.get_global_rect().get_center()
+	for down in [true,false]:
+		var click := InputEventMouseButton.new(); click.position = at; click.global_position = at; click.button_index = MOUSE_BUTTON_LEFT; click.pressed = down
+		get_viewport().push_input(click,true)
+	await settle()
+	check(phone.phone_selected,"Clicking the visible Phone button opens the same phone")

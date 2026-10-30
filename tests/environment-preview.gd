@@ -9,7 +9,7 @@ static func press(lab: EnvironmentLab, code: int) -> void:
 	tap(lab,code); tap(lab,code,false)
 static func use(lab: EnvironmentLab, prop: Node2D) -> void:
 	lab.player.global_position = prop.global_position+Vector2(-65,0); lab.player.velocity = Vector2.ZERO
-	await frames(lab,4); press(lab,KEY_F); await frames(lab,4)
+	await frames(lab,4); press(lab,KEY_E); await frames(lab,4)
 static func chill(lab: EnvironmentLab, prop: Node2D) -> void:
 	lab.player.environment_target.clear(); lab.player.global_position = prop.global_position+Vector2(-180,0); lab.player.velocity = Vector2.ZERO
 	await frames(lab,4); press(lab,KEY_R); tap(lab,KEY_O)

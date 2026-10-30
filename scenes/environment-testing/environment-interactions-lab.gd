@@ -53,7 +53,7 @@ func _build_controls() -> void:
 	var actions := HBoxContainer.new(); panel.add_child(actions)
 	for entry in [["Reset station",reset_station],["Reset room",reset_room],["Exit lab",exit_lab]]:
 		var button := Button.new(); button.text = entry[0]; button.focus_mode = Control.FOCUS_NONE; actions.add_child(button); button.pressed.connect(entry[1])
-	var footer := Label.new(); footer.text = "F interact · E push · Q enemies · R devices · B phone\nO toggles casting; use I/J/K/L for the equipped incantations."; footer.add_theme_font_size_override("font_size",14); panel.add_child(footer)
+	var footer := Label.new(); footer.text = "E interact / push · F phone · Q enemies · R devices\nO toggles casting; use I/J/K/L for the equipped incantations."; footer.add_theme_font_size_override("font_size",14); panel.add_child(footer)
 func _process(_delta: float) -> void:
 	if is_instance_valid(controls): controls.position = Vector2(get_viewport_rect().size.x-580,12)
 func visit(index: int) -> void:

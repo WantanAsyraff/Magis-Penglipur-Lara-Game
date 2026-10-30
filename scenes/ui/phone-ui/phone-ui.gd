@@ -9,6 +9,7 @@ extends Control
 var current_app_node: Control = null
 var _available := false
 var _slide: Tween
+var launcher: Button
 
 func _ready() -> void:
 	add_to_group("phone_ui")
@@ -17,6 +18,11 @@ func _ready() -> void:
 		if child is App: child.app_pressed.connect(_on_app_opened)
 	get_viewport().size_changed.connect(_fit_to_viewport)
 	_fit_to_viewport()
+	var launcher_layer := CanvasLayer.new(); launcher_layer.layer = 6; add_child(launcher_layer)
+	launcher = Button.new(); launcher.text = "F · Phone"; launcher_layer.add_child(launcher)
+	launcher.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT)
+	launcher.offset_left = -160; launcher.offset_top = -56; launcher.offset_right = -24; launcher.offset_bottom = -18
+	launcher.pressed.connect(func(): if _can_open(): _set_open(true))
 	_sync_availability()
 
 func _can_open() -> bool:
@@ -38,6 +44,11 @@ func _sync_availability() -> void:
 	if not allowed and phone_selected: _set_open(false,false)
 	_available = allowed
 	visible = allowed
+	if is_instance_valid(launcher):
+		launcher.visible = allowed and not phone_selected
+		for binding in InputMap.action_get_events("open_phone"):
+			if binding is InputEventKey:
+				launcher.text = OS.get_keycode_string(binding.physical_keycode if binding.physical_keycode else binding.keycode)+" · Phone"; break
 
 func _fit_to_viewport() -> void:
 	var viewport_size := get_viewport().get_visible_rect().size
@@ -63,6 +74,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _set_open(value: bool, animate: bool = true) -> void:
 	phone_selected = value
+	if is_instance_valid(launcher): launcher.visible = _can_open() and not value
 	if current_app_node: current_app_node.process_mode = Node.PROCESS_MODE_INHERIT if value else Node.PROCESS_MODE_DISABLED
 	var focus := get_viewport().gui_get_focus_owner()
 	if not value and is_instance_valid(focus) and is_ancestor_of(focus): focus.release_focus()

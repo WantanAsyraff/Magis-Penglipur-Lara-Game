@@ -18,7 +18,7 @@ func prop(index: int, name_: String) -> Node2D:
 func place(at: Vector2) -> void:
 	lab.player.global_position = at; lab.player.velocity = Vector2.ZERO; lab.player.reset_physics_interpolation()
 func use(index: int, name_: String) -> void:
-	place(prop(index,name_).global_position+Vector2(-65,0)); await frames(3); tap(KEY_F); await frames(3)
+	place(prop(index,name_).global_position+Vector2(-65,0)); await frames(3); tap(KEY_E); await frames(3)
 func chill(target: Node2D) -> void:
 	lab.player.environment_target.clear(); place(target.global_position+Vector2(-180,0)); await frames(3)
 	tap(KEY_R)

@@ -17,6 +17,7 @@ const ROW_SCENE := preload("res://scenes/ui/menus/bind-list.tscn")
 # A non-empty group string inserts a separator label above that row.
 # -------------------------
 const ACTIONS: Array = [
+	["cutscene_skip","Hold to skip story","Story"],
 	["inventory_toggle","Inventory","Inventory"],
 	["inventory_favorite","Favorite item",""],
 	["inventory_previous_tab","Previous inventory tab",""],

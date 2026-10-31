@@ -110,6 +110,22 @@ Source: [data/Resources/ilmu/course.gd](../../data/Resources/ilmu/course.gd). Ba
 | `subjects` | `Array[subjectData]` | Ordered subjectData references rendered by the assigned course view. | Required | `Godot type default` | `@export`; see guide for runtime constraints. | [spell-tree](../../scenes/spell-tree/spell-tree.gd), [player-data](../../autoloads/player-data.gd) |
 | `academic_fields` | `Array[FieldData]` | Referenced FieldData academic identities; not delivery/automatic unlock logic. | Conditional/optional | `[]` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/Resources/ilmu/course.gd) |
 
+## CutsceneSequence
+
+Source: [data/story/cutscene-sequence.gd](../../data/story/cutscene-sequence.gd). Base: `Resource`. [Canonical authoring and validation](../authoring/cutscene-skipping.md).
+
+| Property | Type | Purpose | Required? | Default | Validation / notes | Consumer/source evidence |
+| --- | --- | --- | --- | --- | --- | --- |
+| `sequence_id` | `String` | Stable cutscene identity saved as story_sequence:<ID> in existing world flags. | Required | `""` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/story/cutscene-sequence.gd) |
+| `timeline_path` | `String` | Authored Dialogic timeline path, with matching terminal completion signal. | Required | `""` | `@export_file("*.dtl")`; see guide for runtime constraints. | [Schema / methods](../../data/story/cutscene-sequence.gd) |
+| `style_path` | `String` | Optional DialogicStyle path; story default uses responsive skip-safe layout. | Conditional/optional | `"res://dialogue/styles/story-style.tres"` | `@export_file("*.tres")`; see guide for runtime constraints. | [Schema / methods](../../data/story/cutscene-sequence.gd) |
+| `skippable` | `bool` | Explicit opt-in; choices/jumps and blocking UI still deny eligibility. | Conditional/optional | `false` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/story/cutscene-sequence.gd) |
+| `completion_signal` | `String` | Exact authored terminal signal required for natural completion. | Required | `""` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/story/cutscene-sequence.gd) |
+| `combat_after` | `bool` | Combat mode applied on natural or skipped completion. | Conditional/optional | `false` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/story/cutscene-sequence.gd) |
+| `phone_after` | `bool` | Phone visibility applied on natural or skipped completion. | Conditional/optional | `false` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/story/cutscene-sequence.gd) |
+| `grant_spell` | `SpellData` | Optional canonical registered spell granted/equipped once at completion. | Conditional/optional | `Godot type default` | `@export`; see guide for runtime constraints. | [Schema / methods](../../data/story/cutscene-sequence.gd) |
+| `recap` | `String` | Optional authored summary offered briefly after intentional skip. | Conditional/optional | `""` | `@export_multiline`; see guide for runtime constraints. | [Schema / methods](../../data/story/cutscene-sequence.gd) |
+
 ## DamageEffect
 
 Source: [data/Resources/spell-effects/damage-effect.gd](../../data/Resources/spell-effects/damage-effect.gd). Base: `SpellEffectDefinition`. [Canonical authoring and validation](../authoring/spell-effects.md).

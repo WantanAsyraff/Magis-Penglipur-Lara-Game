@@ -26,7 +26,7 @@ GUIDES = {
  'QuestData':'quests','QuestObjectiveData':'quests','QuestObjectiveGroup':'quests','QuestDatabase':'quests',
  'NPCPresentation':'npcs-and-dialogue','NPCSpawnValidator':'npcs-and-dialogue',
  'NPCSpellcasterData':'additional-systems','SceneData':'worlds-and-scenes','ElevatorFloor':'worlds-and-scenes',
- 'TutorialData':'tutorials','TutorialPage':'tutorials',
+ 'TutorialData':'tutorials','TutorialPage':'tutorials','CutsceneSequence':'cutscene-skipping',
 }
 REQUIRED = {
  'FieldData':{'field_id','display_name'},'CourseData':{'course_id','course_name','subjects'},
@@ -37,6 +37,7 @@ REQUIRED = {
  'QuestObjectiveGroup':{'group_id'},'QuestDatabase':{'quests'},'ItemData':{'item_id','item_name','max_stack'},
  'LootData':{'item'},'NPCPresentation':{'npc_id','display_name'},'SceneData':{'scene_id','scene','scene_name'},
  'ElevatorFloor':{'scene_id','floor_name'},'TutorialData':{'pages'},'TutorialPage':{'page_title','page_desc'},
+ 'CutsceneSequence':{'sequence_id','timeline_path','completion_signal'},
  'NPCSpellcasterData':{'caster_id'},'BossPhaseData':{'enter_at_health_ratio','attacks'},
 }
 DORMANT = {
@@ -298,6 +299,15 @@ PURPOSE = {
  'minion_scene':'Node2D scene instantiated by boss SUMMON.',
  'minion_count':'Desired minions, bounded by twelve owned minions.',
  'spawn_radius':'Radial minion placement offset; no automatic placement safety solver.',
+ 'sequence_id':'Stable cutscene identity saved as story_sequence:<ID> in existing world flags.',
+ 'timeline_path':'Authored Dialogic timeline path, with matching terminal completion signal.',
+ 'style_path':'Optional DialogicStyle path; story default uses responsive skip-safe layout.',
+ 'skippable':'Explicit opt-in; choices/jumps and blocking UI still deny eligibility.',
+ 'completion_signal':'Exact authored terminal signal required for natural completion.',
+ 'combat_after':'Combat mode applied on natural or skipped completion.',
+ 'phone_after':'Phone visibility applied on natural or skipped completion.',
+ 'grant_spell':'Optional canonical registered spell granted/equipped once at completion.',
+ 'recap':'Optional authored summary offered briefly after intentional skip.',
  'item_id':'Stable registry/inventory/save/event identifier.',
  'item_name':'Visible inventory/loot/recipe label.',
  'item_icon':'Inventory/loot/quest presentation texture.',

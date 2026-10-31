@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CutsceneSequence" format=3]
+[ext_resource type="Script" path="res://data/story/cutscene-sequence.gd" id="script"]
+[resource]
+script = ExtResource("script")
+sequence_id = "prologue.after_final_paper"
+timeline_path = "res://dialogue/story-mode/prologue/after-final-paper.dtl"
+skippable = true
+completion_signal = "story:completed:prologue.after_final_paper"
+combat_after = false
+phone_after = false
+recap = "Yan confided in Yunira about studying far from home. She encouraged him, and his admission letter confirmed his place at ABU."

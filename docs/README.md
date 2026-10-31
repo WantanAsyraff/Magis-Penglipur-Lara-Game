@@ -43,3 +43,5 @@ The historical implementation/migration reports and their logs/screenshots remai
 - [Lab puzzles and optional prologue placement](authoring/environmental-puzzles.md)
 
 [Profile and music app screens](profile-and-music-ui.md): updated layouts, phone routing and playback verification.
+
+[Story dialogue skip integration](story-dialogue-skip.md): active-project wiring, controls and native verification.

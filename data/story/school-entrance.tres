@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CutsceneSequence" format=3]
+[ext_resource type="Script" path="res://data/story/cutscene-sequence.gd" id="script"]
+[ext_resource type="Resource" path="res://data/magis/spells/thermal-kinetic.tres" id="spell"]
+[resource]
+script = ExtResource("script")
+sequence_id = "prologue.school"
+timeline_path = "res://dialogue/story-mode/prologue/spm-school-entrance.dtl"
+skippable = true
+completion_signal = "story:completed:prologue.school"
+combat_after = true
+phone_after = false
+recap = "Pak Guard allowed Yan into school despite his lateness. Yan is ready for his hands-on Magis examination."
+grant_spell = ExtResource("spell")

@@ -1,0 +1,6 @@
+A choice must remain explicit.
+- Accept
+	A choice was made.
+- Decline
+	A different choice was made.
+[signal arg="story:completed:test.choice"]

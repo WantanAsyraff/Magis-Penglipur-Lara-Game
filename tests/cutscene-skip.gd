@@ -48,6 +48,10 @@ func _ready() -> void:
 	var cancel := InputEventJoypadButton.new(); cancel.button_index = JOY_BUTTON_B; cancel.pressed = true
 	CutsceneFlow.recap_dialog.window_input.emit(cancel); await settle()
 	check(not get_tree().paused and not is_instance_valid(ModalService.holder),"Controller cancel releases recap pause ownership")
+	var other_modal := Control.new(); add_child(other_modal)
+	ModalService.acquire(other_modal); await settle()
+	check(not CutsceneFlow.recap_button.visible,"Story recap does not cover another exclusive app")
+	ModalService.release(other_modal); other_modal.queue_free(); await settle()
 	var invalid := school.duplicate() as CutsceneSequence; invalid.style_path = "res://data/items/equipment/student-lab-robe.tres"
 	check(not CutsceneFlow.play(story,invalid),"A non-style Resource is rejected before cutscene state changes")
 	var kampung := fresh("kampung-intro")

@@ -31,7 +31,7 @@ func _ready() -> void:
 	if capture:
 		var size_ := Vector2i(1280,720) if "--720" in OS.get_cmdline_user_args() else Vector2i(1920,1080)
 		get_window().size = size_; get_window().content_scale_size = size_
-		folder = "res://docs/previews/inventory-v2/%dx%d/" % [size_.x,size_.y]; DirAccess.make_dir_recursive_absolute(folder)
+		folder = "res://docs/previews/story-skip/%dx%d/" % [size_.x,size_.y]; DirAccess.make_dir_recursive_absolute(folder)
 	for entry in SCENES:
 		QuestManager.world_flags.erase("story_sequence:"+entry[1])
 		world = load(entry[0]).instantiate(); get_tree().root.add_child(world); get_tree().current_scene = world
@@ -39,8 +39,17 @@ func _ready() -> void:
 			if CutsceneFlow.eligible() and is_instance_valid(Player_Manager.get_local_player()): break
 			await get_tree().process_frame
 		check(CutsceneFlow.eligible() and Player_Manager.get_local_player() != null,"Actual scene initializes its player and owned sequence: "+entry[1])
+		await frames()
+		check(CutsceneFlow.skip_button.visible and get_viewport().get_visible_rect().has_point(CutsceneFlow.skip_button.get_global_rect().get_center()),"Visible skip button is onscreen in "+entry[1])
+		await get_tree().create_timer(.65).timeout
+		var camera: PlayerCamera = Player_Manager.get_local_player().camera
+		check(not camera.combatUI.visible and not camera.overworldUI.visible,"Story hides gameplay HUD even when the player spawns after dialogue starts")
+		await shot("skip-"+String(entry[0]).get_file().get_basename())
 		check(not InventoryOverlay.open(),"Actual story blocks inventory before completion")
-		check(CutsceneFlow.request_skip(),"Actual scene accepts intentional sequence completion")
+		var skip := InputEventKey.new(); skip.keycode = KEY_F1; skip.physical_keycode = KEY_F1; skip.pressed = true
+		Input.parse_input_event(skip); await get_tree().create_timer(.95).timeout
+		skip = skip.duplicate(); skip.pressed = false; Input.parse_input_event(skip)
+		check(CutsceneFlow.sequence == null and Dialogic.current_timeline == null,"Holding physical F1 completes the actual scene safely")
 		await frames()
 		check(get_tree().current_scene == world and Player_Global_Data.p_moveable and Player_Global_Data.combat_mode == entry[2] and Player_Global_Data.phone_visible == entry[3],"Completion preserves actual scene and intended gameplay/phone context")
 		if entry[1] == "prologue.kampung":

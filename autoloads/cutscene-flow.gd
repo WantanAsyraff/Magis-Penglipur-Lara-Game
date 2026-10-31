@@ -26,7 +26,10 @@ func _ready() -> void:
 	Dialogic.timeline_ended.connect(_timeline_ended)
 	Dialogic.signal_event.connect(_signal)
 	Dialogic.timeline_started.connect(_timeline_started)
+	Player_Manager.local_player_changed.connect(_player_changed)
 	_build_ui()
+func _player_changed(_player: Node2D) -> void:
+	if sequence != null: _hide_gameplay_hud()
 func _build_ui() -> void:
 	layer = CanvasLayer.new(); layer.layer = 110; add_child(layer)
 	var panel := VBoxContainer.new(); panel.mouse_filter = Control.MOUSE_FILTER_IGNORE; panel.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT); panel.offset_left = -350; panel.offset_right = -36; panel.offset_top = -96; panel.offset_bottom = -24; layer.add_child(panel)
@@ -48,6 +51,7 @@ func play(owner_: Node, data: CutsceneSequence) -> bool:
 	recap_button.hide()
 	sequence = data; story_owner = owner_; _terminal = false; _finishing = false; _holding = false; _mouse_holding = false; elapsed = 0; _outcome = Outcome.INTERRUPTED
 	_before = {"movement":Player_Global_Data.p_moveable,"phone":Player_Global_Data.phone_visible,"combat":Player_Global_Data.combat_mode}
+	_hud_before.clear()
 	_hide_gameplay_hud()
 	Player_Global_Data.p_moveable = false; Player_Global_Data.phone_visible = false
 	var timeline := load(data.timeline_path) as DialogicTimeline
@@ -100,7 +104,7 @@ func interrupt() -> void:
 func _owner_exiting() -> void:
 	interrupt()
 func _process(delta: float) -> void:
-	if SceneManager.is_transitioning: dismiss_recap()
+	if SceneManager.is_transitioning or (is_instance_valid(ModalService.holder) and ModalService.holder != recap_dialog): dismiss_recap()
 	var available := eligible()
 	if available:
 		for binding in InputMap.action_get_events("cutscene_skip"):
@@ -143,11 +147,10 @@ func dismiss_recap() -> void:
 	recap_button.hide()
 
 func _hide_gameplay_hud() -> void:
-	_hud_before.clear()
 	for camera in get_tree().get_nodes_in_group("camera"):
 		if camera is PlayerCamera:
 			for control in [camera.combatUI,camera.overworldUI,camera.get_node_or_null("UI/StatusEffectsHUD")]:
-				if control is Control:
+				if control is Control and not _hud_before.any(func(entry): return entry.node.get_ref() == control):
 					_hud_before.append({"node":weakref(control),"visible":control.visible}); control.hide()
 func _restore_gameplay_hud() -> void:
 	for entry in _hud_before:

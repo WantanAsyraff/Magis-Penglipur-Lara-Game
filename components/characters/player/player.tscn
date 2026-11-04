@@ -24,6 +24,8 @@
 
 [ext_resource type="PackedScene" path="res://components/characters/player/effects/incantation-input-particles.tscn" id="99_feedback"]
 
+[ext_resource type="PackedScene" path="res://components/characters/player/weapons/weapon-rig.tscn" id="100_weapon"]
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_k8mmp"]
 animations = [{
 "frames": [{
@@ -223,3 +225,5 @@ offset_right = 40.0
 offset_bottom = 23.0
 
 [node name="IncantationInputParticles" parent="." instance=ExtResource("99_feedback")]
+
+[node name="WeaponRig" parent="." instance=ExtResource("100_weapon")]

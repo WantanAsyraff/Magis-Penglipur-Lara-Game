@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+[ext_resource type="Script" path="res://data/items/item-data.gd" id="1"]
+[ext_resource type="Script" path="res://data/items/weapon-visual-data.gd" id="2"]
+[ext_resource type="PackedScene" path="res://components/characters/player/weapons/weapon-placeholder.tscn" id="3"]
+[ext_resource type="Texture2D" path="res://assets/temp/temp-mana.png" id="4"]
+[sub_resource type="Resource" id="Visual"]
+script = ExtResource("2")
+scene = ExtResource("3")
+[resource]
+script = ExtResource("1")
+item_id = "equipment_practice_magis_focus"
+item_name = "Practice Magis Focus"
+item_icon = ExtResource("4")
+item_type = 1
+is_stackable = false
+max_stack = 1
+is_sellable = false
+use_behavior = 3
+equipment_slots = 1
+weapon_visual = SubResource("Visual")
+description = "A practice focus with temporary presentation artwork. Grants no additional damage or stats."

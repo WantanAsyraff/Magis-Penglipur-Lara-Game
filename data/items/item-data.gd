@@ -10,6 +10,9 @@ enum ItemType { CONSUMABLE, EQUIPMENT, KEY_ITEM, QUEST_ITEM, MATERIAL, COMPONENT
 @export var item_type: ItemType = ItemType.CONSUMABLE
 @export_multiline var description: String = ""
 
+@export_group("Weapon presentation")
+@export var weapon_visual: WeaponVisualData
+
 @export_group("Stack")
 @export var is_stackable: bool = true
 @export var max_stack: int = 99

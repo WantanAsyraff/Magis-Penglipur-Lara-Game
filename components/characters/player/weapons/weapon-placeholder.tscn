@@ -1,0 +1,11 @@
+[gd_scene format=3]
+[node name="PracticeFocus" type="Node2D"]
+[node name="Blade" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-3, -7, -3, -48, 0, -57, 3, -48, 3, -7)
+color = Color(0.6, 0.78, 0.88, 1)
+[node name="Guard" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-10, -10, 10, -10, 10, -6, -10, -6)
+color = Color(0.7, 0.6, 0.38, 1)
+[node name="Grip" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-3, -6, 3, -6, 3, 8, -3, 8)
+color = Color(0.32, 0.25, 0.27, 1)

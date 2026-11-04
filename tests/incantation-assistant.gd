@@ -177,7 +177,7 @@ func _ready() -> void:
 	player._enter_casting_stance()
 	Player_Global_Data.assistance_mode = 1
 	Player_Global_Data.assistance_changed.emit(1)
-	check(not ui.visible, "Minimal mode hides optional next-key guidance")
+	check(ui.visible and ui.shown_spells.size() <= 2, "Minimal mode shows at most two compact paths")
 	Player_Global_Data.assistance_mode = 2
 	Player_Global_Data.assistance_changed.emit(2)
 	check(not ui.visible, "Off hides optional assistant")
@@ -187,8 +187,8 @@ func _ready() -> void:
 		player._clear_sequence()
 		player._add_sequence("down")
 	await get_tree().process_frame
-	check(ui.next_row.get_child_count() == 4 and visible_keys(ui) == ["left"], "Rapid input does not accumulate stale UI children")
-	check(ui.get_child_count() == 1 and ui.direction_icons.left.custom_minimum_size == Vector2(64, 64), "Assistant contains only enlarged key icons without a panel or text")
+	check(ui.next_row.get_child_count() == 5 and visible_keys(ui) == ["left"], "Rapid input reuses four path groups and overflow label")
+	check(ui.get_child_count() == 1 and ui.views[0].icon.get_index() > ui.views[0].path.get_index(), "Spell icons appear beneath paths without an opaque panel")
 	Dialogic.timeline_started.emit()
 	check(not ui.visible, "Dialogue suspends assistant")
 	Dialogic.timeline_ended.emit()

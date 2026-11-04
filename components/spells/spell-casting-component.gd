@@ -8,6 +8,8 @@ var _active: Dictionary = {}
 
 signal state_changed(state: State)
 signal cast_failed(reason: String)
+## Emitted after actual delivery/launch, including the start of live channels.
+signal delivery_succeeded(context: SpellCastContext)
 signal cast_completed(context: SpellCastContext)
 ## Player chains skip post-dispatch recovery; enemies retain authored pacing.
 var immediate_chaining: bool = false
@@ -124,6 +126,7 @@ func _finish_preparation() -> void:
 		if context.spell.live_channel:
 			if not (is_instance_valid(live_delivery) or SpellDelivery.dispatch(context)): cancel("Channel delivery failed"); return
 			live_delivery = caster.get_parent().get_children().back() as SpellAreaDelivery
+			delivery_succeeded.emit(context)
 			_paid_upfront = 0
 			cooldowns[context.spell.spell_id] = context.spell.cooldown
 
@@ -137,9 +140,11 @@ func _execute() -> void:
 			cancel("Target lost during preparation")
 			return
 	_set_state(State.EXECUTING)
-	if not (is_instance_valid(live_delivery) or SpellDelivery.dispatch(context)):
+	var already_delivered := is_instance_valid(live_delivery)
+	if not (already_delivered or SpellDelivery.dispatch(context)):
 		cancel("Spell delivery failed")
 		return
+	if not already_delivered: delivery_succeeded.emit(context)
 	if is_instance_valid(live_delivery): live_delivery.queue_free()
 	live_delivery = null
 	if echo_eligible(context.spell):

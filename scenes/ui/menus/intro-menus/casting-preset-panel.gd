@@ -2,11 +2,14 @@ class_name CastingPresetPanel extends PanelContainer
 signal confirmed(preset: String)
 signal backed
 var selected := "IJKL"
+var submitting := false
 var cards: Array[Button] = []
 var confirm_button: Button
 var message: Label
 func _ready() -> void:
 	theme = ControlsStyle.theme()
+	var backdrop := StyleBoxFlat.new(); backdrop.bg_color = Color("121520")
+	add_theme_stylebox_override("panel", backdrop)
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	var margin := MarginContainer.new()
 	for side in ["left", "right", "top", "bottom"]: margin.add_theme_constant_override("margin_" + side, 40)
@@ -31,6 +34,11 @@ func select(preset: String) -> void:
 	# Custom is kept until the user explicitly selects and confirms one of the cards.
 	confirm_button.disabled = preset == "Custom"
 	message.text = "Current controls: Custom. Select a card to replace only the four casting keys." if preset == "Custom" else preset + " selected"
+func lock_submission() -> void:
+	submitting = true
+	for button in find_children("*", "Button"): button.disabled = true
 func _unhandled_input(event: InputEvent) -> void:
+	if submitting:
+		get_viewport().set_input_as_handled(); return
 	if event.is_action_pressed("ui_cancel"):
 		get_viewport().set_input_as_handled(); backed.emit()

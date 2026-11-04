@@ -34,6 +34,7 @@ static func set_preset(bindings: Dictionary, preset: String) -> void:
 		var action: String = CAST_ACTIONS[i]
 		var events: Array = bindings.get(action, []).filter(func(e): return not e is InputEventKey)
 		var key := InputEventKey.new()
+		key.device = -1
 		key.physical_keycode = PRESETS[preset][i]
 		events.push_front(key)
 		bindings[action] = events

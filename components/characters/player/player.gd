@@ -506,8 +506,11 @@ func _clear_sequence() -> void:
 	spell_label.text = ""
 	_clear_spell_icons()
 
+signal casting_cancelled
+
 func cancel_active_casting() -> void:
 	casting.cancel()
+	casting_cancelled.emit()
 
 func _on_request_status(_id: int, _chain: int, spell: SpellData, status: SpellCastingComponent.RequestStatus, reason: String) -> void:
 	if spell == null: return
@@ -521,6 +524,10 @@ func _clear_spell_icons() -> void:
 		child.queue_free()
 
 func _update_spell_icons() -> void:
+	# The path HUD presents entered directions without a second strip over Yan.
+	if is_instance_valid(chain_assistant) and Player_Global_Data.assistance_mode != 2:
+		_clear_spell_icons()
+		return
 	if not spell_icon_box:
 		return
 	_clear_spell_icons()
@@ -647,7 +654,10 @@ func _on_damage_taken(amount: float) -> void:
 		Player_Global_Data.p_curr_health - amount, 0.0
 	)
 
+signal presentation_died
+
 func _on_died() -> void:
+	presentation_died.emit()
 	casting.cancel("Caster died")
 	if multiplayer.has_multiplayer_peer() and not is_multiplayer_authority():
 		hitbox.clear_all_effects()

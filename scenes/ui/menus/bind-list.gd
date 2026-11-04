@@ -9,6 +9,7 @@ func _ready() -> void:
 	action_label = ControlsStyle.label(self, "")
 	action_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	primary_btn = ControlsStyle.button(self, "Edit", func(): rebind_requested.emit(self))
+	primary_btn.clip_text = true
 	primary_btn.custom_minimum_size = Vector2(220, 40)
 func setup(action: String, display_name: String, bindings: Array = []) -> void:
 	action_name = action

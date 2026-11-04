@@ -15,8 +15,10 @@ var status: Label
 var section_title: Label
 var preset_label: Label
 var tabs: Array[Button] = []
+var preset_buttons: Dictionary = {}
+var advanced_button: Button
 var content: VBoxContainer
-var _applied := false
+var page_margin: MarginContainer
 
 func _ready() -> void:
 	theme = ControlsStyle.theme()
@@ -24,7 +26,7 @@ func _ready() -> void:
 	assistance_mode = Player_Global_Data.assistance_mode
 	var bg := ColorRect.new(); bg.color = Color("121520")
 	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT); add_child(bg)
-	var margin := MarginContainer.new()
+	var margin := MarginContainer.new(); page_margin = margin
 	margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	for side in ["left", "right", "top", "bottom"]: margin.add_theme_constant_override("margin_" + side, 32)
 	add_child(margin)
@@ -48,6 +50,7 @@ func _ready() -> void:
 	ControlsStyle.button(footer, "Cancel", _on_cancel)
 	ControlsStyle.button(footer, "Apply", _on_save)
 	_select_category(category)
+	resized.connect(_resize_page); _resize_page()
 	tabs[0].grab_focus()
 
 func _select_category(title: String) -> void:
@@ -59,11 +62,14 @@ func _select_category(title: String) -> void:
 
 func _build_rows() -> void:
 	for child in bind_list.get_children(): bind_list.remove_child(child); child.queue_free()
-	_rows.clear()
+	_rows.clear(); preset_buttons.clear()
 	if category == "Spellcasting":
 		preset_label = ControlsStyle.label(bind_list, "Control preset · " + ControlBindings.preset_name(draft))
 		var presets := HBoxContainer.new(); bind_list.add_child(presets)
-		for preset in ControlBindings.PRESETS: ControlsStyle.button(presets, preset, _preset.bind(preset))
+		for preset in ControlBindings.PRESETS:
+			var button := ControlsStyle.button(presets, preset, _preset.bind(preset))
+			button.toggle_mode = true; button.set_pressed_no_signal(ControlBindings.preset_name(draft) == preset)
+			preset_buttons[preset] = button
 		var row := HBoxContainer.new(); bind_list.add_child(row)
 		ControlsStyle.label(row, "Incantation assistance").size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		_assistance = OptionButton.new()
@@ -85,11 +91,15 @@ func _build_rows() -> void:
 			var row: KeybindRow = ROW_SCENE.instantiate(); bind_list.add_child(row)
 			row.setup(action, String(action).capitalize(), draft[action]); row.rebind_requested.connect(_on_rebind_requested); _rows.append(row)
 	if category in ["Spellcasting", "Interface"]:
-		ControlsStyle.button(bind_list, "Hide advanced options ▴" if advanced else "Show advanced options ▾", func(): advanced = not advanced; _build_rows())
+		advanced_button = ControlsStyle.button(bind_list, "Hide advanced options ▴" if advanced else "Show advanced options ▾", _toggle_advanced)
+
+func _toggle_advanced() -> void:
+	advanced = not advanced; _build_rows(); advanced_button.grab_focus()
 
 func _preset(preset: String) -> void:
 	ControlBindings.set_preset(draft, preset)
 	_build_rows()
+	preset_buttons[preset].grab_focus()
 	status.text = preset + " selected. Apply to save. UI arrow navigation remains available."
 
 func _input(event: InputEvent) -> void:
@@ -127,7 +137,9 @@ func _assign(action: String, binding: InputEvent) -> void:
 	ControlBindings.replace_family(draft, action, binding)
 	for row in _rows:
 		row.events = draft[row.action_name]; row.refresh_display()
-	if category == "Spellcasting": preset_label.text = "Control preset · " + ControlBindings.preset_name(draft)
+	if category == "Spellcasting":
+		preset_label.text = "Control preset · " + ControlBindings.preset_name(draft)
+		for preset in preset_buttons: preset_buttons[preset].set_pressed_no_signal(ControlBindings.preset_name(draft) == preset)
 	status.text = "Binding updated. Apply to save."
 
 func _on_rebind_requested(row: KeybindRow) -> void:
@@ -140,15 +152,25 @@ func _stop_listening() -> void:
 func _reset_section() -> void:
 	_stop_listening()
 	for entry in ControlBindings.CATEGORIES[category]: draft[entry[0]] = ControlBindings.defaults(entry[0])
+	if category == "Interface":
+		var known := []
+		for entries in ControlBindings.CATEGORIES.values():
+			for entry in entries: known.append(entry[0])
+		for action in draft:
+			if action not in known: draft[action] = ControlBindings.defaults(action)
 	if category == "Spellcasting": assistance_mode = 0
 	_build_rows(); status.text = "Section reset in draft. Apply to save."
 func _on_save() -> void:
 	_stop_listening()
 	var error := ControlBindings.save_bindings(draft)
 	if error != OK: status.text = "Could not save controls: " + error_string(error); return
+	var previous_mode := Player_Global_Data.assistance_mode
 	if Player_Global_Data.set_assistance_mode(assistance_mode) != OK:
+		ControlBindings.save_bindings(ControlBindings.snapshot())
+		Player_Global_Data.assistance_mode = previous_mode
+		Player_Global_Data.assistance_changed.emit(previous_mode)
 		status.text = "Could not save assistance preference."; return
-	ControlBindings.apply(draft); _applied = true; _go_back()
+	ControlBindings.apply(draft); _go_back()
 func _on_cancel() -> void:
 	_stop_listening(); _go_back()
 func _on_back_button_pressed() -> void:
@@ -164,3 +186,7 @@ func _save_to_file(path: String = SAVE_PATH) -> void:
 	ControlBindings.save_bindings(draft, path)
 static func load_from_file(path: String = SAVE_PATH) -> void:
 	ControlBindings.load_bindings(path)
+
+func _resize_page() -> void:
+	if page_margin == null: return
+	for side in ["left", "right"]: page_margin.add_theme_constant_override("margin_" + side, maxi(24, int((size.x - 1000) / 2)))

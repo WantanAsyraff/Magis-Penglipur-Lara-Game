@@ -15,7 +15,5 @@ item_type = 1
 is_stackable = false
 max_stack = 1
 is_sellable = false
-use_behavior = 3
-equipment_slots = 1
 weapon_visual = SubResource("Visual")
 description = "A practice focus with temporary presentation artwork. Grants no additional damage or stats."

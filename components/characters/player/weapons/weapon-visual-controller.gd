@@ -11,6 +11,7 @@ var equipped: ItemData
 var definition: WeaponVisualData
 var left := false
 var pose := "weapon_idle"
+var holstered := false
 
 func _ready() -> void:
 	player = get_parent() as Player
@@ -22,9 +23,12 @@ func _bind() -> void:
 	if not player.is_multiplayer_authority(): hide(); set_process(false); return
 	player.casting.cast_completed.connect(func(_context): play_presentation(&"weapon_cast"))
 	player.hitbox.died.connect(hide)
+	player.presentation_died.connect(hide)
 func _equipment_changed(slot: int, item: ItemData) -> void:
 	if slot == Inventory_Manager.SlotType.WEAPON: _sync(item)
 func _sync(item: ItemData) -> void:
+	if not is_inside_tree() or not player.is_inside_tree(): return
+	if not player.is_multiplayer_authority(): hide(); return
 	if item == equipped and definition != null: return
 	equipped = item
 	animation_player.stop()
@@ -62,6 +66,7 @@ func _update_facing() -> void:
 func _process(_delta: float) -> void:
 	if definition == null or not visible: return
 	_update_facing()
+	if holstered: return
 	if player.get_meta("combat_dead", false): hide(); return
 	var desired := "weapon_cast" if player._in_casting_stance else ("weapon_block" if player._is_blocking else "weapon_idle")
 	if desired != pose and (animation_player.current_animation.is_empty() or pose in ["weapon_idle", "weapon_block", "weapon_cast"]):
@@ -71,6 +76,7 @@ func present_attack(index: int = 1, airborne: bool = false) -> void:
 	play_presentation(&"weapon_attack_air" if airborne else (&"weapon_attack_2" if index == 2 else &"weapon_attack_1"))
 func play_presentation(animation: StringName) -> void:
 	if equipped == null or not visible: return
+	holstered = animation == &"weapon_holster"
 	visual.show()
 	pose = animation
 	var asset_name := "asset/" + String(animation)
@@ -79,4 +85,5 @@ func _animation_finished(animation: StringName) -> void:
 	if String(animation).ends_with("weapon_holster"):
 		visual.hide(); return
 	visual.show()
+	if String(animation).ends_with("weapon_block"): return
 	pose = ""

@@ -38,7 +38,11 @@ func _ready() -> void:
 		views.append({"column": column, "path": path, "icon": icon, "title": title})
 		for control in [column, path, icon, title]: control.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	overflow = Label.new(); overflow.mouse_filter = Control.MOUSE_FILTER_IGNORE; next_row.add_child(overflow)
+	next_row.minimum_size_changed.connect(_layout_height)
 	hide()
+
+func _layout_height() -> void:
+	offset_top = offset_bottom - maxf(110.0, next_row.get_combined_minimum_size().y)
 
 func bind_player(actor: Player) -> void:
 	player = actor
@@ -66,13 +70,18 @@ func _refresh() -> void:
 		if not view.column.visible: continue
 		var spell: SpellData = spells[i]; shown_spells.append(spell)
 		var parts := PackedStringArray()
-		for index in spell.spell_incantation.size():
+		var first := maxi(0, sequence.size() - 2) if minimal else 0
+		var last := mini(spell.spell_incantation.size(), first + 5) if minimal else spell.spell_incantation.size()
+		for index in range(first, last):
 			var arrow: String = ARROWS.get(spell.spell_incantation[index], "?")
 			parts.append("[b][u]" + arrow + "[/u][/b]" if index < sequence.size() else "[color=#8891a6]" + arrow + "[/color]")
 		# Wrap long authored incantations into readable rows without widening the HUD.
-		var path_text := ""
+		var columns := 8 if not minimal and spells.size() == 1 and spell.spell_incantation.size() > 8 else 5
+		view.path.custom_minimum_size.x = 240 if columns == 8 else 138
+		var path_text := "… " if first > 0 else ""
 		for index in parts.size():
-			path_text += parts[index] + ("\n" if (index + 1) % 6 == 0 else " ")
+			path_text += parts[index] + ("\n" if (index + 1) % columns == 0 else " ")
+		if last < spell.spell_incantation.size(): path_text += " …"
 		view.path.text = "[center]" + ("✓ " if spell == exact else "") + path_text + "[/center]"
 		view.icon.texture = spell.spell_icon if spell.spell_icon else fallback_icon
 		view.title.text = ("✓ " if spell == exact else "") + spell.spell_name

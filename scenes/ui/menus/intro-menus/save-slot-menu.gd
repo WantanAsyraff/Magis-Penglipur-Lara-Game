@@ -137,6 +137,10 @@ func _confirm(title: String, text: String, callback: Callable) -> void:
 
 func _activate() -> void:
 	if creating:
+		if name_input.text.strip_edges().is_empty():
+			status.text = "Enter a character name first."
+			name_input.grab_focus()
+			return
 		var occupied := false
 		for kind in ["manual","auto"]:
 			for backup in [false,true]: occupied = occupied or SaveManager.inspect_slot(selected_profile,kind,backup).state != "empty"
@@ -161,7 +165,7 @@ func _begin(overwrite: bool) -> void:
 			preset_panel.message.text = "Could not save controls: " + error_string(error)
 			return
 		ControlBindings.apply(bindings)
-		preset_panel.confirm_button.disabled = true
+		preset_panel.lock_submission()
 		_create_campaign(overwrite))
 
 func _create_campaign(overwrite: bool) -> void:

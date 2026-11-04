@@ -93,16 +93,23 @@ func _ready() -> void:
 	var ui: IncantationAssistant = player.chain_assistant
 	player.casting.cast_completed.connect(func(context): completed_contexts.append(context))
 	player.casting.request_status.connect(func(id, chain, spell, status, reason): events.append({"id": id, "chain": chain, "spell": spell, "status": status, "reason": reason}))
+	check(ui.views[0].key_icon.custom_minimum_size.is_equal_approx(Vector2(28,28) * 1.15 * 1.30) and ui.views[0].icon.custom_minimum_size.is_equal_approx(Vector2(26,26) * 1.15 * 1.30), "Assistant key and spell icons grow another thirty percent")
 	check(not ui.visible, "Assistant hidden outside stance")
 	player._enter_casting_stance()
 	check(ui.visible and visible_keys(ui) == ["up", "down"], "Guided assistant appears in stance")
 	player._add_sequence("down")
+	check(player.spell_icon_box.get_child_count() == 1 and player.spell_icon_box.get_child(0).texture == ui.ICONS.down, "Entered incantation is visible above the player with guidance enabled")
 	check(visible_keys(ui) == ["left"] and ui.direction_icons.left.texture == ui.ICONS.left, "Only the actual next direction is shown")
+	check(ui.shown_spells.all(func(spell): return spell.spell_incantation[0] == "down") and ui.views[0].key_icon.texture == ui.ICONS.left, "Hints filter equipped spells and show the next eligible input")
 	player._add_sequence("left")
 	check(visible_keys(ui) == ["down", "right"], "Branching prefix displays only eligible next icons")
+	check(player.spell_icon_box.get_child_count() == 2 and player.spell_icon_box.get_child(1).texture == ui.ICONS.left, "Overhead incantation follows input without duplicate old icons")
+	check(ui.views.all(func(view): return view.key_icon.get_parent() is VBoxContainer and view.icon.get_index() > view.key_icon.get_index()), "Each spell icon sits beneath its assistant arrow")
+	check(ui.shown_spells.size() == 4 and ui.views.all(func(view): return not view.column.visible or view.key_icon.texture == ui.ICONS[ui.shown_spells[ui.views.find(view)].spell_incantation[2]]), "Small key icons beneath each combo show only its next eligible input")
 	check(player.incantations.get_reachable_chain_spells()[0] == a, "Nearest prediction deterministically ordered")
 	a.cast_time = 0.5
 	player._add_sequence("down")
+	check(not ui.shown_spells.has(a) and ui.shown_spells.has(b), "Completed prefix leaves the hints while its continuation stays visible")
 	var first_id: int = events.back().id
 	var first_chain: int = events.back().chain
 	check(player.spell_label.text.contains("Preparing") and completed_count() == 0, "Preparation never displays false Cast or chain success")
@@ -188,7 +195,7 @@ func _ready() -> void:
 		player._add_sequence("down")
 	await get_tree().process_frame
 	check(ui.next_row.get_child_count() == 5 and visible_keys(ui) == ["left"], "Rapid input reuses four path groups and overflow label")
-	check(ui.get_child_count() == 1 and ui.views[0].icon.get_index() > ui.views[0].path.get_index(), "Spell icons appear beneath paths without an opaque panel")
+	check(ui.get_child_count() == 1 and ui.views[0].column.get_child_count() == 2 and ui.views[0].column.find_children("*", "RichTextLabel", true, false).is_empty(), "Assistant contains only icon rows and names, with no top arrows")
 	Dialogic.timeline_started.emit()
 	check(not ui.visible, "Dialogue suspends assistant")
 	Dialogic.timeline_ended.emit()
@@ -225,9 +232,56 @@ func _ready() -> void:
 	player._exit_casting_stance()
 	check(not ui.visible, "Exit stance hides assistant")
 	player._enter_casting_stance()
+	_cooldown_feedback(player)
 	player._on_died()
 	check(not ui.visible and player.incantations.sequence.is_empty(), "Death hides and clears assistant safely")
 	player.queue_free()
 	await get_tree().process_frame
 	print("INCANTATION_ASSISTANT: %d checks, %d failures" % [checks, failures])
 	get_tree().quit(1 if failures else 0)
+
+func _cooldown_feedback(player: Player) -> void:
+	check(is_equal_approx(player.DASH_SPEED * player.DASH_TIME, 3400.0 * 0.18 * 1.1), "Dash travel increases by ten percent")
+	var row := HBoxContainer.new()
+	add_child(row)
+	UserInterface.build_dash_display(row, 3)
+	player.dash_charges = 1
+	player.dash_regen_timer = player.DASH_COOLDOWN * 0.5
+	UserInterface.update_dash_display(row, player.dash_charges, 0.5)
+	check(row.get_child(0).get_child(1).value == 1.0 and row.get_child(1).get_child(1).value == 0.5 and row.get_child(2).get_child(1).value == 0.0, "Dash bars distinguish available, recharging and queued charges")
+	Input.action_press("move_right")
+	player._try_dash()
+	Input.action_release("move_right")
+	check(is_equal_approx(player.dash_regen_timer, player.DASH_COOLDOWN * 0.5), "A second dash preserves the recharge already in progress")
+	player._handle_dash_timers(player.DASH_COOLDOWN * 0.5)
+	check(player.dash_charges == 1 and player.dash_regen_timer == 0.0, "Charge restoration starts the next empty charge from zero")
+	player.dash_charges = player.get_max_dash_charges()
+	row.queue_free()
+	var hud := player.camera.get_node("UI/StatusEffectsHUD") as StatusEffectsHUD
+	hud.bind_player(player)
+	player.casting.cancel()
+	player.casting.cooldowns.clear()
+	var spell := definition("cooldown_feedback", ["right"])
+	spell.cooldown = 2.0
+	Player_Global_Data.learned_spells.append(spell)
+	Player_Global_Data.equipped_spells.append(spell)
+	player._sync_spells_from_global()
+	Player_Global_Data.p_curr_mana = 100
+	check(player.casting.request_cast(spell, player.global_position, Vector2.RIGHT), "Cooldown preview uses a real successful cast")
+	hud._update_spell_cooldowns(0)
+	check(hud.recent_spells.has(spell.spell_id) and hud.recent_spells[spell.spell_id].bar.value == 0.0, "Successful cast starts an empty spell cooldown bar")
+	player.casting._physics_process(1.0)
+	hud._update_spell_cooldowns(0)
+	check(is_equal_approx(hud.recent_spells[spell.spell_id].bar.value, 0.5), "Spell cooldown bar fills with the actual cooldown timer")
+	var denied := definition("denied_feedback", ["left"])
+	denied.upfront_cost = 1000
+	denied.cooldown = 2.0
+	Player_Global_Data.learned_spells.append(denied)
+	Player_Global_Data.equipped_spells.append(denied)
+	player._sync_spells_from_global()
+	check(not player.casting.request_cast(denied, player.global_position, Vector2.RIGHT) and not hud.recent_spells.has(denied.spell_id), "Failed casts never add cooldown history")
+	player.casting._physics_process(1.0)
+	hud._update_spell_cooldowns(0)
+	check(hud.recent_spells[spell.spell_id].bar.value == 1.0 and hud.recent_spells[spell.spell_id].label.text == "Ready", "Spell bar reaches full and confirms readiness")
+	hud._update_spell_cooldowns(0.8)
+	check(hud.recent_spells.is_empty(), "Ready spell cooldowns leave the HUD after a brief confirmation")

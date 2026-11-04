@@ -29,18 +29,15 @@ func _on_world_changed(world_name: String) -> void:
 	if current_world_label:
 		current_world_label.text = world_name
 
+func _process(_delta: float) -> void:
+	var actor := Player_Manager.get_local_player() as Player
+	if is_instance_valid(actor):
+		if dashes.get_child_count() != actor.get_max_dash_charges():
+			_build_dash_display(actor.get_max_dash_charges())
+		UserInterface.update_dash_display(dashes, actor.dash_charges, actor.dash_regen_timer / maxf(actor.DASH_COOLDOWN, 0.001))
+
 func _build_dash_display(max_charges: int) -> void:
-	for child in dashes.get_children():
-		child.queue_free()
-	for i in max_charges:
-		var icon = TextureRect.new()
-		icon.texture = DASH_ICON
-		icon.custom_minimum_size = Vector2(DASH_ICON.get_width(), DASH_ICON.get_height())
-		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-		dashes.add_child(icon)
+	UserInterface.build_dash_display(dashes, max_charges)
 
 func _on_dash_charges_changed(current_charges: int) -> void:
-	for i in dashes.get_child_count():
-		var icon = dashes.get_child(i)
-		icon.modulate.a = 1.0 if i < current_charges else 0.3
+	UserInterface.update_dash_display(dashes, current_charges, 0.0)

@@ -26,6 +26,8 @@ func close() -> void:
 	ModalService.release(ui); ui.queue_free(); ui = null
 	if is_instance_valid(layer): layer.queue_free()
 func _input(event: InputEvent) -> void:
+	# The combat repertoire owns its binding even when it overlaps the inventory shortcut.
+	if Player_Global_Data.combat_mode and not is_instance_valid(ui) and event.is_action_pressed("toggle_repertoire"): return
 	if event.is_action_pressed("inventory_toggle") and not event.is_echo():
 		if is_instance_valid(ui):
 			if ui.search.has_focus() and event is InputEventKey: return

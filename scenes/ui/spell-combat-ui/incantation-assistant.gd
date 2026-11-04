@@ -1,7 +1,7 @@
 class_name IncantationAssistant extends Control
 const ICONS := SpellSlot.DIRECTION_TEXTURES
-const ICON_SIZE := 28
-const ARROWS := {"up": "↑", "down": "↓", "left": "←", "right": "→"}
+const ICON_SCALE := 1.15 * 1.30
+const ICON_SIZE := 28 * ICON_SCALE
 @export_range(1, 4) var max_paths := 4
 @export var fallback_icon: Texture2D = preload("res://assets/temp/temp-mana.png")
 var player: Player
@@ -17,7 +17,7 @@ func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	next_row = HBoxContainer.new(); next_row.alignment = BoxContainer.ALIGNMENT_CENTER
 	next_row.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	next_row.add_theme_constant_override("separation", 18); next_row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	next_row.add_theme_constant_override("separation", 36); next_row.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(next_row)
 	for direction in ICONS:
 		var icon := TextureRect.new(); icon.texture = ICONS[direction]
@@ -25,18 +25,20 @@ func _ready() -> void:
 		direction_icons[direction] = icon
 	for i in max_paths:
 		var column := VBoxContainer.new(); column.alignment = BoxContainer.ALIGNMENT_CENTER
-		column.add_theme_constant_override("separation", 4); next_row.add_child(column)
-		var path := RichTextLabel.new(); path.bbcode_enabled = true; path.fit_content = true
-		path.scroll_active = false; path.custom_minimum_size.x = 138
-		path.add_theme_font_size_override("normal_font_size", 22)
-		column.add_child(path)
-		var icon := TextureRect.new(); icon.custom_minimum_size = Vector2(36, 36)
-		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE; icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED; column.add_child(icon)
+		column.add_theme_constant_override("separation", 10); next_row.add_child(column)
+		var icon_row := VBoxContainer.new(); icon_row.alignment = BoxContainer.ALIGNMENT_CENTER
+		icon_row.add_theme_constant_override("separation", 10); column.add_child(icon_row)
+		var key_icon := TextureRect.new(); key_icon.custom_minimum_size = Vector2(ICON_SIZE, ICON_SIZE)
+		key_icon.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+		key_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE; key_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED; icon_row.add_child(key_icon)
+		var icon := TextureRect.new(); icon.custom_minimum_size = Vector2(26, 26) * ICON_SCALE
+		icon.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE; icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED; icon_row.add_child(icon)
 		var title := Label.new(); title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		title.add_theme_font_size_override("font_size", 13); title.custom_minimum_size.x = 138
 		title.clip_text = true; column.add_child(title)
-		views.append({"column": column, "path": path, "icon": icon, "title": title})
-		for control in [column, path, icon, title]: control.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		views.append({"column": column, "icon": icon, "title": title, "key_icon": key_icon})
+		for control in [column, icon_row, key_icon, icon, title]: control.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	overflow = Label.new(); overflow.mouse_filter = Control.MOUSE_FILTER_IGNORE; next_row.add_child(overflow)
 	next_row.minimum_size_changed.connect(_layout_height)
 	hide()
@@ -58,9 +60,9 @@ func _refresh() -> void:
 	if not is_inside_tree() or not is_instance_valid(player): hide(); return
 	var sequence := player.incantations.get_sequence_snapshot()
 	var spells := player.incantations.get_matching_spells()
+	# Completed prefixes belong to cooldown history; hints show only future combos.
+	spells = spells.filter(func(spell): return spell.spell_incantation.size() > sequence.size())
 	var exact := player.incantations.get_current_exact_match()
-	if exact:
-		spells.erase(exact); spells.push_front(exact)
 	shown_spells.clear()
 	var minimal := Player_Global_Data.assistance_mode == 1
 	var limit := mini(max_paths, 2) if minimal else max_paths
@@ -69,20 +71,7 @@ func _refresh() -> void:
 		view.column.visible = i < mini(limit, spells.size())
 		if not view.column.visible: continue
 		var spell: SpellData = spells[i]; shown_spells.append(spell)
-		var parts := PackedStringArray()
-		var first := maxi(0, sequence.size() - 2) if minimal else 0
-		var last := mini(spell.spell_incantation.size(), first + 5) if minimal else spell.spell_incantation.size()
-		for index in range(first, last):
-			var arrow: String = ARROWS.get(spell.spell_incantation[index], "?")
-			parts.append("[b][u]" + arrow + "[/u][/b]" if index < sequence.size() else "[color=#8891a6]" + arrow + "[/color]")
-		# Wrap long authored incantations into readable rows without widening the HUD.
-		var columns := 8 if not minimal and spells.size() == 1 and spell.spell_incantation.size() > 8 else 5
-		view.path.custom_minimum_size.x = 240 if columns == 8 else 138
-		var path_text := "… " if first > 0 else ""
-		for index in parts.size():
-			path_text += parts[index] + ("\n" if (index + 1) % columns == 0 else " ")
-		if last < spell.spell_incantation.size(): path_text += " …"
-		view.path.text = "[center]" + ("✓ " if spell == exact else "") + path_text + "[/center]"
+		view.key_icon.texture = ICONS.get(spell.spell_incantation[sequence.size()])
 		view.icon.texture = spell.spell_icon if spell.spell_icon else fallback_icon
 		view.title.text = ("✓ " if spell == exact else "") + spell.spell_name
 		view.title.visible = not minimal

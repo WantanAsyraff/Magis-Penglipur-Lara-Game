@@ -40,7 +40,7 @@ var SPEED : float = Player_Global_Data.p_speed
 var JUMP_VELOCITY : float = Player_Global_Data.p_jump_height
 
 # Dash — charge based
-var DASH_SPEED : float = 3400.0
+var DASH_SPEED : float = 3740.0
 var DASH_TIME : float = 0.18
 var DASH_COOLDOWN : float = 1.2
 var max_dashes = Player_Global_Data.MAX_DASH_CHARGES
@@ -312,8 +312,8 @@ func _handle_dash_timers(delta: float) -> void:
 func _try_dash() -> void:
 	var dir := Input.get_axis("move_left", "move_right")
 	if dir != 0 and dash_charges > 0:
+		if dash_charges == get_max_dash_charges(): dash_regen_timer = 0.0
 		dash_charges -= 1
-		dash_regen_timer = 0.0
 		is_dashing = true
 		dash_timer = DASH_TIME
 		dash_direction = Vector2(dir, 0).normalized()
@@ -381,7 +381,7 @@ func _unhandled_input(_event: InputEvent) -> void:
 		if phone.phone_selected: return
 	if multiplayer.has_multiplayer_peer() and not is_multiplayer_authority():
 		return
-	if _event.is_action_pressed("environment_target") and not _event.is_echo():
+	if InputMap.has_action("environment_target") and _event.is_action_pressed("environment_target") and not _event.is_echo():
 		environment_target.cycle(); _update_aim_direction(); get_viewport().set_input_as_handled(); return
 	if _event.is_action_pressed("cycle_target") and not _event.is_echo():
 		environment_target.clear()
@@ -533,13 +533,10 @@ func _clear_spell_icons() -> void:
 	if not spell_icon_box:
 		return
 	for child in spell_icon_box.get_children():
+		spell_icon_box.remove_child(child)
 		child.queue_free()
 
 func _update_spell_icons() -> void:
-	# The path HUD presents entered directions without a second strip over Yan.
-	if is_instance_valid(chain_assistant) and Player_Global_Data.assistance_mode != 2:
-		_clear_spell_icons()
-		return
 	if not spell_icon_box:
 		return
 	_clear_spell_icons()
@@ -549,7 +546,9 @@ func _update_spell_icons() -> void:
 			var icon := TextureRect.new()
 			icon.texture = load(DIRECTION_ICONS[key])
 			icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-			icon.custom_minimum_size = Vector2(24, 24)
+			icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+			icon.custom_minimum_size = Vector2(24, 24) * 1.30
+			icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			spell_icon_box.add_child(icon)
 
 func _find_spell_match() -> SpellData:

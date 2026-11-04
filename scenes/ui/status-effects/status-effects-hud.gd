@@ -7,6 +7,8 @@ var effect_row: GridContainer
 var push_panel: PanelContainer
 var push_label: Label
 var push_progress: ProgressBar
+var spell_row: HBoxContainer
+var recent_spells: Dictionary = {}
 var overflow: Label
 var elapsed: float = 0
 var dialogue_active := false
@@ -47,6 +49,18 @@ func _ready() -> void:
 	push_progress.show_percentage = false
 	push_progress.max_value = 1.0
 	column.add_child(push_progress)
+	spell_row = HBoxContainer.new()
+	spell_row.name = "SpellCooldowns"
+	spell_row.add_theme_constant_override("separation", 18)
+	spell_row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(spell_row)
+	spell_row.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT)
+	spell_row.grow_horizontal = Control.GROW_DIRECTION_BEGIN
+	spell_row.offset_left = -580
+	spell_row.offset_right = -24
+	spell_row.offset_top = -190
+	spell_row.offset_bottom = -114
+	spell_row.alignment = BoxContainer.ALIGNMENT_END
 	for i in max_icons:
 		var icon := preload("res://scenes/ui/status-effects/status-effect-icon.tscn").instantiate() as StatusEffectIcon
 		icon.size_flags_vertical = Control.SIZE_SHRINK_CENTER
@@ -64,7 +78,14 @@ func _local_changed(player: Node2D) -> void:
 
 func bind_player(player: Player) -> void:
 	if manager and manager.changed.is_connected(_changed): manager.changed.disconnect(_changed)
+	if is_instance_valid(actor) and actor.casting and actor.casting.delivery_succeeded.is_connected(_spell_used):
+		actor.casting.delivery_succeeded.disconnect(_spell_used)
+	if actor != player:
+		for entry in recent_spells.values(): entry.column.queue_free()
+		recent_spells.clear()
 	actor = player
+	if is_instance_valid(actor) and actor.casting and not actor.casting.delivery_succeeded.is_connected(_spell_used):
+		actor.casting.delivery_succeeded.connect(_spell_used)
 	manager = actor.hitbox.effects if is_instance_valid(actor) else null
 	if manager: manager.changed.connect(_changed)
 	refresh()
@@ -74,6 +95,7 @@ func _exit_tree() -> void:
 func _changed(_key: String) -> void:
 	refresh()
 func _process(delta: float) -> void:
+	_update_spell_cooldowns(delta)
 	elapsed += delta
 	if elapsed < .1: return
 	elapsed = 0
@@ -100,6 +122,10 @@ func grouped_entries() -> Array[Dictionary]:
 	return result
 func refresh() -> void:
 	if not is_inside_tree() or not is_node_ready(): return
+	var repertoire: Control = actor.camera.combatUI.get_node_or_null("Repetoire") if is_instance_valid(actor) else null
+	var right_margin := 398.0 if repertoire != null and repertoire.is_visible_in_tree() else 24.0
+	spell_row.offset_right = -right_margin
+	spell_row.offset_left = -right_margin - 556.0
 	var rows := grouped_entries()
 	var phone := get_tree().get_first_node_in_group("phone_ui")
 	var phone_open: bool = phone != null and phone.phone_selected
@@ -114,7 +140,7 @@ func refresh() -> void:
 		push_label.text = "%s  Push · %s" % [key, "%.1fs" % ability.remaining if ability.remaining > 0 else "Ready"]
 		push_panel.tooltip_text = "Push nearby enemies away. %.1fs cooldown. Interactions take priority." % ability.cooldown
 		push_progress.value = 1.0 - ability.remaining / maxf(ability.cooldown, 0.001)
-	visible = not phone_open and (not rows.is_empty() or push_panel.visible) and is_instance_valid(actor) and not actor.get_meta("combat_dead",false) and Player_Global_Data.is_alive() and not get_tree().paused and not dialogue_active and not QuestOfferDialog.is_open()
+	visible = not phone_open and (not rows.is_empty() or push_panel.visible or not recent_spells.is_empty()) and is_instance_valid(actor) and not actor.get_meta("combat_dead",false) and Player_Global_Data.is_alive() and not get_tree().paused and not dialogue_active and not QuestOfferDialog.is_open()
 	effect_row.visible = not rows.is_empty()
 	var limit := _layout_effects(rows.size())
 	for i in icons.size():
@@ -145,3 +171,53 @@ func _layout_effects(group_count: int) -> int:
 	var slots := rows * effect_row.columns
 	if group_count > mini(max_icons,slots): slots -= 1
 	return clampi(slots,0,max_icons)
+
+func _spell_used(context: SpellCastContext) -> void:
+	var spell := context.spell
+	if spell.cooldown <= 0: return
+	if recent_spells.has(spell.spell_id):
+		recent_spells[spell.spell_id].ready_time = 0.0
+		recent_spells[spell.spell_id].bar.value = 0.0
+		return
+	if recent_spells.size() >= 6:
+		var oldest: String = recent_spells.keys()[0]
+		spell_row.remove_child(recent_spells[oldest].column)
+		recent_spells[oldest].column.queue_free()
+		recent_spells.erase(oldest)
+	var column := VBoxContainer.new()
+	column.custom_minimum_size.x = 76
+	column.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	spell_row.add_child(column)
+	var icon := TextureRect.new()
+	icon.texture = spell.spell_icon if spell.spell_icon else preload("res://assets/temp/temp-mana.png")
+	icon.custom_minimum_size = Vector2(40, 40)
+	icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	column.add_child(icon)
+	var bar := ProgressBar.new()
+	bar.custom_minimum_size.y = 7
+	bar.max_value = 1.0
+	UserInterface.style_cooldown_bar(bar)
+	bar.show_percentage = false
+	column.add_child(bar)
+	var label := Label.new()
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.add_theme_font_size_override("font_size", 14)
+	column.add_child(label)
+	column.tooltip_text = spell.spell_name
+	recent_spells[spell.spell_id] = {"column": column, "bar": bar, "label": label, "spell": spell, "ready_time": 0.0}
+
+func _update_spell_cooldowns(delta: float) -> void:
+	if not is_instance_valid(actor) or not actor.casting: return
+	for id in recent_spells.keys():
+		var entry: Dictionary = recent_spells[id]
+		var remaining: float = actor.casting.cooldowns.get(id, 0.0)
+		entry.bar.value = clampf(1.0 - remaining / maxf(entry.spell.cooldown, 0.001), 0.0, 1.0)
+		entry.label.text = "%.1fs" % remaining if remaining > 0 else "Ready"
+		entry.column.modulate.a = 0.65 if remaining > 0 else 1.0
+		if remaining <= 0:
+			entry.ready_time += delta
+			if entry.ready_time >= 0.8:
+				spell_row.remove_child(entry.column)
+				entry.column.queue_free()
+				recent_spells.erase(id)

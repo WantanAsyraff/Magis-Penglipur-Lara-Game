@@ -1,15 +1,15 @@
 extends CPUParticles2D
-## Four fixed CPU emitters: 6 accepted-input + 12 idle + 32 flow + 24 release.
+## Bounded CPU emitters plus a growing cast ring and release shockwave.
 @export_range(0.0, 3.0) var intensity_scale := 1.0
 @export_range(0.01, 1.0) var direction_gain := 0.18
 @export_range(0.05, 2.0) var fade_seconds := 0.35
-@export_range(1, 64) var aura_quantity := 12
-@export_range(1, 64) var flow_quantity := 32
-@export_range(1, 64) var release_quantity := 24
+@export_range(1, 64) var aura_quantity := 24
+@export_range(1, 64) var flow_quantity := 48
+@export_range(1, 64) var release_quantity := 48
 @export_range(0.1, 2.0) var aura_lifetime := 0.8
-@export var drift_speed := 35.0
-@export var particle_size := 1.0
-@export var aura_radius := 65.0
+@export var drift_speed := 65.0
+@export var particle_size := 2.2
+@export var aura_radius := 100.0
 @export var default_colour := Color(0.48, 0.72, 0.9, 0.75)
 var bursts := 0
 var releases := 0
@@ -23,17 +23,24 @@ var active := false
 var tint: Color
 var last_chain := -1
 var preparing := false
+var release_age := 1.0
+var release_colour := Color.WHITE
+var ring_canvas: Node2D
 
 func _ready() -> void:
 	player = get_parent() as Player
 	amount = clampi(amount, 1, 16)
 	position = Vector2(0, -25)
+	ring_canvas = Node2D.new()
+	ring_canvas.name = "CastingRings"
+	add_child(ring_canvas)
+	ring_canvas.draw.connect(_draw_rings)
 	tint = default_colour
 	aura = _emitter("IdleAura", aura_quantity, false)
 	flow = _emitter("ComboFlow", flow_quantity, false)
 	release = _emitter("CastRelease", release_quantity, true)
-	release.spread = 180; release.initial_velocity_min = 80; release.initial_velocity_max = 150
-	release.lifetime = 0.45
+	release.spread = 180; release.initial_velocity_min = 180; release.initial_velocity_max = 360
+	release.lifetime = 0.65
 	player.incantation_direction_accepted.connect(_accepted)
 	player.ready.connect(_bind, CONNECT_ONE_SHOT)
 
@@ -83,6 +90,8 @@ func _accepted(_direction: String) -> void:
 	if last_chain != player.incantation_chain_id:
 		buildup = 0; last_chain = player.incantation_chain_id
 	buildup = minf(1.0, buildup + direction_gain)
+	color = tint
+	direction = {"up": Vector2.UP, "down": Vector2.DOWN, "left": Vector2.LEFT, "right": Vector2.RIGHT}.get(_direction, Vector2.UP)
 	restart()
 
 func _status(_id: int, _chain: int, spell: SpellData, status: SpellCastingComponent.RequestStatus, _reason: String) -> void:
@@ -98,6 +107,8 @@ func _status(_id: int, _chain: int, spell: SpellData, status: SpellCastingCompon
 func _completed(context: SpellCastContext) -> void:
 	if not player.is_multiplayer_authority() or player.get_meta("combat_dead", false): return
 	releases += 1
+	release_age = 0.0
+	release_colour = context.spell.spell_colour
 	preparing = false
 	release.color = context.spell.spell_colour
 	# Follow dispatch, not recognition. Each completed prefix may release independently.
@@ -120,9 +131,28 @@ func _process(delta: float) -> void:
 	flow.position = player.castMarker.position * 0.25 if preparing else Vector2.ZERO
 	flow.radial_accel_min = -35.0 if preparing else 0.0
 	flow.radial_accel_max = -15.0 if preparing else 8.0
+	release_age += delta
+	ring_canvas.queue_redraw()
 	if strength <= 0.01: tint = default_colour
 
 func _clear() -> void:
 	active = false; buildup = 0; strength = 0
 	emitting = false; aura.emitting = false; flow.emitting = false; release.emitting = false
 	hide(); set_process(false)
+
+func _draw_rings() -> void:
+	if strength > 0.01:
+		var charge := clampf(strength, 0.0, 1.0)
+		var radius := 68.0 + charge * 38.0
+		var glow := Color(tint, charge * 0.16)
+		ring_canvas.draw_arc(Vector2.ZERO, radius, 0, TAU, 64, glow, 12.0, true)
+		ring_canvas.draw_arc(Vector2.ZERO, radius, 0, TAU, 64, Color(tint, charge * 0.8), 2.5, true)
+		var turn := Time.get_ticks_msec() * 0.0015
+		for i in 8:
+			var angle := turn + i * TAU / 8.0
+			var point := Vector2.from_angle(angle) * radius
+			ring_canvas.draw_line(point * 0.92, point * 1.1, Color(tint, charge * 0.9), 3.0, true)
+	if release_age < 0.6:
+		var progress := release_age / 0.6
+		var radius := lerpf(38.0, 210.0, ease(progress, 0.6))
+		ring_canvas.draw_arc(Vector2.ZERO, radius, 0, TAU, 80, Color(release_colour, (1.0 - progress) * 0.8), lerpf(9.0, 1.0, progress), true)

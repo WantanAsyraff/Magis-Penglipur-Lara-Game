@@ -7,7 +7,7 @@ const CATEGORIES := {
 	"Movement": [["move_left", "Move left"], ["move_right", "Move right"], ["climb_up", "Climb up"], ["climb_down", "Climb down"], ["jump", "Jump"], ["dash", "Dash"]],
 	"Combat": [["block", "Block / Parry"], ["start_incantation", "Casting stance"], ["pushback", "Push enemies"], ["cycle_target", "Next enemy target"]],
 	"Spellcasting": [["incantation_up", "Cast up"], ["incantation_down", "Cast down"], ["incantation_left", "Cast left"], ["incantation_right", "Cast right"], ["cancel_casting", "Cancel active cast / queue", true], ["clear_incantation", "Clear sequence", true], ["casting_aim_lock", "Stop movement", true]],
-	"Interface": [["interact", "Interact"], ["open_phone", "Phone"], ["paused", "Pause"]]
+	"Interface": [["interact", "Interact"], ["open_phone", "Phone"], ["toggle_repertoire", "Show / hide repertoire"], ["paused", "Pause"]]
 }
 const EVENT_TYPES := ["InputEventKey", "InputEventJoypadButton", "InputEventJoypadMotion", "InputEventMouseButton", "InputEventMouseMotion", "InputEventAction", "InputEventScreenTouch", "InputEventScreenDrag", "InputEventMagnifyGesture", "InputEventPanGesture"]
 

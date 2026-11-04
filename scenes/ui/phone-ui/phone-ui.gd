@@ -23,10 +23,15 @@ func _ready() -> void:
 	launcher = Button.new(); launcher.flat = true; launcher.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	add_child(launcher); launcher.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	launcher.pressed.connect(func(): if _can_open(): _set_open(true))
+	Player_Global_Data.combat_mode_changed.connect(_combat_mode_changed)
+	_sync_availability()
+
+func _combat_mode_changed(_combat: bool) -> void:
 	_sync_availability()
 
 func _can_open() -> bool:
-	if not Player_Global_Data.phone_visible or not Player_Global_Data.is_alive(): return false
+	if not is_inside_tree(): return false
+	if Player_Global_Data.combat_mode or not Player_Global_Data.phone_visible or not Player_Global_Data.is_alive(): return false
 	if get_tree().paused or SaveManager.loading or SceneManager.is_transitioning: return false
 	if QuestOfferDialog.is_open() or Dialogic.current_timeline != null: return false
 	var modal := get_node_or_null("/root/ModalService")
@@ -40,6 +45,7 @@ func _notification(what: int) -> void:
 	if what == NOTIFICATION_PAUSED and is_node_ready(): _sync_availability()
 
 func _sync_availability() -> void:
+	if not is_inside_tree(): return
 	var allowed := _can_open()
 	if not allowed and phone_selected: _set_open(false,false)
 	_available = allowed
@@ -73,6 +79,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 
 func _set_open(value: bool, animate: bool = true) -> void:
+	if value and not _can_open(): return
 	phone_selected = value
 	if is_instance_valid(launcher): launcher.visible = _can_open() and not value
 	if current_app_node: current_app_node.process_mode = Node.PROCESS_MODE_INHERIT if value else Node.PROCESS_MODE_DISABLED

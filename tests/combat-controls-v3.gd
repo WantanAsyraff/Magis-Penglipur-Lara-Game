@@ -145,7 +145,7 @@ func _gameplay() -> void:
 	var ui := player.chain_assistant
 	check(ui.shown_spells == spells, "HUD discovers equipped spells in path-length order")
 	for view in ui.views:
-		if view.column.visible: check(view.icon.get_index() > view.path.get_index(), "Actual icon is below directional path")
+		if view.column.visible: check(view.column.get_child_count() == 2 and view.key_icon.get_parent() is VBoxContainer and view.icon.get_index() > view.key_icon.get_index(), "Assistant stacks enlarged spell icons beneath the arrows")
 	for preset in ["IJKL", "Arrow Keys"]:
 		player._clear_sequence(); player.casting.cooldowns.clear(); Player_Global_Data.p_curr_mana = 400
 		var bindings := ControlBindings.snapshot(); ControlBindings.set_preset(bindings, preset); ControlBindings.apply(bindings)
@@ -153,7 +153,7 @@ func _gameplay() -> void:
 			var e: InputEventKey = InputMap.action_get_events("incantation_" + direction)[0].duplicate(); e.pressed = true
 			player._process_incantation_inputs(e)
 		check(player.incantations.get_sequence_snapshot() == ["down", "left"], preset + " drives actual spell input")
-		check(ui.views[0].path.text.contains("[u]"), "Entered path has an underline as well as brightness")
+		check(ui.views[0].key_icon.texture == ui.ICONS.down, "Assistant shows only the next eligible key")
 		var old: float = aura.buildup
 		var released: int = aura.releases
 		player._add_sequence("down")
@@ -174,7 +174,7 @@ func _gameplay() -> void:
 	check(aura.buildup == 0, "Explicit cancellation dissipates buildup")
 	player._exit_casting_stance(); aura._process(1)
 	check(not aura.aura.emitting and not aura.flow.emitting, "Exiting stance fades continuous emitters")
-	check(aura.amount + aura.aura.amount + aura.flow.amount + aura.release.amount == 74, "CPU particle count bounded to 74 with defaults")
+	check(aura.amount + aura.aura.amount + aura.flow.amount + aura.release.amount == 132, "CPU particle count bounded to 132 with enlarged casting effects")
 	# Live channels launch before their completion; release exactly once on delivery.
 	var jet: SpellData = load("res://data/magis/spells/phys-pressure-jet.tres")
 	Player_Global_Data.learned_spells.append(jet); Player_Global_Data.equipped_spells.append(jet)

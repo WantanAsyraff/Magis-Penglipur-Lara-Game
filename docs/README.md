@@ -36,4 +36,6 @@ Start with [getting started](getting-started.md), then follow the [three content
 
 The historical implementation/migration reports and their logs/screenshots remain intact. Use [the audited document inventory](documentation-audit.md#coverage-and-evidence) to locate every prior page, including Physics/Bakau catalogues, NPC accessibility, spell/enemy/quest internals and boss delivery evidence. Their test counts describe their recorded runs, not a new verification on every documentation edit. Current authoring starts in this handbook.
 
-- [Combat controls and presentation V3](combat-controls-presentation-v3.md) — controls drafts/presets, progressive aura, equipped spell paths and weapon asset authoring.
+Inventory V2: [items and transactions](authoring/inventory-and-items.md), [interface and controls](authoring/inventory-ui.md), [authored cutscene skipping](authoring/cutscene-skipping.md).
+
+[Profile and music app screens](profile-and-music-ui.md): updated layouts, phone routing and playback verification.

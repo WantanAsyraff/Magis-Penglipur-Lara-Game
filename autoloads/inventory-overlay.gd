@@ -16,8 +16,7 @@ func reason() -> String:
 	return ""
 func open() -> bool:
 	if not reason().is_empty(): return false
-	var story := get_node_or_null("/root/CutsceneFlow")
-	if story: story.dismiss_recap()
+	CutsceneFlow.dismiss_recap()
 	layer = CanvasLayer.new(); layer.layer = 100; add_child(layer)
 	ui = load("res://scenes/ui/inventory/inventory-ui.tscn").instantiate()
 	if not ModalService.acquire(ui): layer.queue_free(); ui.free(); ui = null; return false

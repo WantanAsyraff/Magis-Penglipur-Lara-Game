@@ -17,6 +17,4 @@ Start with the [three self-contained exercises](content-authoring-quickstart.md)
 
 Use the [complete property reference](../reference/resource-reference.md) for defaults and Inspector enum/range hints, the [registration matrix](../reference/content-registration-matrix.md) for discovery/export, and [troubleshooting](../reference/troubleshooting.md) for symptoms and fixes. Completion includes actual reachable gameplay, validation, exported references and save compatibility, not just a `.tres` file that can be opened.
 
-Inventory V2: [items and transactions](inventory-and-items.md), [phone crate app and controls](inventory-ui.md).
-
-[Story dialogue skipping](cutscene-skipping.md): explicit opt-in, completion contracts and prologue integration.
+Inventory V2: [items and transactions](inventory-and-items.md), [interface and controls](inventory-ui.md), [authored cutscene skipping](cutscene-skipping.md).

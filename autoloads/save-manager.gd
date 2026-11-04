@@ -165,9 +165,7 @@ func _restore(staged: Dictionary, profile: int) -> bool:
 	var old_position := Player_Manager.last_player_position
 	var old_profile := active_profile
 	var old_ready := session_ready
-	InventoryOverlay.close()
-	var story := get_node_or_null("/root/CutsceneFlow")
-	if story: story.dismiss_recap()
+	InventoryOverlay.close(); CutsceneFlow.dismiss_recap()
 	if is_instance_valid(ModalService.holder): ModalService.release(ModalService.holder)
 	loading = true
 	session_ready = false

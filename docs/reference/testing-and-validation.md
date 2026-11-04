@@ -70,18 +70,19 @@ Use an actual test/scene referencing your newly authored data too; existing suit
 
 Neither static links nor schema introspection proves prose semantics, UI accessibility, balance, narrative completeness, multiplayer synchronization, physical world reachability or power-loss durability. Those require source review, focused behavior tests and actual play/rendered evidence. The [audit](../documentation-audit.md) records unsupported/partially implemented boundaries instead of turning them into fictional workflows.
 
-## Environmental Interactions V1
+## Inventory V2 and authored skipping
 
-The [environment validation report](environment-validation.md) records actual per-suite counts, native screenshots and limits. Source scenes cover physical F interaction, R selection and incantation key events, real projectiles, fluid conservation, buoyancy/current, crate contact, platform riding, turret damage and emergency cutoff. Separate processes exercise existing SaveManager world-flag persistence.
+Run these from the project root with the same Godot command above, always passing --quest-test-mode:
 
 ```bash
-flatpak run org.godotengine.Godot --headless --path . tests/environment-interactions.tscn -- --quest-test-mode
-flatpak run org.godotengine.Godot --headless --path . tests/environment-lab-gameplay.tscn -- --quest-test-mode
-flatpak run org.godotengine.Godot --headless --path . tests/environment-prologue.tscn -- --quest-test-mode
-flatpak run org.godotengine.Godot --headless --path . tests/environment-persistence.tscn -- --quest-test-mode
-flatpak run org.godotengine.Godot --headless --path . tests/environment-persistence.tscn -- --quest-test-mode --read-environment-save
-flatpak run org.godotengine.Godot --path . scenes/environment-testing/environment-interactions-lab.tscn -- --capture-environment --720
-flatpak run org.godotengine.Godot --path . scenes/environment-testing/environment-interactions-lab.tscn -- --capture-environment
+flatpak run org.godotengine.Godot --headless --path . tests/inventory-v2.tscn -- --quest-test-mode
+flatpak run org.godotengine.Godot --headless --path . tests/cutscene-skip.tscn -- --quest-test-mode
+flatpak run org.godotengine.Godot --headless --path . tests/inventory-v2-save.tscn -- --quest-test-mode
+flatpak run org.godotengine.Godot --headless --path . tests/inventory-v2-save.tscn -- --quest-test-mode --read-inventory-save
+flatpak run org.godotengine.Godot --path . scenes/inventory-testing/inventory-v2-preview.tscn -- --quest-test-mode --capture-inventory --720
+flatpak run org.godotengine.Godot --path . scenes/inventory-testing/inventory-v2-preview.tscn -- --quest-test-mode --capture-inventory
+flatpak run org.godotengine.Godot --path . tests/prologue-inventory-integration.tscn -- --quest-test-mode --capture-prologue --720
+flatpak run org.godotengine.Godot --path . tests/prologue-inventory-integration.tscn -- --quest-test-mode --capture-prologue
 ```
 
-The persistence writer/reader use test-prefixed profile 1 and must run in order, without another profile-1 fixture. The reader deletes the fixture slots. Capture commands require a real display and write sixteen Godot-rendered PNGs per resolution. They drive physical inputs and simulation; they are not substitutes for human balance/accessibility testing. For exported coverage, substitute the PCK commands above and run the three environment suites plus the persistence pair against that pack. No campaign save files are changed by these test-prefixed commands.
+The inventory save writer uses test-prefixed profiles 1/2; run its reader immediately afterward and do not overlap other shared-profile fixtures. Captures go into docs/previews/inventory-v2/ at the actual viewport resolution. The native fixture injects real mouse/gamepad events through Godot, exercises Control drag/drop and includes UI screenshot checks; this does not substitute for physical-controller hardware testing. See [delivery evidence and limitations](inventory-v2-validation.md) for actual results and engine shutdown diagnostics.

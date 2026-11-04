@@ -393,7 +393,7 @@ Source: [data/Resources/spell-effects/interrupt-effect.gd](../../data/Resources/
 
 ## ItemData
 
-Source: [data/items/item-data.gd](../../data/items/item-data.gd). Base: `Resource`. [Canonical authoring and validation](../authoring/items-and-loot.md).
+Source: [data/items/item-data.gd](../../data/items/item-data.gd). Base: `Resource`. [Canonical authoring and validation](../authoring/inventory-and-items.md).
 
 Enum `ItemType`: `CONSUMABLE`, `EQUIPMENT`, `KEY_ITEM`, `QUEST_ITEM`, `MATERIAL`, `COMPONENT`, `FOOD`, `WEAPON_MATERIAL`, `RARE_MATERIAL`.
 Enum `UseBehavior`: `AUTOMATIC_COMPATIBILITY`, `MANUAL`, `ACQUISITION_REWARD`, `NONE`.

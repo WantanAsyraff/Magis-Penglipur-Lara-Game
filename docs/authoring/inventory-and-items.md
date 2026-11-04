@@ -37,4 +37,4 @@ A real DroppedItem receives a unique ledger token. It becomes collectible only a
 
 Favorites are stable IDs, toggled by the detail star, Y key or gamepad Y. The optional favorites array and drop_escrow dictionary live in the existing Quest V2 bundle inside Save V1. No schema version changes. Old bundles default to empty values; malformed fields, fractional quantities, invalid IDs/tokens or incompatible explicit equipment reject staging before mutation. Restore returns valid escrow once and reconciles held objectives. Profile reset clears favorites and receipts; UI selection/search/scroll are session-only.
 
-Validate with tests/inventory-v2.tscn, quest-persistence, combat-feedback-save-v1 and the native phone-and-push-input fixture. Test fixtures register temporary data only in their own test process and never grant campaign content.
+Validate with tests/inventory-v2.tscn, inventory-v2-save writer/reader, quest-persistence, combat-feedback-save-v1 and the native preview. Test fixtures register temporary data only in their own test process and never grant campaign content.

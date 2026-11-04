@@ -130,3 +130,5 @@ New and updated Markdown lists below are generated from the actual branch diff a
 - [docs/spell-pipeline-v2-report.md](../spell-pipeline-v2-report.md)
 - [docs/status-effects-hud.md](../status-effects-hud.md)
 - [docs/technical-overview.md](../technical-overview.md)
+
+The later [Inventory V2 and cutscene delivery](inventory-v2-validation.md) records the 2026-10-29 feature checks, new Resource coverage, native screenshots and the separately reproduced baseline dialogue shutdown abort. The earlier results above remain historical.

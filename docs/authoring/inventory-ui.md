@@ -14,8 +14,6 @@ The compact vertical list occupies about 60% of the body, with a scrolling detai
 
 Rows are cached by item_id. Inventory, equipment and preferences signals coalesce refreshes, update quantities and reconcile affected rows. Selection, scroll and search/filter state survive changes; removal selects a neighbor and restores useful focus. Details only show supported properties, plus disabled action reasons. Empty inventory and empty search results have distinct messages. Long descriptions and details scroll rather than expanding the whole window.
 
-The crate icon in the phone opens this same overlay over the current world. F opens the phone from its resting preview; closing it leaves its top edge visible at the bottom-right.
-
 ## Mouse, keyboard and controller
 
 | Operation | Input |
@@ -39,4 +37,4 @@ Child dialogs route controller cancel through window_input and restore focus. Sc
 
 Edit [inventory-theme.tres](../../assets/styles/inventory-theme.tres) for fonts, sizes and normal/hover/pressed/disabled/focus states. InventoryRow normal/selected styles are theme entries. InventoryUI exports background_color, optional background_texture, page_margin and optional open_sound/success_sound/failure_sound. Imported textures cover the viewport; null sounds stay silent. The opening fade lasts 0.12 seconds. Keep contrast and visible focus when supplying artwork. Item icons come from ItemData, fall back to readable monograms and use nearest filtering.
 
-Layout uses anchors, Containers, stretch ratios and scrolling at 1280×720 and 1920×1080. Avoid increasing fixed dimensions until both resolutions are checked. Use the native [phone/inventory integration fixture](../../tests/phone-and-push-input.tscn) with --quest-test-mode --actual-overworld. This creates scoped fixtures and captures real renderer images, not design mockups. See [validation evidence](../phone-input-fix.md).
+Layout uses anchors, Containers, stretch ratios and scrolling at 1280×720 and 1920×1080. Avoid increasing fixed dimensions until both resolutions are checked. Use the native [preview scene](../../scenes/inventory-testing/inventory-v2-preview.tscn) with --quest-test-mode --capture-inventory (add --720 for 720p). This creates scoped fixtures and captures real renderer images, not design mockups. See [validation evidence](../reference/inventory-v2-validation.md).

@@ -38,4 +38,4 @@ Skipped sequences with authored recap text offer a short-lived optional View rec
 | after-final-paper / chapter-1 subway | Complete dialogue in place, noncombat, phone hidden; no added transition or reward |
 | after-final-paper / FLAC floor-one entrance | Same sequence identity, caller duplicates phone_after=true to preserve its existing context |
 
-Save V1 and Quest V2 versions are unchanged. Old saves have no new sequence flag and can play the introduction once. Existing completion flags persist across fresh-process load. Test with tests/cutscene-skip.tscn, inventory-v2-save and the native preview; [recorded evidence](../story-dialogue-skip.md) distinguishes synthetic controller input from hardware testing.
+Save V1 and Quest V2 versions are unchanged. Old saves have no new sequence flag and can play the introduction once. Existing completion flags persist across fresh-process load. Test with tests/cutscene-skip.tscn, inventory-v2-save and the native preview; [recorded evidence](../reference/inventory-v2-validation.md) distinguishes synthetic controller input from hardware testing.

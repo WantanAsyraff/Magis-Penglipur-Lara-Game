@@ -1,6 +1,6 @@
 extends RefCounted
 const ITEMS = [
- preload("res://data/items/equipment/student-lab-robe.tres"),
+	preload("res://data/items/equipment/practice-magis-focus.tres"),
 	preload("res://data/items/drops/fish-meat.tres"),
 	preload("res://data/items/drops/fish-bone.tres"),
 	preload("res://data/items/drops/fish-scales.tres"),

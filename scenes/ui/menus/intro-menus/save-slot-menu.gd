@@ -137,6 +137,10 @@ func _confirm(title: String, text: String, callback: Callable) -> void:
 
 func _activate() -> void:
 	if creating:
+		if name_input.text.strip_edges().is_empty():
+			status.text = "Enter a character name first."
+			name_input.grab_focus()
+			return
 		var occupied := false
 		for kind in ["manual","auto"]:
 			for backup in [false,true]: occupied = occupied or SaveManager.inspect_slot(selected_profile,kind,backup).state != "empty"
@@ -145,12 +149,32 @@ func _activate() -> void:
 		else: _begin(false)
 	else: _load(false)
 
+var preset_panel: CastingPresetPanel
+
 func _begin(overwrite: bool) -> void:
+	if is_instance_valid(preset_panel): return
+	preset_panel = CastingPresetPanel.new()
+	add_child(preset_panel)
+	preset_panel.backed.connect(func():
+		remove_child(preset_panel); preset_panel.queue_free(); action.grab_focus())
+	preset_panel.confirmed.connect(func(preset):
+		var bindings := ControlBindings.snapshot()
+		ControlBindings.set_preset(bindings, preset)
+		var error := ControlBindings.save_bindings(bindings)
+		if error != OK:
+			preset_panel.message.text = "Could not save controls: " + error_string(error)
+			return
+		ControlBindings.apply(bindings)
+		preset_panel.lock_submission()
+		_create_campaign(overwrite))
+
+func _create_campaign(overwrite: bool) -> void:
 	action.disabled = true
 	var success := await SaveManager.new_game(selected_profile,name_input.text,overwrite)
 	if is_instance_valid(self) and not success:
 		status.text = SaveManager.last_error
 		action.disabled = false
+		if is_instance_valid(preset_panel): preset_panel.queue_free()
 
 func _load(backup: bool) -> void:
 	action.disabled = true

@@ -5,6 +5,7 @@ const SPELL_SLOT = preload("res://scenes/ui/spell-combat-ui/spell-slot.tscn")
 
 @onready var grid: GridContainer = %RepetoireGrid
 
+@export var show_legacy_repertoire := false
 var tween: Tween
 
 func _ready() -> void:
@@ -15,6 +16,8 @@ func _ready() -> void:
 
 func _on_casting_changed(casting: bool) -> void:
 	if not is_inside_tree(): return
+	if not show_legacy_repertoire or Player_Global_Data.assistance_mode == 2:
+		hide(); return
 	if tween:
 		tween.kill()
 

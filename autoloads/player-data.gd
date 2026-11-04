@@ -308,7 +308,7 @@ const ASSISTANCE_SETTINGS := "user://incantation-assistant.cfg"
 
 func _ready() -> void:
 	load_assistance_settings()
-	load("res://scenes/ui/menus/settings_menu.gd").load_from_file()
+	ControlBindings.load_bindings()
 
 func load_assistance_settings(path: String = ASSISTANCE_SETTINGS) -> void:
 	var cfg := ConfigFile.new()

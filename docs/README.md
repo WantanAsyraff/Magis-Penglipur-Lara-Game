@@ -36,12 +36,4 @@ Start with [getting started](getting-started.md), then follow the [three content
 
 The historical implementation/migration reports and their logs/screenshots remain intact. Use [the audited document inventory](documentation-audit.md#coverage-and-evidence) to locate every prior page, including Physics/Bakau catalogues, NPC accessibility, spell/enemy/quest internals and boss delivery evidence. Their test counts describe their recorded runs, not a new verification on every documentation edit. Current authoring starts in this handbook.
 
-## Environmental content
-
-- [Mechanisms, rules, collision and persistence](authoring/environmental-interactions.md)
-- [Sprites, animation, audio and visual replacements](authoring/environmental-visuals-and-animations.md)
-- [Lab puzzles and optional prologue placement](authoring/environmental-puzzles.md)
-
-[Profile and music app screens](profile-and-music-ui.md): updated layouts, phone routing and playback verification.
-
-[Story dialogue skip integration](story-dialogue-skip.md): active-project wiring, controls and native verification.
+- [Combat controls and presentation V3](combat-controls-presentation-v3.md) — controls drafts/presets, progressive aura, equipped spell paths and weapon asset authoring.

@@ -247,6 +247,7 @@ func _process_incantation_inputs(event: InputEvent) -> void:
 
 	if pressed == "":
 		return
+	get_viewport().set_input_as_handled()
 
 	var candidate := spell_string + [pressed]
 	if not _has_partial_match(candidate):
@@ -373,6 +374,11 @@ func _regen_mana(delta: float) -> void:
 # INPUT
 # -------------------------
 func _unhandled_input(_event: InputEvent) -> void:
+	if get_tree().paused or Dialogic.current_timeline != null or QuestOfferDialog.is_open(): return
+	var focused := get_viewport().gui_get_focus_owner()
+	if focused != null and focused.is_visible_in_tree(): return
+	for phone in get_tree().get_nodes_in_group("phone_ui"):
+		if phone.phone_selected: return
 	if multiplayer.has_multiplayer_peer() and not is_multiplayer_authority():
 		return
 	if _event.is_action_pressed("environment_target") and not _event.is_echo():
@@ -387,6 +393,7 @@ func _unhandled_input(_event: InputEvent) -> void:
 		return
 	if _event.is_action_pressed("pushback") and not _event.is_echo():
 		if pushback.try_push(_event.is_action_pressed("interact")):
+			$WeaponRig.present_attack(1, not is_on_floor())
 			get_viewport().set_input_as_handled()
 			return
 	if _event.is_action_pressed("cancel_casting") and not _event.is_echo():
@@ -511,8 +518,11 @@ func _clear_sequence() -> void:
 	spell_label.text = ""
 	_clear_spell_icons()
 
+signal casting_cancelled
+
 func cancel_active_casting() -> void:
 	casting.cancel()
+	casting_cancelled.emit()
 
 func _on_request_status(_id: int, _chain: int, spell: SpellData, status: SpellCastingComponent.RequestStatus, reason: String) -> void:
 	if spell == null: return
@@ -526,6 +536,10 @@ func _clear_spell_icons() -> void:
 		child.queue_free()
 
 func _update_spell_icons() -> void:
+	# The path HUD presents entered directions without a second strip over Yan.
+	if is_instance_valid(chain_assistant) and Player_Global_Data.assistance_mode != 2:
+		_clear_spell_icons()
+		return
 	if not spell_icon_box:
 		return
 	_clear_spell_icons()
@@ -621,6 +635,7 @@ func _on_damage_taken(amount: float) -> void:
 	# ---- PARRY: full negation ----
 	if _parry_active:
 		_parry_active = false
+		$WeaponRig.play_presentation(&"weapon_parry")
 		_spawn_indicator("PARRIED!", "#A78BFA")
 		_spawn_particles(parry_particles_scene)
 		spell_label.text = "Parried!"
@@ -651,7 +666,10 @@ func _on_damage_taken(amount: float) -> void:
 		Player_Global_Data.p_curr_health - amount, 0.0
 	)
 
+signal presentation_died
+
 func _on_died() -> void:
+	presentation_died.emit()
 	casting.cancel("Caster died")
 	if multiplayer.has_multiplayer_peer() and not is_multiplayer_authority():
 		hitbox.clear_all_effects()

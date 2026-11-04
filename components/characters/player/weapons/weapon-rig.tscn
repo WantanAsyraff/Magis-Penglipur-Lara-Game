@@ -1,0 +1,100 @@
+[gd_scene format=3]
+[ext_resource type="Script" path="res://components/characters/player/weapons/weapon-visual-controller.gd" id="1"]
+[ext_resource type="Script" path="res://data/items/weapon-visual-data.gd" id="2"]
+[sub_resource type="Resource" id="DefaultVisual"]
+script = ExtResource("2")
+[sub_resource type="Animation" id="weapon_idle"]
+resource_name = "weapon_idle"
+length = 1.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/path = NodePath("WeaponAttachment:rotation")
+tracks/0/interp = 1
+tracks/0/keys = {"times": PackedFloat32Array(0,0.6,1.2), "transitions": PackedFloat32Array(1,1,1), "update": 0, "values": [0,0.04,0]}
+[sub_resource type="Animation" id="weapon_draw"]
+resource_name = "weapon_draw"
+length = 0.28
+loop_mode = 0
+tracks/0/type = "value"
+tracks/0/path = NodePath("WeaponAttachment:rotation")
+tracks/0/interp = 1
+tracks/0/keys = {"times": PackedFloat32Array(0,0.14,0.28), "transitions": PackedFloat32Array(1,1,1), "update": 0, "values": [1.2,-0.2,0]}
+[sub_resource type="Animation" id="weapon_holster"]
+resource_name = "weapon_holster"
+length = 0.22
+loop_mode = 0
+tracks/0/type = "value"
+tracks/0/path = NodePath("WeaponAttachment:rotation")
+tracks/0/interp = 1
+tracks/0/keys = {"times": PackedFloat32Array(0,0.22), "transitions": PackedFloat32Array(1,1), "update": 0, "values": [0,1.4]}
+[sub_resource type="Animation" id="weapon_attack_1"]
+resource_name = "weapon_attack_1"
+length = 0.36
+loop_mode = 0
+tracks/0/type = "value"
+tracks/0/path = NodePath("WeaponAttachment:rotation")
+tracks/0/interp = 1
+tracks/0/keys = {"times": PackedFloat32Array(0,0.08,0.22,0.36), "transitions": PackedFloat32Array(1,1,1,1), "update": 0, "values": [-0.7,-1.4,1.3,0]}
+[sub_resource type="Animation" id="weapon_attack_2"]
+resource_name = "weapon_attack_2"
+length = 0.4
+loop_mode = 0
+tracks/0/type = "value"
+tracks/0/path = NodePath("WeaponAttachment:rotation")
+tracks/0/interp = 1
+tracks/0/keys = {"times": PackedFloat32Array(0,0.1,0.24,0.4), "transitions": PackedFloat32Array(1,1,1,1), "update": 0, "values": [0.7,1.5,-1.3,0]}
+[sub_resource type="Animation" id="weapon_attack_air"]
+resource_name = "weapon_attack_air"
+length = 0.42
+loop_mode = 0
+tracks/0/type = "value"
+tracks/0/path = NodePath("WeaponAttachment:rotation")
+tracks/0/interp = 1
+tracks/0/keys = {"times": PackedFloat32Array(0,0.12,0.3,0.42), "transitions": PackedFloat32Array(1,1,1,1), "update": 0, "values": [0,-2.0,1.5,0]}
+[sub_resource type="Animation" id="weapon_block"]
+resource_name = "weapon_block"
+length = 0.15
+loop_mode = 0
+tracks/0/type = "value"
+tracks/0/path = NodePath("WeaponAttachment:rotation")
+tracks/0/interp = 1
+tracks/0/keys = {"times": PackedFloat32Array(0,0.15), "transitions": PackedFloat32Array(1,1), "update": 0, "values": [0,-1.0]}
+[sub_resource type="Animation" id="weapon_parry"]
+resource_name = "weapon_parry"
+length = 0.32
+loop_mode = 0
+tracks/0/type = "value"
+tracks/0/path = NodePath("WeaponAttachment:rotation")
+tracks/0/interp = 1
+tracks/0/keys = {"times": PackedFloat32Array(0,0.08,0.2,0.32), "transitions": PackedFloat32Array(1,1,1,1), "update": 0, "values": [-1,-1.6,-0.8,0]}
+[sub_resource type="Animation" id="weapon_cast"]
+resource_name = "weapon_cast"
+length = 0.28
+loop_mode = 0
+tracks/0/type = "value"
+tracks/0/path = NodePath("WeaponAttachment:rotation")
+tracks/0/interp = 1
+tracks/0/keys = {"times": PackedFloat32Array(0,0.12,0.28), "transitions": PackedFloat32Array(1,1,1), "update": 0, "values": [0,0.7,0]}
+[sub_resource type="AnimationLibrary" id="Library"]
+_data = {
+&"weapon_idle": SubResource("weapon_idle"),
+&"weapon_draw": SubResource("weapon_draw"),
+&"weapon_holster": SubResource("weapon_holster"),
+&"weapon_attack_1": SubResource("weapon_attack_1"),
+&"weapon_attack_2": SubResource("weapon_attack_2"),
+&"weapon_attack_air": SubResource("weapon_attack_air"),
+&"weapon_block": SubResource("weapon_block"),
+&"weapon_parry": SubResource("weapon_parry"),
+&"weapon_cast": SubResource("weapon_cast")
+}
+[node name="WeaponRig" type="Node2D"]
+script = ExtResource("1")
+default_visual = SubResource("DefaultVisual")
+[node name="WeaponAttachment" type="Node2D" parent="."]
+[node name="WeaponVisual" type="Node2D" parent="WeaponAttachment"]
+[node name="WeaponHitOrigin" type="Marker2D" parent="WeaponAttachment"]
+position = Vector2(0, -48)
+[node name="WeaponEffectsOrigin" type="Marker2D" parent="WeaponAttachment"]
+position = Vector2(0, -52)
+[node name="WeaponAnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {&"": SubResource("Library")}

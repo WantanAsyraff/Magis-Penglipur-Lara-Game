@@ -1,245 +1,192 @@
 extends Control
-
-
-# -------------------------
-# SCENE REFS
-# -------------------------
-@onready var bind_list      : VBoxContainer = %BindList
-@onready var save_btn       : Button        = %SaveButton
-@onready var cancel_btn     : Button        = %CancelButton
-@onready var reset_all_btn  : Button        = %ResetAllButton
-
 const ROW_SCENE := preload("res://scenes/ui/menus/bind-list.tscn")
-
-# -------------------------
-# ACTION REGISTRY
-# Tuples: [ action_string, display_name, group_header_or_empty ]
-# A non-empty group string inserts a separator label above that row.
-# -------------------------
-const ACTIONS: Array = [
-	["cutscene_skip","Hold to skip story","Story"],
-	["inventory_toggle","Inventory","Inventory"],
-	["inventory_favorite","Favorite item",""],
-	["inventory_previous_tab","Previous inventory tab",""],
-	["inventory_next_tab","Next inventory tab",""],
-	["inventory_search","Search inventory",""],
-	# ── Movement ──────────────────────────────────────────────
-	["move_left",           "Move Left",            "Movement"],
-	["move_right",          "Move Right",           ""],
-	["climb_up",            "Climb Up",             ""],
-	["climb_down",          "Climb Down",           ""],
-	# ── Core ──────────────────────────────────────────────────
-	["jump",                "Jump",                 "Core"],
-	["dash",                "Dash",                 ""],
-	["block",               "Block / Parry",        ""],
-	["interact",            "Interact",             ""],
-	["open_phone",          "Open Phone",           ""],
-	["paused",              "Pause",                ""],
-	# ── Incantation ───────────────────────────────────────────
-	["incantation_up",      "Incantation ↑",        "Incantation"],
-	["incantation_down",    "Incantation ↓",        ""],
-	["incantation_left",    "Incantation ←",        ""],
-	["incantation_right",   "Incantation →",        ""],
-	["cancel_casting",      "Cancel Active Cast / Queue", ""],
-	["clear_incantation",   "Clear Incantation",    ""],
-	# ── Combat / Casting ──────────────────────────────────────
-	["start_incantation",   "Toggle Casting Stance","Combat & Casting"],
-	["pushback",            "Push Enemies",          ""],
-	["environment_target",   "Next Puzzle Target",     ""],
-	["cycle_target",        "Next Enemy Target",     ""],
-	["casting_aim_lock",    "Stop Movement (optional)", ""],
-]
-# -------------------------
-# STATE
-# -------------------------
+const SAVE_PATH := ControlBindings.SAVE_PATH
+# Public registry retained for tools and validation.
+const ACTIONS := [["move_left"], ["move_right"], ["climb_up"], ["climb_down"], ["jump"], ["dash"], ["block"], ["interact"], ["open_phone"], ["paused"], ["incantation_up"], ["incantation_down"], ["incantation_left"], ["incantation_right"], ["cancel_casting"], ["clear_incantation"], ["start_incantation"], ["pushback"], ["cycle_target"], ["casting_aim_lock"]]
+var draft: Dictionary
+var category := "Movement"
+var advanced := false
+var assistance_mode: int
+var bind_list: VBoxContainer
+var _rows: Array[KeybindRow] = []
+var _listening_row: KeybindRow
 var _assistance: OptionButton
-var _rows           : Array[KeybindRow] = []
-var _listening_row  : KeybindRow        = null
-var _saved_snapshot : Dictionary        = {}   # action → Array[InputEvent]
+var status: Label
+var section_title: Label
+var preset_label: Label
+var tabs: Array[Button] = []
+var preset_buttons: Dictionary = {}
+var advanced_button: Button
+var content: VBoxContainer
+var page_margin: MarginContainer
 
-# -------------------------
-# LIFECYCLE
-# -------------------------
 func _ready() -> void:
-	print(bind_list) 
-	_snapshot_current_binds()
+	theme = ControlsStyle.theme()
+	draft = ControlBindings.snapshot()
+	assistance_mode = Player_Global_Data.assistance_mode
+	var bg := ColorRect.new(); bg.color = Color("121520")
+	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT); add_child(bg)
+	var margin := MarginContainer.new(); page_margin = margin
+	margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	for side in ["left", "right", "top", "bottom"]: margin.add_theme_constant_override("margin_" + side, 32)
+	add_child(margin)
+	content = VBoxContainer.new(); content.add_theme_constant_override("separation", 14); margin.add_child(content)
+	ControlsStyle.label(content, "CONTROLS & INPUT", 30)
+	ControlsStyle.label(content, "Customize how you play Magis Penglipur Lara", 16).modulate = Color("b6bccb")
+	var navigation := HBoxContainer.new(); content.add_child(navigation)
+	for title in ControlBindings.CATEGORIES:
+		var button := ControlsStyle.button(navigation, title, _select_category.bind(title))
+		button.toggle_mode = true; button.size_flags_horizontal = Control.SIZE_EXPAND_FILL; tabs.append(button)
+	section_title = ControlsStyle.label(content, "", 22)
+	var scroll := ScrollContainer.new(); scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED; content.add_child(scroll)
+	bind_list = VBoxContainer.new(); bind_list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	bind_list.add_theme_constant_override("separation", 8); scroll.add_child(bind_list)
+	status = ControlsStyle.label(content, "Select a binding to edit. Keyboard, mouse and controller supported.", 15)
+	status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	var footer := HBoxContainer.new(); footer.add_theme_constant_override("separation", 12); content.add_child(footer)
+	ControlsStyle.button(footer, "Reset section", _reset_section)
+	var spacer := Control.new(); spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL; footer.add_child(spacer)
+	ControlsStyle.button(footer, "Cancel", _on_cancel)
+	ControlsStyle.button(footer, "Apply", _on_save)
+	_select_category(category)
+	resized.connect(_resize_page); _resize_page()
+	tabs[0].grab_focus()
+
+func _select_category(title: String) -> void:
+	_stop_listening()
+	category = title
+	for button in tabs: button.set_pressed_no_signal(button.text == title)
+	section_title.text = title.to_upper()
 	_build_rows()
 
-	save_btn.pressed.connect(_on_save)
-	cancel_btn.pressed.connect(_on_cancel)
-	reset_all_btn.pressed.connect(_on_reset_all)
+func _build_rows() -> void:
+	for child in bind_list.get_children(): bind_list.remove_child(child); child.queue_free()
+	_rows.clear(); preset_buttons.clear()
+	if category == "Spellcasting":
+		preset_label = ControlsStyle.label(bind_list, "Control preset · " + ControlBindings.preset_name(draft))
+		var presets := HBoxContainer.new(); bind_list.add_child(presets)
+		for preset in ControlBindings.PRESETS:
+			var button := ControlsStyle.button(presets, preset, _preset.bind(preset))
+			button.toggle_mode = true; button.set_pressed_no_signal(ControlBindings.preset_name(draft) == preset)
+			preset_buttons[preset] = button
+		var row := HBoxContainer.new(); bind_list.add_child(row)
+		ControlsStyle.label(row, "Incantation assistance").size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		_assistance = OptionButton.new()
+		for title in ["Guided", "Minimal", "Off"]: _assistance.add_item(title)
+		_assistance.select(assistance_mode); _assistance.item_selected.connect(func(mode): assistance_mode = mode); row.add_child(_assistance)
+	for entry in ControlBindings.CATEGORIES[category]:
+		if entry.size() > 2 and not advanced: continue
+		if not InputMap.has_action(entry[0]): continue
+		var row: KeybindRow = ROW_SCENE.instantiate(); bind_list.add_child(row)
+		row.setup(entry[0], entry[1], draft.get(entry[0], []))
+		row.rebind_requested.connect(_on_rebind_requested); _rows.append(row)
+	# Preserve future/project-specific supported actions in Interface advanced.
+	if category == "Interface" and advanced:
+		var known := []
+		for entries in ControlBindings.CATEGORIES.values():
+			for entry in entries: known.append(entry[0])
+		for action in draft:
+			if action in known: continue
+			var row: KeybindRow = ROW_SCENE.instantiate(); bind_list.add_child(row)
+			row.setup(action, String(action).capitalize(), draft[action]); row.rebind_requested.connect(_on_rebind_requested); _rows.append(row)
+	if category in ["Spellcasting", "Interface"]:
+		advanced_button = ControlsStyle.button(bind_list, "Hide advanced options ▴" if advanced else "Show advanced options ▾", _toggle_advanced)
+
+func _toggle_advanced() -> void:
+	advanced = not advanced; _build_rows(); advanced_button.grab_focus()
+
+func _preset(preset: String) -> void:
+	ControlBindings.set_preset(draft, preset)
+	_build_rows()
+	preset_buttons[preset].grab_focus()
+	status.text = preset + " selected. Apply to save. UI arrow navigation remains available."
 
 func _input(event: InputEvent) -> void:
-	if _listening_row == null:
-		return
-
-	# Ignore non-key events and modifier-only presses
-	if not event is InputEventKey:
-		return
-	if not event.pressed:
-		return
-	var key_event := event as InputEventKey
-	if key_event.keycode in [KEY_SHIFT, KEY_CTRL, KEY_ALT, KEY_META]:
-		return
-
-	# Escape cancels rebind without changing anything
-	if key_event.keycode == KEY_ESCAPE:
-		_stop_listening()
-		return
-
+	if _listening_row == null: return
 	get_viewport().set_input_as_handled()
-
-	# Apply the new binding
+	if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
+		_stop_listening(); return
+	if event is InputEventJoypadButton and event.pressed and event.button_index == JOY_BUTTON_B:
+		_stop_listening(); return
+	if event is InputEventKey:
+		if not event.pressed or event.echo or event.keycode in [KEY_SHIFT, KEY_CTRL, KEY_ALT, KEY_META]: return
+	elif event is InputEventJoypadMotion:
+		if absf(event.axis_value) < 0.7: return
+	elif event is InputEventJoypadButton or event is InputEventMouseButton:
+		if not event.pressed: return
+	else: return
+	var binding: InputEvent = event.duplicate()
+	if binding is InputEventKey:
+		binding.physical_keycode = event.physical_keycode if event.physical_keycode else event.keycode
+		binding.keycode = 0; binding.unicode = 0; binding.pressed = false
 	var action := _listening_row.action_name
-	var controller_events := InputMap.action_get_events(action).filter(func(event): return not event is InputEventKey)
-	InputMap.action_erase_events(action)
-	for binding in controller_events: InputMap.action_add_event(action,binding)
-	var new_event := InputEventKey.new()
-	new_event.keycode = key_event.keycode
-	InputMap.action_add_event(action, new_event)
-
+	var conflicts := ControlBindings.conflicts(draft, action, binding)
+	var focus := _listening_row.primary_btn
 	_stop_listening()
+	if not conflicts.is_empty():
+		var dialog := ConfirmationDialog.new(); dialog.title = "Shared binding"
+		dialog.dialog_text = "Also assigned to: %s. Keep this shared binding?" % ", ".join(conflicts)
+		add_child(dialog)
+		dialog.confirmed.connect(func(): _assign(action, binding); dialog.queue_free(); focus.grab_focus())
+		dialog.canceled.connect(func(): dialog.queue_free(); focus.grab_focus())
+		dialog.popup_centered()
+	else: _assign(action, binding)
 
-# -------------------------
-# BUILD
-# -------------------------
-func _build_rows() -> void:
-	# Clear any existing rows (e.g. on re-open)
-	for child in bind_list.get_children():
-		child.queue_free()
-	_rows.clear()
+func _assign(action: String, binding: InputEvent) -> void:
+	ControlBindings.replace_family(draft, action, binding)
+	for row in _rows:
+		row.events = draft[row.action_name]; row.refresh_display()
+	if category == "Spellcasting":
+		preset_label.text = "Control preset · " + ControlBindings.preset_name(draft)
+		for preset in preset_buttons: preset_buttons[preset].set_pressed_no_signal(ControlBindings.preset_name(draft) == preset)
+	status.text = "Binding updated. Apply to save."
 
-	var assistance_label := Label.new()
-	assistance_label.text = "Incantation assistance"
-	bind_list.add_child(assistance_label)
-	_assistance = OptionButton.new()
-	for title in ["Guided", "Minimal", "Off"]: _assistance.add_item(title)
-	_assistance.select(Player_Global_Data.assistance_mode)
-	bind_list.add_child(_assistance)
-
-	for entry in ACTIONS:
-		var action_str   : String = entry[0]
-		var display_name : String = entry[1]
-		var group_header : String = entry[2]
-
-		# Section label
-		if group_header != "":
-			var sep := HSeparator.new()
-			bind_list.add_child(sep)
-			var lbl := Label.new()
-			lbl.text = group_header.to_upper()
-			lbl.add_theme_color_override("font_color", Color(0.7, 0.65, 0.5))
-			lbl.add_theme_font_size_override("font_size", 11)
-			bind_list.add_child(lbl)
-
-		# Skip actions not registered in the InputMap
-		if not InputMap.has_action(action_str):
-			continue
-
-		var row : KeybindRow = ROW_SCENE.instantiate()
-		bind_list.add_child(row)
-		row.setup(action_str, display_name)
-		row.rebind_requested.connect(_on_rebind_requested)
-		_rows.append(row)
-
-# -------------------------
-# LISTENING
-# -------------------------
 func _on_rebind_requested(row: KeybindRow) -> void:
-	# If another row was listening, cancel it first
-	if _listening_row != null and _listening_row != row:
-		_listening_row.set_listening(false)
-
-	_listening_row = row
-	row.set_listening(true)
-
+	_stop_listening(); _listening_row = row; row.set_listening(true)
+	status.text = "Press a key, mouse button or controller input. Escape / controller B cancels."
 func _stop_listening() -> void:
-	if _listening_row:
-		_listening_row.set_listening(false)
-		_listening_row = null
-
-# -------------------------
-# SAVE / CANCEL / RESET
-# -------------------------
+	if is_instance_valid(_listening_row):
+		_listening_row.set_listening(false); _listening_row.primary_btn.grab_focus()
+	_listening_row = null
+func _reset_section() -> void:
+	_stop_listening()
+	for entry in ControlBindings.CATEGORIES[category]: draft[entry[0]] = ControlBindings.defaults(entry[0])
+	if category == "Interface":
+		var known := []
+		for entries in ControlBindings.CATEGORIES.values():
+			for entry in entries: known.append(entry[0])
+		for action in draft:
+			if action not in known: draft[action] = ControlBindings.defaults(action)
+	if category == "Spellcasting": assistance_mode = 0
+	_build_rows(); status.text = "Section reset in draft. Apply to save."
 func _on_save() -> void:
 	_stop_listening()
-	Player_Global_Data.set_assistance_mode(_assistance.selected)
-	_save_to_file()
-	_snapshot_current_binds()
-	_go_back()
-
+	var error := ControlBindings.save_bindings(draft)
+	if error != OK: status.text = "Could not save controls: " + error_string(error); return
+	var previous_mode := Player_Global_Data.assistance_mode
+	if Player_Global_Data.set_assistance_mode(assistance_mode) != OK:
+		ControlBindings.save_bindings(ControlBindings.snapshot())
+		Player_Global_Data.assistance_mode = previous_mode
+		Player_Global_Data.assistance_changed.emit(previous_mode)
+		status.text = "Could not save assistance preference."; return
+	ControlBindings.apply(draft); _go_back()
 func _on_cancel() -> void:
-	_stop_listening()
-	_restore_snapshot()
-	for row in _rows:
-		row.refresh_display()
-	_go_back()
-
+	_stop_listening(); _go_back()
+func _on_back_button_pressed() -> void:
+	_on_cancel()
 func _go_back() -> void:
-	print("Current scene, ", Player_Global_Data.current_scene)
-	print("Previous scene, ", Player_Global_Data.previous_scene)
 	if Player_Global_Data.previous_scene == "":
 		get_tree().change_scene_to_file("res://scenes/ui/menus/intro-menus/main-menu.tscn")
-		return
-	Player_Manager.last_player_position = Player_Global_Data.previous_position
-	SceneManager.change_scene(Player_Global_Data.previous_scene)
-	print("Position, ", Player_Global_Data.previous_position)
-	Player_Global_Data.p_moveable = true
-
-func _on_reset_all() -> void:
-	_stop_listening()
-	_assistance.select(0)
-	for row in _rows:
-		row.reset_to_default()
-
-# -------------------------
-# PERSISTENCE
-# -------------------------
-const SAVE_PATH := "user://keybinds.cfg"
-
-func _snapshot_current_binds() -> void:
-	_saved_snapshot.clear()
-	for entry in ACTIONS:
-		var action: String = entry[0]
-		if InputMap.has_action(action):
-			_saved_snapshot[action] = InputMap.action_get_events(action).duplicate(true)
-
-func _restore_snapshot() -> void:
-	for action in _saved_snapshot:
-		InputMap.action_erase_events(action)
-		for event in _saved_snapshot[action]:
-			InputMap.action_add_event(action, event)
-
+	else:
+		Player_Manager.last_player_position = Player_Global_Data.previous_position
+		SceneManager.change_scene(Player_Global_Data.previous_scene)
+		Player_Global_Data.p_moveable = true
 func _save_to_file(path: String = SAVE_PATH) -> void:
-	var cfg := ConfigFile.new()
-	for entry in ACTIONS:
-		var action: String = entry[0]
-		if not InputMap.has_action(action):
-			continue
-		var keycodes: Array[Dictionary] = []
-		for event in InputMap.action_get_events(action):
-			if event is InputEventKey:
-				keycodes.append({"keycode": event.keycode, "physical_keycode": event.physical_keycode})
-		cfg.set_value("keybinds", action, keycodes)
-	cfg.save(path)
-
-func _on_back_button_pressed() -> void:
-	_go_back()
-
-## Call this from your game's boot/autoload to restore saved binds on startup.
+	ControlBindings.save_bindings(draft, path)
 static func load_from_file(path: String = SAVE_PATH) -> void:
-	var cfg := ConfigFile.new()
-	if cfg.load(path) != OK:
-		return
-	for action in (cfg.get_section_keys("keybinds") if cfg.has_section("keybinds") else []):
-		if not InputMap.has_action(action):
-			continue
-		InputMap.action_erase_events(action)
-		for keycode in cfg.get_value("keybinds", action, []):
-			var event := InputEventKey.new()
-			if keycode is Dictionary:
-				event.keycode = int(keycode.get("keycode", 0))
-				event.physical_keycode = int(keycode.get("physical_keycode", 0))
-			else:
-				event.keycode = int(keycode)
-			InputMap.action_add_event(action, event)
+	ControlBindings.load_bindings(path)
+
+func _resize_page() -> void:
+	if page_margin == null: return
+	for side in ["left", "right"]: page_margin.add_theme_constant_override("margin_" + side, maxi(24, int((size.x - 1000) / 2)))

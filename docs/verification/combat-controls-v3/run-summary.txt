@@ -1,0 +1,16 @@
+PASS combat-controls-v3 [('104', '0')] diagnostics=1
+PASS combat-controls-v3-read-v3-bindings [('1', '0')] diagnostics=1
+PASS incantation-assistant [('60', '0')] diagnostics=1
+PASS player-combo-chains [('23', '0')] diagnostics=1
+PASS spell-equipment-ui [('38', '0')] diagnostics=1
+PASS spell-regression [('71', '0')] diagnostics=1
+PASS snappy-combat [('55', '0')] diagnostics=4
+PASS quest-pipeline [('172', '0')] diagnostics=1
+PASS quest-accessibility [('90', '0')] diagnostics=1
+PASS quest-persistence-write-quest-save [('4', '0')] diagnostics=1
+PASS quest-persistence [('7', '0')] diagnostics=1
+PASS combat-feedback-save-v1 [('60', '0')] diagnostics=20
+PASS combat-feedback-save-v1-read-full-save [('20', '0')] diagnostics=1
+PASS boss-prototype [('70', '0')] diagnostics=1
+PASS combat-controls-v3-preview [] diagnostics=1
+15/15 invocations passed. Logs: /tmp/magis-combat-v3/.godot/v3-test-results

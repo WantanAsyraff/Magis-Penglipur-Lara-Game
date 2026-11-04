@@ -1,0 +1,157 @@
+Godot Engine v4.7.2.stable.flathub.ed1daf0bf - https://godotengine.org
+
+[   0% ] [90m[1mfirst_scan_filesystem[22m | Started Project initialization (5 steps)[39m[0m
+[   0% ] [90m[1mfirst_scan_filesystem[22m | Scanning file structure...[39m[0m
+[  16% ] [90m[1mfirst_scan_filesystem[22m | Loading global class names...[39m[0m
+[  33% ] [90m[1mfirst_scan_filesystem[22m | Verifying GDExtensions...[39m[0m
+[  50% ] [90m[1mfirst_scan_filesystem[22m | Creating autoload scripts...[39m[0m
+WARNING: res://data/magis/spells/phys-force.tres:7 - ext_resource, invalid UID: uid://cnnad3qojgc2y - using text path instead: res://assets/temp/temp-mana.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://assets/custom-labels/ui-stats-label.tres:3 - ext_resource, invalid UID: uid://bid56dcwfjc8v - using text path instead: res://assets/font/Bitter/static/Bitter-Bold.ttf
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://scenes/ui/spell-combat-ui/repetoire.tscn:4 - ext_resource, invalid UID: uid://diiqo28q375lq - using text path instead: res://assets/ui/spells/RepetoireBook.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/NPCs/npc.tscn:4 - ext_resource, invalid UID: uid://doaygnck5qus5 - using text path instead: res://assets/temp/player-temp.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/platforms/temptilemap.tscn:3 - ext_resource, invalid UID: uid://157vauidtvr1 - using text path instead: res://assets/temp/platform.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/platforms/temptilemap.tscn:5 - ext_resource, invalid UID: uid://djldihdqsy2qq - using text path instead: res://assets/temp/classroom-temp1.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/platforms/temptilemap.tscn:6 - ext_resource, invalid UID: uid://clgvvrn3l1gqs - using text path instead: res://assets/temp/classroom-temp1-items.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/tilemaps/palleteTemp.tscn:3 - ext_resource, invalid UID: uid://cmrde1ocyibd0 - using text path instead: res://assets/temp/pallete.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/tilemaps/palleteTemp.tscn:4 - ext_resource, invalid UID: uid://clgvvrn3l1gqs - using text path instead: res://assets/temp/classroom-temp1-items.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/panels/tutorials/tutorial-panel.tscn:5 - ext_resource, invalid UID: uid://bid56dcwfjc8v - using text path instead: res://assets/font/Bitter/static/Bitter-Bold.ttf
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/NPCs/enemies/Enemy.tscn:12 - ext_resource, invalid UID: uid://caaqv80a8h88s - using text path instead: res://assets/temp/player-temp-left.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/NPCs/enemies/Enemy.tscn:14 - ext_resource, invalid UID: uid://bid56dcwfjc8v - using text path instead: res://assets/font/Bitter/static/Bitter-Bold.ttf
+     at: load (scene/resources/resource_format_text.cpp:501)
+WARNING: res://components/NPCs/enemies/zalam-manifestations/bunga/bunga.tscn:4 - ext_resource, invalid UID: uid://cdb2b3lesaux2 - using text path instead: res://assets/enemy/bunga-attack.png
+     at: load (scene/resources/resource_format_text.cpp:501)
+[  66% ] [90m[1mfirst_scan_filesystem[22m | Initializing plugins...[39m[0m
+[  83% ] [90m[1mfirst_scan_filesystem[22m | Starting file scan...[39m[0m
+[92m[ DONE ][39m [1mfirst_scan_filesystem[22m
+[0m
+[   0% ] [90m[1mupdate_scripts_classes[22m | Started Registering global classes... (14 steps)[39m[0m
+[   0% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[   6% ] [90m[1mupdate_scripts_classes[22m | WeaponVisualController[39m[0m
+[  13% ] [90m[1mupdate_scripts_classes[22m | Player[39m[0m
+[  20% ] [90m[1mupdate_scripts_classes[22m | SpellCastingComponent[39m[0m
+[  26% ] [90m[1mupdate_scripts_classes[22m | CastingPresetPanel[39m[0m
+[  33% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  40% ] [90m[1mupdate_scripts_classes[22m | KeybindRow[39m[0m
+[  46% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  53% ] [90m[1mupdate_scripts_classes[22m | IncantationAssistant[39m[0m
+[  60% ] [90m[1mupdate_scripts_classes[22m | RepetoirePanel[39m[0m
+[  66% ] [90m[1mupdate_scripts_classes[22m | ControlBindings[39m[0m
+[  73% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  80% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  86% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[92m[ DONE ][39m [1mupdate_scripts_classes[22m
+[0m
+[   0% ] [90m[1m_update_scan_actions[22m | Started Scanning actions... (28 steps)[39m[0m
+[   0% ] [90m[1m_update_scan_actions[22m | 01-settings-1280.png[39m[0m
+[   3% ] [90m[1m_update_scan_actions[22m | 01-settings-1920.png[39m[0m
+[   6% ] [90m[1m_update_scan_actions[22m | 02-preset-ijkl-1280.png[39m[0m
+[  10% ] [90m[1m_update_scan_actions[22m | 02-preset-ijkl-1920.png[39m[0m
+[  13% ] [90m[1m_update_scan_actions[22m | 03-preset-arrows-1280.png[39m[0m
+[  17% ] [90m[1m_update_scan_actions[22m | 03-preset-arrows-1920.png[39m[0m
+[  20% ] [90m[1m_update_scan_actions[22m | 04-empty-weapon-rig-1280.png[39m[0m
+[  24% ] [90m[1m_update_scan_actions[22m | 04-empty-weapon-rig-1920.png[39m[0m
+[  27% ] [90m[1m_update_scan_actions[22m | 05-initial-aura-1280.png[39m[0m
+[  31% ] [90m[1m_update_scan_actions[22m | 05-initial-aura-1920.png[39m[0m
+[  34% ] [90m[1m_update_scan_actions[22m | 06-mid-combo-1280.png[39m[0m
+[  37% ] [90m[1m_update_scan_actions[22m | 06-mid-combo-1920.png[39m[0m
+[  41% ] [90m[1m_update_scan_actions[22m | 07-cast-release-1280.png[39m[0m
+[  44% ] [90m[1m_update_scan_actions[22m | 07-cast-release-1920.png[39m[0m
+[  48% ] [90m[1m_update_scan_actions[22m | 08-shared-prefix-paths-1280.png[39m[0m
+[  51% ] [90m[1m_update_scan_actions[22m | 08-shared-prefix-paths-1920.png[39m[0m
+[  55% ] [90m[1m_update_scan_actions[22m | 09-equipped-weapon-1280.png[39m[0m
+[  58% ] [90m[1m_update_scan_actions[22m | 09-equipped-weapon-1920.png[39m[0m
+[  62% ] [90m[1m_update_scan_actions[22m | 10-weapon-attack-1280.png[39m[0m
+[  65% ] [90m[1m_update_scan_actions[22m | 10-weapon-attack-1920.png[39m[0m
+[  68% ] [90m[1m_update_scan_actions[22m | 11-weapon-cast-1280.png[39m[0m
+[  72% ] [90m[1m_update_scan_actions[22m | 11-weapon-cast-1920.png[39m[0m
+[  75% ] [90m[1m_update_scan_actions[22m | 12-long-path-1280.png[39m[0m
+[  79% ] [90m[1m_update_scan_actions[22m | 12-long-path-1920.png[39m[0m
+[  82% ] [90m[1m_update_scan_actions[22m | 13-minimal-1280.png[39m[0m
+[  86% ] [90m[1m_update_scan_actions[22m | 13-minimal-1920.png[39m[0m
+[  89% ] [90m[1m_update_scan_actions[22m | 14-off-1280.png[39m[0m
+[  93% ] [90m[1m_update_scan_actions[22m | 14-off-1920.png[39m[0m
+[92m[ DONE ][39m [1m_update_scan_actions[22m
+[0m
+[   0% ] [90m[1mreimport[22m | Started (Re)Importing Assets (28 steps)[39m[0m
+[   0% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[   3% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[   6% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  10% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  13% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  17% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  20% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  24% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  27% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  31% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  34% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  37% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  41% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  44% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  48% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  51% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  55% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  58% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  62% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  65% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  68% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  72% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  75% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  79% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  82% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  86% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  89% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  93% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[   0% ] [90m[1mreimport[22m | Executing pre-reimport operations...[39m[0m
+[   0% ] [90m[1mreimport[22m | 14-off-1920.png[39m[0m
+[   3% ] [90m[1mreimport[22m | 14-off-1280.png[39m[0m
+[   6% ] [90m[1mreimport[22m | 13-minimal-1920.png[39m[0m
+[  10% ] [90m[1mreimport[22m | 13-minimal-1280.png[39m[0m
+[  13% ] [90m[1mreimport[22m | 12-long-path-1920.png[39m[0m
+[  17% ] [90m[1mreimport[22m | 12-long-path-1280.png[39m[0m
+[  20% ] [90m[1mreimport[22m | 11-weapon-cast-1920.png[39m[0m
+[  24% ] [90m[1mreimport[22m | 11-weapon-cast-1280.png[39m[0m
+[  27% ] [90m[1mreimport[22m | 10-weapon-attack-1920.png[39m[0m
+[  31% ] [90m[1mreimport[22m | 10-weapon-attack-1280.png[39m[0m
+[  34% ] [90m[1mreimport[22m | 09-equipped-weapon-1920.png[39m[0m
+[  37% ] [90m[1mreimport[22m | 09-equipped-weapon-1280.png[39m[0m
+[  41% ] [90m[1mreimport[22m | 08-shared-prefix-paths-1920.png[39m[0m
+[  44% ] [90m[1mreimport[22m | 08-shared-prefix-paths-1280.png[39m[0m
+[  48% ] [90m[1mreimport[22m | 07-cast-release-1920.png[39m[0m
+[  51% ] [90m[1mreimport[22m | 07-cast-release-1280.png[39m[0m
+[  55% ] [90m[1mreimport[22m | 06-mid-combo-1920.png[39m[0m
+[  58% ] [90m[1mreimport[22m | 06-mid-combo-1280.png[39m[0m
+[  62% ] [90m[1mreimport[22m | 05-initial-aura-1920.png[39m[0m
+[  65% ] [90m[1mreimport[22m | 05-initial-aura-1280.png[39m[0m
+[  68% ] [90m[1mreimport[22m | 04-empty-weapon-rig-1920.png[39m[0m
+[  72% ] [90m[1mreimport[22m | 04-empty-weapon-rig-1280.png[39m[0m
+[  75% ] [90m[1mreimport[22m | 03-preset-arrows-1920.png[39m[0m
+[  79% ] [90m[1mreimport[22m | 03-preset-arrows-1280.png[39m[0m
+[  82% ] [90m[1mreimport[22m | 02-preset-ijkl-1920.png[39m[0m
+[  86% ] [90m[1mreimport[22m | 02-preset-ijkl-1280.png[39m[0m
+[  89% ] [90m[1mreimport[22m | 01-settings-1920.png[39m[0m
+[  93% ] [90m[1mreimport[22m | 01-settings-1280.png[39m[0m
+[  96% ] [90m[1mreimport[22m | Finalizing Asset Import...[39m[0m
+[92m[ DONE ][39m [1mreimport[22m
+[0m
+[   0% ] [90m[1mreimport[22m | Started (Re)Importing Assets (28 steps)[39m[0m
+[   0% ] [90m[1mreimport[22m | Executing post-reimport operations...[39m[0m
+[92m[ DONE ][39m [1mreimport[22m
+[0m
+[   0% ] [90m[1mloading_editor_layout[22m | Started Loading editor (5 steps)[39m[0m
+[   0% ] [90m[1mloading_editor_layout[22m | Loading editor layout...[39m[0m
+[  16% ] [90m[1mloading_editor_layout[22m | Loading docks...[39m[0m
+[92m[ DONE ][39m [1mloading_editor_layout[22m
+[0m
+WARNING: 2 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)

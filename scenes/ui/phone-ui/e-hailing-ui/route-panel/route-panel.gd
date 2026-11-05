@@ -24,6 +24,7 @@ func _update_label() -> void:
 	if destinations.is_empty():
 		%LocationLabel.text = "No destinations"
 		return
+	
 	%LocationLabel.text = destinations[current_index].scene_name
 
 func _travel_to(scene_data: SceneData) -> void:

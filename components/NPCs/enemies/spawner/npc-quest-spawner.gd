@@ -16,6 +16,8 @@ class_name RoomQuestManager
 @export var spawn_validator: NPCSpawnValidator
 @export var safe_spawn_markers: Array[NodePath] = []
 @export var access_markers: Array[NodePath] = []
+@export_group("Story Presence")
+@export var story_spawn_rules: Array[StoryNPCSpawnRule] = []
 var active_npcs: Array[Node2D] = []
 var quests_completed_in_room: int = 0
 var completion_threshold: int = 0
@@ -29,6 +31,7 @@ func _ready() -> void:
 	if QuestManager.is_connected("quest_handed_off", _on_quest_handed_off):
 		QuestManager.quest_handed_off.disconnect(_on_quest_handed_off)
 	QuestManager.quest_handed_off.connect(_on_quest_handed_off)
+	StoryDirector.story_state_changed.connect(_on_story_changed)
 	
 	print("[RoomQuestManager:%s] Ready — threshold: %d" % [room_id, completion_threshold])
 	
@@ -53,7 +56,7 @@ func _spawn_random_npcs() -> void:
 			var comp = npc.find_child("QuestNPCComponent") as QuestNPCComponent
 			if comp: ids_currently_in_room.append(comp.npc_id)
 
-	var pool := npc_directory.keys().filter(func(id): return not ids_currently_in_room.has(id))
+	var pool := npc_directory.keys().filter(func(id): return not ids_currently_in_room.has(id) and _story_allows(id))
 	pool.shuffle()
 
 	var current_count = active_npcs.size()
@@ -67,7 +70,10 @@ func _spawn_random_npcs() -> void:
 
 func spawn_npc(npc_id_to_spawn: String) -> void:
 	active_npcs = active_npcs.filter(func(n): return is_instance_valid(n) and not n.is_queued_for_deletion())
-	if not SpellExecutor.is_authoritative(self) or active_npcs.size() >= max_npcs: return
+	if not SpellExecutor.is_authoritative(self) or active_npcs.size() >= max_npcs or not npc_directory.has(npc_id_to_spawn) or not _story_allows(npc_id_to_spawn): return
+	for existing in active_npcs:
+		var existing_component := existing.find_child("QuestNPCComponent") as QuestNPCComponent
+		if existing_component and existing_component.npc_id == npc_id_to_spawn: return
 	if spawn_validator == null:
 		push_warning("Room %s has no authored NPC placement policy; skipping unsafe spawn." % room_id)
 		return
@@ -91,6 +97,13 @@ func spawn_npc(npc_id_to_spawn: String) -> void:
 	if component:
 		component.faculty = room_faculty
 		component.npc_id = npc_id_to_spawn
+	var story_rule := _rule_for(npc_id_to_spawn)
+	if story_rule:
+		var condition_component := npc.find_child("StoryConditionComponent", true, false) as StoryConditionComponent
+		if condition_component == null:
+			condition_component = StoryConditionComponent.new(); condition_component.name = "StoryConditionComponent"; condition_component.conditions = story_rule.conditions.duplicate(); npc.add_child(condition_component)
+		if npc.find_child("StoryPresenceComponent", true, false) == null:
+			var presence := StoryPresenceComponent.new(); presence.name = "StoryPresenceComponent"; presence.actor = npc; presence.condition_component = condition_component; npc.add_child(presence)
 	npc.position = to_local(placement.position)
 	npc.add_to_group("quest_npc")
 	add_child(npc)
@@ -111,6 +124,15 @@ func _replenish() -> void:
 	await get_tree().physics_frame
 	await get_tree().process_frame
 	_spawn_random_npcs()
+func _rule_for(npc_id: String) -> StoryNPCSpawnRule:
+	for rule in story_spawn_rules:
+		if rule != null and rule.npc_id == npc_id: return rule
+	return null
+func _story_allows(npc_id: String) -> bool:
+	var rule := _rule_for(npc_id)
+	return rule == null or rule.allows()
+func _on_story_changed() -> void:
+	if is_inside_tree() and not SaveManager.loading: _replenish.call_deferred()
 
 # -------------------------
 # ROOM PROGRESSION

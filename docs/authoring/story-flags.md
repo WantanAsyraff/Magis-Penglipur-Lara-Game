@@ -1,0 +1,3 @@
+# Story flags
+
+Create `StoryFlagDefinition` in the database's `flags` array. Set lowercase `story.<chapter>.<fact>` `flag_id`, `value_type`, `scope`, and matching `default_value`. `CAMPAIGN` accepts only BOOLEAN and delegates to `QuestManager.world_flags`. `SESSION` and `SCENE` values are transient and reset on successful restore. Nonboolean values do not enter Save V1. Use `StoryDirector.set_flag` to write registered values; unknown IDs, wrong types, unchanged values and restore-time writes return false. Existing legacy keys, including `story_sequence:<id>` and WorldPersistence IDs, are preserved unchanged.

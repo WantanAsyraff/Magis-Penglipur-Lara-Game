@@ -39,3 +39,16 @@ The historical implementation/migration reports and their logs/screenshots remai
 Inventory V2: [items and transactions](authoring/inventory-and-items.md), [interface and controls](authoring/inventory-ui.md), [authored cutscene skipping](authoring/cutscene-skipping.md).
 
 [Profile and music app screens](profile-and-music-ui.md): updated layouts, phone routing and playback verification.
+
+## Modular destructible environments
+
+- [Inspector authoring and lifecycle](authoring/destructible-environments.md)
+- [Reusable behaviors and extension API](authoring/destruction-behaviors.md)
+- [Explosive barrel recipes](authoring/explosive-destructibles.md)
+- [V1 handover, executed tests and screenshots](verification/environment-destruction/report.md)
+
+## Story debugging
+
+- [Runtime debugger and editor authoring guide](authoring/story-debugger-and-authoring.md)
+- [Diagnostic architecture](architecture/story-debugger-architecture.md)
+- [Phase 5 verification and limits](reference/story-phase5-validation.md)

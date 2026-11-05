@@ -20,6 +20,7 @@ var detection: DetectionComponent
 var dialogic: DialogicComponent
 var tutorial: TutorialComponent
 var quest: QuestNPCComponent
+var story_dialogue: StoryDialogueResolver
 var sprite: Sprite2D
 # -------------------------
 # BOOTSTRAP
@@ -30,6 +31,7 @@ func _ready() -> void:
 	dialogic  = get_node_or_null("%DialogicComponent")
 	tutorial  = get_node_or_null("%TutorialComponent")
 	quest     = get_node_or_null("%QuestNPCComponent")
+	story_dialogue = find_child("StoryDialogueResolver", true, false) as StoryDialogueResolver
 	sprite    = get_node_or_null("%Sprite2D")
 	if npc_sprite and sprite:
 		sprite.texture = npc_sprite
@@ -51,7 +53,10 @@ func _on_interacted() -> void:
 		quest.interact()
 		return
 	if dialogic:
-		dialogic.start()
+		if story_dialogue and story_dialogue.resolve_dialogue() != null:
+			story_dialogue.start(dialogic)
+		else:
+			dialogic.start()
 # -------------------------
 # QUEST DIALOGUE
 # -------------------------
@@ -63,7 +68,7 @@ func _on_quest_dialogue_requested(dialogue_text: String, _instance: QuestInstanc
 # -------------------------
 func _physics_process(delta: float) -> void:
 	if not SpellExecutor.is_authoritative(self): return
-	if wander: wander.steer(delta)
+	if wander and wander.process_mode != Node.PROCESS_MODE_DISABLED: wander.steer(delta)
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 	move_and_slide()

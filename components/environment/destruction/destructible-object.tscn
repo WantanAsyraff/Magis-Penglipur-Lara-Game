@@ -1,0 +1,37 @@
+[gd_scene load_steps=10 format=3]
+[ext_resource type="Script" path="res://components/environment/destruction/destructible-object.gd" id="1"]
+[ext_resource type="Script" path="res://components/environment/destruction/destructible-component.gd" id="2"]
+[ext_resource type="Script" path="res://components/environment/destruction/destructible-visual-controller.gd" id="3"]
+[ext_resource type="Script" path="res://components/environment/destruction/destructible-hitbox.gd" id="4"]
+[ext_resource type="Script" path="res://components/environment/core/environmental-target.gd" id="5"]
+[ext_resource type="Script" path="res://components/environment/destruction/destructible-interaction-receiver.gd" id="6"]
+[ext_resource type="Resource" path="res://components/environment/destruction/presets/wooden-crate.tres" id="7"]
+[ext_resource type="AnimationLibrary" path="res://components/environment/destruction/effects/destruction-animations.tres" id="animations"]
+[sub_resource type="RectangleShape2D" id="Shape"]
+size = Vector2(64, 64)
+
+[node name="DestructibleObject" type="StaticBody2D"]
+collision_layer = 16
+collision_mask = 3
+script = ExtResource("1")
+config = ExtResource("7")
+[node name="SolidCollision" type="CollisionShape2D" parent="."]
+shape = SubResource("Shape")
+[node name="VisualRoot" type="Node2D" parent="."]
+script = ExtResource("3")
+[node name="Sprite2D" type="Sprite2D" parent="VisualRoot"]
+visible = false
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="VisualRoot"]
+visible = false
+[node name="AnimationPlayer" type="AnimationPlayer" parent="VisualRoot"]
+libraries = {&"": ExtResource("animations")}
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="VisualRoot"]
+[node name="HitboxComponent" type="Node" parent="."]
+script = ExtResource("4")
+receives_knockback = false
+[node name="EnvironmentalTarget" type="Node" parent="."]
+script = ExtResource("5")
+[node name="InteractionReceiver" type="Node" parent="."]
+script = ExtResource("6")
+[node name="DestructibleComponent" type="Node" parent="."]
+script = ExtResource("2")

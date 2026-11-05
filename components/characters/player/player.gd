@@ -31,6 +31,7 @@ const DIRECTION_ICONS := {
 @onready var camera: Camera2D = %Camera2D
 @onready var dash_particles: GPUParticles2D = %DashParticles
 @onready var hitbox: HitboxComponent = $HitboxComponent
+@onready var god_mode: GodMode = $GodModeComponent
 @onready var stop_label: Label = %StopLabel
 
 # -------------------------
@@ -76,6 +77,7 @@ var spell_string: Array[String] = []
 
 # Casting stance — stays open until toggled off
 var _in_casting_stance: bool = false
+var _wasd_casting_stance: bool = false
 
 # Aim lock — true while held during casting stance
 
@@ -181,6 +183,10 @@ func _physics_process(delta: float) -> void:
 	_update_aim_direction()
 	_regen_mana(delta)
 
+	if god_mode.step(delta):
+		move_and_slide()
+		return
+
 	if hitbox.is_stunned():
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		move_and_slide()
@@ -199,7 +205,7 @@ func _physics_process(delta: float) -> void:
 	if multiplayer.has_multiplayer_peer() and not is_multiplayer_authority():
 		return
 
-	if _update_climbing():
+	if not _wasd_casting_stance and _update_climbing():
 		move_and_slide()
 		return
 
@@ -215,6 +221,9 @@ func _physics_process(delta: float) -> void:
 		if body is EnvironmentCrate: body.push_from_player(self)
 
 func _handle_movement() -> void:
+	if _wasd_casting_stance:
+		velocity.x = move_toward(velocity.x, 0, SPEED)
+		return
 	var current_speed := (SPEED + hitbox.effects.magnitude("buff_speed")) * (1.0 - hitbox.get_slow_factor())
 	var dir := Input.get_axis("move_left", "move_right")
 	if dir != 0:
@@ -341,6 +350,11 @@ func _handle_jump_timers(delta: float) -> void:
 # BLOCK / PARRY TIMERS
 # -------------------------
 func _handle_block_timers(delta: float) -> void:
+	if _wasd_casting_stance:
+		_is_blocking = false
+		_parry_active = false
+		_parry_timer = 0.0
+		return
 	_is_blocking = Input.is_action_pressed("block")
 
 	if Input.is_action_just_pressed("block"):
@@ -440,6 +454,7 @@ func _enter_casting_stance() -> void:
 	_new_chain = true
 	incantations.clear()
 	_in_casting_stance = true
+	_wasd_casting_stance = ControlBindings.preset_name(ControlBindings.snapshot()) == "WASD"
 	Player_Global_Data.is_casting = true
 	spell_string.clear()
 	spell_label.text = ""
@@ -449,6 +464,7 @@ func _exit_casting_stance() -> void:
 	_new_chain = true
 	incantations.clear()
 	_in_casting_stance = false
+	_wasd_casting_stance = false
 	Player_Global_Data.is_casting = false
 	spell_string.clear()
 	spell_label.text = ""

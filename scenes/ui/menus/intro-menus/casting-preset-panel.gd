@@ -19,7 +19,7 @@ func _ready() -> void:
 	ControlsStyle.label(column, "You can change this later in Settings.", 18).horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	var row := HBoxContainer.new(); row.alignment = BoxContainer.ALIGNMENT_CENTER; row.add_theme_constant_override("separation", 24); column.add_child(row)
 	for preset in ControlBindings.PRESETS:
-		var text := "IJKL — Letter-key casting\n\n       I\n    J  K  L\n\nI = Up · K = Down\nJ = Left · L = Right" if preset == "IJKL" else "Arrow Keys — Directional-key casting\n\n       ↑\n    ←  ↓  →\n\n↑ = Up · ↓ = Down\n← = Left · → = Right"
+		var text := "IJKL — Letter-key casting\n\n       I\n    J  K  L\n\nI = Up · K = Down\nJ = Left · L = Right" if preset == "IJKL" else "WASD — Standard letter-key casting\n\n       W\n    A  S  D\n\nW = Up · S = Down\nA = Left · D = Right"
 		var card := ControlsStyle.button(row, text, select.bind(preset))
 		card.toggle_mode = true; card.custom_minimum_size = Vector2(330, 230); cards.append(card)
 	message = ControlsStyle.label(column, "", 16); message.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -27,7 +27,7 @@ func _ready() -> void:
 	ControlsStyle.button(footer, "Back", func(): backed.emit())
 	confirm_button = ControlsStyle.button(footer, "Confirm controls", func(): confirmed.emit(selected))
 	select(ControlBindings.preset_name(ControlBindings.snapshot()))
-	(cards[1] if selected == "Arrow Keys" else cards[0]).grab_focus()
+	(cards[1] if selected == "WASD" else cards[0]).grab_focus()
 func select(preset: String) -> void:
 	selected = preset
 	for i in cards.size(): cards[i].set_pressed_no_signal(ControlBindings.PRESETS.keys()[i] == preset)

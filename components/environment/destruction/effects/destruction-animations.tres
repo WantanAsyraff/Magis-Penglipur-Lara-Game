@@ -1,0 +1,76 @@
+[gd_resource type="AnimationLibrary" format=3]
+
+[sub_resource type="Animation" id="idle"]
+resource_name = "idle"
+length = 0.25
+loop_mode = 1
+
+[sub_resource type="Animation" id="hit"]
+resource_name = "hit"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/enabled = true
+tracks/0/keys = {"times": PackedFloat32Array(0, 0.25), "transitions": PackedFloat32Array(1, 1), "update": 0, "values": [Color(1, 0.65, 0.3, 1), Color(1, 1, 1, 1)]}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimatedSprite2D:modulate")
+tracks/1/interp = 1
+tracks/1/enabled = true
+tracks/1/keys = {"times": PackedFloat32Array(0, 0.25), "transitions": PackedFloat32Array(1, 1), "update": 0, "values": [Color(1, 0.65, 0.3, 1), Color(1, 1, 1, 1)]}
+
+[sub_resource type="Animation" id="damaged"]
+resource_name = "damaged"
+length = 0.25
+
+[sub_resource type="Animation" id="critical"]
+resource_name = "critical"
+length = 0.25
+
+[sub_resource type="Animation" id="destroy_start"]
+resource_name = "destroy_start"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/enabled = true
+tracks/0/keys = {"times": PackedFloat32Array(0, 0.25), "transitions": PackedFloat32Array(1, 1), "update": 0, "values": [Color(1, 0.65, 0.3, 1), Color(1, 1, 1, 1)]}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimatedSprite2D:modulate")
+tracks/1/interp = 1
+tracks/1/enabled = true
+tracks/1/keys = {"times": PackedFloat32Array(0, 0.25), "transitions": PackedFloat32Array(1, 1), "update": 0, "values": [Color(1, 0.65, 0.3, 1), Color(1, 1, 1, 1)]}
+
+[sub_resource type="Animation" id="destroy_loop"]
+resource_name = "destroy_loop"
+length = 0.25
+loop_mode = 1
+
+[sub_resource type="Animation" id="destroy_end"]
+resource_name = "destroy_end"
+length = 0.25
+
+[sub_resource type="Animation" id="destroyed"]
+resource_name = "destroyed"
+length = 0.25
+
+[sub_resource type="Animation" id="repair"]
+resource_name = "repair"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/enabled = true
+tracks/0/keys = {"times": PackedFloat32Array(0, 0.25), "transitions": PackedFloat32Array(1, 1), "update": 0, "values": [Color(1, 0.65, 0.3, 1), Color(1, 1, 1, 1)]}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimatedSprite2D:modulate")
+tracks/1/interp = 1
+tracks/1/enabled = true
+tracks/1/keys = {"times": PackedFloat32Array(0, 0.25), "transitions": PackedFloat32Array(1, 1), "update": 0, "values": [Color(1, 0.65, 0.3, 1), Color(1, 1, 1, 1)]}
+
+[sub_resource type="Animation" id="reset"]
+resource_name = "reset"
+length = 0.25
+
+[resource]
+_data = {&"idle": SubResource("idle"), &"hit": SubResource("hit"), &"damaged": SubResource("damaged"), &"critical": SubResource("critical"), &"destroy_start": SubResource("destroy_start"), &"destroy_loop": SubResource("destroy_loop"), &"destroy_end": SubResource("destroy_end"), &"destroyed": SubResource("destroyed"), &"repair": SubResource("repair"), &"reset": SubResource("reset")}

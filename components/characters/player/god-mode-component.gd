@@ -31,8 +31,6 @@ func _ready() -> void:
 	if not _player:
 		push_error("GodMode: parent is not a Player node.")
 		return
-	# Run our physics step AFTER Player's so we always win the velocity race
-	process_physics_priority = 10  # Player defaults to 0
 	_setup_label()
 
 func _setup_label() -> void:
@@ -52,7 +50,7 @@ func _setup_label() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if multiplayer.has_multiplayer_peer() and not get_parent().is_multiplayer_authority():
 		return
-	if Input.is_action_just_pressed("god_mode"):
+	if event.is_action_pressed("god_mode") and not event.is_echo():
 		_toggle()
 
 # -------------------------
@@ -93,26 +91,21 @@ func _on_exit() -> void:
 # -------------------------
 # PHYSICS
 # -------------------------
-func _physics_process(delta: float) -> void:
-	if multiplayer.has_multiplayer_peer() and not get_parent().is_multiplayer_authority():
-		return
-	if not _active or not _player:
-		return
+## Called by Player before ordinary movement so gravity never advances a flying body.
+func step(delta: float) -> bool:
+	if not _active or not is_instance_valid(_player):
+		return false
+	if multiplayer.has_multiplayer_peer() and not _player.is_multiplayer_authority():
+		return false
 	if not Player_Global_Data.p_moveable:
-		return
+		_player.velocity = Vector2.ZERO
+		return true
 
-	# Read 8-directional input
 	var dir := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	var fly_speed := _player.SPEED * GOD_SPEED_MULTIPLIER
-
 	if dir != Vector2.ZERO:
 		_player.velocity = dir * fly_speed
 	else:
-		# Smooth stop on X — feels natural for horizontal deceleration.
-		# Hard zero on Y every frame — prevents gravity accumulated by
-		# Player._apply_gravity() from slowly drifting the player downward
-		# when no directional input is held. Node execution order is not
-		# guaranteed, so we can't rely on our velocity write overriding
-		# whatever Player._physics_process already added to velocity.y.
 		_player.velocity.x = move_toward(_player.velocity.x, 0.0, fly_speed * FLY_FRICTION * delta)
 		_player.velocity.y = 0.0
+	return true

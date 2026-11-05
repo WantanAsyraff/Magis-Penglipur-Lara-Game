@@ -1,4 +1,9 @@
 class_name SpellData extends Resource
+
+@export_group("Environmental damage")
+## Authored classification for destructible material responses. Never inferred from names.
+@export var environmental_damage_kind: EnvironmentalDamage.Kind = EnvironmentalDamage.Kind.IMPACT
+
 # ─────────────────────────────────────────
 # CATEGORY  (top-level intent dispatcher)
 # ─────────────────────────────────────────

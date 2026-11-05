@@ -14,6 +14,7 @@ var checkpoint: Dictionary = {}
 var _autosave_pending := false
 var _autosave_delay: float = 0
 var _test_mode := false
+var _creating_new_game := false
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -76,6 +77,7 @@ func snapshot() -> Dictionary:
 	return {"version": GameSaveSchema.VERSION, "profile": active_profile, "slot": "manual",
 		"meta": {"name": Player_Global_Data.p_name, "timestamp": Time.get_unix_time_from_system(), "playtime": playtime},
 		"player": GameSaveSchema.capture_player(), "quest": QuestSaveService.encode(QuestManager),
+		"story": StorySaveService.encode(StoryDirector.state, StoryDirector.registry),
 		"location": {"scene_id": scene_id, "position": [player.global_position.x,player.global_position.y], "facing": -1 if player.get_node("PlayerSprite").flip_h else 1},
 		"checkpoint": checkpoint.duplicate(true)}
 
@@ -165,6 +167,7 @@ func _restore(staged: Dictionary, profile: int) -> bool:
 	var old_position := Player_Manager.last_player_position
 	var old_profile := active_profile
 	var old_ready := session_ready
+	var old_story := StorySaveService.capture_runtime(StoryDirector.state)
 	InventoryOverlay.close(); CutsceneFlow.dismiss_recap()
 	if is_instance_valid(ModalService.holder): ModalService.release(ModalService.holder)
 	loading = true
@@ -209,6 +212,7 @@ func _restore(staged: Dictionary, profile: int) -> bool:
 			get_tree().root.add_child(old_scene)
 			get_tree().current_scene = old_scene
 		if not old_quest.is_empty(): QuestManager.apply_staged(old_quest)
+		StorySaveService.restore_runtime(StoryDirector.state, old_story)
 		GameSaveSchema.apply_player(old_player,old_equipped)
 		Player_Global_Data.combat_mode = old_combat
 		Player_Global_Data.current_world = old_world
@@ -254,6 +258,7 @@ func _restore(staged: Dictionary, profile: int) -> bool:
 func _apply(staged: Dictionary) -> void:
 	Player_Global_Data.active_goals.clear()
 	QuestManager.apply_staged(staged.quest)
+	StorySaveService.apply(StoryDirector.state, staged.story)
 	GameSaveSchema.apply_player(staged.data.player,staged.equipped)
 
 func _reset_transients() -> void:
@@ -278,7 +283,10 @@ func new_game(profile: int, character_name: String, overwrite: bool = false) -> 
 	var data := _default_snapshot(profile,character_name)
 	var staged := GameSaveSchema.stage(data,profile,Scene_Registry)
 	if staged.is_empty(): return _fail("New game defaults could not be validated.")
-	if not await _restore(staged,profile): return false
+	_creating_new_game = true
+	var restored_new_game := await _restore(staged,profile)
+	_creating_new_game = false
+	if not restored_new_game: return false
 	# Use the authored starting spawn, rather than inventing a historical position.
 	var scene := get_tree().current_scene
 	var marker: Node2D = scene.find_child("PlayerSpawn",true,false)
@@ -312,7 +320,7 @@ func _default_snapshot(profile: int, character_name: String) -> Dictionary:
 	var p := {"combat_mode": false, "phone_visible": true, "p_name": character_name.strip_edges(), "p_role": "", "p_mood": "", "player_level": 1, "p_max_health": 400, "p_curr_health": 400, "p_max_mana": 400.0, "p_curr_mana": 400.0, "current_field": "", "current_major": "", "current_minor": "", "completed_subjects": [], "academic_comprehension": {}, "equipped_spells": []}
 	var q := {"version": 2, "owner_id": "local", "instances": [], "completed_quests": [], "claims": {}, "seen_events": {}, "selected_quest": "", "world_flags": {}, "pending_events": [], "inventory": [], "equipment": {}, "acquisition_receipts": {}, "max_slots": 64, "player_xp": 9999, "currency": 0, "learned_spells": [], "conversations": QuestConversationStore.new().to_dict()}
 	var location := {"scene_id": START_SCENE,"position": [0,0],"facing": 1}
-	return {"version": 1,"profile": profile,"slot": "manual","meta": {"name": p.p_name,"timestamp": Time.get_unix_time_from_system(),"playtime": 0},"player": p,"quest": q,"location": location,"checkpoint": {"combat_mode": false, "id": "entry:"+START_SCENE,"scene_id": START_SCENE,"position": [0,0],"facing": 1}}
+	return {"version": 1,"profile": profile,"slot": "manual","meta": {"name": p.p_name,"timestamp": Time.get_unix_time_from_system(),"playtime": 0},"player": p,"quest": q,"story": StorySaveService.defaults(StoryDirector.registry),"location": location,"checkpoint": {"combat_mode": false, "id": "entry:"+START_SCENE,"scene_id": START_SCENE,"position": [0,0],"facing": 1}}
 
 func campaign_scene_ready(scene: Node) -> void:
 	# ZoneRoot calls after its authoritative player spawn. Loads/new games set their own checkpoint.

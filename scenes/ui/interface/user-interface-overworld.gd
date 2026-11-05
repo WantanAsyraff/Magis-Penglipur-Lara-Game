@@ -22,7 +22,10 @@ func _ready() -> void:
 func _on_goals_changed(goals: Array[String]) -> void:
 	print("[HUD] goals_changed fired — %d goal(s): %s" % [goals.size(), str(goals)])
 	if temp_goal_label:
-		temp_goal_label.text = "\n".join(goals) if goals.size() > 0 else ""
+		var lines: Array[String] = []
+		for goal in goals:
+			lines.append(goal.replace("Main Story: ", "Main Story:\n") if goal.begins_with("Main Story: ") else goal)
+		temp_goal_label.text = "\n".join(lines)
 	else:
 		print("[HUD] temp_goal_label is NULL")
 func _on_world_changed(world_name: String) -> void:

@@ -3,4 +3,9 @@ extends Node2D
 func _ready() -> void:
 	if not SaveManager.loading: begin_intro()
 func begin_intro() -> void:
-	CutsceneFlow.play(self,sequence)
+	var trigger := get_node_or_null("StoryCutsceneTrigger") as StoryCutsceneTrigger
+	if trigger and StoryDirector.is_ready():
+		trigger.sequence = sequence
+		trigger.try_play()
+	else:
+		CutsceneFlow.play(self,sequence)

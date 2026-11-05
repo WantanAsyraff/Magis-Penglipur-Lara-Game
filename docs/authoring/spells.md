@@ -103,3 +103,7 @@ academic_fields = Array[ExtResource("field_type")]([ExtResource("physics")])
 ```
 
 In this format `delivery = 4` is the current AREA_BURST enum value. Prefer selecting the named value in Inspector; changing enum order would require migration of authored numeric data.
+
+## Destructible material classification
+
+`environmental_damage_kind` explicitly classifies damage as impact, thermal, electrical, pressure or sonic for the [modular destructible framework](destructible-environments.md). Existing definitions default to impact. Names, schools and flavour text never determine this value. DamageEffect passes the existing context through a virtual hitbox adapter; ordinary player/enemy damage semantics remain unchanged. Destructibles also retain the existing EnvironmentalTarget acceptance path for projectile/direct/area/beam delivery.

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="DestructibleMaterialDefinition" load_steps=2 format=3]
+[ext_resource type="Script" path="res://components/environment/destruction/resources/destructible-material-definition.gd" id="1"]
+[resource]
+script = ExtResource("1")
+material_id = &"metal"
+display_name = "Metal"
+impact_multiplier = 0.6
+thermal_multiplier = 0.8
+electrical_multiplier = 1.8
+pressure_multiplier = 0.5
+sonic_multiplier = 0.4

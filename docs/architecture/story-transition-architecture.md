@@ -1,0 +1,7 @@
+# Story transitions and actions
+
+StoryStageData owns ordered StoryTransitionData Resources. StoryDirector evaluates only the active stage, sorts eligible transitions by descending priority then ID, and processes automatic changes through a deferred, bounded pass (16 transitions). Event-gated transitions require a newly accepted GameplayEvent with the configured type and target. QuestManager emits `gameplay_event_accepted` only after receipt validation. A one-time transition records a session receipt derived from arc, chapter and transition IDs.
+
+Requests validate source, destination, conditions and action definitions. Source exit actions execute first, followed by transition actions and destination entry actions. The active stage and chapter change after required actions succeed; then signals fire. Actions are synchronous and **not a durable atomic transaction**. Persistent flag actions must be optional in Phase 2 because Save V1 cannot commit them atomically with stage state. Choice and stage data, objectives, and receipts now restore from SaveManager's validated story section. Arbitrary external effects are still not crash-atomic.
+
+QuestManager owns quests, event receipts and world flags. CutsceneFlow owns skip, completion flags and spell grants. StoryDirector owns only narrative orchestration. Phase 4 can connect its typed events and conditions to NPCs, routes and world devices.

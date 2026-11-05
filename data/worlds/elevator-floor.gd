@@ -11,3 +11,15 @@ extends Resource
 # Tie this to Player_Global_Data course checks at runtime if needed.
 @export var locked: bool = false
 @export var locked_hint: String = "Access restricted"
+
+@export_group("Story Gate")
+@export var story_conditions: Array[StoryCondition] = []
+func is_accessible() -> bool:
+	if locked: return false
+	return story_allows()
+func story_allows() -> bool:
+	if story_conditions.is_empty(): return true
+	if not StoryDirector.is_ready() or SaveManager.loading: return false
+	for condition in story_conditions:
+		if condition == null or not StoryDirector.evaluate_condition(condition): return false
+	return true

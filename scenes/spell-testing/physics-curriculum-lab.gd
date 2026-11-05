@@ -41,7 +41,7 @@ func _ready() -> void:
 	for spell in spells: selector.add_item(spell.spell_name)
 	selector.item_selected.connect(func(_i): update_readout())
 	panel.add_child(selector)
-	for spec in [["Cast selected (F6)", cast_selected], ["Reset targets (F7)", reset_targets], ["Refill mana (F8)", refill]]:
+	for spec in [["Cast selected (F6)", cast_selected], ["Reset targets (F7)", reset_targets], ["Refill mana (F8)", refill], ["Destruction lab (F9)", open_destruction_lab]]:
 		var button := Button.new()
 		button.text = spec[0]
 		button.pressed.connect(spec[1])
@@ -70,6 +70,8 @@ func floor_at(at: Vector2, size: Vector2) -> StaticBody2D:
 	return body
 func cast_selected() -> void:
 	player._cast_resolved(spells[selector.selected])
+func open_destruction_lab() -> void:
+	get_tree().change_scene_to_file("res://scenes/spell-testing/destruction-lab.tscn")
 func reset_targets() -> void:
 	for target in targets: target.reset_target()
 func refill() -> void:
@@ -85,3 +87,4 @@ func _unhandled_key_input(event: InputEvent) -> void:
 			KEY_F6: cast_selected()
 			KEY_F7: reset_targets()
 			KEY_F8: refill()
+			KEY_F9: open_destruction_lab()

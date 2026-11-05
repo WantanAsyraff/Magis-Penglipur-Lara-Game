@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="StoryCutsceneCondition" load_steps=3 format=3]
+[ext_resource type="Script" path="res://data/story/conditions/story-cutscene-condition.gd" id="1"]
+[ext_resource type="Resource" path="res://data/story/kampung-intro.tres" id="2"]
+[resource]
+script = ExtResource("1")
+sequence_reference = ExtResource("2")
+must_be_completed = true

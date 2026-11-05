@@ -91,7 +91,9 @@ static func stage(data: Dictionary, profile: int, registry: Node) -> Dictionary:
 			if not valid_number(value,0,1e9,true): return {}
 	var quest := QuestSaveService.stage(QuestManager,q)
 	if quest.is_empty(): return {}
-	return {"data": data.duplicate(true), "quest": quest, "equipped": equipped, "scene": registry.get_scene(data.location.scene_id).scene}
+	var story := StorySaveService.stage(data.get("story", null), StoryDirector.registry, q)
+	if story.is_empty(): return {}
+	return {"data": data.duplicate(true), "quest": quest, "story": story, "equipped": equipped, "scene": registry.get_scene(data.location.scene_id).scene}
 
 static func apply_player(p: Dictionary, equipped: Array[SpellData]) -> void:
 	for key in ["p_max_health","p_max_mana"]: Player_Global_Data.set(key,p[key])

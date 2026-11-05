@@ -5,6 +5,8 @@
 [ext_resource type="Script" uid="uid://bxc44phagq28x" path="res://data/Resources/worlds/scene-data.gd" id="3_xr7qs"]
 [ext_resource type="Resource" uid="uid://qonagicvy0i3" path="res://data/worlds/hubs/the-echanted-forest(TEF)/deeper-forest/TEF-forest-entrance.tres" id="5_h1r04"]
 [ext_resource type="Resource" uid="uid://3tx0xedjc6h1" path="res://data/worlds/hubs/akademi-bintang-utama(ABU)/faculty-of-logic-and-computation(FLAC)/floor-one/FLAC-F1-receptionist-area.tres" id="5_xr7qs"]
+[ext_resource type="Resource" uid="uid://c16neiucavf22" path="res://data/worlds/hubs/chapters/prologue/yan-prologue-house-entrance.tres" id="6_h1r04"]
+[ext_resource type="Resource" uid="uid://d3mdsv68qw20h" path="res://data/worlds/hubs/chapters/prologue/yan-exam-tutorial.tres" id="7_rhtvq"]
 
 [node name="E-HailingApp" type="Control" unique_id=1861485113]
 layout_mode = 3
@@ -50,6 +52,6 @@ layout_mode = 2
 
 [node name="RoutePanel" parent="PanelContainer/UI/E-HailingVBoxContainer" unique_id=1707784299 instance=ExtResource("1_s4xdm")]
 layout_mode = 2
-destinations = Array[ExtResource("3_xr7qs")]([ExtResource("5_h1r04"), ExtResource("5_xr7qs")])
+destinations = Array[ExtResource("3_xr7qs")]([ExtResource("5_h1r04"), ExtResource("5_xr7qs"), ExtResource("6_h1r04"), ExtResource("7_rhtvq"), null])
 
 [connection signal="pressed" from="PanelContainer/UI/HBoxContainer/Back button" to="." method="_on_back_button_pressed"]

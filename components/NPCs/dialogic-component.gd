@@ -46,7 +46,9 @@ func start_direct_text(text: String, npc_id: String = "", portrait_identity: Str
 # STANDARD TIMELINE
 # -------------------------
 func start(npc_id: String = "") -> bool:
-	if _open or Dialogic.current_timeline != null or not use_dialogic or npc_timeline == null:
+	return await start_timeline(npc_timeline, npc_id)
+func start_timeline(timeline: DialogicTimeline, npc_id: String = "", portrait_identity: String = "") -> bool:
+	if _open or Dialogic.current_timeline != null or not use_dialogic or timeline == null:
 		return false
 
 	_cancelled = false
@@ -57,10 +59,10 @@ func start(npc_id: String = "") -> bool:
 	dialogue_started.emit()
 
 	# ✅ FIXED HERE
-	if not npc_id.is_empty():
-		Dialogic.VAR.set_variable("CurrentPortrait", npc_id)
+	if not portrait_identity.is_empty() or not npc_id.is_empty():
+		Dialogic.VAR.set_variable("CurrentPortrait", portrait_identity if not portrait_identity.is_empty() else npc_id)
 
-	Dialogic.start(npc_timeline)
+	Dialogic.start(timeline)
 
 	await Dialogic.timeline_ended
 	_finish_dialogue()

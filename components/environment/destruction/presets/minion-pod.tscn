@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3]
+[ext_resource type="PackedScene" path="res://components/environment/destruction/destructible-object.tscn" id="base"]
+[ext_resource type="Resource" path="res://components/environment/destruction/presets/minion-pod.tres" id="config"]
+[sub_resource type="RectangleShape2D" id="Shape"]
+size = Vector2(70, 100)
+[node name="MinionPod" instance=ExtResource("base")]
+config = ExtResource("config")
+[node name="SolidCollision" parent="." index="0"]
+shape = SubResource("Shape")
+[node name="VisualRoot" parent="." index="1"]
+placeholder_shape = 7
+placeholder_size = Vector2(70, 100)
+placeholder_color = Color(0.5, 0.36, 0.68, 1)

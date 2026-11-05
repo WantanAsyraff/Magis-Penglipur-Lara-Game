@@ -2,6 +2,7 @@
 class_name DroppedItem
 extends CharacterBody2D
 
+@export_range(0, 5) var pickup_delay: float = 0.2
 @export var friction: float = 0.95
 @export var bounce: float = 0.5
 

@@ -1,0 +1,5 @@
+# Story save migrations
+
+Old Save V1 profiles without a `story` section remain valid. The legacy staging path preserves all existing player, quest, inventory, world flag, cutscene and reward data. It derives only the earliest supported prologue stage from successful `story_sequence:prologue.kampung`, `.school`, or `.after_final_paper` facts; it creates no choices or transition receipts. The original file is not rewritten during inspection or load. A later normal save writes the story section through GameSaveStore's existing backup mechanism.
+
+Renaming a story ID requires a reviewed StoryIdMigrations Resource assigned to StoryDatabase before releasing the content. Its explicit `arcs`, `chapters`, `stages`, `variables`, `choices`, `options`, `transitions`, `actions`, and `dialogues` maps rewrite only story-owned IDs during staging. Colliding aliases reject the save. QuestManager world flags are never renamed by this Resource. Unknown IDs without an authored alias reject safely; the loader does not guess a replacement or delete the fact. Test each alias against a saved fixture.

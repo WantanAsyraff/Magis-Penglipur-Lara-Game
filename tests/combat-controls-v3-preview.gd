@@ -27,7 +27,7 @@ func _ready() -> void:
 		settings.free()
 		var panel := CastingPresetPanel.new(); layer.add_child(panel)
 		panel.select("IJKL"); await shot("02-preset-ijkl-" + tag)
-		panel.select("Arrow Keys"); await shot("03-preset-arrows-" + tag)
+		panel.select("WASD"); await shot("03-preset-wasd-" + tag)
 		panel.free()
 		var focused := get_viewport().gui_get_focus_owner()
 		if focused: focused.release_focus()

@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3]
+[ext_resource type="PackedScene" path="res://components/environment/destruction/destructible-object.tscn" id="base"]
+[ext_resource type="Resource" path="res://components/environment/destruction/presets/wooden-crate.tres" id="config"]
+[sub_resource type="RectangleShape2D" id="Shape"]
+size = Vector2(64, 64)
+[node name="WoodenCrate" instance=ExtResource("base")]
+config = ExtResource("config")
+[node name="SolidCollision" parent="." index="0"]
+shape = SubResource("Shape")
+[node name="VisualRoot" parent="." index="1"]
+placeholder_shape = 0
+placeholder_size = Vector2(64, 64)
+placeholder_color = Color(0.67, 0.43, 0.23, 1)

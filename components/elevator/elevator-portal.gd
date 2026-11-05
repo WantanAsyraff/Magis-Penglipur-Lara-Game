@@ -94,8 +94,12 @@ func _close_ui() -> void:
 # SCENE TRANSITION
 # -------------------------
 func _on_floor_selected(scene_id: String, spawn_marker: String) -> void:
-	if _triggered:
+	if _triggered or SaveManager.loading or SceneManager.is_transitioning:
 		return
+	var selected_floor: ElevatorFloor
+	for floor in floors:
+		if floor != null and floor.scene_id == scene_id and floor.spawn_marker_override == spawn_marker: selected_floor = floor
+	if selected_floor == null or (use_locking and selected_floor.locked) or not selected_floor.story_allows(): return
 	_triggered = true
 	_close_ui()
 	var scene_data := Scene_Registry.get_scene(scene_id)

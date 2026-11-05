@@ -1,0 +1,9 @@
+# Story Phase 3 validation
+
+Branch `feature/story-pipeline-phase3-persistence`; base `bd320fe9cf889247232c0f8cc14f4f2acfe40e92`. Godot 4.7 Flatpak editor import completed with no script errors. Phase 1 baseline: 24 checks, 0 failures. Phase 2 baseline: 20 checks, 0 failures. StorySaveService fixture: 16 checks, 0 failures. Isolated full campaign writer: 8 checks, 0 failures. Separate-process reader with profile switching, choice and receipt restoration, legacy staging and invalid-story rejection: 18 checks, 0 failures. The reader caught a JSON numeric decoding issue, which was fixed before the passing run.
+
+Commands use isolated `XDG_DATA_HOME` via Flatpak shell and `--quest-test-mode`. Writer: `res://tests/story/story-roundtrip.tscn -- --quest-test-mode --write-story-save`; reader: the same scene without `--write-story-save`. The same isolated data directory is used sequentially. See `tests/story/story-save.tscn` for schema validation. Export and broader regressions are recorded separately when run.
+
+Known limits: arbitrary external effects are not crash-atomic; renamed IDs require explicit StoryIdMigrations aliases; production prologue stage transitions are not activated by this phase. The unrelated Combat Feedback Save V1 particle-pool assertion remains failing (1 of 60); no story assertion in that suite failed.
+
+Quest Pipeline: 172 checks, 0 failures. Quest persistence writer: 4 checks, 0 failures; reader: 7 checks, 0 failures. Quest Accessibility: 90 checks, 0 failures. Prologue Inventory Integration: 28 checks, 0 failures. Cutscene Skip: 29 checks, 0 failures. Web PCK exported (98 MB); packed story schema fixture: 16 checks, 0 failures; packed fresh reader: 18 checks, 0 failures. Combat Feedback Save V1: 60 checks, 1 failure in existing incantation particle pool expectation; this test does not exercise story persistence. Engine shutdown resource warnings remain.

@@ -74,7 +74,7 @@ func setup(floors: Array[ElevatorFloor]) -> void:
 func _add_floor_button(floor_data: ElevatorFloor) -> void:
 	var btn := Button.new()
 
-	if floor_data.locked:
+	if not floor_data.is_accessible():
 		btn.text = "%s  %s" % [LOCK_ICON, floor_data.floor_name]
 		btn.disabled = true
 		btn.tooltip_text = floor_data.locked_hint

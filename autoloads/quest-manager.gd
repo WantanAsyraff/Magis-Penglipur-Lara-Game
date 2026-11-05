@@ -5,6 +5,8 @@ signal quest_completed(instance: QuestInstance)
 signal quest_handed_off(instance: QuestInstance)
 signal quest_changed(instance: QuestInstance)
 signal quests_changed
+signal world_flag_changed(id: String, old_value: bool, new_value: bool)
+signal gameplay_event_accepted(event: GameplayEvent)
 signal save_finished(success: bool)
 var conversations := QuestConversationStore.new()
 var live_offers: Dictionary = {}
@@ -112,6 +114,7 @@ func publish(event: GameplayEvent) -> bool:
 	_update_goals()
 	quests_changed.emit()
 	schedule_save()
+	gameplay_event_accepted.emit(event)
 	return true
 ## Compatibility for trusted legacy callers; normal pickups publish actual acquired IDs.
 func notify_item_collected(id: String, quantity: int, receipt: String = "") -> void:
@@ -299,8 +302,10 @@ func publish_flag_event(id: String, value: bool, receipt: String = "") -> void:
 func set_world_flag(id: String, value: bool) -> bool:
 	if not authoritative() or id.is_empty(): return false
 	if world_flags.get(id) == value: return false
+	var old_value: bool = world_flags.get(id, false)
 	world_flags[id] = value
 	publish_flag_event(id, value)
+	world_flag_changed.emit(id, old_value, value)
 	return true
 func drain_outbox() -> void:
 	while not pending_events.is_empty():

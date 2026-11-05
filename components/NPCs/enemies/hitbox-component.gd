@@ -111,6 +111,10 @@ func set_invincible(value: bool) -> void:
 func _apply_damage(raw_damage: float) -> void:
 	receive_damage(raw_damage)
 
+## Virtual adapter preserves ordinary damage while environmental hitboxes retain spell metadata.
+func receive_spell_damage(raw_damage: float, context: SpellCastContext) -> void:
+	receive_damage(raw_damage, context.caster)
+
 func receive_damage(raw_damage: float, source: Node2D = null) -> void:
 	if _invincible or not SpellExecutor.is_authoritative(self) or get_parent().get_meta("combat_dead", false):
 		return

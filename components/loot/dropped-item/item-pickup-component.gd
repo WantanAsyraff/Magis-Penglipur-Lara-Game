@@ -10,7 +10,7 @@ func _physics_process(delta: float) -> void:
 	if _is_collectible or not is_instance_valid(_parent_item): return
 	if not _parent_item.player_drop_id.is_empty() and not _parent_item.drop_armed: return
 	_elapsed += delta
-	if _elapsed >= .2: _make_collectible()
+	if _elapsed >= clampf(_parent_item.pickup_delay,0,5): _make_collectible()
 func _make_collectible() -> void:
 	if not is_instance_valid(_parent_item) or _parent_item.is_queued_for_deletion(): return
 	_is_collectible = true

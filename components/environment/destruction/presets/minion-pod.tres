@@ -1,0 +1,55 @@
+[gd_resource type="Resource" script_class="DestructibleConfig" format=3]
+[ext_resource type="Script" path="res://components/environment/destruction/resources/destructible-config.gd" id="config"]
+[ext_resource type="Script" path="res://components/environment/destruction/resources/destructible-state-definition.gd" id="state"]
+[ext_resource type="Script" path="res://components/environment/destruction/behaviors/destruction-behavior.gd" id="behavior"]
+[ext_resource type="Resource" path="res://components/environment/destruction/materials/organic.tres" id="material"]
+[ext_resource type="Script" path="res://components/environment/destruction/behaviors/spawn-actor-behavior.gd" id="spawn_actor"]
+[ext_resource type="PackedScene" path="res://components/NPCs/enemies/zalam-manifestations/bunga/bunga.tscn" id="actor"]
+
+[sub_resource type="Resource" id="intact"]
+script = ExtResource("state")
+state_id = &"intact"
+health_threshold_ratio = 1.0
+modulate_color = Color(1, 1, 1, 1)
+animation_name = &"idle"
+
+[sub_resource type="Resource" id="damaged"]
+script = ExtResource("state")
+state_id = &"damaged"
+health_threshold_ratio = 0.75
+modulate_color = Color(0.9, 0.8, 0.65, 1)
+animation_name = &"damaged"
+
+[sub_resource type="Resource" id="critical"]
+script = ExtResource("state")
+state_id = &"critical"
+health_threshold_ratio = 0.4
+modulate_color = Color(1, 0.55, 0.38, 1)
+animation_name = &"critical"
+
+[sub_resource type="Resource" id="destroyed"]
+script = ExtResource("state")
+state_id = &"destroyed"
+health_threshold_ratio = 0.0
+modulate_color = Color(0.5, 0.5, 0.5, 1)
+animation_name = &"destroyed"
+collision_enabled = false
+interaction_enabled = false
+
+[sub_resource type="Resource" id="spawn_actor"]
+script = ExtResource("spawn_actor")
+actor_scene = ExtResource("actor")
+spawn_count = 3
+spawn_pattern = 4
+directional_offsets = Array[Vector2]([Vector2(-160, -90), Vector2(0, -120), Vector2(160, -90)])
+delay_seconds = 0.45
+
+[resource]
+script = ExtResource("config")
+destructible_id = "minion-pod"
+display_name = "Minion Pod"
+max_health = 30.0
+remove_after_destroy = true
+material = ExtResource("material")
+states = Array[ExtResource("state")]([SubResource("intact"), SubResource("damaged"), SubResource("critical"), SubResource("destroyed")])
+behaviors = Array[ExtResource("behavior")]([SubResource("spawn_actor")])

@@ -16,7 +16,7 @@ func _ready() -> void:
 		push_error("V3 tests require --quest-test-mode and an isolated existing v3-test-users XDG_DATA_HOME directory")
 		get_tree().quit(2); return
 	if "--read-v3-bindings" in OS.get_cmdline_user_args():
-		check(ControlBindings.preset_name(ControlBindings.snapshot()) == "Arrow Keys", "Fresh process restores saved application preset")
+		check(ControlBindings.preset_name(ControlBindings.snapshot()) == "WASD", "Fresh process restores saved application preset")
 		print("COMBAT_CONTROLS_V3: %d checks, %d failures" % [checks, failures]); get_tree().quit(failures); return
 	await _controls()
 	await _gameplay()
@@ -28,7 +28,7 @@ func _controls() -> void:
 	var bindings := ControlBindings.snapshot()
 	var pad := InputEventJoypadButton.new(); pad.button_index = JOY_BUTTON_Y
 	bindings.incantation_up.append(pad)
-	for preset in ["IJKL", "Arrow Keys", "IJKL"]:
+	for preset in ["IJKL", "WASD", "IJKL"]:
 		ControlBindings.set_preset(bindings, preset)
 		check(ControlBindings.preset_name(bindings) == preset, preset + " recognized after switching")
 		for i in 4:
@@ -55,7 +55,7 @@ func _controls() -> void:
 	ControlBindings.apply(original)
 	var menu: Control = load("res://scenes/ui/menus/settings-menu.tscn").instantiate()
 	add_child(menu)
-	menu._select_category("Spellcasting"); menu._preset("Arrow Keys")
+	menu._select_category("Spellcasting"); menu._preset("WASD")
 	check(ControlBindings.preset_name(ControlBindings.snapshot()) == ControlBindings.preset_name(original), "Settings draft does not mutate gameplay")
 	menu.assistance_mode = 2
 	check(Player_Global_Data.assistance_mode != 2, "Draft assistance stays unapplied")
@@ -74,9 +74,9 @@ func _controls() -> void:
 	check(ControlBindings.preset_name(ControlBindings.snapshot()) == ControlBindings.preset_name(original), "Closing uncommitted editor discards draft")
 	await get_tree().process_frame
 	menu = load("res://scenes/ui/menus/settings-menu.tscn").instantiate(); add_child(menu)
-	menu._select_category("Spellcasting"); menu._preset("Arrow Keys"); menu.assistance_mode = 1
+	menu._select_category("Spellcasting"); menu._preset("WASD"); menu.assistance_mode = 1
 	menu._on_save()
-	check(ControlBindings.preset_name(ControlBindings.snapshot()) == "Arrow Keys" and Player_Global_Data.assistance_mode == 1, "Settings Apply commits draft bindings and assistance")
+	check(ControlBindings.preset_name(ControlBindings.snapshot()) == "WASD" and Player_Global_Data.assistance_mode == 1, "Settings Apply commits draft bindings and assistance")
 	var cfg := ConfigFile.new()
 	check(cfg.load(ControlBindings.SAVE_PATH) == OK and cfg.get_value("format", "version") == 2, "Settings Apply persists versioned bindings")
 	menu.free()
@@ -84,8 +84,8 @@ func _controls() -> void:
 	var panel := CastingPresetPanel.new(); add_child(panel)
 	panel.select("Custom")
 	check(panel.confirm_button.disabled and panel.selected == "Custom", "Custom new-game controls require explicit card selection")
-	panel.select("Arrow Keys")
-	check(panel.cards[1].button_pressed and not panel.confirm_button.disabled, "Arrow card is selectable")
+	panel.select("WASD")
+	check(panel.cards[1].button_pressed and not panel.confirm_button.disabled, "WASD card is selectable")
 	panel.select("IJKL")
 	check(panel.cards[0].button_pressed, "IJKL card is selectable")
 	panel.cards[0].grab_focus()
@@ -98,7 +98,7 @@ func _controls() -> void:
 	get_viewport().push_input(accept, true)
 	accept = accept.duplicate(); accept.pressed = false; get_viewport().push_input(accept, true)
 	await get_tree().process_frame
-	check(panel.selected == "Arrow Keys", "Controller accept selects the focused preset card")
+	check(panel.selected == "WASD", "Controller accept selects the focused preset card")
 	panel.free()
 	var campaign: Control = load("res://scenes/ui/menus/intro-menus/new-game-menu.tscn").instantiate()
 	add_child(campaign); campaign.name_input.text = "V3 Yan"; campaign.selected_profile = 3
@@ -115,13 +115,13 @@ func _gameplay() -> void:
 	for kind in ["manual", "auto"]: SaveManager.delete_slot(3, kind)
 	var campaign: Control = load("res://scenes/ui/menus/intro-menus/new-game-menu.tscn").instantiate()
 	add_child(campaign); campaign.name_input.text = "V3 Yan"; campaign.selected_profile = 3
-	campaign._begin(false); campaign.preset_panel.select("Arrow Keys")
-	campaign.preset_panel.confirmed.emit("Arrow Keys")
+	campaign._begin(false); campaign.preset_panel.select("WASD")
+	campaign.preset_panel.confirmed.emit("WASD")
 	for i in 300:
 		await get_tree().process_frame
 		if SaveManager.session_ready and not SaveManager.loading: break
 	check(SaveManager.session_ready and SaveManager.active_profile == 3, "Preset confirmation creates production campaign")
-	check(ControlBindings.preset_name(ControlBindings.snapshot()) == "Arrow Keys", "Confirmed new-game preset changes real InputMap")
+	check(ControlBindings.preset_name(ControlBindings.snapshot()) == "WASD", "Confirmed new-game preset changes real InputMap")
 	campaign.free()
 	var player := Player_Manager.get_local_player() as Player
 	if player == null: check(false, "Production player exists"); return
@@ -146,7 +146,7 @@ func _gameplay() -> void:
 	check(ui.shown_spells == spells, "HUD discovers equipped spells in path-length order")
 	for view in ui.views:
 		if view.column.visible: check(view.column.get_child_count() == 2 and view.key_icon.get_parent() is VBoxContainer and view.icon.get_index() > view.key_icon.get_index(), "Assistant stacks enlarged spell icons beneath the arrows")
-	for preset in ["IJKL", "Arrow Keys"]:
+	for preset in ["IJKL", "WASD"]:
 		player._clear_sequence(); player.casting.cooldowns.clear(); Player_Global_Data.p_curr_mana = 400
 		var bindings := ControlBindings.snapshot(); ControlBindings.set_preset(bindings, preset); ControlBindings.apply(bindings)
 		for direction in ["down", "left"]:
@@ -248,7 +248,7 @@ func _gameplay() -> void:
 	player = Player_Manager.get_local_player() as Player
 	rig = player.get_node("WeaponRig")
 	check(rig.equipped == weapon and rig.visual.get_child_count() == 1, "Save/load restores weapon once through equipment synchronization")
-	check(ControlBindings.preset_name(ControlBindings.snapshot()) == "Arrow Keys", "Campaign load preserves application casting preset")
+	check(ControlBindings.preset_name(ControlBindings.snapshot()) == "WASD", "Campaign load preserves application casting preset")
 	inventory_ui = load("res://scenes/ui/inventory/inventory-ui.tscn").instantiate(); add_child(inventory_ui)
 	inventory_ui.unequip_button.pressed.emit(); inventory_ui.free()
 	check(not rig.visible and rig.visual.get_child_count() == 0, "Unequip removes visual safely")

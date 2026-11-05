@@ -1,0 +1,74 @@
+[gd_resource type="Resource" script_class="StoryDatabase" format=3 uid="uid://bmb4exiuncptx"]
+
+[ext_resource type="Script" uid="uid://c5vrivnqx3087" path="res://data/story/core/story-database.gd" id="1"]
+[ext_resource type="Script" uid="uid://dmag04w4sgyp3" path="res://data/story/core/story-arc-data.gd" id="2"]
+[ext_resource type="Script" uid="uid://cgui3it25dto7" path="res://data/story/core/story-chapter-data.gd" id="3"]
+[ext_resource type="Script" uid="uid://b34icgatiuxum" path="res://data/story/core/story-stage-data.gd" id="4"]
+[ext_resource type="Script" uid="uid://dl4wtju884vg8" path="res://data/story/core/story-action.gd" id="4_0jria"]
+[ext_resource type="Script" uid="uid://cxhtdsbyj0w2e" path="res://data/story/core/story-flag-definition.gd" id="5"]
+[ext_resource type="Script" uid="uid://b4irnk17m6do5" path="res://data/story/core/story-transition-data.gd" id="5_fnk1q"]
+[ext_resource type="Script" uid="uid://b26dsyq8wptr" path="res://data/story/core/story-choice-data.gd" id="6_mbvmn"]
+
+[sub_resource type="Resource" id="stage1"]
+script = ExtResource("4")
+stage_id = &"prologue.wake_up"
+display_name = "Wake Up"
+objective_hint = "Wake at Yan’s house"
+
+[sub_resource type="Resource" id="stage2"]
+script = ExtResource("4")
+stage_id = &"prologue.leave_house"
+display_name = "Leave House"
+objective_hint = "Leave for the final paper"
+
+[sub_resource type="Resource" id="stage3"]
+script = ExtResource("4")
+stage_id = &"prologue.reach_school"
+display_name = "Reach School"
+objective_hint = "Arrive at school"
+
+[sub_resource type="Resource" id="stage4"]
+script = ExtResource("4")
+stage_id = &"prologue.spm_practical"
+display_name = "SPM Practical"
+objective_hint = "Complete the practical"
+
+[sub_resource type="Resource" id="stage5"]
+script = ExtResource("4")
+stage_id = &"prologue.after_exam"
+display_name = "After Exam"
+objective_hint = "Continue after the final paper"
+
+[sub_resource type="Resource" id="chapter"]
+script = ExtResource("3")
+chapter_id = &"prologue"
+chapter_name = "Prologue"
+stages = Array[ExtResource("4")]([SubResource("stage1"), SubResource("stage2"), SubResource("stage3"), SubResource("stage4"), SubResource("stage5")])
+initial_stage_id = &"prologue.wake_up"
+
+[sub_resource type="Resource" id="arc"]
+script = ExtResource("2")
+arc_id = &"main"
+display_name = "Main Story"
+chapters = Array[ExtResource("3")]([SubResource("chapter")])
+initial_chapter_id = &"prologue"
+
+[sub_resource type="Resource" id="flag1"]
+script = ExtResource("5")
+flag_id = &"story.prologue.left_house"
+display_name = "Left House"
+
+[sub_resource type="Resource" id="flag2"]
+script = ExtResource("5")
+flag_id = &"story.prologue.reached_school"
+display_name = "Reached School"
+
+[sub_resource type="Resource" id="flag3"]
+script = ExtResource("5")
+flag_id = &"story.prologue.spm_completed"
+display_name = "Spm Completed"
+
+[resource]
+script = ExtResource("1")
+arcs = Array[ExtResource("2")]([SubResource("arc")])
+flags = Array[ExtResource("5")]([SubResource("flag1"), SubResource("flag2"), SubResource("flag3")])

@@ -2,7 +2,7 @@ extends Control
 const ROW_SCENE := preload("res://scenes/ui/menus/bind-list.tscn")
 const SAVE_PATH := ControlBindings.SAVE_PATH
 # Public registry retained for tools and validation.
-const ACTIONS := [["move_left"], ["move_right"], ["climb_up"], ["climb_down"], ["jump"], ["dash"], ["block"], ["interact"], ["open_phone"], ["toggle_repertoire"], ["paused"], ["incantation_up"], ["incantation_down"], ["incantation_left"], ["incantation_right"], ["cancel_casting"], ["clear_incantation"], ["start_incantation"], ["pushback"], ["cycle_target"], ["casting_aim_lock"]]
+const ACTIONS := [["move_left"], ["move_right"], ["climb_up"], ["climb_down"], ["jump"], ["dash"], ["block"], ["interact"], ["open_phone"], ["toggle_repertoire"], ["paused"], ["incantation_up"], ["incantation_down"], ["incantation_left"], ["incantation_right"], ["cancel_casting"], ["clear_incantation"], ["start_incantation"], ["pushback"], ["cycle_target"], ["environment_target"], ["casting_aim_lock"]]
 var draft: Dictionary
 var category := "Movement"
 var advanced := false

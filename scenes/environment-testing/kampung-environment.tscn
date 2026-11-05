@@ -1,192 +1,186 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://blbn1f7i6a0wd"]
 
-[ext_resource type="Script" path="res://data/environment/environment-device-data.gd" id="cfg"]
-[ext_resource type="Script" path="res://data/environment/environment-link.gd" id="link"]
-[ext_resource type="Script" path="res://data/environment/environment-visual-data.gd" id="art"]
-[ext_resource type="PackedScene" path="res://components/environment/light-switch.tscn" id="light-switch"]
-[ext_resource type="PackedScene" path="res://components/environment/lamp.tscn" id="lamp"]
-[ext_resource type="PackedScene" path="res://components/environment/powered-gate.tscn" id="powered-gate"]
-[ext_resource type="PackedScene" path="res://components/environment/water-valve.tscn" id="water-valve"]
-[ext_resource type="PackedScene" path="res://components/environment/water-tap.tscn" id="water-tap"]
-[ext_resource type="PackedScene" path="res://components/environment/water-pump.tscn" id="water-pump"]
-[ext_resource type="PackedScene" path="res://components/environment/water-tank.tscn" id="water-tank"]
+[ext_resource type="Script" uid="uid://doxgmvpmyr7hx" path="res://data/loot/loot-data.gd" id="2_upt1a"]
+[ext_resource type="Script" uid="uid://dme4whqdjv8ll" path="res://data/environment/environment-visual-data.gd" id="art"]
 [ext_resource type="PackedScene" path="res://components/environment/ceiling-fan.tscn" id="ceiling-fan"]
+[ext_resource type="Script" uid="uid://cmrap2t65xo2f" path="res://data/environment/environment-device-data.gd" id="cfg"]
 [ext_resource type="PackedScene" path="res://components/environment/drainage-channel.tscn" id="drainage-channel"]
 [ext_resource type="PackedScene" path="res://components/environment/floating-crate.tscn" id="floating-crate"]
+[ext_resource type="PackedScene" path="res://components/environment/lamp.tscn" id="lamp"]
+[ext_resource type="PackedScene" path="res://components/environment/light-switch.tscn" id="light-switch"]
+[ext_resource type="Script" uid="uid://duxn5jogn0nw4" path="res://data/environment/environment-link.gd" id="link"]
+[ext_resource type="PackedScene" path="res://components/environment/powered-gate.tscn" id="powered-gate"]
+[ext_resource type="PackedScene" path="res://components/environment/water-pump.tscn" id="water-pump"]
+[ext_resource type="PackedScene" path="res://components/environment/water-tank.tscn" id="water-tank"]
+[ext_resource type="PackedScene" path="res://components/environment/water-tap.tscn" id="water-tap"]
+[ext_resource type="PackedScene" path="res://components/environment/water-valve.tscn" id="water-valve"]
 
 [sub_resource type="Resource" id="art"]
 script = ExtResource("art")
-tint = Color(0.3,0.85,0.8,1)
+tint = Color(0.3, 0.85, 0.8, 1)
 
 [sub_resource type="Resource" id="cfg101"]
 script = ExtResource("cfg")
-visual = SubResource("art")
-kind = 0
 device_name = "Suis lampu"
-size = Vector2(60,80)
+visual = SubResource("art")
+size = Vector2(60, 80)
 
 [sub_resource type="Resource" id="link102"]
 script = ExtResource("link")
 target = NodePath("../HouseLight")
-port = 0
-inverted = false
 
 [sub_resource type="Resource" id="link103"]
 script = ExtResource("link")
 target = NodePath("../Kipas")
-port = 0
-inverted = false
 
 [sub_resource type="Resource" id="cfg104"]
 script = ExtResource("cfg")
-visual = SubResource("art")
-kind = 2
 device_name = "Lampu"
+kind = 2
+visual = SubResource("art")
 initial_enabled = true
 
 [sub_resource type="Resource" id="cfg105"]
 script = ExtResource("cfg")
-visual = SubResource("art")
-kind = 7
 device_name = "Kipas siling"
+kind = 7
+visual = SubResource("art")
+size = Vector2(110, 80)
 initial_enabled = true
-size = Vector2(110,80)
-airflow_enabled = true
 initial_power = false
+airflow_enabled = true
 
 [sub_resource type="Resource" id="cfg106"]
 script = ExtResource("cfg")
-visual = SubResource("art")
-kind = 6
 device_name = "Tangki air"
-size = Vector2(120,120)
+kind = 6
+visual = SubResource("art")
+size = Vector2(120, 120)
 initial_enabled = true
 initial_volume = 80.0
 
 [sub_resource type="Resource" id="cfg107"]
 script = ExtResource("cfg")
-visual = SubResource("art")
-kind = 6
 device_name = "Tangki air"
-size = Vector2(120,120)
+kind = 6
+visual = SubResource("art")
+size = Vector2(120, 120)
 initial_enabled = true
-initial_volume = 0.0
 
 [sub_resource type="Resource" id="cfg108"]
 script = ExtResource("cfg")
-visual = SubResource("art")
-kind = 4
 device_name = "Paip air"
-size = Vector2(70,70)
+kind = 4
+visual = SubResource("art")
+size = Vector2(70, 70)
 
 [sub_resource type="Resource" id="cfg109"]
 script = ExtResource("cfg")
-visual = SubResource("art")
-kind = 4
 device_name = "Injap air"
+kind = 4
+visual = SubResource("art")
 
 [sub_resource type="Resource" id="cfg110"]
 script = ExtResource("cfg")
-visual = SubResource("art")
-kind = 0
 device_name = "Suis lampu"
-size = Vector2(60,80)
+visual = SubResource("art")
+size = Vector2(60, 80)
 
 [sub_resource type="Resource" id="link111"]
 script = ExtResource("link")
 target = NodePath("../Pump")
-port = 0
-inverted = false
 
 [sub_resource type="Resource" id="cfg112"]
 script = ExtResource("cfg")
-visual = SubResource("art")
-kind = 5
 device_name = "Pam air"
+kind = 5
+visual = SubResource("art")
 initial_enabled = true
 initial_power = false
 
 [sub_resource type="Resource" id="cfg113"]
 script = ExtResource("cfg")
-visual = SubResource("art")
-kind = 8
 device_name = "Longkang"
-size = Vector2(180,70)
+kind = 8
+visual = SubResource("art")
+size = Vector2(180, 70)
 initial_enabled = true
 flow_rate = 20.0
 
 [sub_resource type="Resource" id="cfg115"]
 script = ExtResource("cfg")
-visual = SubResource("art")
-kind = 3
-manual_interaction = false
 device_name = "Pagar"
+kind = 3
+visual = SubResource("art")
+size = Vector2(40, 180)
+manual_interaction = false
 initial_enabled = true
-logic = 0
-size = Vector2(40,180)
 persistent = true
 
-[node name="kampung-environment" type="Node2D"]
+[node name="kampung-environment" type="Node2D" unique_id=517383988]
 
-[node name="HouseSwitch" parent="." instance=ExtResource("light-switch")]
-position = Vector2(650,810)
+[node name="HouseSwitch" parent="." unique_id=1606671067 instance=ExtResource("light-switch")]
+position = Vector2(650, 810)
 data = SubResource("cfg101")
 links = Array[ExtResource("link")]([SubResource("link102"), SubResource("link103")])
 
-[node name="HouseLight" parent="." instance=ExtResource("lamp")]
-position = Vector2(950,620)
+[node name="HouseLight" parent="." unique_id=1292526675 instance=ExtResource("lamp")]
+position = Vector2(950, 620)
 data = SubResource("cfg104")
 
-[node name="Kipas" parent="." instance=ExtResource("ceiling-fan")]
-position = Vector2(1200,590)
+[node name="Kipas" parent="." unique_id=973438201 instance=ExtResource("ceiling-fan")]
+position = Vector2(1200, 590)
 data = SubResource("cfg105")
 
-[node name="Tangki" parent="." instance=ExtResource("water-tank")]
-position = Vector2(1630,560)
+[node name="Tangki" parent="." unique_id=292045801 instance=ExtResource("water-tank")]
+position = Vector2(1630, 560)
 data = SubResource("cfg106")
 
-[node name="CatchTank" parent="." instance=ExtResource("water-tank")]
-position = Vector2(2530,560)
+[node name="CatchTank" parent="." unique_id=294285379 instance=ExtResource("water-tank")]
+position = Vector2(2530, 560)
 data = SubResource("cfg107")
 
-[node name="Tap" parent="." instance=ExtResource("water-tap")]
-position = Vector2(2050,810)
+[node name="Tap" parent="." unique_id=1328457136 instance=ExtResource("water-tap")]
+position = Vector2(2050, 810)
 data = SubResource("cfg108")
 source_tank = NodePath("../Tangki")
 destination_tank = NodePath("../CatchTank")
 valves = Array[NodePath]([NodePath("../Valve")])
 
-[node name="Valve" parent="." instance=ExtResource("water-valve")]
-position = Vector2(2300,810)
+[node name="Valve" parent="." unique_id=1274535264 instance=ExtResource("water-valve")]
+position = Vector2(2300, 810)
 data = SubResource("cfg109")
 
-[node name="PumpSwitch" parent="." instance=ExtResource("light-switch")]
-position = Vector2(2800,810)
+[node name="PumpSwitch" parent="." unique_id=1674959080 instance=ExtResource("light-switch")]
+position = Vector2(2800, 810)
 data = SubResource("cfg110")
 links = Array[ExtResource("link")]([SubResource("link111")])
 
-[node name="Pump" parent="." instance=ExtResource("water-pump")]
-position = Vector2(3050,810)
+[node name="Pump" parent="." unique_id=139339303 instance=ExtResource("water-pump")]
+position = Vector2(3050, 810)
 data = SubResource("cfg112")
 source_tank = NodePath("../CatchTank")
 destination_tank = NodePath("../Tangki")
 valves = Array[NodePath]([NodePath("../Valve")])
 
-[node name="Longkang" parent="." instance=ExtResource("drainage-channel")]
-position = Vector2(3400,860)
+[node name="Longkang" parent="." unique_id=1045051930 instance=ExtResource("drainage-channel")]
+position = Vector2(3400, 860)
 data = SubResource("cfg113")
 source_tank = NodePath("../CatchTank")
 destination_tank = NodePath("../Tangki")
 blocking_debris = NodePath("../Debris")
 
-[node name="Debris" parent="." instance=ExtResource("floating-crate")]
-position = Vector2(3400,840)
+[node name="Debris" parent="." unique_id=48820743 instance=ExtResource("floating-crate")]
+position = Vector2(3400, 840)
 
-[node name="Pagar" parent="." instance=ExtResource("powered-gate")]
-position = Vector2(3750,615)
+[node name="Pagar" parent="." unique_id=53234435 instance=ExtResource("powered-gate")]
+position = Vector2(3750, 615)
 data = SubResource("cfg115")
 
-[node name="OptionalLabel" type="Label" parent="."]
-position = Vector2(640,510)
-text = "Rumah Yan · Optional household utilities"
+[node name="OptionalLabel" type="Label" parent="." unique_id=2019892534]
+offset_left = 640.0
+offset_top = 510.0
+offset_right = 640.0
+offset_bottom = 510.0
 theme_override_font_sizes/font_size = 24
+text = "Rumah Yan · Optional household utilities"

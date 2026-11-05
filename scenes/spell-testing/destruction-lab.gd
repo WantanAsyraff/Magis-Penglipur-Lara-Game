@@ -21,7 +21,8 @@ func _ready() -> void:
 	reset_props()
 	Player_Global_Data.equipped_spells.assign(LOADOUT); Player_Global_Data.spells_updated.emit()
 	Player_Global_Data.p_curr_health = Player_Global_Data.p_max_health; Player_Global_Data.p_curr_mana = Player_Global_Data.p_max_mana
-	Player_Global_Data.combat_mode = true; Player_Global_Data.p_moveable = true
+	Player_Global_Data.combat_mode = true
+	Player_Global_Data.p_moveable = true
 	player = load("res://scenes/combat/boss-prototype-player.tscn").instantiate() as Player
 	player.set("training_spells",LOADOUT.duplicate()); player.position = Vector2(-1230,65)
 	add_child(player); Player_Manager.players[Player_Manager.get_local_peer_id()] = player

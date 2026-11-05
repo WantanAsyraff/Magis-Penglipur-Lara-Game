@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SceneData" format=3 uid="uid://c3jfg0enm6al8"]
+
+[ext_resource type="Script" uid="uid://bxc44phagq28x" path="res://data/Resources/worlds/scene-data.gd" id="1_58qsp"]
+[ext_resource type="PackedScene" uid="uid://duli2ukdpeb1e" path="res://scenes/spell-testing/destruction-lab.tscn" id="1_fs36s"]
+
+[resource]
+script = ExtResource("1_58qsp")
+scene_id = "scene_destruction_lab"
+scene = ExtResource("1_fs36s")
+scene_name = "Destruction_Lab"
+metadata/_custom_type_script = "uid://bxc44phagq28x"

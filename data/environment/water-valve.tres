@@ -1,11 +1,15 @@
-[gd_resource type="Resource" script_class="EnvironmentDeviceData" load_steps=4 format=3]
-[ext_resource type="Script" path="res://data/environment/environment-device-data.gd" id="data"]
-[ext_resource type="Script" path="res://data/environment/environment-visual-data.gd" id="visual"]
+[gd_resource type="Resource" script_class="EnvironmentDeviceData" format=3 uid="uid://bftl20p2r7rg6"]
+
+[ext_resource type="Script" uid="uid://doxgmvpmyr7hx" path="res://data/loot/loot-data.gd" id="1_lsioi"]
+[ext_resource type="Script" uid="uid://cmrap2t65xo2f" path="res://data/environment/environment-device-data.gd" id="data"]
+[ext_resource type="Script" uid="uid://dme4whqdjv8ll" path="res://data/environment/environment-visual-data.gd" id="visual"]
+
 [sub_resource type="Resource" id="art"]
 script = ExtResource("visual")
 tint = Color(0.35, 0.75, 0.83, 1)
+
 [resource]
 script = ExtResource("data")
-visual = SubResource("art")
-kind = 4
 device_name = "Injap air"
+kind = 4
+visual = SubResource("art")

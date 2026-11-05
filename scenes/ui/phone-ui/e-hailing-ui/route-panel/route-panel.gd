@@ -8,6 +8,7 @@ var current_index: int = 0
 func _ready() -> void:
 	_update_label()
 
+
 func _on_button_pressed() -> void:
 	_travel_to(destinations[current_index])
 	Player_Global_Data.p_moveable = true

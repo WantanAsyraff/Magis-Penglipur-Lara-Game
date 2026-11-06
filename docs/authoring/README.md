@@ -27,6 +27,7 @@ Inventory V2: [items and transactions](inventory-and-items.md), [interface and c
 - [Flags](story-flags.md)
 - [Conditions](story-conditions.md)
 - [Phase 1 validation](../reference/story-phase1-validation.md)
+- [Yan prologue production authoring](prologue-story-authoring.md)
 
 ## Story transitions
 

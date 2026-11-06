@@ -190,5 +190,5 @@ data = SubResource("cfg132")
 
 [node name="OptionalLabel" type="Label" parent="."]
 position = Vector2(1640,510)
-text = "Optional practical equipment · Kinetic Chill (R to select) · Main route stays below"
+text = "Practical: cool the Magis receiver (R to select Kinetic Chill), then reach the exit."
 theme_override_font_sizes/font_size = 24

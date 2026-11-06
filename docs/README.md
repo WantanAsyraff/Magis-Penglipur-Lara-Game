@@ -52,3 +52,4 @@ Inventory V2: [items and transactions](authoring/inventory-and-items.md), [inter
 - [Runtime debugger and editor authoring guide](authoring/story-debugger-and-authoring.md)
 - [Diagnostic architecture](architecture/story-debugger-architecture.md)
 - [Phase 5 verification and limits](reference/story-phase5-validation.md)
+- [Prologue integration](architecture/story-prologue-integration.md) and [Phase 6 validation](reference/story-phase6-validation.md)

@@ -38,7 +38,7 @@ func _ready() -> void:
 	check(StorySaveService.encode(StoryDirector.state, StoryDirector.registry) == before and QuestManager.world_flags == world_before and changes[0] == 0, "inspection emits no progression")
 	var graph := service.get_registered_story_graph()
 	check(graph.nodes.size() == 5, "authored prologue graph extracted")
-	check(graph.issues.any(func(row: Dictionary): return row.code == "STORY_STRUCTURALLY_UNREACHABLE"), "missing production transitions identified")
+	check(graph.edges.size() == 4 and not graph.issues.any(func(row: Dictionary): return row.code == "STORY_STRUCTURALLY_UNREACHABLE"), "production prologue path is reachable")
 	var synthetic := StoryDatabase.new()
 	var arc := StoryArcData.new(); arc.arc_id = &"test.arc"; arc.initial_chapter_id = &"test.chapter"
 	var chapter := StoryChapterData.new(); chapter.chapter_id = &"test.chapter"; chapter.initial_stage_id = &"test.a"

@@ -24,6 +24,7 @@ static func stage(raw: Variant, registry: StoryRegistry, legacy_quest: Dictionar
   var flags: Dictionary = legacy_quest.get("world_flags", {})
   if flags.get("story_sequence:prologue.after_final_paper", false): raw.active_stage_id = "prologue.after_exam"
   elif flags.get("story_sequence:prologue.school", false): raw.active_stage_id = "prologue.spm_practical"
+  elif flags.get("story.prologue.reached_school", false): raw.active_stage_id = "prologue.reach_school"
   elif flags.get("story_sequence:prologue.kampung", false): raw.active_stage_id = "prologue.leave_house"
  elif raw is Dictionary:
   raw = raw.duplicate(true)

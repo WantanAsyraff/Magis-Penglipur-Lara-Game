@@ -1,0 +1,9 @@
+# Authoring the Yan prologue
+
+Open the Story Editor and select the `main` arc and `prologue` chapter. The registered source of truth is `res://data/story/definitions/story-database.tres`; the four production transitions are owned by their source `StoryStageData` Resources. Edit a transition in the Inspector, save the Resource, refresh the graph, and run **Validate Story**. A terminal `after_exam` dead-end is intentional.
+
+To change a stage objective, edit its `objective_hint`. To add a future branch, register a real stage in the appropriate chapter, give it a stable lowercase ID, then add a `StoryTransitionData` to the source stage. Use a specific accepted event or condition. A graph edge alone does not advance gameplay. Avoid unconditional automatic transitions. For a new chapter, register its entry stage and connect to that ID only when its scene and completion facts exist.
+
+For the current path, the sequence conditions reference the existing Kampung and School `CutsceneSequence` Resources. Keep spell grants in `CutsceneFlow`; do not add a story spell action. The school arrival event is emitted only by the school scene on fresh route entry. The practical demonstration is recorded when the Kinetic Chill receiver activates; the FLAC entrance records success after the end portal transfers the player. Do not replace these facts with a scene-load check during SaveManager restoration.
+
+After editing, run `tests/story/story-prologue-migration.tscn` in isolated test mode, run the Story Editor validator, and play from a new isolated campaign through the cutscenes, receiver, portal and after-paper narrative. Check F12 after each milestone and save/load at the house, school, practical and FLAC. Verify natural completion, skip and interruption separately. Preserve all five stable stage IDs to keep Save V1 compatible.

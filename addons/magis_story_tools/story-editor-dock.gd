@@ -32,6 +32,18 @@ var _stage_id_input: LineEdit
 var _stage_chapter_choice: OptionButton
 var _stage_dialog_mode := "create"
 var _stage_template: StoryStageData
+var _preferred_chapter_id := ""
+var _tree_menu: PopupMenu
+var _tree_context_resource: Resource
+var _story_dialog: ConfirmationDialog
+var _story_dialog_mode := "arc"
+var _story_arc_id: LineEdit
+var _story_arc_name: LineEdit
+var _story_chapter_id: LineEdit
+var _story_chapter_name: LineEdit
+var _story_stage_id: LineEdit
+var _story_stage_name: LineEdit
+var _story_arc_fields: VBoxContainer
 var _stage_picker: ConfirmationDialog
 var _stage_picker_search: LineEdit
 var _stage_picker_list: ItemList
@@ -53,6 +65,7 @@ var _drag_active := false
 var _drag_feedback := false
 var interaction_diagnostics := false
 enum ContextAction { ADD_STAGE, ARRANGE, FIT, REFRESH, VALIDATE, EDIT_STAGE, CONNECT_TO, CONNECT_FROM, SET_ENTRY, DUPLICATE_STAGE, COPY_STAGE_ID, DELETE_STAGE, EDIT_TRANSITION, VIEW_CONDITIONS, COPY_TRANSITION_ID, DELETE_TRANSITION, TOGGLE_DIAGNOSTICS }
+enum TreeAction { NEW_STORY, ADD_CHAPTER, ADD_STAGE, EDIT_RESOURCE, CONNECT_TO, DUPLICATE_STAGE, DELETE_STAGE, DELETE_TRANSITION }
 func _ready() -> void:
 	custom_minimum_size.y = 480
 	_build()
@@ -67,7 +80,7 @@ func _build() -> void:
 	var split := HSplitContainer.new(); split.size_flags_vertical = Control.SIZE_EXPAND_FILL; add_child(split)
 	var left := VBoxContainer.new(); left.custom_minimum_size.x = 200; split.add_child(left)
 	var navigator := Label.new(); navigator.text = "Story Resources"; left.add_child(navigator)
-	tree = Tree.new(); tree.size_flags_vertical = Control.SIZE_EXPAND_FILL; tree.hide_root = true; tree.item_selected.connect(_on_tree_selected); left.add_child(tree)
+	tree = Tree.new(); tree.size_flags_vertical = Control.SIZE_EXPAND_FILL; tree.hide_root = true; tree.item_selected.connect(_on_tree_selected); tree.gui_input.connect(_on_tree_gui_input); left.add_child(tree)
 	var center := VBoxContainer.new(); center.size_flags_horizontal = Control.SIZE_EXPAND_FILL; split.add_child(center)
 	graph = GraphEdit.new(); graph.custom_minimum_size.y = 220; graph.size_flags_vertical = Control.SIZE_EXPAND_FILL; graph.zoom = 0.75; graph.right_disconnects = false; graph.minimap_enabled = false; graph.show_minimap_button = false; graph.node_selected.connect(_on_graph_selected)
 	graph.add_theme_constant_override("port_hotzone_inner_extent", 28)
@@ -94,6 +107,7 @@ func _build() -> void:
 	details = RichTextLabel.new(); details.custom_minimum_size.x = 240; details.selection_enabled = true; details.text = "Select a Resource or finding."; split.add_child(details)
 	_delete_dialog = ConfirmationDialog.new(); _delete_dialog.title = "Delete story transition"; _delete_dialog.confirmed.connect(_confirm_delete); add_child(_delete_dialog)
 	_build_context_controls()
+	_build_tree_controls()
 
 func refresh() -> void:
 	database = load(database_path) as StoryDatabase
@@ -190,6 +204,15 @@ func _on_tree_selected() -> void:
 			_clear_transition_selection()
 			_select_resource(resource)
 			_open_selected()
+func _on_tree_gui_input(event: InputEvent) -> void:
+	if not event is InputEventMouseButton: return
+	var mouse := event as InputEventMouseButton
+	if not mouse.pressed or mouse.button_index != MOUSE_BUTTON_RIGHT: return
+	var item := tree.get_item_at_position(mouse.position)
+	_tree_context_resource = item.get_metadata(0) as Resource if item != null else null
+	if item != null: item.select(0)
+	_show_tree_menu(Vector2i(tree.get_screen_transform() * mouse.position))
+	tree.accept_event()
 func _on_graph_selected(node: Node) -> void:
 	if node and node.has_meta("story_id"):
 		_selected_stage_id = String(node.get_meta("story_id"))
@@ -535,7 +558,9 @@ func _show_stage_dialog(duplicate: bool) -> void:
 	var selected_chapter := ""
 	if duplicate:
 		selected_chapter = String(StoryGraphAuthoring.find_stage(database, _context_stage_id).chapter.chapter_id)
+	elif not _preferred_chapter_id.is_empty(): selected_chapter = _preferred_chapter_id
 	elif chapter_filter.selected > 0: selected_chapter = chapter_filter.get_item_text(chapter_filter.selected)
+	_preferred_chapter_id = ""
 	for arc in database.arcs:
 		if arc == null: continue
 		for chapter in arc.chapters:
@@ -644,3 +669,146 @@ func _confirm_stage_picker() -> void:
 	var source_id := _stage_picker_fixed_id if _stage_picker_mode == "to" else chosen
 	var target_id := chosen if _stage_picker_mode == "to" else _stage_picker_fixed_id
 	_create_transition(source_id, target_id)
+
+func _build_tree_controls() -> void:
+	_tree_menu = PopupMenu.new(); _tree_menu.id_pressed.connect(_on_tree_action); add_child(_tree_menu)
+	_story_dialog = ConfirmationDialog.new(); _story_dialog.title = "New story"; _story_dialog.confirmed.connect(_confirm_story_dialog); add_child(_story_dialog)
+	var fields := VBoxContainer.new(); _story_dialog.add_child(fields)
+	_story_arc_fields = VBoxContainer.new(); fields.add_child(_story_arc_fields)
+	var arc_id_label := Label.new(); arc_id_label.text = "Story arc ID"; _story_arc_fields.add_child(arc_id_label)
+	_story_arc_id = LineEdit.new(); _story_arc_id.placeholder_text = "e.g. side_story"; _story_arc_fields.add_child(_story_arc_id)
+	var arc_name_label := Label.new(); arc_name_label.text = "Story name"; _story_arc_fields.add_child(arc_name_label)
+	_story_arc_name = LineEdit.new(); _story_arc_name.placeholder_text = "Display name"; _story_arc_fields.add_child(_story_arc_name)
+	var chapter_id_label := Label.new(); chapter_id_label.text = "First chapter ID"; fields.add_child(chapter_id_label)
+	_story_chapter_id = LineEdit.new(); _story_chapter_id.placeholder_text = "e.g. side_story.chapter_1"; fields.add_child(_story_chapter_id)
+	var chapter_name_label := Label.new(); chapter_name_label.text = "Chapter name"; fields.add_child(chapter_name_label)
+	_story_chapter_name = LineEdit.new(); _story_chapter_name.placeholder_text = "Display name"; fields.add_child(_story_chapter_name)
+	var stage_id_label := Label.new(); stage_id_label.text = "First stage ID"; fields.add_child(stage_id_label)
+	_story_stage_id = LineEdit.new(); _story_stage_id.placeholder_text = "e.g. side_story.start"; fields.add_child(_story_stage_id)
+	var stage_name_label := Label.new(); stage_name_label.text = "Stage name"; fields.add_child(stage_name_label)
+	_story_stage_name = LineEdit.new(); _story_stage_name.placeholder_text = "Display name"; fields.add_child(_story_stage_name)
+
+func _show_tree_menu(screen_position: Vector2i) -> void:
+	_tree_menu.clear()
+	if _tree_context_resource == null:
+		_tree_menu.add_item("New Story...", TreeAction.NEW_STORY)
+	elif _tree_context_resource is StoryArcData:
+		_tree_menu.add_item("Edit Story", TreeAction.EDIT_RESOURCE)
+		_tree_menu.add_item("Add Chapter...", TreeAction.ADD_CHAPTER)
+		_tree_menu.add_item("New Story...", TreeAction.NEW_STORY)
+	elif _tree_context_resource is StoryChapterData:
+		_tree_menu.add_item("Edit Chapter", TreeAction.EDIT_RESOURCE)
+		_tree_menu.add_item("Add Stage...", TreeAction.ADD_STAGE)
+		_tree_menu.add_item("New Story...", TreeAction.NEW_STORY)
+	elif _tree_context_resource is StoryStageData:
+		_tree_menu.add_item("Edit Stage", TreeAction.EDIT_RESOURCE)
+		_tree_menu.add_item("Add Stage to Chapter...", TreeAction.ADD_STAGE)
+		_tree_menu.add_item("Connect to Stage...", TreeAction.CONNECT_TO)
+		_tree_menu.add_item("Duplicate Stage...", TreeAction.DUPLICATE_STAGE)
+		_tree_menu.add_item("Delete Stage...", TreeAction.DELETE_STAGE)
+		_tree_menu.add_item("New Story...", TreeAction.NEW_STORY)
+	elif _tree_context_resource is StoryTransitionData:
+		_tree_menu.add_item("Edit Transition", TreeAction.EDIT_RESOURCE)
+		_tree_menu.add_item("Delete Transition...", TreeAction.DELETE_TRANSITION)
+	else:
+		_tree_menu.add_item("New Story...", TreeAction.NEW_STORY)
+	_tree_menu.popup()
+	var origin := DisplayServer.window_get_position()
+	var bounds := DisplayServer.window_get_size()
+	_tree_menu.position = Vector2i(clampi(screen_position.x, origin.x, origin.x + bounds.x - _tree_menu.size.x), clampi(screen_position.y, origin.y, origin.y + bounds.y - _tree_menu.size.y))
+
+func _on_tree_action(id: int) -> void:
+	match id:
+		TreeAction.NEW_STORY: _show_story_dialog("arc")
+		TreeAction.ADD_CHAPTER:
+			if _tree_context_resource is StoryArcData: _show_story_dialog("chapter")
+		TreeAction.ADD_STAGE:
+			if _tree_context_resource is StoryChapterData:
+				_preferred_chapter_id = String(_tree_context_resource.chapter_id)
+			elif _tree_context_resource is StoryStageData:
+				var owner := StoryGraphAuthoring.find_stage(database, String(_tree_context_resource.stage_id))
+				if not owner.is_empty(): _preferred_chapter_id = String(owner.chapter.chapter_id)
+			_show_stage_dialog(false)
+		TreeAction.EDIT_RESOURCE:
+			if _tree_context_resource is StoryTransitionData: _select_transition(_tree_context_resource)
+			else: _select_resource(_tree_context_resource); _open_selected()
+		TreeAction.CONNECT_TO:
+			if _tree_context_resource is StoryStageData: _show_stage_picker("to", String(_tree_context_resource.stage_id))
+		TreeAction.DUPLICATE_STAGE:
+			if _tree_context_resource is StoryStageData:
+				_context_stage_id = String(_tree_context_resource.stage_id); _show_stage_dialog(true)
+		TreeAction.DELETE_STAGE:
+			if _tree_context_resource is StoryStageData: _request_stage_delete(String(_tree_context_resource.stage_id))
+		TreeAction.DELETE_TRANSITION:
+			if _tree_context_resource is StoryTransitionData:
+				_select_transition(_tree_context_resource); _request_delete_selected()
+
+func _show_story_dialog(mode: String) -> void:
+	_story_dialog_mode = mode
+	_story_dialog.title = "New Story" if mode == "arc" else "Add Chapter"
+	_story_arc_fields.visible = mode == "arc"
+	_story_arc_id.clear(); _story_arc_name.clear()
+	_story_chapter_id.clear(); _story_chapter_name.clear()
+	_story_stage_id.clear(); _story_stage_name.clear()
+	_story_dialog.popup_centered(Vector2i(470, 420))
+	if mode == "arc": _story_arc_id.grab_focus()
+	else: _story_chapter_id.grab_focus()
+
+func _confirm_story_dialog() -> void:
+	if database == null: _status("Story database unavailable."); return
+	var chapter_id := _story_chapter_id.text.strip_edges()
+	var stage_id := _story_stage_id.text.strip_edges()
+	var reason := StoryGraphAuthoring.chapter_id_error(database, chapter_id)
+	if reason.is_empty(): reason = StoryGraphAuthoring.stage_id_error(database, stage_id)
+	if _story_dialog_mode == "arc" and reason.is_empty(): reason = StoryGraphAuthoring.arc_id_error(database, _story_arc_id.text.strip_edges())
+	if not reason.is_empty(): _status(reason); _story_dialog.popup_centered(); return
+	var stage := StoryStageData.new()
+	stage.stage_id = StringName(stage_id)
+	stage.display_name = _story_stage_name.text.strip_edges() if not _story_stage_name.text.strip_edges().is_empty() else stage_id
+	var chapter := StoryChapterData.new()
+	chapter.chapter_id = StringName(chapter_id)
+	chapter.chapter_name = _story_chapter_name.text.strip_edges() if not _story_chapter_name.text.strip_edges().is_empty() else chapter_id
+	chapter.stages = [stage]
+	chapter.initial_stage_id = stage.stage_id
+	if _story_dialog_mode == "arc":
+		var arc := StoryArcData.new()
+		arc.arc_id = StringName(_story_arc_id.text.strip_edges())
+		arc.display_name = _story_arc_name.text.strip_edges() if not _story_arc_name.text.strip_edges().is_empty() else String(arc.arc_id)
+		arc.chapters = [chapter]
+		arc.initial_chapter_id = chapter.chapter_id
+		var result := StoryGraphAuthoring.set_arc_registered(database, arc, true)
+		if result != OK: _status("Could not save new story: " + error_string(result)); return
+		_record_arc_undo(arc)
+		refresh(); _select_resource(arc); _open_selected()
+		_status("Saved story %s with chapter %s and starting stage %s." % [arc.arc_id, chapter_id, stage_id])
+	else:
+		var arc := _tree_context_resource as StoryArcData
+		if arc == null or arc not in database.arcs: _status("Selected story is no longer registered."); return
+		var result := StoryGraphAuthoring.set_chapter_registered(database, arc, chapter, true)
+		if result != OK: _status("Could not save new chapter: " + error_string(result)); return
+		_record_chapter_undo(arc, chapter)
+		refresh(); _select_resource(chapter); _open_selected()
+		_status("Saved chapter %s with starting stage %s." % [chapter_id, stage_id])
+
+func _record_arc_undo(arc: StoryArcData) -> void:
+	if editor_plugin == null: return
+	var history := editor_plugin.get_undo_redo()
+	history.create_action("Add story " + String(arc.arc_id))
+	history.add_do_method(self, "_apply_arc_state", arc, true)
+	history.add_undo_method(self, "_apply_arc_state", arc, false)
+	history.commit_action(false)
+func _apply_arc_state(arc: StoryArcData, present: bool) -> void:
+	var result := StoryGraphAuthoring.set_arc_registered(database, arc, present)
+	if result != OK: _status("Could not save story change: " + error_string(result)); return
+	refresh()
+func _record_chapter_undo(arc: StoryArcData, chapter: StoryChapterData) -> void:
+	if editor_plugin == null: return
+	var history := editor_plugin.get_undo_redo()
+	history.create_action("Add chapter " + String(chapter.chapter_id))
+	history.add_do_method(self, "_apply_chapter_state", arc, chapter, true)
+	history.add_undo_method(self, "_apply_chapter_state", arc, chapter, false)
+	history.commit_action(false)
+func _apply_chapter_state(arc: StoryArcData, chapter: StoryChapterData, present: bool) -> void:
+	var result := StoryGraphAuthoring.set_chapter_registered(database, arc, chapter, present)
+	if result != OK: _status("Could not save chapter change: " + error_string(result)); return
+	refresh()

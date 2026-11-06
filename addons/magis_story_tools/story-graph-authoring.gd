@@ -115,6 +115,59 @@ static func find_chapter(database: StoryDatabase, id: String) -> Dictionary:
 				return {"arc": arc, "chapter": chapter}
 	return {}
 
+static func arc_id_error(database: StoryDatabase, id: String) -> String:
+	var error := _id_error(id)
+	if not error.is_empty(): return error
+	if database != null:
+		for arc in database.arcs:
+			if arc != null and String(arc.arc_id) == id: return "Story arc ID already exists: " + id
+	return ""
+
+static func chapter_id_error(database: StoryDatabase, id: String) -> String:
+	var error := _id_error(id)
+	if not error.is_empty(): return error
+	if not find_chapter(database, id).is_empty(): return "Chapter ID already exists: " + id
+	return ""
+
+static func _id_error(id: String) -> String:
+	if id.is_empty() or id.length() > 128 or id != id.to_lower(): return "ID must be 1–128 lowercase characters."
+	for c in id:
+		if not (c >= "a" and c <= "z" or c >= "0" and c <= "9" or c in "._-"):
+			return "ID may contain only lowercase letters, digits, periods, underscores and hyphens."
+	return ""
+
+static func set_arc_registered(database: StoryDatabase, arc: StoryArcData, present: bool) -> Error:
+	if database == null or arc == null or database.resource_path.is_empty(): return ERR_INVALID_PARAMETER
+	var previous := database.arcs.duplicate()
+	var updated := previous.duplicate()
+	var index := updated.find(arc)
+	if present and index < 0: updated.append(arc)
+	elif not present and index >= 0: updated.remove_at(index)
+	else: return OK
+	database.arcs = updated
+	var result := ResourceSaver.save(database, database.resource_path)
+	if result != OK: database.arcs = previous
+	return result
+
+static func set_chapter_registered(database: StoryDatabase, arc: StoryArcData, chapter: StoryChapterData, present: bool) -> Error:
+	if database == null or arc == null or chapter == null or database.resource_path.is_empty(): return ERR_INVALID_PARAMETER
+	var owner_path := arc.resource_path.get_slice("::", 0)
+	var owner: Resource = database
+	if not owner_path.is_empty() and owner_path != database.resource_path:
+		owner = arc if owner_path == arc.resource_path else load(owner_path)
+	if owner == null: return ERR_FILE_NOT_FOUND
+	if owner_path.is_empty() or owner_path == database.resource_path: owner_path = database.resource_path
+	var previous := arc.chapters.duplicate()
+	var updated := previous.duplicate()
+	var index := updated.find(chapter)
+	if present and index < 0: updated.append(chapter)
+	elif not present and index >= 0: updated.remove_at(index)
+	else: return OK
+	arc.chapters = updated
+	var result := ResourceSaver.save(owner, owner_path)
+	if result != OK: arc.chapters = previous
+	return result
+
 static func set_stage_registered(database: StoryDatabase, chapter: StoryChapterData, stage: StoryStageData, present: bool) -> Error:
 	if database == null or chapter == null or stage == null or database.resource_path.is_empty(): return ERR_INVALID_PARAMETER
 	var owner := _owner_for_chapter(database, chapter)

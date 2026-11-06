@@ -1,3 +1,4 @@
+@tool
 class_name CutsceneSequence extends Resource
 @export var sequence_id: String = ""
 @export_file("*.dtl") var timeline_path: String = ""

@@ -23,6 +23,8 @@ tile_map_data = PackedByteArray("AAAAAA4AAAAAAAAAAAAAAA8AAAAAAAAAAAABAA4AAAABAAA
 position = Vector2(10769, 732)
 is_door = true
 next_scene_id = "faculty_of_logic_and_computation_entrance"
+practical_completion_portal = true
+locked_hint = "Cool the Magis receiver with Kinetic Chill before leaving"
 spawn_marker_override = "FromPostPrologueMarker"
 
 [node name="PlayerSpawn" type="Marker2D" parent="World/GameComponents/SpawnPoints" parent_id_path=PackedInt32Array(1598029619) index="0" unique_id=1736311650]

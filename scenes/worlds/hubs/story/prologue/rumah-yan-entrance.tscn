@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://c6practmijq12" path="res://assets/temp/temp-bgs/prologue-art-lvl-0.jpg" id="3_5qp84"]
 [ext_resource type="LabelSettings" uid="uid://dk40du64xk8k7" path="res://assets/custom-labels/ui-stats-label.tres" id="3_r5ue3"]
 [ext_resource type="PackedScene" uid="uid://c5a41lx0gq8be" path="res://scenes/transitioners/zone-portal/zone-portal.tscn" id="4_6g4xo"]
+[ext_resource type="Resource" path="res://data/story/definitions/conditions/intro-completed.tres" id="intro_gate"]
 
 [ext_resource type="Script" path="res://components/environment/core/optional-environment-loader.gd" id="environment"]
 
@@ -25,8 +26,11 @@ tile_map_data = PackedByteArray("AAD//w4AAQACAA0AAAD//w8AAQACAA4AAAD//xAAAQACAA8
 position = Vector2(4645, 748)
 is_door = true
 next_scene_id = "yan_exam_tutorial"
+entry_conditions = Array[StoryCondition]([ExtResource("intro_gate")])
+locked_hint = "Finish the introduction before leaving"
 
 [node name="NoteToSelfLabel" type="Label" parent="World/GameComponents/Dungeon" parent_id_path=PackedInt32Array(268330895) index="0" unique_id=1088558356]
+visible = false
 offset_left = 109.0
 offset_top = 129.0
 offset_right = 1821.0

@@ -10,6 +10,7 @@ extends Area2D
 @export var show_locked_hint := true
 @export var hide_when_locked := false
 @export var allow_interaction_when_locked := false
+@export var practical_completion_portal := false
 
 @export_group("Enter Label")
 @export var label_fade_duration: float = 0.2
@@ -38,6 +39,9 @@ func _set_label_visible(show: bool) -> void:
 	tween.tween_property(enter_label, "modulate:a", 1.0 if show else 0.0, label_fade_duration)
 
 func story_unlocked() -> bool:
+	if practical_completion_portal:
+		if not StoryDirector.is_ready() or StoryDirector.get_current_stage_id() not in [&"prologue.spm_practical", &"prologue.after_exam"]: return false
+		if not QuestManager.world_flags.get("story.prologue.practical_demonstrated", false): return false
 	if entry_conditions.is_empty(): return true
 	if not StoryDirector.is_ready() or SaveManager.loading: return false
 	for condition in entry_conditions:

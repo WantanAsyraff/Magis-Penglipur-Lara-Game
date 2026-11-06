@@ -150,6 +150,54 @@ static func run_create(plugin: EditorPlugin, dock: Control) -> int:
 	check(StoryGraphAuthoring.find_stage(dock.database, "test.b").stage.transitions.size() == 1, "Connect From Stage chooses source")
 	plugin.get_undo_redo().get_history_undo_redo(0).undo()
 	check(StoryGraphAuthoring.find_stage(dock.database, "test.b").stage.transitions.is_empty(), "undo Connect From Stage")
+	dock._tree_context_resource = null
+	dock._show_tree_menu(Vector2i(20, 20))
+	check(dock._tree_menu.get_item_text(0) == "New Story...", "empty resource panel offers new story")
+	dock._tree_menu.hide()
+	dock._tree_context_resource = dock.database.arcs[0]
+	dock._show_tree_menu(Vector2i(20, 20))
+	check(dock._tree_menu.get_item_text(1) == "Add Chapter...", "story arc offers chapter creation")
+	dock._tree_menu.hide()
+	dock._show_story_dialog("arc")
+	dock._story_arc_id.text = "test.side"
+	dock._story_arc_name.text = "Side Story"
+	dock._story_chapter_id.text = "test.side.chapter"
+	dock._story_chapter_name.text = "First Chapter"
+	dock._story_stage_id.text = "test.side.start"
+	dock._story_stage_name.text = "Start"
+	dock._confirm_story_dialog()
+	dock._story_dialog.hide()
+	var side := StoryGraphAuthoring.find_stage(dock.database, "test.side.start")
+	check(not side.is_empty() and side.arc.arc_id == &"test.side" and side.arc.initial_chapter_id == &"test.side.chapter" and side.chapter.initial_stage_id == &"test.side.start", "new story registers arc, chapter and entry stage")
+	var story_disk: StoryDatabase = ResourceLoader.load(FIXTURE_PATH, "", ResourceLoader.CACHE_MODE_IGNORE_DEEP)
+	check(not StoryGraphAuthoring.find_stage(story_disk, "test.side.start").is_empty(), "new story persisted to disk")
+	plugin.get_undo_redo().get_history_undo_redo(0).undo()
+	check(StoryGraphAuthoring.find_stage(dock.database, "test.side.start").is_empty(), "undo new story")
+	plugin.get_undo_redo().get_history_undo_redo(0).redo()
+	check(not StoryGraphAuthoring.find_stage(dock.database, "test.side.start").is_empty(), "redo new story")
+	plugin.get_undo_redo().get_history_undo_redo(0).undo()
+	dock._tree_context_resource = dock.database.arcs[0]
+	dock._show_story_dialog("chapter")
+	dock._story_chapter_id.text = "test.chapter_2"
+	dock._story_chapter_name.text = "Second Chapter"
+	dock._story_stage_id.text = "test.chapter_2.start"
+	dock._confirm_story_dialog()
+	dock._story_dialog.hide()
+	check(not StoryGraphAuthoring.find_stage(dock.database, "test.chapter_2.start").is_empty(), "arc menu adds chapter with entry stage")
+	plugin.get_undo_redo().get_history_undo_redo(0).undo()
+	check(StoryGraphAuthoring.find_stage(dock.database, "test.chapter_2.start").is_empty(), "undo chapter creation")
+	plugin.get_undo_redo().get_history_undo_redo(0).redo()
+	check(not StoryGraphAuthoring.find_stage(dock.database, "test.chapter_2.start").is_empty(), "redo chapter creation")
+	plugin.get_undo_redo().get_history_undo_redo(0).undo()
+	dock._tree_context_resource = dock.database.arcs[0].chapters[0]
+	dock._on_tree_action(2)
+	check(dock._stage_chapter_choice.get_item_text(dock._stage_chapter_choice.selected) == "test.chapter", "chapter right-click preselects owning chapter")
+	dock._stage_id_input.text = "test.tree_stage"
+	dock._confirm_stage_dialog()
+	dock._stage_dialog.hide()
+	check(not StoryGraphAuthoring.find_stage(dock.database, "test.tree_stage").is_empty(), "chapter menu creates registered stage")
+	plugin.get_undo_redo().get_history_undo_redo(0).undo()
+	check(StoryGraphAuthoring.find_stage(dock.database, "test.tree_stage").is_empty(), "undo tree stage creation")
 	var failure_db := StoryDatabase.new()
 	failure_db.resource_path = "res://.godot/nonexistent-story-test-dir/failure.tres"
 	var failure_stage := StoryStageData.new(); failure_stage.stage_id = &"failure.a"
@@ -184,6 +232,21 @@ static func run_gui(plugin: EditorPlugin, dock: Control) -> int:
 		var a: GraphNode = dock._cards["test.a"]
 		var b: GraphNode = dock._cards["test.b"]
 		check(dock.graph.is_visible_in_tree(), "graph visible at %s" % resolution)
+		var arc_item: TreeItem = dock.tree.get_root().get_first_child()
+		var chapter_item: TreeItem = arc_item.get_first_child()
+		var stage_item: TreeItem = chapter_item.get_first_child()
+		await _right_click(plugin, dock.tree.get_global_transform() * dock.tree.get_item_area_rect(arc_item, 0).get_center())
+		check(dock._tree_menu.visible and dock._tree_context_resource is StoryArcData, "resource tree arc right-click at %s" % resolution)
+		dock._tree_menu.hide()
+		await _right_click(plugin, dock.tree.get_global_transform() * dock.tree.get_item_area_rect(chapter_item, 0).get_center())
+		check(dock._tree_menu.visible and dock._tree_context_resource is StoryChapterData, "resource tree chapter right-click at %s" % resolution)
+		dock._tree_menu.hide()
+		await _right_click(plugin, dock.tree.get_global_transform() * dock.tree.get_item_area_rect(stage_item, 0).get_center())
+		check(dock._tree_menu.visible and dock._tree_context_resource is StoryStageData, "resource tree stage right-click at %s" % resolution)
+		dock._tree_menu.hide()
+		await _right_click(plugin, dock.tree.get_global_rect().position + Vector2(20, dock.tree.size.y - 15))
+		check(dock._tree_menu.visible and dock._tree_context_resource == null, "resource tree empty-space right-click at %s" % resolution)
+		dock._tree_menu.hide()
 		print("STORY_GUI_SIZE: requested=", resolution, " actual=", DisplayServer.window_get_size(), " viewport=", plugin.get_tree().root.size)
 		check(a.get_output_port_count() == 1 and b.get_input_port_count() == 1, "rendered ports at %s" % resolution)
 		check(dock.graph.get_theme_constant("port_hotzone_inner_extent") >= 28 and not dock.graph.minimap_enabled, "expanded hotzones and minimap off")
